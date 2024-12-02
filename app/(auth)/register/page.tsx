@@ -2,31 +2,71 @@ import React from 'react'
 import Link from 'next/link'
 import { Button } from '@/app/components/atoms/Button'
 import Input from '@/app/components/molecules/auth/Input'
-import EyeOpen from '@/app/components/atoms/icons/EyeOpen'
+import { cn } from '@/lib/utils'
+import { poppins_400, poppins_600 } from '@/app/lib/config/font.config'
 
 function Register() {
     return (
-        <div className='w-164 py-28 px-14'>
+        <div className='w-full py-28 px-14 mx-auto'>
             <div className='flex flex-col gap-4  '>
-                <EyeOpen/>
 
-                <div className='pt-18 mx-auto text-center mb-4'>
-                    <h1 className='text-[26px] font-semibold mb-2 leading-[39px]'> Welcome to  <span className='text-primary'>  EduSpaher </span> </h1>
-                    <p className='text-gray text-[13px] w-[308px] leading-[20px]'>Lorem ipsum dolor sit amet consectetur. Sapien ipsum lorem volutpat magna tortor.</p>
+                <div className={cn('pt-18 mx-auto text-center mb-4', poppins_400.className)}>
+                    <h1 className={cn('text-2xl mb-2', poppins_600.className)}> Welcome to  <span className='text-primary'>  EduSpaher </span> </h1>
+                    <p className='text-gray text-xs  '>Lorem ipsum dolor sit amet consectetur. <br /> Sapien  ipsum lorem volutpat magna tortor.</p>
                 </div>
 
-                <form action="" className='mx-auto'>
-                    <Input labelName='Full name' type='text' name='fullname' placeholder='Input your name' />
-                    <Input labelName='Email' type='email' name='email' placeholder='Input email address' />
-                    <Input labelName='Password' type='password' name='password' placeholder='**************' />
-                    <Input labelName='Confirm Password' type='password' name='confirm-password' placeholder='**************' />
+                <form action="" className='mx-auto w-full xxs:px-2 tablet:px-10  laptop:px-28'>
+                    <Input
+                        id="fullname"
+                        label="Full Name"
+                        type="text"
+                        labelClassName="label"
+                        className="input"
+                        name="fullname"
+                        placeholder='Input your name'
+                    // value={loginInfo.password}
+                    // handleChange={updateLoginInfo}
+                    />
+                    <Input
+                        id="email"
+                        label="Email Address"
+                        type="email"
+                        labelClassName="label mt-4"
+                        className="input"
+                        name="email"
+                        placeholder='Input email address'
+                    // value={loginInfo.password}
+                    // handleChange={updateLoginInfo}
+                    />
 
+                    <Input
+                        id="emailLogin-password"
+                        label="Password"
+                        type="password"
+                        labelClassName="label mt-4"
+                        name="password"
+                        placeholder='**************'
+                    // value={loginInfo.password}
+                    // handleChange={updateLoginInfo}
+                    />
+                    <Input
+                        id="confirm-password"
+                        label="Confirm Password"
+                        type="password"
+                        labelClassName="label mt-4"
+                        name="confirm-password"
+                        placeholder='**************'
+                    // value={loginInfo.password}
+                    // handleChange={updateLoginInfo}
+                    />
 
-                    <Button name='Register' />
+                    <div className='mt-16'>
+                        <Button name='Register' />
+                    </div>
 
                 </form>
 
-                <div className='text-center mt-8 text-[#323232] text-4 leading-7'>
+                <div className={cn('text-center mt-8 text-[#323232] text-base', poppins_400.className)}>
                     <p> Already have an account? <Link href='login' className='text-primary'> Log in  </Link>  </p>
                     <p className='mt-4'>
                         By Signing In, you agree to our <Link href='/' className='text-primary'> terms of services  </Link>  <br />

@@ -1,25 +1,4 @@
-// import React from 'react'
-
-// type InputType = {
-//   labelName: 'Full name' | 'Email' | 'Password' | 'Confirm Password'
-//   type: 'text' | 'password' | 'email',
-//   placeholder: string,
-//   name: string,
-// }
-// function Input({type, placeholder, name, labelName}: InputType) {
-//   return (
-      
-//     <div className='mb-4'>
-//       <label htmlFor="" className='label'>
-//         {labelName}
-//       </label>
-//       <input type={type} name={name} className='input' placeholder={placeholder}/>
-//     </div>
-//   )
-// }
-
-// export default Input
-
+'use client'
 
 import {
   ChangeEvent,
@@ -30,11 +9,11 @@ import {
   ReactNode,
   useState,
 } from "react";
-// import { FaEye, FaEyeSlash } from "react-icons/fa"; // Importing eye icons
-import cn from "../../../lib/utils/cn";
 import { ClassValue } from "clsx";
 import EyeOpen from "../../atoms/icons/EyeOpen";
 import EyeClose from "../../atoms/icons/EyeClose";
+import { cn } from "@/lib/utils";
+import { poppins_400 } from "@/app/lib/config/font.config";
 
 type inputProps = {
   type?: HTMLInputTypeAttribute;
@@ -44,7 +23,7 @@ type inputProps = {
   value?: string | number;
   required?: boolean;
   handleChange?: (e: ChangeEvent<HTMLInputElement>) => void;
-  handleBlur?:   (e: React.FocusEvent<any>)=> void;
+  handleBlur?: (e: React.FocusEvent<any>) => void;
   placeholder?: string;
   errMsg?: string | null;
   min?: number;
@@ -54,11 +33,11 @@ type inputProps = {
   autoComplete?: "on" | "off";
   name?: string;
   register?: any;
-  disabled?: boolean; 
+  disabled?: boolean;
   labelClassName?: string;
   leftIcon?: ReactNode,
   rightIcon?: ReactNode,
-} & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> ;
+} & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
 
 const Input: FC<inputProps> = ({
   type = "text",
@@ -88,12 +67,12 @@ const Input: FC<inputProps> = ({
   const [passwordShown, setPasswordShown] = useState(false);
 
   return (
-    <div className="w-full">
+    <div className={cn("w-full", poppins_400.className)}>
       <label
         htmlFor={id}
         className={cn(
           "block text-left w-full font-nunito text-base mb-3",
-          labelClassName
+          labelClassName, poppins_400.className
         )}
       >
         {label}
@@ -106,7 +85,7 @@ const Input: FC<inputProps> = ({
       >
         <input
           className={cn(
-            "bg-transparent text-wmt-black-500 w-full outline-none font-nunito",
+            "bg-transparent text-wmt-black-500 w-full outline-none",
             inputClassName
           )}
           {...props}
@@ -136,6 +115,7 @@ const Input: FC<inputProps> = ({
           </div>
         )}
       </div>
+
       <span
         className={`text-[indianred] text-2 w-fit text-left float-left mt-0`}
       >

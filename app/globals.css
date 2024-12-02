@@ -1,6 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import 'material-tailwind/css/material-tailwind.css';
+
+
+
 
 body {
   font-family: Poppin, Arial, Helvetica, sans-serif;
@@ -12,11 +16,15 @@ body {
   @apply text-[16px] text-gray1 block mb-2;
 }
 .input {
-  @apply py-4 pl-4 pr-60 text-gray outline-none border border-gray2 rounded-[8px];
+  @apply pl-4 px-4 w-full  text-gray outline-none border border-gray2 rounded-[8px];
 }
 .btn {
   @apply px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600;
 }
+.otp-input{
+  @apply xlgTablet:w-20 xlgTablet:h-20 xxs:h-8 xxs:w-8 lxs:w-12 lxs:h-12 text-2xl border border-[#F9F9F9] rounded-sm bg-[#E7E7E7] focus:ring-2 focus:ring-green-600 focus:outline-none;
+}
+
 @layer base {
   :root {
     --radius: 0.5rem;
