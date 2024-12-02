@@ -20,7 +20,7 @@ function page() {
         <div className=' max:w-full flex flex-col items-center justify-center min-h-screen py-28 tablet:px-14 laptop:px-28 mx-auto px-8'>
             <div className='mb-9'>
                 <h1 className={cn('text-[#101828] mb-2 text-3xl leading-10', poppins_600.className)} >
-                    Input your  <span className='text-primary'> student ID </span> <br /> to access your profile
+                    Input your  <span className='text-primary'> student ID </span>  to access your profile
                 </h1>
                 <p className={cn('text-[#828282] text-base mt-4', poppins_400.className)}>
                     Lorem ipsum dolor sit amet consectetur. Blandit nibh convallis et imperdiet lobortis et. Egestas vitae bibendum morbi.
