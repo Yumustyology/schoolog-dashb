@@ -16,6 +16,7 @@ module.exports = withMT({
         gray: "#828282",
         gray2: "#D9DCE0",
         gray3: "#828282",
+        gray4: "#F2F2F2",
         gray5: "#E0E0E0",
         white: "#FFFFFF",
         background: "var(--background)",
