@@ -12,7 +12,7 @@ import React from 'react';
 
 function Login() {
   return (
-    <div className="py-28 mx-auto w-full tablet:px-6 laptop:px-20 px-8">
+    <div className="py-28 mx-auto w-full tablet:px-6 laptop:px-20 px-8 ">
       <div className="flex flex-col gap-4 justify-center w-full ">
         <div
           className={cn(
@@ -58,7 +58,7 @@ function Login() {
           />
 
           <div className="mt-16">
-            <Button>Log in</Button>
+            <Button wide>Log in</Button>
           </div>
         </form>
 

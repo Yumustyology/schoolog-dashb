@@ -1,8 +1,10 @@
+'use client';
+
 import React, { ReactNode } from 'react';
-import { FaSpinner } from 'react-icons/fa'; // Importing the spinner icon
+import { FaSpinner } from 'react-icons/fa'; 
 import Ripples from 'react-ripples';
-import { Link } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import Link from 'next/link';
 
 type ButtonProps = {
   children: ReactNode;
@@ -70,7 +72,7 @@ const Button = ({
       );
     } else {
       return (
-        <Link href={to} className="overflow-hidden">
+        <Link download={download} href={to} className="overflow-hidden">
           <button
             type={type}
             {...props}
