@@ -64,7 +64,7 @@ function page() {
             </p>
           </div>
           <div className="mt-12">
-            <Button>Proceed to dashboard</Button>
+            <Button wide>Proceed to dashboard</Button>
           </div>
         </Modal>
       )}

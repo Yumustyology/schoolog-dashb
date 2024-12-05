@@ -1,10 +1,8 @@
-import { Button } from '@/app/components/atoms/form/Button';
+import Button from '@/app/components/atoms/form/Button';
 import Input from '@/app/components/atoms/form/Input';
-import IsNotVerified from '@/app/components/molecules/auth/IsNotVerified';
 import {
   Inter_400,
   Inter_800,
-  poppins_600,
 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
 import React from 'react';
@@ -38,7 +36,7 @@ function ForgotPassword() {
           />
 
           <div className="py-8">
-            <Button name="Proceed" />
+            <Button wide>Proceed</Button>
           </div>
         </form>
       </div>
