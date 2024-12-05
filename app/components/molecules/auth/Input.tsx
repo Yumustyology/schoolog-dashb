@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import {
   ChangeEvent,
@@ -8,12 +8,12 @@ import {
   HTMLInputTypeAttribute,
   ReactNode,
   useState,
-} from "react";
-import { ClassValue } from "clsx";
-import EyeOpen from "../../atoms/icons/EyeOpen";
-import EyeClose from "../../atoms/icons/EyeClose";
-import { cn } from "@/lib/utils";
-import { poppins_400 } from "@/app/lib/config/font.config";
+} from 'react';
+import { ClassValue } from 'clsx';
+import EyeOpen from '../../atoms/icons/EyeOpen';
+import EyeClose from '../../atoms/icons/EyeClose';
+import { cn } from '@/lib/utils';
+import { poppins_400 } from '@/app/lib/config/font.config';
 
 type inputProps = {
   type?: HTMLInputTypeAttribute;
@@ -30,17 +30,21 @@ type inputProps = {
   max?: number;
   maxLength?: number | null;
   minLength?: number | null;
-  autoComplete?: "on" | "off";
+  autoComplete?: 'on' | 'off';
   name?: string;
   register?: any;
   disabled?: boolean;
   labelClassName?: string;
-  leftIcon?: ReactNode,
-  rightIcon?: ReactNode,
-} & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> & DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>;
+  leftIcon?: ReactNode;
+  rightIcon?: ReactNode;
+} & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
+  DetailedHTMLProps<
+    React.InputHTMLAttributes<HTMLInputElement>,
+    HTMLInputElement
+  >;
 
 const Input: FC<inputProps> = ({
-  type = "text",
+  type = 'text',
   label,
   className,
   inputClassName,
@@ -48,7 +52,7 @@ const Input: FC<inputProps> = ({
   value,
   handleChange,
   required = true,
-  name = "",
+  name = '',
   placeholder,
   errMsg,
   min,
@@ -67,25 +71,26 @@ const Input: FC<inputProps> = ({
   const [passwordShown, setPasswordShown] = useState(false);
 
   return (
-    <div className={cn("w-full", poppins_400.className)}>
+    <div className={cn('w-full', poppins_400.className)}>
       <label
         htmlFor={id}
         className={cn(
-          "block text-left w-full font-nunito text-base mb-3",
-          labelClassName, poppins_400.className
+          'block text-left w-full font-nunito text-base mb-3',
+          labelClassName,
+          poppins_400.className
         )}
       >
         {label}
       </label>
       <div
         className={cn(
-          "border border-[#E0E0E0] rounded-lg w-full p-4 outline-none flex items-center",
+          'border border-[#E0E0E0] rounded-lg w-full p-4 outline-none flex items-center',
           className
         )}
       >
         <input
           className={cn(
-            "bg-transparent text-wmt-black-500 w-full outline-none",
+            'bg-transparent text-wmt-black-500 w-full outline-none',
             inputClassName
           )}
           {...props}
@@ -93,9 +98,9 @@ const Input: FC<inputProps> = ({
           required={required}
           name={name}
           onChange={handleChange}
-          type={passwordShown ? "text" : type}
+          type={passwordShown ? 'text' : type}
           id={id}
-          placeholder={placeholder || " "}
+          placeholder={placeholder || ' '}
           min={min}
           max={max}
           maxLength={maxLength}
@@ -105,13 +110,12 @@ const Input: FC<inputProps> = ({
           {...register}
         />
 
-        {type === "password" && (
-          <div className="flex items-center cursor-pointer mx-4 no-select" onClick={() => setPasswordShown(!passwordShown)}>
-            {passwordShown ? (
-              <EyeOpen />
-            ) : (
-              <EyeClose />
-            )}
+        {type === 'password' && (
+          <div
+            className="flex items-center cursor-pointer mx-4 no-select"
+            onClick={() => setPasswordShown(!passwordShown)}
+          >
+            {passwordShown ? <EyeOpen /> : <EyeClose />}
           </div>
         )}
       </div>
