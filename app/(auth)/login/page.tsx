@@ -1,6 +1,6 @@
 // import { Button } from '@/app/components/atoms/Button';
 import Button from '@/app/components/atoms/form/Button';
-import Input from '@/app/components/molecules/auth/Input';
+import Input from '@/app/components/atoms/form/Input';
 import {
   poppins_400,
   poppins_600,

@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { Button } from '@/app/components/atoms/form/Button';
-import Input from '@/app/components/molecules/auth/Input';
+import Input from '@/app/components/atoms/form/Input';
 import { cn } from '@/lib/utils';
 import { poppins_400, poppins_600 } from '@/app/lib/config/font.config';
 

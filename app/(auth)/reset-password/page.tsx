@@ -1,5 +1,5 @@
 import { Button } from '@/app/components/atoms/form/Button';
-import Input from '@/app/components/molecules/auth/Input';
+import Input from '@/app/components/atoms/form/Input';
 import { Inter_400, Inter_800 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
 import Link from 'next/link';

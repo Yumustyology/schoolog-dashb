@@ -10,8 +10,8 @@ import {
   useState,
 } from 'react';
 import { ClassValue } from 'clsx';
-import EyeOpen from '../../atoms/icons/EyeOpen';
-import EyeClose from '../../atoms/icons/EyeClose';
+import EyeOpen from '../icons/EyeOpen';
+import EyeClose from '../icons/EyeClose';
 import { cn } from '@/lib/utils';
 import { poppins_400 } from '@/app/lib/config/font.config';
 

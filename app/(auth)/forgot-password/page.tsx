@@ -1,5 +1,5 @@
 import { Button } from '@/app/components/atoms/form/Button';
-import Input from '@/app/components/molecules/auth/Input';
+import Input from '@/app/components/atoms/form/Input';
 import IsNotVerified from '@/app/components/molecules/auth/IsNotVerified';
 import {
   Inter_400,

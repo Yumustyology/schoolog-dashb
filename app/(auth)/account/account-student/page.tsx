@@ -3,7 +3,7 @@ import Button from '@/app/components/atoms/form/Button';
 import Review from '@/app/components/atoms/icons/ModalIcons/Review';
 import Modal from '@/app/components/molecules/Modal';
 import AccountName from '@/app/components/molecules/auth/AccountName';
-import Input from '@/app/components/molecules/auth/Input';
+import Input from '@/app/components/atoms/form/Input';
 import {
   Inter_400,
   Inter_600,
