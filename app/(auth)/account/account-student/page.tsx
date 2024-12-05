@@ -11,7 +11,7 @@ import {
   poppins_600,
 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
-import React from 'react';  
+import React from 'react';
 
 function page() {
   const [isModalOpen, setIsModalOpen] = React.useState(true);
@@ -64,7 +64,7 @@ function page() {
             </p>
           </div>
           <div className="mt-12">
-            <Button>Proceed to dashboard</Button> 
+            <Button>Proceed to dashboard</Button>
           </div>
         </Modal>
       )}

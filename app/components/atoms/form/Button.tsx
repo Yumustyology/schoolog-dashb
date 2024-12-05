@@ -1,8 +1,8 @@
-import React, { ReactNode } from "react";
-import { FaSpinner } from "react-icons/fa"; // Importing the spinner icon
-import Ripples from "react-ripples";
-import { Link } from "lucide-react";
-import { cn } from "@/lib/utils";
+import React, { ReactNode } from 'react';
+import { FaSpinner } from 'react-icons/fa'; // Importing the spinner icon
+import Ripples from 'react-ripples';
+import { Link } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 type ButtonProps = {
   children: ReactNode;
@@ -47,11 +47,11 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const commonClasses = cn(
-    wide && "flex-grow w-full",
-    outlined && "border border-primary",
-    round ? "rounded-full" : "rounded-lg",
-    "inline-block py-2 px-4 font-medium flex items-center justify-center cursor-pointer flex-shrink-0 font-nunito font-normal",
-    flat ? "text-primary bg-white" : "bg-primary text-white",
+    wide && 'flex-grow w-full',
+    outlined && 'border border-primary',
+    round ? 'rounded-full' : 'rounded-lg',
+    'inline-block py-2 px-4 font-medium flex items-center justify-center cursor-pointer flex-shrink-0 font-nunito font-normal',
+    flat ? 'text-primary bg-white' : 'bg-primary text-white',
     className
   );
 
@@ -72,16 +72,16 @@ const Button = ({
       return (
         <Link href={to} className="overflow-hidden">
           <button
-          type={type}
+            type={type}
             {...props}
             disabled={commonProps.disabled}
             id={commonProps.id}
-            className={cn(wide && "w-full flex-grow")}
+            className={cn(wide && 'w-full flex-grow')}
           >
             <div
               id={commonProps.id}
               className={cn(
-                "hover:!shadow-none !shadow-none inline-block",
+                'hover:!shadow-none !shadow-none inline-block',
                 commonProps.className
               )}
               onClick={onClick}
@@ -89,7 +89,8 @@ const Button = ({
             >
               <p
                 className={cn(
-                  "text-clash-grotesk font-medium flex items-center justify-center space-x-2",childrenClassName
+                  'text-clash-grotesk font-medium flex items-center justify-center space-x-2',
+                  childrenClassName
                 )}
               >
                 {loading ? (
@@ -126,16 +127,16 @@ const Button = ({
 
   return (
     <button
-    type={type}
+      type={type}
       {...props}
       disabled={commonProps.disabled}
       id={commonProps.id}
-      className={cn(wide && "w-full flex-grow h-auto")}
+      className={cn(wide && 'w-full flex-grow h-auto')}
     >
       <Ripples
         id={commonProps.id}
         className={cn(
-          "hover:!shadow-none !shadow-none inline-block",
+          'hover:!shadow-none !shadow-none inline-block',
           commonProps.className
         )}
         onClick={onClick}
@@ -143,7 +144,8 @@ const Button = ({
       >
         <div
           className={cn(
-            "text-clash-grotesk font-medium flex items-center justify-center space-x-2", childrenClassName
+            'text-clash-grotesk font-medium flex items-center justify-center space-x-2',
+            childrenClassName
           )}
         >
           {loading ? (
