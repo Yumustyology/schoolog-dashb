@@ -11,8 +11,23 @@ function CircleMark() {
     >
       <circle cx="59" cy="59" r="59" fill="#21B55A" fillOpacity="0.06" />
       <circle cx="58.9998" cy="59.2933" r="35.8997" fill="#E9F8EF" />
-      <circle cx="58.9998" cy="59.2937" r="39.9814" fill="#E9F8EF" stroke="white" strokeWidth="2.22634" />
-      <mask id="mask0_3_9337" style={{ maskType: 'alpha' }} maskUnits="userSpaceOnUse" x="20" y="20" width="78" height="78">
+      <circle
+        cx="58.9998"
+        cy="59.2937"
+        r="39.9814"
+        fill="#E9F8EF"
+        stroke="white"
+        strokeWidth="2.22634"
+      />
+      <mask
+        id="mask0_3_9337"
+        style={{ maskType: 'alpha' }}
+        maskUnits="userSpaceOnUse"
+        x="20"
+        y="20"
+        width="78"
+        height="78"
+      >
         <circle cx="59" cy="59.293" r="38.6827" fill="white" />
       </mask>
       <g mask="url(#mask0_3_9337)">
@@ -55,8 +70,17 @@ function CircleMark() {
             type="matrix"
             values="0 0 0 0 0.490196 0 0 0 0 0.113725 0 0 0 0 0.658824 0 0 0 0.12 0"
           />
-          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_3_9337" />
-          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_3_9337" result="shape" />
+          <feBlend
+            mode="normal"
+            in2="BackgroundImageFix"
+            result="effect1_dropShadow_3_9337"
+          />
+          <feBlend
+            mode="normal"
+            in="SourceGraphic"
+            in2="effect1_dropShadow_3_9337"
+            result="shape"
+          />
         </filter>
         <linearGradient
           id="paint0_linear_3_9337"

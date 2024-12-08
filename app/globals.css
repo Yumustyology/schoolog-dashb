@@ -2,13 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-
 body {
   font-family: Poppin, Arial, Helvetica, sans-serif;
 }
-
 
 /* Reusable Tailwind CSS Styles For Authentication Pages */
 .label {
@@ -20,7 +16,7 @@ body {
 .btn {
   @apply px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600;
 }
-.otp-input{
+.otp-input {
   @apply xlgTablet:w-20 xlgTablet:h-20 xxs:h-8 xxs:w-8 lxs:w-12 lxs:h-12 text-2xl border border-[#F9F9F9] rounded-sm bg-[#E7E7E7] focus:ring-2 focus:ring-green-600 focus:outline-none;
 }
 
@@ -48,8 +44,8 @@ body {
   }
 }
 
-
 /* SCROLL HIDDEN */
+
 /* Hide scrollbar but keep scroll functionality */
 ::-webkit-scrollbar {
   display: none;
@@ -60,4 +56,7 @@ html {
 }
 
 
-
+/* input[type='password'] {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  letter-spacing: 0.125em;
+} */
