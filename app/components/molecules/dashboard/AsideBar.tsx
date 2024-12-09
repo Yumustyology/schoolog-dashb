@@ -37,7 +37,8 @@ const items = [
   {
     title: 'Dashboard',
     url: '/student/dashboard',
-    icon: <Dashboard />, // Ensure the icon is rendered as a component
+    icon: <Dashboard />,
+    activeIcon: <Dashboard color='#FFFFFF' />
   },
   {
     title: 'Subjects',
@@ -84,29 +85,37 @@ const items = [
 export function AppSidebar() {
   const pathname = usePathname();
   return (
-    <Sidebar className="w-64 h-screen border-none bg-white">
-      <SidebarHeader className="py-4 px-6 bg-white">
+    <Sidebar collapsible='icon' className="w-64 h-screen border-none bg-white">
+      <SidebarHeader className="py-4 px-6 bg-white" >
         <h1 className="text-2xl font-bold text-center text-black">Edu Share</h1>
       </SidebarHeader>
 
-      <SidebarContent className="py-2 px-4  h-full overflow-y-scroll scrollbar-hidden bg-white ">
+      <SidebarContent className="  h-full overflow-y-scroll scrollbar-hidden bg-white ">
         <SidebarGroup>
           <SidebarMenu>
             {items.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton className="py-5 rounded-full" asChild>
-                  <a
+                  <Link
                     href={item.url}
-                    className={`flex items-center gap-4 px-4 py-2 text-sm  ${
-                      pathname === item.url
-                        ? 'bg-primary text-white'
-                        : 'hover:bg-gray2  '
-                    } transition-colors duration-200`}
+                    className={`flex items-center gap-4 px-4 py-2 text-sm  ${pathname === item.url
+                      ? 'bg-primary text-white'
+                      : 'hover:bg-gray2  '
+                      } transition-colors duration-200`}
                   >
-                    {item.icon}
+                    {
+                      pathname === item.url
+                        ? <div>
+                          {item.activeIcon}
+                        </div>
+                        : <div >
+                          {item.icon}
+                        </div>
+
+                    }
                     <span className="text-sm">{item.title}</span>{' '}
-                    {/* Hide title on small screens */}
-                  </a>
+                   
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
@@ -149,6 +158,7 @@ export function AppSidebar() {
 
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
+import Link from 'next/link';
 
 export function SwitchDemo() {
   return (

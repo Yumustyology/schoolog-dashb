@@ -50,10 +50,12 @@ function page() {
             <Input label="Student ID" placeholder="Input your student ID" />
           </div>
 
+          <Button wide round className='h-12 mt-12'>Verify ID</Button>
+
           {isModalOpen && (
             <Modal isOpen={true} onClose={onClose} title="Review">
               <div className="flex flex-col items-center justify-center">
-                <div className="mb-10">
+                <div className="mb-8">
                   <Review />
                 </div>
                 <h3 className={cn('text-lg', Inter_600.className)}>
@@ -68,9 +70,9 @@ function page() {
                   to view your details{' '}
                 </p>
               </div>
-              <div className="mt-12">
-                <Button wide>Proceed to dashboard</Button>
-              </div>
+
+              <Button wide round className='h-12 mt-7'>Proceed to dashboard</Button>
+
             </Modal>
           )}
         </div>

@@ -1,5 +1,6 @@
 import {
   agricultural,
+  avatar,
   biology,
   chemistry,
   computer,
@@ -96,3 +97,21 @@ export const subjects = [
 ];
 
 export const materials = [{}];
+
+
+export const avatars = [
+  {
+    avater: avatar
+  },
+  {
+    avater: avatar
+  },
+  {
+    avater: avatar
+  },
+  {
+    avater: avatar
+  },
+ 
+
+]

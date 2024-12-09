@@ -11,6 +11,7 @@ import teacherImg from './images/teacher.png';
 import school from './school.png';
 import biology1 from './images/biology1.png';
 import teacherImg2 from './images/Frame 1000001843.png';
+import avatar from './images/avatar.png';
 
 export {
   school,
@@ -26,4 +27,5 @@ export {
   teacherImg,
   biology1,
   teacherImg2,
+  avatar,
 };
