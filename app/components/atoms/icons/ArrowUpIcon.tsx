@@ -3,7 +3,7 @@ import React from 'react';
 const ArrowUpIcon = ({
   height = '20',
   width = '20',
-  color = "#17B26A",
+  color = '#17B26A',
 }: {
   height?: string;
   width?: string;

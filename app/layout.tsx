@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
+import './mode-switch.css';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -18,6 +19,7 @@ export const metadata: Metadata = {
   description: 'School management got easier',
   icons: {
     icon: '/schoolog-logo.png',
+
   },
 };
 

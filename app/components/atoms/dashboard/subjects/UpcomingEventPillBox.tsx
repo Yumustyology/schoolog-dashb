@@ -1,7 +1,4 @@
-import {
-  poppins_500,
-  poppins_400,
-} from '@/app/lib/config/font.config';
+import { poppins_500, poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import React from 'react';

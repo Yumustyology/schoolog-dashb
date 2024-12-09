@@ -25,6 +25,8 @@ import TodayClassesList from '@/app/components/molecules/dashboard/TodayClassesL
 import UpcomingEventLists from '@/app/components/molecules/dashboard/UpcomingEventsList';
 import Timetable from '@/app/components/atoms/icons/dashboard/SideBar/Timetable';
 import GradesAnalytics from '@/app/components/molecules/dashboard/analytics/GradesAnalytics';
+import AssignmentAnalytics from '@/app/components/molecules/dashboard/analytics/AssignmentAnalytics';
+import AttendanceAnalytics from '@/app/components/molecules/dashboard/analytics/AttendanceAnalytics';
 
 function StudentDashboard() {
   const todayClassesTabs = [
@@ -42,23 +44,24 @@ function StudentDashboard() {
 
   const analyticsTabs = [
     {
-      label: "Grades",
+      label: 'Grades',
       value: 'grades',
       content: <GradesAnalytics />,
     },
     {
       label: 'Attendance',
       value: 'attendance',
-      content: <>foo1</>,
+      content: <AttendanceAnalytics />,
     },
     {
       label: 'Assignment',
       value: 'assignment',
-      content: <>foo3</>,
+      content: <AssignmentAnalytics />,
     },
   ];
 
-  const [activeTodayClassesTab, setActiveTodayClassesTab] = useState('todays-classes');
+  const [activeTodayClassesTab, setActiveTodayClassesTab] =
+    useState('todays-classes');
   const [activeAnalyticsTab, setActiveAnalyticsTab] = useState('grades');
 
   useEffect(() => {
@@ -66,13 +69,19 @@ function StudentDashboard() {
     const todaysClassesTabFromUrl = urlParams.get('tab');
     const analyticsTabFromUrl = urlParams.get('analytics-tab');
 
-    if (todaysClassesTabFromUrl && todayClassesTabs.some((item) => item.value === todaysClassesTabFromUrl)) {
+    if (
+      todaysClassesTabFromUrl &&
+      todayClassesTabs.some((item) => item.value === todaysClassesTabFromUrl)
+    ) {
       setActiveTodayClassesTab(todaysClassesTabFromUrl);
     } else {
       setActiveTodayClassesTab('todays-classes');
     }
 
-    if (analyticsTabFromUrl && todayClassesTabs.some((item) => item.value === analyticsTabFromUrl)) {
+    if (
+      analyticsTabFromUrl &&
+      todayClassesTabs.some((item) => item.value === analyticsTabFromUrl)
+    ) {
       setActiveAnalyticsTab(analyticsTabFromUrl);
     } else {
       setActiveAnalyticsTab('todays-classes');
@@ -186,7 +195,7 @@ function StudentDashboard() {
                     poppins_400.className
                   )}
                 >
-                  Pick date <Timetable height='16' width='16'/>
+                  Pick date <Timetable height="16" width="16" />
                 </div>
               </div>
               <TabsBody>

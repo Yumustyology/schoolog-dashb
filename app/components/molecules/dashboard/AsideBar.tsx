@@ -31,6 +31,10 @@ import Activities from '../../atoms/icons/dashboard/SideBar/Activities';
 import Logout from '../../atoms/icons/dashboard/SideBar/Logout';
 import { usePathname } from 'next/navigation';
 import Library from '../../atoms/icons/dashboard/SideBar/Library';
+import { Label } from '@/components/ui/label';
+import { Switch } from '@/components/ui/switch';
+import Link from 'next/link';
+import ModeSwitch from '../../organisms/ModeSwitch';
 
 const items = [
   {
@@ -137,30 +141,28 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className=" bg-white ">
-        <div className="bg-[#E5E5EA] rounded-full  py-2 text-center px-4 mx-4 my-2">
-          <SwitchDemo />
+      {/* <SidebarFooter className="bg-white">
+        <div className=" border border-[#E5E5EA] rounded-full text-center px-4 mx-4 h-[48px] flex justify-between items-center">
+          <p className={cn('text-sm flex-shrink-0',Inter_500.className)}>Dark mode</p>
+          <ModeSwitch className='scale-[.3] w-min float-left text-gray-6'/>
         </div>
-      </SidebarFooter>
+      </SidebarFooter> */}
     </Sidebar>
   );
 }
 
-import { Label } from '@/components/ui/label';
-import { Switch } from '@/components/ui/switch';
-import Link from 'next/link';
 
-export function SwitchDemo() {
-  return (
-    <div className="flex items-center justify-center space-x-2">
-      <Label
-        htmlFor="darkMode"
-        className={cn('text-sm text-[#4f4f4f]', Inter_500.className)}
-      >
-        Dark mode{' '}
-      </Label>
+// export function SwitchDemo() {
+//   return (
+//     <div className="flex items-center justify-center space-x-2">
+//       <Label
+//         htmlFor="darkMode"
+//         className={cn('text-sm text-[#4f4f4f]', Inter_500.className)}
+//       >
+//         Dark mode{' '}
+//       </Label>
 
-      <Switch id="airplane-mode" className="bg-primary" />
-    </div>
-  );
-}
+//       <Switch id="airplane-mode" className="bg-primary" />
+//     </div>
+//   );
+// }

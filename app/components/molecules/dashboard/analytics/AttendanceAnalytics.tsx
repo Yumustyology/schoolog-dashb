@@ -17,7 +17,7 @@ const chartConfig = {
   series: [
     {
       name: "Grades",
-      data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
+      data: [10, 50, 30, 70, 50, 330, 400, 630, 800],
     },
   ],
   options: {
@@ -106,15 +106,15 @@ const chartConfig = {
   },
 };
 
-const GradesAnalytics = () => {
+const AttendanceAnalytics = () => {
   return (
     <div>
       <div className="flex items-end gap-3">
         <p className="text-[#101828] flex gap-1 items-end">
-          <h2 className={cn(Inter_800.className, 'text-3xl')}>90</h2>
+          <h2 className={cn(Inter_800.className, 'text-3xl')}>60</h2>
           <span className={Inter_400.className}>/</span>
           <span className={cn(Inter_400.className, 'text-gray3')}>
-            average grade
+            average attendance
           </span>
         </p>
         <div
@@ -136,4 +136,4 @@ const GradesAnalytics = () => {
   );
 };
 
-export default GradesAnalytics;
+export default AttendanceAnalytics;
