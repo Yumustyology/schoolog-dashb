@@ -146,21 +146,21 @@ function StudentDashboard() {
             <DashboardLinkBox
               title="Total subjects"
               count={'16'}
-              to="/"
+              to="/students/subjects"
               icon={<SubjectIcon />}
               iconBgColor="bg-[#21B55A1F]"
             />
             <DashboardLinkBox
               title="Assignments"
               count={'26/42'}
-              to="/"
+              to="/students/assignments"
               icon={<AssignmentIcon />}
               iconBgColor="bg-[#3365E31F]"
             />
             <DashboardLinkBox
               title="Event"
               count={'3/8'}
-              to="/"
+              to="/students/events"
               icon={<EventsIcon />}
               iconBgColor="bg-[#EB57571F]"
             />
