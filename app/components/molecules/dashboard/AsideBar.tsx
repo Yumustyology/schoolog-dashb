@@ -32,11 +32,10 @@ import Logout from '../../atoms/icons/dashboard/SideBar/Logout';
 import { usePathname } from 'next/navigation';
 import Library from '../../atoms/icons/dashboard/SideBar/Library';
 
-// Menu items with React components as icons
 const items = [
   {
     title: 'Dashboard',
-    url: '/student/dashboard',
+    url: '/student',
     icon: <Dashboard />, // Ensure the icon is rendered as a component
   },
   {
@@ -95,7 +94,7 @@ export function AppSidebar() {
             {items.map((item) => (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton className="py-5 rounded-full" asChild>
-                  <a
+                  <Link
                     href={item.url}
                     className={`flex items-center gap-4 px-4 py-2 text-sm  ${
                       pathname === item.url
@@ -106,7 +105,7 @@ export function AppSidebar() {
                     {item.icon}
                     <span className="text-sm">{item.title}</span>{' '}
                     {/* Hide title on small screens */}
-                  </a>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             ))}
@@ -114,24 +113,24 @@ export function AppSidebar() {
             <div className="border-b border-gray2 border h-0 my-2"> </div>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <a
+                <Link
                   href="/"
                   className="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md"
                 >
                   <Settings />
                   <span>Settings</span>
-                </a>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <a
+                <Link
                   href="/"
                   className="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md"
                 >
                   <Logout />
                   <span>Logout</span>
-                </a>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
@@ -149,6 +148,7 @@ export function AppSidebar() {
 
 import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
+import Link from 'next/link';
 
 export function SwitchDemo() {
   return (

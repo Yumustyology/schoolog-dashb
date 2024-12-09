@@ -21,7 +21,7 @@ function page() {
 
   return (
     <AuthWrapper>
-      <main className='w-full min-h-screen py-28 px-36 mx-auto'>
+      <main className="w-full min-h-screen py-28 px-36 mx-auto">
         <PageNumber />
 
         <div className=" flex flex-col items-center justify-center  mx-auto">
@@ -36,7 +36,10 @@ function page() {
               access your profile
             </h1>
             <p
-              className={cn('text-[#828282] text-base mt-4', poppins_400.className)}
+              className={cn(
+                'text-[#828282] text-base mt-4',
+                poppins_400.className
+              )}
             >
               Lorem ipsum dolor sit amet consectetur. Blandit nibh convallis et
               imperdiet lobortis et. Egestas vitae bibendum morbi.
@@ -61,11 +64,14 @@ function page() {
                   ID Verified{' '}
                 </h3>
                 <p
-                  className={cn('text-center text-gray3 mt-4', Inter_400.className)}
+                  className={cn(
+                    'text-center text-gray3 mt-4',
+                    Inter_400.className
+                  )}
                 >
                   {' '}
-                  Your ID has been verified successfully! proceed to you dashboard
-                  to view your details{' '}
+                  Your ID has been verified successfully! proceed to you
+                  dashboard to view your details{' '}
                 </p>
               </div>
               <div className="mt-12">
@@ -81,17 +87,16 @@ function page() {
 
 export default page;
 
-
 export const PageNumber = () => {
   return (
     <div>
-      <p className={cn('text-base text-gray3', poppins_600.className)}><span className='text-primary'>1 </span>/2</p>
-      <div className='flex gap-2 mb-2'>
-
-        <div className='h-[4px] w-[31px] bg-primary'></div>
-        <div className='h-[4px] w-[31px] bg-[#F2EEFB]'></div>
-
+      <p className={cn('text-base text-gray3', poppins_600.className)}>
+        <span className="text-primary">1 </span>/2
+      </p>
+      <div className="flex gap-2 mb-2">
+        <div className="h-[4px] w-[31px] bg-primary"></div>
+        <div className="h-[4px] w-[31px] bg-[#F2EEFB]"></div>
       </div>
     </div>
-  )
-}
+  );
+};

@@ -15,14 +15,14 @@ export default async function Layout({
   return (
     <SidebarProvider defaultOpen={defaultOpen}>
       <AppSidebar />
-      <main className="w-screen pl-2">
+      <main className="w-screen pl-1">
         <div className=" w-full bg-white py-3">
           <div className="flex  items-center">
             <SidebarTrigger />
             <Search placeholderName="Search projects, users and resources" />
           </div>
         </div>
-        <div className="p-6 h-full bg-[#F8F8F8]">{children}</div>
+        <div className="p-8 h-full bg-[#F8F8F8]">{children}</div>
       </main>
     </SidebarProvider>
   );
