@@ -37,36 +37,35 @@
 //     );
 // }
 
-
-import { avatars } from '@/constants'
-import Image from 'next/image'
-import React from 'react'
+import { avatars } from '@/constants';
+import Image from 'next/image';
+import React from 'react';
 
 function AvatarStack() {
-    return (
-        <div className="relative flex">
-            {avatars?.map((avatar, index) => (
-                <div
-                    key={index}
-                    className={`relative z-${avatars.length - index} -ml-2`}
-                    style={{
-                        width: 20 ,
-                        height: 20,
-                    }}
-                >
-                    <Image
-                        src={avatar.avater}
-                        alt={`avatar-${index}`}
-                        className="rounded-full border-1 border-white"
-                        style={{
-                            width: 20,
-                            height: 20,
-                        }}
-                    />
-                </div>
-            ))}
+  return (
+    <div className="relative flex">
+      {avatars?.map((avatar, index) => (
+        <div
+          key={index}
+          className={`relative z-${avatars.length - index} -ml-2`}
+          style={{
+            width: 20,
+            height: 20,
+          }}
+        >
+          <Image
+            src={avatar.avater}
+            alt={`avatar-${index}`}
+            className="rounded-full border-1 border-white"
+            style={{
+              width: 20,
+              height: 20,
+            }}
+          />
         </div>
-    )
+      ))}
+    </div>
+  );
 }
 
-export default AvatarStack
+export default AvatarStack;

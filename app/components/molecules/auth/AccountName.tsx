@@ -10,7 +10,12 @@ function AccountName() {
   return (
     <div className="border border-gray5 w-full rounded-xl mt-7 flex items-center p-4 gap-4">
       <div>
-        <Image src={school} alt="Description of image" width={100} height={100} />
+        <Image
+          src={school}
+          alt="Description of image"
+          width={100}
+          height={100}
+        />
       </div>
 
       <div className="flex flex-col gap-3">
@@ -25,7 +30,7 @@ function AccountName() {
         </p>
 
         <div className="flex gap-3 px-2 ">
-            <AvatarStack/>
+          <AvatarStack />
           <p
             className={cn(
               'bg-[#f4f4f4] text-sm rounded-[44px] h-[22px] text-gray3 px-2'

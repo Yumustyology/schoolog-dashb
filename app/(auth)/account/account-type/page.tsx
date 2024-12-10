@@ -18,7 +18,6 @@ import React from 'react';
 function page() {
   return (
     <AuthWrapper>
-
       <div className=" w-full flex items-center justify-center min-h-screen py-28 tablet:px-14 laptop:px-24 desktop:px-36 mx-auto px-8">
         <div>
           <div className="mb-12">
@@ -66,7 +65,6 @@ function page() {
         </div>
       </div>
     </AuthWrapper>
-
   );
 }
 

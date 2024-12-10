@@ -1,10 +1,16 @@
 import React from 'react';
 
-function Dashboard({height="20",width="20",color="#828282"}:{height?:string,width?:string,color?:string}) {
+function Dashboard({
+  size = '20',
+  color = '#828282',
+}: {
+  size?: string;
+  color?: string;
+}) {
   return (
     <svg
-      width={height}
-      height={width}
+      width={size}
+      height={size}
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

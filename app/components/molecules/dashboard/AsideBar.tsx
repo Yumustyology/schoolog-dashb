@@ -38,59 +38,67 @@ const items = [
     title: 'Dashboard',
     url: '/student/dashboard',
     icon: <Dashboard />,
-    activeIcon: <Dashboard color='#FFFFFF' />
+    activeIcon: <Dashboard color="#FFFFFF" size='17'/>
   },
   {
     title: 'Subjects',
     url: '/student/subjects',
     icon: <Subjects />,
+    activeIcon: <Subjects color="#FFFFFF" size='17'/>
   },
   {
     title: 'Materials',
     url: '/student/materials',
     icon: <Material />,
+    activeIcon: <Material color="#FFFFFF" size='17'/>
   },
   {
     title: 'Timetable',
     url: '/student/timetable',
     icon: <Timetable />,
+    activeIcon: <Timetable color="#FFFFFF" size='17'/>
   },
   {
     title: 'Attendance',
     url: '/student/attendance',
     icon: <Attendance />,
+    activeIcon: <Attendance color="#FFFFFF" size='17'/>
   },
   {
     title: 'Library',
     url: '/student/library',
     icon: <Library />,
+    activeIcon: <Library color="#FFFFFF" size='17'/>
   },
   {
     title: 'Message',
     url: '/student/message',
     icon: <Message />,
+    activeIcon: <Message color="#FFFFFF" size='17'/>
   },
   {
     title: 'Announcement',
     url: '/student/announcement',
     icon: <Annoucement />,
+    activeIcon: <Annoucement color="#FFFFFF" size='17'/>
   },
   {
     title: 'Activities',
     url: '/student/activities',
     icon: <Activities />,
+    activeIcon: <Activities color="#FFFFFF" size='17'/>
   },
 ];
 
 export function AppSidebar() {
   const pathname = usePathname();
   return (
-    <Sidebar collapsible='icon' className="w-64 h-screen border-none bg-white">
-      <SidebarHeader className="py-4 px-6 bg-white" >
+    <Sidebar collapsible="icon" className="h-screen border-none bg-white">
+      <SidebarHeader className="py-4 bg-white">
         <h1 className="text-2xl font-bold text-center text-black">Edu Share</h1>
       </SidebarHeader>
 
-      <SidebarContent className="  h-full overflow-y-scroll scrollbar-hidden bg-white ">
+      <SidebarContent className="h-full overflow-y-scroll scrollbar-hidden bg-white ">
         <SidebarGroup>
           <SidebarMenu>
             {items.map((item) => (
@@ -99,22 +107,16 @@ export function AppSidebar() {
                   <Link
                     href={item.url}
                     className={`flex items-center gap-4 px-4 py-2 text-sm  ${pathname === item.url
-                      ? 'bg-primary text-white'
-                      : 'hover:bg-gray2  '
+                        ? 'bg-primary text-white'
+                        : 'hover:bg-gray2  '
                       } transition-colors duration-200`}
                   >
-                    {
-                      pathname === item.url
-                        ? <div>
-                          {item.activeIcon}
-                        </div>
-                        : <div >
-                          {item.icon}
-                        </div>
-
-                    }
+                    {pathname === item.url ? (
+                      <div>{item.activeIcon}</div>
+                    ) : (
+                      <div>{item.icon}</div>
+                    )}
                     <span className="text-sm">{item.title}</span>{' '}
-                   
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -123,24 +125,24 @@ export function AppSidebar() {
             <div className="border-b border-gray2 border h-0 my-2"> </div>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <a
+                <Link
                   href="/"
-                  className="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md"
+                  className="flex items-center py-2 text-gray-300 hover:bg-gray-700 rounded-md"
                 >
                   <Settings />
                   <span>Settings</span>
-                </a>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
-                <a
+                <Link
                   href="/"
-                  className="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md"
+                  className="flex items-center py-2 text-gray-300 hover:bg-gray-700 rounded-md"
                 >
                   <Logout />
                   <span>Logout</span>
-                </a>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
           </SidebarMenu>
@@ -148,7 +150,7 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className=" bg-white ">
-        <div className="bg-[#E5E5EA] rounded-full  py-2 text-center px-4 mx-4 my-2">
+        <div className="bg-[#E5E5EA] rounded-full  py-2 text-center  mx-4 my-2">
           <SwitchDemo />
         </div>
       </SidebarFooter>
