@@ -1,6 +1,6 @@
-import { AxiosResponse } from "axios";
-import axiosConfig, { redirectUser } from "../config/axios.config";
-import { handleError } from "../utils/handleError";
+import { AxiosResponse } from 'axios';
+import axiosConfig, { redirectUser } from '../config/axios.config';
+import { handleError } from '../utils/handleError';
 
 const handleRequest = async <T>(
   request: Promise<AxiosResponse<T>>
@@ -8,18 +8,20 @@ const handleRequest = async <T>(
   try {
     return await request;
   } catch (e: any) {
-    handleError(e)
+    handleError(e);
     throw e;
   }
 };
 
 export const generalGetRequest = async <T>(
   url: string,
-  payload?:string,
+  payload?: string,
   token?: string
 ): Promise<AxiosResponse<T> | void> => {
   const headers = token ? { Authorization: `Bearer ${token}` } : {};
-  return handleRequest(axiosConfig.get<T>(`${url}${payload? `/${payload}` : ""}`, { headers }));
+  return handleRequest(
+    axiosConfig.get<T>(`${url}${payload ? `/${payload}` : ''}`, { headers })
+  );
 };
 
 export const postRequest = async <T>(
@@ -29,13 +31,14 @@ export const postRequest = async <T>(
   const config = {
     ...axiosConfig,
     headers: {
-      ...(payload instanceof FormData && { "Content-Type": "multipart/form-data" })
-    }
+      ...(payload instanceof FormData && {
+        'Content-Type': 'multipart/form-data',
+      }),
+    },
   };
 
   return handleRequest(axiosConfig.post<T>(endpoint, payload, config));
 };
-
 
 export const putRequest = async <T>(
   endpoint: string,
@@ -55,6 +58,6 @@ export const getRequest = async <T>(
   endpoint: string,
   payload?: string
 ): Promise<AxiosResponse<T> | void> => {
-  const url = `${endpoint}${payload ? `/${payload}` : ""}`;
+  const url = `${endpoint}${payload ? `/${payload}` : ''}`;
   return handleRequest(axiosConfig.get<T>(url));
 };

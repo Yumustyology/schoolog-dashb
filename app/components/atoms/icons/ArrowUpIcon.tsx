@@ -1,0 +1,31 @@
+import React from 'react';
+
+const ArrowUpIcon = ({
+  height = '20',
+  width = '20',
+  color = '#17B26A',
+}: {
+  height?: string;
+  width?: string;
+  color?: string;
+}) => {
+  return (
+    <svg
+      width={height}
+      height={width}
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M10.0001 15.8334V4.16675M10.0001 4.16675L4.16675 10.0001M10.0001 4.16675L15.8334 10.0001"
+        stroke={color}
+        stroke-width="2"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+      />
+    </svg>
+  );
+};
+
+export default ArrowUpIcon;
