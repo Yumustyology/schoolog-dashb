@@ -12,6 +12,8 @@ import school from './school.png';
 import biology1 from './images/biology1.png';
 import teacherImg2 from './images/Frame 1000001843.png';
 import avatar from './images/avatar.png';
+import uploadedAssignment from './images/uploaded-assignment.png';
+import largeUploadedAssignment from './images/largeUploadedAssignment.png';
 
 export {
   school,
@@ -28,4 +30,6 @@ export {
   biology1,
   teacherImg2,
   avatar,
+  uploadedAssignment,
+  largeUploadedAssignment,
 };

@@ -12,6 +12,8 @@ import {
   teacherImg,
 } from '@/app/assets';
 
+
+
 export const subjects = [
   {
     textbookImg: biology,
@@ -96,7 +98,7 @@ export const subjects = [
   },
 ];
 
-export const materials = [{}];
+
 
 export const avatars = [
   {
@@ -112,3 +114,4 @@ export const avatars = [
     avater: avatar,
   },
 ];
+

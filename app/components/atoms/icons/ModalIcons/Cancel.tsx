@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Cancel() {
+function Cancel({ strokeColor = "#4F4F4F" }: { strokeColor?: string }) {
   return (
     <svg
       width="43"
@@ -11,20 +11,22 @@ function Cancel() {
     >
       <path
         d="M16.1992 27.2969L26.8058 16.6903"
-        stroke="#4F4F4F"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        stroke={strokeColor}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M26.8058 27.3097L16.1992 16.7031"
-        stroke="#4F4F4F"
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        stroke={strokeColor}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
 }
 
 export default Cancel;
+
+

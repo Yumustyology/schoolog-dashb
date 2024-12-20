@@ -11,16 +11,16 @@ import React from 'react';
 
 function page() {
   return (
-    <main className="">
+    <main className="w-full">
       <div>
         <BreadcrumbBox />
       </div>
 
-      <div className="bg-white p-6  rounded-xl mt-3">
-        <section className="grid grid-cols-3 gap-6">
+      <div className="bg-white p-6 rounded-xl mt-3">
+        <section className=" grid grid-cols-[repeat(auto-fill,_minmax(300px,_1fr))]  gap-6">
           {subjects.map((subject) => {
             return (
-              <div key={subject.subject} className="flex flex-col gap-4">
+              <div key={subject.subject} className="flex flex-col gap-4 ">
                 <div>
                   <Image src={subject.textbookImg} alt={subject.subject} />
                 </div>
@@ -28,7 +28,7 @@ function page() {
                   <h3
                     className={cn(
                       'text-base text-gray1 font-semibold',
-                      poppins_500
+                      poppins_500.className
                     )}
                   >
                     {subject.subject}
