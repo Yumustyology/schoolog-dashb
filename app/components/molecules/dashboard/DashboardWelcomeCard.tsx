@@ -1,5 +1,7 @@
-import { cn } from '@/lib/utils';
+import { cn, getRandomBinary } from '@/lib/utils';
 import React, { ReactNode } from 'react';
+import Meteors from '../../atoms/meteors';
+import Particles from '../../atoms/particles';
 
 const DashboardWelcomeCard = ({
   children,
@@ -8,6 +10,8 @@ const DashboardWelcomeCard = ({
   children: ReactNode;
   className?: string;
 }) => {
+ 
+
   return (
     <div
       className={cn(
@@ -15,9 +19,13 @@ const DashboardWelcomeCard = ({
         className
       )}
     >
-      <div className="w-[180px] h-[180px] tablet:w-[374px] tablet:h-[360px] rounded-full border-4 border-[#00B59566] absolute top-[10px] -right-[100px] tablet:-right-[180px] tablet:-top-[3px]"></div>
+      {getRandomBinary() ? <Meteors number={20} /> : <Particles />}  
+       {/* <Meteors number={20} /> <Particles /> */}
+      {/* <div className="w-[180px] h-[180px] tablet:w-[200px] tablet:h-[200px] rounded-full border-8 border-[#00B59566] absolute -top-[150px] right-[90px] --tablet:-right-[180px]-tablet:-top-[3px]"></div> */}
+      {/* <div className="w-[180px] h-[180px] tablet:w-[200px] tablet:h-[200px] rounded-full border-8 border-[#00B59566] absolute top-[150px] left-[40px]"></div> */}
 
-      <div className="w-[180px] h-[180px] tablet:w-[374px] rounded-full tablet:h-[360px] border-4 border-[#00B59566] absolute -left-[90px] -top-[40px] tablet:-left-[187px] tablet:-top-[120px]"></div>
+      <div className="w-[180px] h-[180px] tablet:w-[274px] rounded-full tablet:h-[200px]  bg-[#00B59566] absolute -left-[90px] -top-[40px] tablet:-left-[197px] tablet:-top-[100px]"></div>
+      <div className="w-[180px] h-[180px] tablet:w-[274px] rounded-full tablet:h-[200px] bg-[#00B59566] absolute -right-[190px] top-[40px] tablet:top-[100px]"></div>
 
       <div
         className={cn(
