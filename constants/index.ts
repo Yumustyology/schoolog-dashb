@@ -1,4 +1,5 @@
 import {
+  activities1,
   agricultural,
   avatar,
   biology,
@@ -115,3 +116,14 @@ export const avatars = [
   },
 ];
 
+export const activitiesAndEvents = [
+  {
+    image: activities1,
+    title: 'End of the year party celebration',
+    type: 'Event',
+    mode: 'Physical',
+    date: '16/03/202',
+    category: 'For all students',
+    price: 'N5,000'
+  }
+]

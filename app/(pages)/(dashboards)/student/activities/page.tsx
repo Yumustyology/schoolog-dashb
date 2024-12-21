@@ -13,13 +13,14 @@ import Topics from '@/app/components/organisms/dashboard/students/Topics';
 import Assignments from '@/app/components/organisms/dashboard/students/Assignments';
 import { SelectSubject } from '@/app/components/atoms/dashboard/materials/SelectSubject';
 import { DatePicker } from '@/app/components/atoms/dashboard/materials/DatePicker';
+import ActivitiesAndEvents from '@/app/components/organisms/dashboard/students/ActivitiesAndEvents';
 
 function page() {
     const todayClassesTabs = [
         {
             label: 'Activities & event',
-            value: 'topics',
-            content: <Topics />,
+            value: 'activities',
+            content: <ActivitiesAndEvents />,
         },
         {
             label: 'Your activities',
@@ -81,7 +82,7 @@ function page() {
 
                                 <input
                                     type="search"
-                                    placeholder="Search school"
+                                    placeholder="Search event and activity"
                                     className=" outline-none w-full text-gray1 bg-transparent"
                                 />
                             </div>
