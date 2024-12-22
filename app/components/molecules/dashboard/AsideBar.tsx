@@ -118,7 +118,7 @@ export function AppSidebar() {
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <Link
-                  href="/"
+                  href="/student/settings"
                   className="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md"
                 >
                   <Settings />
@@ -150,7 +150,6 @@ export function AppSidebar() {
     </Sidebar>
   );
 }
-
 
 // export function SwitchDemo() {
 //   return (

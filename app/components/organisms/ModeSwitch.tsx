@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const ModeSwitch = ({className}:{className?:string}) => {
+const ModeSwitch = ({ className }: { className?: string }) => {
   const [isPressed, setIsPressed] = useState(false);
   const [syncChecked, setSyncChecked] = useState(false);
 

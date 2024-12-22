@@ -41,7 +41,7 @@ module.exports = withMT({
       animation: {
         rippling: 'rippling var(--duration) ease-out',
         'caret-blink': 'caret-blink 1.25s ease-out infinite',
-         meteor: "meteor 5s linear infinite",
+        meteor: 'meteor 5s linear infinite',
       },
       keyframes: {
         rippling: {
@@ -62,10 +62,10 @@ module.exports = withMT({
           },
         },
         meteor: {
-          "0%": { transform: "rotate(215deg) translateX(0)", opacity: 1 },
-          "70%": { opacity: 1 },
-          "100%": {
-            transform: "rotate(215deg) translateX(-500px)",
+          '0%': { transform: 'rotate(215deg) translateX(0)', opacity: 1 },
+          '70%': { opacity: 1 },
+          '100%': {
+            transform: 'rotate(215deg) translateX(-500px)',
             opacity: 0,
           },
         },

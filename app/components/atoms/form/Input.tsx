@@ -90,7 +90,7 @@ const Input: FC<inputProps> = ({
       >
         <input
           className={cn(
-            'bg-transparent text-wmt-black-500 w-full outline-none',
+            'bg-transparent text-gray1 w-full outline-none',
             inputClassName
           )}
           {...props}
