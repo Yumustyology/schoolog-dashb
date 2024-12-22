@@ -1,5 +1,6 @@
 import {
   activities1,
+  activities2,
   agricultural,
   avatar,
   biology,
@@ -12,6 +13,7 @@ import {
   physics,
   teacherImg,
 } from '@/app/assets';
+import { ActivitiesAndEvent } from '@/type';
 
 
 
@@ -116,7 +118,16 @@ export const avatars = [
   },
 ];
 
-export const activitiesAndEvents = [
+export const activitiesAndEvents: ActivitiesAndEvent = [
+  {
+    image: activities2,
+    title: 'Jet club gathering',
+    type: 'Event',
+    mode: 'Physical',
+    date: '16/03/202',
+    category: 'For all students',
+    price: 'FREE'
+  },
   {
     image: activities1,
     title: 'End of the year party celebration',
@@ -125,5 +136,52 @@ export const activitiesAndEvents = [
     date: '16/03/202',
     category: 'For all students',
     price: 'N5,000'
-  }
+  },
+  {
+    image: activities1,
+    title: 'End of the year party celebration',
+    type: 'Event',
+    mode: 'Physical',
+    date: '16/03/202',
+    category: 'For all students',
+    price: 'N5,000'
+  },
+  {
+    image: activities1,
+    title: 'End of the year party celebration',
+    type: 'Event',
+    mode: 'Physical',
+    date: '16/03/202',
+    category: 'For all students',
+    price: 'N5,000'
+  },
+  
+
+  
 ]
+
+export const registeredActivitiesAndEvents: ActivitiesAndEvent = [
+  {
+    image: activities2,
+    title: 'Jet club gathering',
+    type: 'Event',
+    mode: 'Physical',
+    date: '16/03/202',
+    category: 'For all students',
+    price: 'FREE'
+  },
+  {
+    image: activities1,
+    title: 'End of the year party celebration',
+    type: 'Event',
+    mode: 'Physical',
+    date: '16/03/202',
+    category: 'For all students',
+    price: 'N5,000'
+  },
+
+  
+
+  
+]
+

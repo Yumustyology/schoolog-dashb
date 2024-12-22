@@ -9,11 +9,13 @@ import {
 } from '@material-tailwind/react';
 import { cn } from '@/lib/utils';
 import { poppins_500 } from '@/app/lib/config/font.config';
-import Topics from '@/app/components/organisms/dashboard/students/Topics';
 import Assignments from '@/app/components/organisms/dashboard/students/Assignments';
 import { SelectSubject } from '@/app/components/atoms/dashboard/materials/SelectSubject';
 import { DatePicker } from '@/app/components/atoms/dashboard/materials/DatePicker';
 import ActivitiesAndEvents from '@/app/components/organisms/dashboard/students/ActivitiesAndEvents';
+import RegisteredActivitiesAndEvents from '@/app/components/organisms/dashboard/students/RegisteredActivitiesAndEvents';
+import CalendarActivities from '@/app/components/organisms/dashboard/students/CalendarActivities';
+import { DrawerSide } from '@/app/components/molecules/dashboard/DrawerSide';
 
 function page() {
     const todayClassesTabs = [
@@ -24,13 +26,13 @@ function page() {
         },
         {
             label: 'Your activities',
-            value: 'assignments',
-            content: <Assignments />,
+            value: 'your_activities',
+            content: <RegisteredActivitiesAndEvents />,
         },
         {
             label: 'Calender',
             value: 'calender',
-            content: <Assignments />,
+            content: <CalendarActivities />,
         },
     ];
 
@@ -52,6 +54,8 @@ function page() {
 
     return (
         <div>
+            <DrawerSide/>
+
             <div className="bg-white w-full p-6 mt-6 rounded-lg min-h-[398px] h-auto">
                 <Tabs value={activeActivitiestTab}>
                     <div className="flex justify-between items-center">
@@ -124,6 +128,7 @@ function page() {
                     </TabsBody>
                 </Tabs>
             </div>
+                
         </div>
     )
 }

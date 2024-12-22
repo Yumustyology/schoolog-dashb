@@ -15,6 +15,7 @@ import avatar from './images/avatar.png';
 import uploadedAssignment from './images/uploaded-assignment.png';
 import largeUploadedAssignment from './images/largeUploadedAssignment.png';
 import activities1 from './images/activities1.png'
+import activities2 from './images/activities2.png'
 
 export {
   school,
@@ -33,6 +34,7 @@ export {
   avatar,
   uploadedAssignment,
   largeUploadedAssignment,
-  activities1
+  activities1,
+  activities2
   
 };
