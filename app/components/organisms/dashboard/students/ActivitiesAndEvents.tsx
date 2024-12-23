@@ -1,7 +1,5 @@
 'use client'
 import Dot from '@/app/components/atoms/dashboard/subjects/Dot'
-import Button from '@/app/components/atoms/form/Button'
-import Request from '@/app/components/atoms/icons/ModalIcons/Request'
 import CalendarIcon from '@/app/components/atoms/icons/dashboard/CalendarIcon'
 import CategoryIcon from '@/app/components/atoms/icons/dashboard/CategoryIcon'
 import Modal from '@/app/components/molecules/Modal'
@@ -9,6 +7,7 @@ import FormModal from '@/app/components/molecules/dashboard/FormModal'
 import QuestionBox from '@/app/components/molecules/dashboard/QuestionBox'
 import YesNoQuestion from '@/app/components/molecules/dashboard/YesNoQuestionnBox'
 import { Inter_400, Inter_600, poppins_400, poppins_500 } from '@/app/lib/config/font.config'
+import { Input } from '@/components/ui/input'
 import { activitiesAndEvents } from '@/constants'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
@@ -87,8 +86,20 @@ function ActivitiesAndEvents() {
                 </div>
 
                 <div className='mt-[63px]'>
-                    <QuestionBox/>
-                    <YesNoQuestion/>
+                    <QuestionBox />
+                    <div>
+                        <YesNoQuestion question='Do you have any club you presently partake in?' />
+                        <Input placeholder='Input the club name' className='h-[56px] mt-6 border border-gray2 rounded-md' />
+                    </div>
+                    <div>
+                        <YesNoQuestion question='Have you previously joined a jet club in the past' />
+                        <Input placeholder='Input the club name' className='h-[56px] mt-6 border border-gray2 rounded-md' />
+                    </div>
+
+                    <div>
+                        <YesNoQuestion question='What name do you prefer to be called ' />
+                        <Input placeholder='Input the club name' className='h-[56px] mt-6 border border-gray2 rounded-md' />
+                    </div>
                 </div>
 
             </FormModal>)}

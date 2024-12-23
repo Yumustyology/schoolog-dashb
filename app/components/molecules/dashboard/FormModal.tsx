@@ -32,7 +32,7 @@ const FormModal: React.FC<ModalProps> = ({ isOpen, onClose, children, title, bod
                 </div>
                 <div className="border-b border-gray4"></div>
 
-                <main className='px-8 py-6'>
+                <main className='px-8 py-6 h-[400px] overflow-scroll'>
                     {children}
 
                 </main>
