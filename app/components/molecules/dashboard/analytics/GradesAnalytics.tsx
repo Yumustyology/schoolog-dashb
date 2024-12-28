@@ -7,16 +7,16 @@ import {
 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
 import React from 'react';
-import {CardBody} from "@material-tailwind/react";
+import { CardBody } from '@material-tailwind/react';
 import dynamic from 'next/dynamic';
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
- 
+const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
+
 const chartConfig = {
-  type: "line",
+  type: 'line',
   height: 240,
   series: [
     {
-      name: "Grades",
+      name: 'Grades',
       data: [50, 40, 300, 320, 500, 350, 200, 230, 500],
     },
   ],
@@ -27,15 +27,15 @@ const chartConfig = {
       },
     },
     title: {
-      show: "",
+      show: '',
     },
     dataLabels: {
       enabled: false,
     },
-    colors: ["#21B55A"],
+    colors: ['#21B55A'],
     stroke: {
-      lineCap: "round",
-      curve: "smooth"
+      lineCap: 'round',
+      curve: 'smooth',
     },
     // colors: ["#FCC200"],
     // stroke: {
@@ -55,29 +55,29 @@ const chartConfig = {
       },
       labels: {
         style: {
-          colors: "#4F4F4F",
-          fontSize: "9px",
+          colors: '#4F4F4F',
+          fontSize: '9px',
           fontFamily: Inter_400.className,
           fontWeight: 400,
         },
       },
       categories: [
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec",
+        'Apr',
+        'May',
+        'Jun',
+        'Jul',
+        'Aug',
+        'Sep',
+        'Oct',
+        'Nov',
+        'Dec',
       ],
     },
     yaxis: {
       labels: {
         style: {
-          colors: "#4F4F4F",
-          fontSize: "9px",
+          colors: '#4F4F4F',
+          fontSize: '9px',
           fontFamily: Inter_400.className,
           fontWeight: 400,
         },
@@ -85,7 +85,7 @@ const chartConfig = {
     },
     grid: {
       show: true,
-      borderColor: "#E5E5EA",
+      borderColor: '#E5E5EA',
       strokeDashArray: 5,
       xaxis: {
         lines: {
@@ -101,7 +101,7 @@ const chartConfig = {
       opacity: 0.8,
     },
     tooltip: {
-      theme: "light",
+      theme: 'light',
     },
   },
 };
@@ -130,7 +130,7 @@ const GradesAnalytics = () => {
         </div>
       </div>
       <CardBody className="px-0 pb-0 w-full">
-        <Chart {...chartConfig as any}  width={"100%"} />
+        <Chart {...(chartConfig as any)} width={'100%'} />
       </CardBody>
     </div>
   );

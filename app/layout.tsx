@@ -19,7 +19,6 @@ export const metadata: Metadata = {
   description: 'School management got easier',
   icons: {
     icon: '/schoolog-logo.png',
-
   },
 };
 
