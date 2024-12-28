@@ -8,6 +8,7 @@ import QuestionBox from '@/app/components/molecules/dashboard/QuestionBox'
 import YesNoQuestion from '@/app/components/molecules/dashboard/YesNoQuestionnBox'
 import { Inter_400, Inter_600, poppins_400, poppins_500 } from '@/app/lib/config/font.config'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import { activitiesAndEvents } from '@/constants'
 import { cn } from '@/lib/utils'
 import Image from 'next/image'
@@ -74,7 +75,7 @@ function ActivitiesAndEvents() {
                     );
                 })}
             </section>
-            {isModalOpen && (<FormModal isOpen={true} onClose={onClose} title='Submit assignment' body='Are you sure you want to submit this answer? You will be graded based on the answer provided'>
+            {isModalOpen && (<FormModal isOpen={true} onClose={onClose} title='Create project' body='Are you sure you want to submit this answer? You will be graded based on the answer provided'>
                 <div>
 
                     <h2 className={cn('text-2xl text-gray1 ', Inter_600.className)}>
@@ -96,9 +97,9 @@ function ActivitiesAndEvents() {
                         <Input placeholder='Input the club name' className='h-[56px] mt-6 border border-gray2 rounded-md' />
                     </div>
 
-                    <div>
-                        <YesNoQuestion question='What name do you prefer to be called ' />
-                        <Input placeholder='Input the club name' className='h-[56px] mt-6 border border-gray2 rounded-md' />
+                    <div className='mt-6'>
+                        <Label className={cn('text-[16px] text-gray1 mt-6', Inter_400.className)}>What name do you prefer to be called?</Label>
+                        <Input placeholder='Input the text here...' className='h-[56px] mt-3 border border-gray2 rounded-md' />
                     </div>
                 </div>
 

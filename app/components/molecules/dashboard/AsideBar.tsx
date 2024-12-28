@@ -35,6 +35,7 @@ import { Label } from '@/components/ui/label';
 import { Switch } from '@/components/ui/switch';
 import Link from 'next/link';
 import ModeSwitch from '../../organisms/ModeSwitch';
+import Result from '../../atoms/icons/dashboard/SideBar/Result';
 
 const items = [
   {
@@ -90,6 +91,12 @@ const items = [
     url: '/student/activities',
     icon: <Activities />,
     activeIcon: <Activities color="#FFFFFF" size="17" />,
+  },
+  {
+    title: 'Results',
+    url: '/student/results',
+    icon: <Result/>,
+    activeIcon: <Result color="#FFFFFF" size="17" />,
   },
 ];
 export function AppSidebar() {

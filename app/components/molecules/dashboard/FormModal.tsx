@@ -12,10 +12,10 @@ interface ModalProps {
     onClose?: () => void;
     children?: React.ReactNode;
     title: string;
-    body: string;
+    body?: string;
 }
 
-const FormModal: React.FC<ModalProps> = ({ isOpen, onClose, children, title, body }) => {
+const FormModal: React.FC<ModalProps> = ({ isOpen, onClose, children, title,body  }) => {
     if (!isOpen) return null; // Don't render modal if it's not open
 
     return (
@@ -32,13 +32,13 @@ const FormModal: React.FC<ModalProps> = ({ isOpen, onClose, children, title, bod
                 </div>
                 <div className="border-b border-gray4"></div>
 
-                <main className='px-8 py-6 h-[400px] overflow-scroll'>
+                <main className='px-8 py-6 max-h-[400px] overflow-scroll'>
                     {children}
 
                 </main>
-                <div className='w-full mt-8 mb-6 text-center flex justify-center gap-4 '>
-                    <Button round className={cn('bg-transparent border text-primary text-xl border-primary h-[44px] w-[185px]', Inter_500.className)}> Back </Button>
-                    <Button round className={cn('text-xl bg-primary text-white h-[44px] w-[185px]', Inter_500.className)}> Proceed </Button>
+                <div className='w-full mt-8 mb-6 text-center flex justify-center gap-4 px-8  '>
+                    <Button round wide className={cn('bg-transparent border text-primary w-full text-xl border-primary h-[44px]', Inter_500.className)}> Back </Button>
+                    <Button round wide className={cn('text-xl bg-primary text-white h-[44px] ', Inter_500.className)}> Proceed </Button>
                 </div>
             </div>
         </div>

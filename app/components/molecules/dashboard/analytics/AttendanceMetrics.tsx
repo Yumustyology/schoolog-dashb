@@ -1,3 +1,4 @@
+'use client'
 import ArrowUpIcon from '@/app/components/atoms/icons/ArrowUpIcon';
 import {
   Inter_400,

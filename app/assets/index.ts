@@ -16,6 +16,10 @@ import uploadedAssignment from './images/uploaded-assignment.png';
 import largeUploadedAssignment from './images/largeUploadedAssignment.png';
 import activities1 from './images/activities1.png'
 import activities2 from './images/activities2.png'
+import mathTextbook from './images/mathTextbook.png'
+import biologyTextbook from './images/BiologyTextbook.png'
+// import mathTextook from './images/math/mathTextook.png'
+// import BiologyTextbook from '.images/BiologyTextbook.png'
 
 export {
   school,
@@ -35,6 +39,10 @@ export {
   uploadedAssignment,
   largeUploadedAssignment,
   activities1,
-  activities2
+  activities2,
+  mathTextbook,
+  biologyTextbook,
+  // mathTextook,
+  // BiologyTextbook
   
 };
