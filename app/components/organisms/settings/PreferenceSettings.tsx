@@ -6,7 +6,7 @@ import Button from '../../atoms/form/Button';
 
 const PreferenceSettings = () => {
   return (
-    <div className='min-h-[250px]'>
+    <div className="min-h-[250px]">
       <form>
         <div className="flex items-start justify-between pb-4 border-b border-b-[#E5E5EA] mb-8">
           <div>
@@ -51,7 +51,6 @@ const PreferenceSettings = () => {
               // value={loginInfo.password}
               // handleChange={updateLoginInfo}
             />
-            
           </div>
         </div>
       </form>

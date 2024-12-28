@@ -19,7 +19,7 @@ export function CountriesSelect({
 }) {
   const { countries } = useCountries();
   const [country, setCountry] = useState<string>('');
-  
+
   return (
     <div className="w-full">
       <label

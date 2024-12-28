@@ -47,7 +47,7 @@ const Switch: React.FC<SwitchProps> = ({
 
   return (
     <div
-      className='relative inline-block'
+      className="relative inline-block"
       style={{
         width: `${width}px`,
         height: `${height}px`,
@@ -58,7 +58,7 @@ const Switch: React.FC<SwitchProps> = ({
         onChange={handleSwitchChange}
         disabled={disabled}
         id={id}
-        type='checkbox'
+        type="checkbox"
         className={cn(
           'peer appearance-none absolute w-full h-full rounded-full cursor-pointer transition-all duration-300 disabled:cursor-not-allowed disabled:opacity-50',
           inactiveColor,

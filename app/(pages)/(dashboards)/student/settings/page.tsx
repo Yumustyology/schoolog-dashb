@@ -27,7 +27,7 @@ const page = () => {
     {
       label: 'Notification',
       value: 'notification',
-      content: <NotificationSettings/>,
+      content: <NotificationSettings />,
     },
     {
       label: 'Preference',
