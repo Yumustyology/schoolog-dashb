@@ -8,6 +8,9 @@ import Tabs, { Tab, TabPanel } from '@material-tailwind/react/components/Tabs';
 import { cn } from '@/lib/utils';
 import useActiveTab from '@/app/lib/hooks/useActiveTab';
 import EditProfile from '@/app/components/organisms/settings/EditProfile';
+import SecuritySettings from '@/app/components/organisms/settings/SecuritySettings';
+import NotificationSettings from '@/app/components/organisms/settings/NotificationSettings';
+import PreferenceSettings from '@/app/components/organisms/settings/PreferenceSettings';
 
 const page = () => {
   const data = [
@@ -19,17 +22,17 @@ const page = () => {
     {
       label: 'Security settings',
       value: 'security-settings',
-      content: <>tt</>,
+      content: <SecuritySettings />,
     },
     {
       label: 'Notification',
       value: 'notification',
-      content: <>ss</>,
+      content: <NotificationSettings/>,
     },
     {
       label: 'Preference',
       value: 'preference',
-      content: <>ss</>,
+      content: <PreferenceSettings />,
     },
   ];
 

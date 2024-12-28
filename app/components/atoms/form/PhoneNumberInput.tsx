@@ -43,19 +43,25 @@ export function PhoneNumberInput({
         inputClass={cn('w-full bg-transparent w-full outline-none', className)}
         // buttonClass="!w-[50px]"
         placeholder="234 000 000 000"
-        dropdownStyle={{}}
+        dropdownStyle={{
+          // boxShadow: 'none',
+        }}
         inputStyle={{
           height: '100%',
           width: '90%',
           color: '#333333',
           border: 'none',
-          padding: '0 2em 0 4em',
+          padding: '0 2em 0 5em',
         }}
         buttonStyle={{
           border: 'none',
           padding: '0 4px 0 4px',
           marginLeft: '2px',
           background: 'transparent',
+          borderRight: "1px solid #DDE2E5",
+          height: '30px',
+          marginTop: '10px',
+          paddingRight:'10px'
         }}
         buttonClass=""
       />
