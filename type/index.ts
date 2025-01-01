@@ -24,3 +24,10 @@ export type Borrowedbooks = {
   availableCopies: number;
   coverImage: any;
 }[];
+
+export type Announcements = {
+  headline: string;
+  content: string;
+  date: string;
+}[];
+

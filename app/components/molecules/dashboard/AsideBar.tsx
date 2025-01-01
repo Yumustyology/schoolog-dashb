@@ -82,7 +82,7 @@ const items = [
   },
   {
     title: 'Announcement',
-    url: '/student/announcement',
+    url: '/student/announcements',
     icon: <Annoucement />,
     activeIcon: <Annoucement color="#FFFFFF" size="17" />,
   },
@@ -95,6 +95,12 @@ const items = [
   {
     title: 'Results',
     url: '/student/results',
+    icon: <Result/>,
+    activeIcon: <Result color="#FFFFFF" size="17" />,
+  },
+  {
+    title: 'Payments',
+    url: '/student/payments',
     icon: <Result/>,
     activeIcon: <Result color="#FFFFFF" size="17" />,
   },

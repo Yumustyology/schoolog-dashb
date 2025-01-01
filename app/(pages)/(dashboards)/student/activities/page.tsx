@@ -6,9 +6,10 @@ import {
     Tabs,
     TabsBody,
     TabsHeader,
+    Typography,
 } from '@material-tailwind/react';
 import { cn } from '@/lib/utils';
-import { poppins_500 } from '@/app/lib/config/font.config';
+import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import Assignments from '@/app/components/organisms/dashboard/students/Assignments';
 import { SelectSubject } from '@/app/components/atoms/dashboard/materials/SelectSubject';
 import { DatePicker } from '@/app/components/atoms/dashboard/materials/DatePicker';
@@ -16,6 +17,12 @@ import ActivitiesAndEvents from '@/app/components/organisms/dashboard/students/A
 import RegisteredActivitiesAndEvents from '@/app/components/organisms/dashboard/students/RegisteredActivitiesAndEvents';
 import CalendarActivities from '@/app/components/organisms/dashboard/students/CalendarActivities';
 import { DrawerSide } from '@/app/components/molecules/dashboard/DrawerSide';
+import Image from 'next/image';
+import { activities1 } from '@/app/assets';
+import Dot from '@/app/components/atoms/dashboard/subjects/Dot';
+import CalendarIcon from '@/app/components/atoms/icons/dashboard/CalendarIcon';
+import CategoryIcon from '@/app/components/atoms/icons/dashboard/CategoryIcon';
+import Button from '@/app/components/atoms/form/Button';
 
 function page() {
     const todayClassesTabs = [
@@ -54,7 +61,40 @@ function page() {
 
     return (
         <div>
-            <DrawerSide/>
+            <DrawerSide title='Event Details'>
+                <div className="p-6 overflow-y-auto max-h-[calc(100vh-140px)]" >
+                    <div className="relative h-[233px]">
+                        <Image src={activities1} alt='activities' className="rounded-md object-cover h-[233px]" />
+                        <p className={cn('border border-[#FFFFFFA6] absolute top-3 right-3  bg-[#00000059] text-white rounded-[32px] py-1 px-2 ', poppins_500.className)}>N5,000</p>
+                    </div>
+                    <div className="mt-6">
+                        <Typography>
+                            <h2 className={cn('text-xl text-gray1 mb-2', poppins_500.className)}>Jet club student organization</h2>
+                        </Typography>
+                        <Typography>
+                            <span className={cn('text-sm flex items-center text-gray6 gap-1.5', poppins_400.className)}>
+                                Event <Dot /> Physical <CalendarIcon /> 16/03/2024 <CategoryIcon /> For all students
+                            </span>
+                        </Typography>
+                        <Typography className='my-4'>
+                            <span className={cn('text-sm flex items-center text-gray6 gap-1.5', poppins_400.className)}>
+                                Registration ends on <span className="text-gray1"> 16/03/2024 </span>
+                            </span>
+                        </Typography>
+                        <p className={cn('text-sm flex items-center text-gray gap-1.5 mb-3', poppins_400.className)}>About us</p>
+                        <p className={cn('text-sm flex items-center text-[#071E3B] gap-1.5', poppins_400.className)}>
+                            Agriculture is the cornerstone of food security, serving as the primary means of sustenance
+                            and economic stability for nations worldwide. It encompasses the cultivation of crops and livestock,
+                            which are essential for providing the food supply that suppor.
+
+                        </p>
+
+                    </div>
+                </div>
+                <div className="px-6 mt-6">
+                    <Button round wide className="absolute bottom-3  left-0 right-0 w-full">Register</Button>
+                </div>
+            </DrawerSide>
 
             <div className="bg-white w-full p-6 mt-6 rounded-lg min-h-[398px] h-auto">
                 <Tabs value={activeActivitiestTab}>
@@ -128,7 +168,7 @@ function page() {
                     </TabsBody>
                 </Tabs>
             </div>
-                
+
         </div>
     )
 }
