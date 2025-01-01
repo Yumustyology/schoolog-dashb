@@ -49,6 +49,13 @@ export const poppins_600 = Poppins({
   adjustFontFallback: false,
 });
 
+export const poppins_700 = Poppins({
+  subsets: ['latin'],
+  weight: '700',
+  display: 'swap',
+  adjustFontFallback: false,
+});
+
 export const Inter_400 = Inter({
   subsets: ['latin'],
   weight: '400',

@@ -8,26 +8,49 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from '@/components/ui/breadcrumb';
+import { cn } from '@/lib/utils';
+import { poppins_400, poppins_700 } from '@/app/lib/config/font.config';
 
-export default function BreadcrumbBox() {
+// Define the types for the breadcrumb items
+interface BreadcrumbItemType {
+  label: string;
+  href?: string; // Optional href for active items
+  isActive: boolean;
+}
+
+interface BreadcrumbBoxProps {
+  crumbs: BreadcrumbItemType[]; // Array of breadcrumb items
+}
+
+export default function BreadcrumbBox({ crumbs }: BreadcrumbBoxProps) {
   return (
-    <Breadcrumb>
+    <Breadcrumb className='mb-8'>
       <BreadcrumbList>
-        <BreadcrumbItem>
-          <BreadcrumbLink>
-            <Link href="/">Home</Link>
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbLink>
-            <Link href="/components">Components</Link>
-          </BreadcrumbLink>
-        </BreadcrumbItem>
-        <BreadcrumbSeparator />
-        <BreadcrumbItem>
-          <BreadcrumbPage>Breadcrumb</BreadcrumbPage>
-        </BreadcrumbItem>
+        {crumbs.map((crumb, index) => {
+          const isLast = index === crumbs.length - 1; 
+          return (
+            <BreadcrumbItem className={cn('text-base font-normal',poppins_400.className)} key={index}>
+              {isLast ? (
+                <BreadcrumbPage
+                className={cn(crumb.isActive ? 'text-primary' : `text-gray-600 font-bold`,
+                  poppins_700.className
+                )}
+                >
+                  {crumb.label}
+                </BreadcrumbPage>
+              ) : (
+                <>
+                  <BreadcrumbLink
+                    className={crumb.isActive ? 'text-primary' : 'text-gray1'} 
+                  >
+                    <Link href={crumb.href || '#'}>{crumb.label}</Link>
+                  </BreadcrumbLink>
+                  <BreadcrumbSeparator />
+                </>
+              )}
+            </BreadcrumbItem>
+          );
+        })}
       </BreadcrumbList>
     </Breadcrumb>
   );

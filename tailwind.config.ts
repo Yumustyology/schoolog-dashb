@@ -12,13 +12,18 @@ module.exports = withMT({
     extend: {
       colors: {
         primary: '#21B55A',
+        primary1: 'rgba(33, 181, 90, 0.12)',
+        black1: '#101828',
+        black2: '#071E3B',
         gray1: '#333333',
         gray: '#828282',
         gray2: '#D9DCE0',
         gray3: '#828282',
+        'gray-line': '#EAECF0',
         gray4: '#F2F2F2',
         gray5: '#E0E0E0',
         gray6: '#4F4F4F',
+        gray7: '#F4F4F4',
         white: '#FFFFFF',
         background: 'var(--background)',
         foreground: 'var(--foreground)',
