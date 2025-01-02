@@ -62,9 +62,9 @@ export function ImageViewModal() {
             </p>
           </div>
 
-          <div className="bg-gray3 rounded-full ">
+          <Button onClick={handleOpen} className="!py-0 !px-0 bg-gray3 rounded-full h-[40px] w-[40px]">
             <Cancel strokeColor="#FFFFFF" />
-          </div>
+          </Button>
         </DialogHeader>
         <DialogBody className="">
           <CarouselImage setActiveFooterImg={(arg)=>{
@@ -92,6 +92,7 @@ export function ImageViewModal() {
 }
 
 import { Carousel } from '@material-tailwind/react';
+import Button from '../atoms/form/Button';
 
 export const CarouselImage = forwardRef<carouselImageRefType, { setActiveFooterImg: Dispatch<SetStateAction<number>> }>(
   (props:{setActiveFooterImg:any}, ref) => {

@@ -29,7 +29,7 @@ function AnswerBox({
 }: AnswerBoxProps) {
   return (
     <div className="grid w-full gap-4">
-      <div className="flex justify-between items-center gap-10">
+      <div className={cn("flex justify-between items-center gap-10",questionType=="images" && "items-start")}>
         {questionType == 'text' ? (
           <Label
             htmlFor="answer"
