@@ -1,13 +1,9 @@
-import React from 'react';
+import React, { Dispatch, forwardRef, SetStateAction, useEffect, useImperativeHandle, useRef } from 'react';
 import {
-  Button,
   Dialog,
   DialogHeader,
   DialogBody,
   DialogFooter,
-  Avatar,
-  IconButton,
-  Typography,
   Card,
 } from '@material-tailwind/react';
 import Image from 'next/image';
@@ -16,12 +12,30 @@ import Cancel from '../atoms/icons/ModalIcons/Cancel';
 import { cn } from '@/lib/utils';
 import { poppins_500 } from '@/app/lib/config/font.config';
 
+type carouselImageRefType = {
+  setActiveIndexTab: (arg: number) => void;
+};
+
 export function ImageViewModal() {
   const [open, setOpen] = React.useState(false);
-  const [isFavorite, setIsFavorite] = React.useState(false);
+  const [activeIndex, setActiveIndex] = React.useState(0);
+
+  const carouselImageRef = useRef<carouselImageRefType | null>(null);
+
+  const footerImages = [
+    uploadedAssignment,
+    uploadedAssignment,
+    uploadedAssignment,
+  ];
 
   const handleOpen = () => setOpen((cur) => !cur);
-  const handleIsFavorite = () => setIsFavorite((cur) => !cur);
+
+  const handleSetActiveIndex = (arg: number) => {
+    if (carouselImageRef?.current) {
+      setActiveIndex(arg);
+      carouselImageRef?.current?.setActiveIndexTab(arg);
+    }
+  };
 
   return (
     <>
@@ -44,7 +58,6 @@ export function ImageViewModal() {
         <DialogHeader className="justify-between border-b border-[#4F4F4F]">
           <div>
             <p className={cn('text-white text-[18px]', poppins_500.className)}>
-              {' '}
               Assignment questions
             </p>
           </div>
@@ -54,27 +67,24 @@ export function ImageViewModal() {
           </div>
         </DialogHeader>
         <DialogBody className="">
-          <CarouselImage />
+          <CarouselImage setActiveFooterImg={(arg)=>{
+            setActiveIndex(arg)
+          }} ref={carouselImageRef} />
         </DialogBody>
         <DialogFooter className="border-t border-[#4F4F4F] flex justify-start gap-3">
-          <Image
-            src={uploadedAssignment}
-            alt="Assignment"
-            height={60}
-            width={100}
-          />
-          <Image
-            src={uploadedAssignment}
-            alt="Assignment"
-            height={60}
-            width={100}
-          />
-          <Image
-            src={uploadedAssignment}
-            alt="Assignment"
-            height={60}
-            width={100}
-          />
+          {footerImages.map((image, index) => (
+            <Image
+              key={index}
+              src={image}
+              alt={`Thumbnail ${index + 1}`}
+              height={60}
+              width={100}
+              className={`cursor-pointer ${
+                activeIndex === index ? 'border-2 border-white' : ''
+              }`}
+              onClick={() => handleSetActiveIndex(index)}
+            />
+          ))}
         </DialogFooter>
       </Dialog>
     </>
@@ -83,27 +93,56 @@ export function ImageViewModal() {
 
 import { Carousel } from '@material-tailwind/react';
 
-export function CarouselImage() {
-  return (
-    <Carousel
-      className="rounded-xl"
-      navigation={({ setActiveIndex, activeIndex, length }) => (
-        <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
-          {new Array(length).fill('').map((_, i) => (
-            <span
-              key={i}
-              className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
-                activeIndex === i ? 'w-8 bg-white' : 'w-4 bg-white/50'
-              }`}
-              onClick={() => setActiveIndex(i)}
-            />
-          ))}
-        </div>
-      )}
-    >
-      <Image src={largeUploadedAssignment} alt="" className="object-cover" />
-      <Image src={largeUploadedAssignment} alt="" className="object-cover" />
-      <Image src={largeUploadedAssignment} alt="" className="object-cover" />
-    </Carousel>
-  );
-}
+export const CarouselImage = forwardRef<carouselImageRefType, { setActiveFooterImg: Dispatch<SetStateAction<number>> }>(
+  (props:{setActiveFooterImg:any}, ref) => {
+  
+    let setActiveIndexTab: (arg: number) => void;
+    let activeTab: number = 0;
+    useImperativeHandle(ref, () => ({
+      setActiveIndexTab,
+    }));
+
+    useEffect(()=>props.setActiveFooterImg(activeTab),[activeTab])
+    return (
+      <Carousel
+        className="rounded-xl"
+        navigation={({ setActiveIndex, activeIndex, length }) => {
+          setActiveIndexTab = setActiveIndex;
+          props?.setActiveFooterImg(activeIndex)
+          return (
+            <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
+              {new Array(length).fill('').map((_, i) => (
+                <span
+                  key={i}
+                  className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
+                    activeIndex === i ? 'w-8 bg-white' : 'w-4 bg-white/50'
+                  }`}
+                  onClick={() => {
+                    setActiveIndex(i)
+                  }}
+                />
+              ))}
+            </div>
+          );
+        }}
+      >
+        <Image
+          onClick={() => setActiveIndexTab(2)}
+          src={largeUploadedAssignment}
+          alt="Assignment"
+          className="object-cover"
+        />
+        <Image
+          src={largeUploadedAssignment}
+          alt="Assignment"
+          className="object-cover"
+        />
+        <Image
+          src={largeUploadedAssignment}
+          alt="Assignment"
+          className="object-cover"
+        />
+      </Carousel>
+    );
+  }
+);

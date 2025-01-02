@@ -5,9 +5,11 @@ import Button from '@/app/components/atoms/form/Button';
 import Review from '@/app/components/atoms/icons/ModalIcons/Review';
 import DraftIcon from '@/app/components/atoms/icons/dashboard/DraftIcon';
 import SubmitIcon from '@/app/components/atoms/icons/dashboard/SubmitIcon';
+import { ImageViewModal } from '@/app/components/molecules/ImageViewModal';
 import Modal from '@/app/components/molecules/Modal';
 import YNmodal from '@/app/components/molecules/YNmodal';
 import AnswerBox from '@/app/components/molecules/dashboard/student/subjects/AnswerBox';
+import { UploadAnswer } from '@/app/components/molecules/dashboard/student/subjects/UploadAnswer';
 import {
   Inter_400,
   Inter_600,
@@ -18,12 +20,31 @@ import { cn } from '@/lib/utils';
 import React from 'react';
 
 function page() {
-  const [isModalOpen, setIsModalOpen] = React.useState(true);
+  const [assignmentSubmittedModalOpen, setAssignmentSubmittedModalOpen] =
+    React.useState(false);
+  const [confirmSubmitAssignmentModal, setConfirmSubmitAssignmentModal] =
+    React.useState(false);
 
-  const onClose = () => setIsModalOpen(false);
   return (
     <main className="">
-      <BreadcrumbBox />
+      <BreadcrumbBox
+        crumbs={[
+          {
+            isActive: false,
+            label: 'Subjects',
+            href: '/students/subjects',
+          },
+          {
+            isActive: false,
+            label: 'Biology',
+            href: '/students/subjects/biology',
+          },
+          {
+            isActive: true,
+            label: 'Assignment',
+          },
+        ]}
+      />
 
       <div className="bg-white w-full p-6 mt-6 rounded-lg min-h-[398px] h-auto">
         <div className="border-b border-[#E5E5EA] mb-8">
@@ -52,15 +73,24 @@ function page() {
           <AnswerBox
             question="How can it help reduce the risk of cardiovascular diseases?"
             mark={5}
+            answerType="select"
           />
           <AnswerBox
             question="What are the potential health benefits of adopting a plant-based diet?"
             mark={20}
           />
 
+          <AnswerBox
+            questionType="images"
+            question={['']}
+            mark={20}
+            answerType="upload"
+          />
+
           <div className="flex gap-4">
             <Button
               round
+              onClick={() => setConfirmSubmitAssignmentModal(true)}
               className={cn(
                 'h-[44px] text-sm text-white px-8',
                 Inter_600.className
@@ -83,40 +113,45 @@ function page() {
           </div>
         </div>
       </div>
-      {isModalOpen && (
-        <YNmodal
-          isOpen={true}
-          onClose={onClose}
-          title="Submit assignment"
-          body="Are you sure you want to submit this answer? You will be graded based on the answer provided"
-        ></YNmodal>
-      )}
 
-      {isModalOpen && (
-        <Modal isOpen={true} onClose={onClose} title="Submit assignment">
-          <div className="flex flex-col items-center justify-center">
-            <div className="mb-8">
-              <Review />
-            </div>
-            <h3 className={cn('text-lg', Inter_600.className)}>
-              {' '}
-              Assignment submitted{' '}
-            </h3>
-            <p
-              className={cn(
-                'text-center text-gray3 mt-4 px-3',
-                Inter_400.className
-              )}
-            >
-              You have successfully submitted your assignment
-            </p>
+      <YNmodal
+        isOpen={confirmSubmitAssignmentModal}
+        onClose={() => setConfirmSubmitAssignmentModal(false)}
+        title="Submit assignment"
+        submit={() => {
+          setConfirmSubmitAssignmentModal(false);
+          setAssignmentSubmittedModalOpen(true);
+        }}
+        body="Are you sure you want to submit this answer? You will be graded based on the answer provided"
+      ></YNmodal>
+
+      <Modal
+        isOpen={assignmentSubmittedModalOpen}
+        onClose={() => setAssignmentSubmittedModalOpen(false)}
+        title="Submit assignment"
+      >
+        <div className="flex flex-col items-center justify-center">
+          <div className="mb-8">
+            <Review />
           </div>
+          <h3 className={cn('text-lg', Inter_600.className)}>
+            {' '}
+            Assignment submitted{' '}
+          </h3>
+          <p
+            className={cn(
+              'text-center text-gray3 mt-4 px-3',
+              Inter_400.className
+            )}
+          >
+            You have successfully submitted your assignment
+          </p>
+        </div>
 
-          <Button wide round className="h-12 mt-7">
-            Okay
-          </Button>
-        </Modal>
-      )}
+        <Button wide round className="h-12 mt-7">
+          Okay
+        </Button>
+      </Modal>
     </main>
   );
 }

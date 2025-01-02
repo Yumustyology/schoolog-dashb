@@ -11,6 +11,7 @@ interface ModalProps {
   onClose?: () => void;
   children?: React.ReactNode;
   title: string;
+  submit: () => void;
   body: string;
 }
 
@@ -19,9 +20,10 @@ const YNmodal: React.FC<ModalProps> = ({
   onClose,
   children,
   title,
+  submit,
   body,
 }) => {
-  if (!isOpen) return null; // Don't render modal if it's not open
+  if (!isOpen) return null;
 
   return (
     <div className="fixed inset-0 bg-[rgb(0,0,0,0.25)] flex items-center  justify-center z-50 w-full ">
@@ -39,9 +41,7 @@ const YNmodal: React.FC<ModalProps> = ({
           <div className="mb-4">
             <Checked />
           </div>
-          <h4
-            className={cn('text-[16px] text-black mb-3 ', Inter_500.className)}
-          >
+          <h4 className={cn('text-base text-black mb-3 ', Inter_500.className)}>
             {' '}
             {title}
           </h4>
@@ -51,19 +51,20 @@ const YNmodal: React.FC<ModalProps> = ({
         </main>
         <div className="w-full mt-8 mb-6 text-center flex justify-center gap-4 ">
           <Button
+            onClick={onClose}
             round
             className={cn(
-              'bg-transparent border text-primary text-xl border-primary h-[44px] w-[185px]',
+              'bg-transparent border text-primary text-base border-primary h-[44px] w-[185px]',
               Inter_500.className
             )}
           >
-            {' '}
-            Cancel{' '}
+            Cancel
           </Button>
           <Button
+            onClick={submit}
             round
             className={cn(
-              'text-xl bg-primary text-white h-[44px] w-[185px]',
+              'text-base bg-primary text-white h-[44px] w-[185px]',
               Inter_500.className
             )}
           >

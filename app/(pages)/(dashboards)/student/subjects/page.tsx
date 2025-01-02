@@ -12,20 +12,17 @@ import React from 'react';
 
 const breadcrumbs = [
   { label: 'Home', href: '/student', isActive: false },
-  { label: 'Subjects', isActive: true }
+  { label: 'Subjects', isActive: true },
 ];
 function page() {
   return (
     <main className="w-full">
-  
-        <BreadcrumbBox crumbs={breadcrumbs} />
+      <BreadcrumbBox crumbs={breadcrumbs} />
 
       <div className="bg-white p-6 rounded-xl mt-3">
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xlgDesktop:grid-cols-4 gap-6">
-          {subjects.map((subject:any) => {
-            return (
-              <SubjectCard subject={subject} />
-            );
+          {subjects.map((subject: any) => {
+            return <SubjectCard subject={subject} />;
           })}
         </section>
 

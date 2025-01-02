@@ -49,17 +49,19 @@ function page() {
   return (
     <main className="">
       <div>
-        <BreadcrumbBox crumbs={[
-          {
-            label:"Subjects",
-            isActive: false,
-            href: "/students/subjects"
-          },
-             {
-            label:"Biology",
-            isActive: true,
-          },
-        ]}  />
+        <BreadcrumbBox
+          crumbs={[
+            {
+              label: 'Subjects',
+              isActive: false,
+              href: '/students/subjects',
+            },
+            {
+              label: 'Biology',
+              isActive: true,
+            },
+          ]}
+        />
 
         <div className="flex space-x-3 mt-4">
           <div className="w-[446px]">

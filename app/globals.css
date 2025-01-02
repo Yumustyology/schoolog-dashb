@@ -119,6 +119,11 @@ html {
 
 /* For webkit-based browsers (Chrome, Safari) */
 
+.placeholder-poppins::placeholder {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+}
+
 .sidebar-scroll::-webkit-scrollbar {
   width: 5px;
 }

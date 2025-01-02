@@ -24,24 +24,28 @@ interface BreadcrumbBoxProps {
 
 export default function BreadcrumbBox({ crumbs }: BreadcrumbBoxProps) {
   return (
-    <Breadcrumb className='mb-8'>
+    <Breadcrumb className="mb-8">
       <BreadcrumbList>
         {crumbs.map((crumb, index) => {
-          const isLast = index === crumbs.length - 1; 
+          const isLast = index === crumbs.length - 1;
           return (
-            <BreadcrumbItem className={cn('text-base font-normal',poppins_400.className)} key={index}>
+            <BreadcrumbItem
+              className={cn('text-base font-normal', poppins_400.className)}
+              key={index}
+            >
               {isLast ? (
                 <BreadcrumbPage
-                className={cn(crumb.isActive ? 'text-primary' : `text-gray-600 font-bold`,
-                  poppins_700.className
-                )}
+                  className={cn(
+                    crumb.isActive ? 'text-primary' : `text-gray-600 font-bold`,
+                    poppins_700.className
+                  )}
                 >
                   {crumb.label}
                 </BreadcrumbPage>
               ) : (
                 <>
                   <BreadcrumbLink
-                    className={crumb.isActive ? 'text-primary' : 'text-gray1'} 
+                    className={crumb.isActive ? 'text-primary' : 'text-gray1'}
                   >
                     <Link href={crumb.href || '#'}>{crumb.label}</Link>
                   </BreadcrumbLink>

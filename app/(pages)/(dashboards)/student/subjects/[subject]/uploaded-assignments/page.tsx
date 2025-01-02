@@ -27,8 +27,6 @@ function page() {
   const onClose = () => setIsModalOpen(false);
   return (
     <main className="">
-      <BreadcrumbBox />
-
       <div className="bg-white w-full p-6 mt-6 rounded-lg min-h-[826px] h-auto relative">
         <div className="border-b border-[#E5E5EA] mb-8">
           <h2
@@ -49,10 +47,6 @@ function page() {
         </div>
 
         <div className="flex flex-col gap-6 ">
-          {/* <div className='flex gap-4'>
-            <Image src={uploadedAssignment} alt='Assignment' />
-            <Image src={uploadedAssignment} alt='Assignment' />
-          </div> */}
           <ImageViewModal />
 
           <div className="mt-[49px]">
@@ -77,38 +71,7 @@ function page() {
             </div>
           </div>
         </div>
-        <div className="flex gap-4 absolute bottom-4 ">
-          <Button
-            round
-            className={cn(
-              'h-[44px] text-sm text-white px-8',
-              Inter_600.className
-            )}
-          >
-            {' '}
-            <SubmitIcon /> <span>Submit</span>{' '}
-          </Button>
-
-          <Button
-            round
-            className={cn(
-              'h-[44px] text-sm bg-transparent text-[#EB5757] border border-[#EB5757] px-8',
-              Inter_600.className
-            )}
-          >
-            {' '}
-            <DraftIcon /> <span> Draft </span>{' '}
-          </Button>
-        </div>
       </div>
-      {isModalOpen && (
-        <YNmodal
-          isOpen={true}
-          onClose={onClose}
-          title="Submit assignment"
-          body="Are you sure you want to submit this answer? You will be graded based on the answer provided"
-        ></YNmodal>
-      )}
     </main>
   );
 }

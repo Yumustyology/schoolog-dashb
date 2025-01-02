@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 
 export function UploadAnswer() {
   return (
-    <div className="bg-[#F8F8F8] rounded-xl w-[524px] mt-8">
+    <div className="bg-[#F8F8F8] rounded-xl w-[524px] mt-8 cursor-pointer">
       <Label htmlFor="picture" className="flex gap-4 p-2">
         <div className="bg-[#ECECEC] rounded-full p-2.5">
           <UploadIcon />

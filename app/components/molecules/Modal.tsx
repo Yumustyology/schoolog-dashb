@@ -16,7 +16,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title }) => {
 
   return (
     <div className="fixed inset-0 bg-[rgb(0,0,0,0.25)] flex items-center p-6 justify-center z-50 w-full ">
-      <div className="bg-white rounded-lg desktop:w-1/3 tablet:w-2/3  xxs:w-full shadow-lg">
+      <div className="bg-white rounded-lg tablet:w-[434px]  xxs:w-full shadow-lg">
         <div className="flex justify-between items-center mb-2 px-8 py-2">
           <h2 className={cn('text-lg ', Inter_500.className)}> {title}</h2>
           <button
