@@ -1,6 +1,6 @@
 'use client';
 import Search from '@/app/components/atoms/form/SearchInput';
-import { DatePicker } from '@/app/components/atoms/dashboard/materials/DatePicker';
+import { DatePicker } from '@/app/components/atoms/form/DatePicker';
 import Button from '@/app/components/atoms/form/Button';
 import { DrawerSide } from '@/app/components/molecules/dashboard/DrawerSide';
 import {
@@ -9,9 +9,11 @@ import {
   poppins_500,
 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
-import { Announcements } from '@/type';
 import { Typography } from '@material-tailwind/react';
-import React from 'react';
+import React, { useState } from 'react';
+import { Announcements } from '@/types';
+import SelectBox from '@/app/components/atoms/dashboard/subjects/Select';
+import PaginationBox from '@/app/components/atoms/dashboard/subjects/Pagination';
 
 const announcements: Announcements = [
   {
@@ -46,17 +48,24 @@ const announcements: Announcements = [
   },
 ];
 function page() {
+    const [open, setOpen] = useState(false);
+  
+    const openDrawer = () => setOpen(true);
+    const closeDrawer = () => setOpen(false);
   return (
     <div className="bg-white w-full p-6 mt-6 rounded-lg  h-auto">
-      <div className="flex items-center mb-3 gap-4 w-1/2">
-        <Search placeholderName="Search Title and keywords" />
-        <DatePicker />
+      <div className="flex items-center mb-8 gap-4 w-1/2">
+        <Search placeholder="Search Title and keywords" />
+        <DatePicker className='w-max' />
       </div>
-      <div className="flex flex-col gap-4 ">
+      <div className="flex flex-col gap-4">
         {announcements.map((announcement, index) => {
           return (
-            <div
-              className="flex gap-8 p-3 items-center bg-[#F8F8F8] border border-[#E5E5EA] rounded-md"
+            <Button
+            wide
+            onClick={openDrawer}
+              childrenClassName="w-full !justify-between items-start gap-8" 
+              className="!justify-start text-left items-start flex p-3 bg-[#F8F8F8] border border-[#E5E5EA] rounded-md"
               key={index}
             >
               <div>
@@ -76,12 +85,22 @@ function page() {
                   {announcement.date}
                 </p>
               </div>
-            </div>
+            </Button>
           );
         })}
+         <footer className="mt-6 flex justify-between items-center">
+          <div className="flex gap-4 items-center">
+            <h5> Showing </h5>
+            <SelectBox />
+          </div>
+
+          <div>
+            <PaginationBox />
+          </div>
+        </footer>
       </div>
 
-      <DrawerSide title="Announcement details" subtitle="21/05/2024">
+      <DrawerSide open={open} close={closeDrawer} title="Announcement details" subtitle="21/05/2024">
         <div className="p-6 overflow-y-auto max-h-[calc(100vh-140px)]">
           <div className="mt-6">
             <Typography>
@@ -117,12 +136,12 @@ function page() {
         </div>
         <div className="px-6 mt-6">
           <Button
+          onClick={closeDrawer}
             round
             wide
             className="absolute bottom-3 bg-primary left-0 right-0 w-full text-white flex gap-3"
           >
-            {' '}
-            Okay{' '}
+            Okay
           </Button>
         </div>
       </DrawerSide>

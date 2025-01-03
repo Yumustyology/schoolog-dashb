@@ -11,7 +11,7 @@ import { cn } from '@/lib/utils';
 import { poppins_500 } from '@/app/lib/config/font.config';
 import Assignments from '@/app/components/organisms/dashboard/students/Assignments';
 import { SelectSubject } from '@/app/components/atoms/dashboard/materials/SelectSubject';
-import { DatePicker } from '@/app/components/atoms/dashboard/materials/DatePicker';
+import { DatePicker } from '@/app/components/atoms/form/DatePicker';
 import ActivitiesAndEvents from '@/app/components/organisms/dashboard/students/ActivitiesAndEvents';
 import RegisteredActivitiesAndEvents from '@/app/components/organisms/dashboard/students/RegisteredActivitiesAndEvents';
 import CalendarActivities from '@/app/components/organisms/dashboard/students/CalendarActivities';
@@ -52,7 +52,7 @@ function page() {
         <Tabs value={activeBooksTab}>
           <div className="flex justify-between items-center">
             <div className="flex gap-6 ">
-              <div className="flex justify-start gap-6 bg-[#F7F7F7] border border-gray4 rounded-[100px] mb-6 p-2 h-[38px] w-[200px]">
+              <div className="flex justify-start gap-3 bg-[#F7F7F7] border border-gray4 rounded-[100px] mb-6 p-2 h-[38px] w-[250px]">
                 <svg
                   width="18"
                   height="18"
@@ -78,14 +78,12 @@ function page() {
 
                 <input
                   type="search"
-                  placeholder="Search event and activity"
-                  className=" outline-none w-full text-gray1 bg-transparent"
+                  placeholder="Search books"
+                  className="-ml-1 placeholder-poppins outline-none w-full text-gray1 bg-transparent"
                 />
               </div>
-              <div className="flex w-[200px] gap-6">
-                <SelectSubject />
-                <DatePicker />
-              </div>
+
+              <SelectSubject />
             </div>
 
             <TabsHeader

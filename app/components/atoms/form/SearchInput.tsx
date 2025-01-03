@@ -7,7 +7,12 @@ type SearchProps = {
 
 function SearchInput({ placeholder, className }: SearchProps) {
   return (
-    <div className={cn("flex justify-start items-center gap-3 bg-white rounded-full py-2 px-4 pl-3 placeholder:text-base w-full border border-gray4",className)}>
+    <div
+      className={cn(
+        'flex justify-start items-center gap-3 bg-white rounded-full py-2 px-4 pl-3 placeholder:text-base w-full border border-gray4',
+        className
+      )}
+    >
       <svg
         width="20"
         height="20"

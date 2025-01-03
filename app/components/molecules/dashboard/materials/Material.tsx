@@ -15,11 +15,14 @@ function Material({ ...material }: MaterialType) {
           <DownloadIcon />
         </div>
       )}
-      <Link href={"/student/materials/123"} className="cursor-pointer mx-auto">
+      <Link href={'/student/materials/123'} className="cursor-pointer mx-auto">
         {material.icon}
       </Link>
       <div
-        className={cn('cursor-pointer text-black1 text-center text-sm ', Inter_500.className)}
+        className={cn(
+          'cursor-pointer text-black1 text-center text-sm ',
+          Inter_500.className
+        )}
       >
         <h3>{material.name}</h3>
       </div>

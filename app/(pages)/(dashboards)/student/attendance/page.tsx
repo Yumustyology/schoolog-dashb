@@ -1,5 +1,5 @@
 'use client';
-import { DatePicker } from '@/app/components/atoms/dashboard/materials/DatePicker';
+import { DatePicker } from '@/app/components/atoms/form/DatePicker';
 import { SelectSubject } from '@/app/components/atoms/dashboard/materials/SelectSubject';
 import PaginationBox from '@/app/components/atoms/dashboard/subjects/Pagination';
 import SelectBox from '@/app/components/atoms/dashboard/subjects/Select';
@@ -19,6 +19,7 @@ import {
   TabsHeader,
 } from '@material-tailwind/react';
 import React, { useState } from 'react';
+import { DateRangePicker } from '@/app/components/atoms/form/DateRangePicker';
 
 function page() {
   return (
@@ -29,14 +30,13 @@ function page() {
             <p className={cn('text-gray6 text-[16px]', poppins_500.className)}>
               Attendance metrics
             </p>
-            <div
+            <DatePicker
               className={cn(
-                'text-xs cursor-pointer text-gray6 2 w-[101px] border-gray4 bg-[#F7F7F8] flex justify-between rounded-full h-[30px] items-center px-3 py-1.5',
+                'text-xs cursor-pointer text-gray6 2 w-[101px] border-gray4 bg-[#F7F7F8] flex justify-between rounded-full h-[38px] items-center px-3 py-1.5',
                 poppins_400.className
               )}
-            >
-              Pick date <Timetable height="16" width="16" />
-            </div>
+              placeholder={'Pick date'}
+            />
           </div>
           <AttendanceMetrics />
         </div>
@@ -134,8 +134,8 @@ function page() {
 
       <div className="bg-white mt-8 rounded-4 p-8">
         <div className="flex w-[600px] gap-6">
-          <SelectSubject />
-          <DatePicker />
+          {/* <SelectSubject /> */}
+          <DateRangePicker />
         </div>
         <AttendanceList />
         <footer className="flex justify-between items-center">

@@ -9,14 +9,18 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Inter_400 } from '@/app/lib/config/font.config';
+import { cn } from '@/lib/utils';
 
 export function SelectSubject() {
   return (
     <Select>
-      <SelectTrigger className="rounded-full w-[300px]">
+      <SelectTrigger
+        className={cn('rounded-full w-[170px]', Inter_400.className)}
+      >
         <SelectValue placeholder="Select subjects" />
       </SelectTrigger>
-      <SelectContent>
+      <SelectContent className={Inter_400.className}>
         <SelectGroup>
           <SelectItem value="biology">Biology</SelectItem>
           <SelectItem value="english">English</SelectItem>

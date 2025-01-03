@@ -70,6 +70,12 @@ const items = [
     activeIcon: <Attendance color="#FFFFFF" size="17" />,
   },
   {
+    title: 'Live classes',
+    url: '/student/live-classes',
+    icon: <Material />,
+    activeIcon: <Material color="#FFFFFF" size="17" />,
+  },
+  {
     title: 'Library',
     url: '/student/library',
     icon: <Library />,
@@ -82,13 +88,7 @@ const items = [
     activeIcon: <Message color="#FFFFFF" size="17" />,
   },
   {
-    title: 'Announcement',
-    url: '/student/announcements',
-    icon: <Annoucement />,
-    activeIcon: <Annoucement color="#FFFFFF" size="17" />,
-  },
-  {
-    title: 'Activities',
+    title: 'Activities & events',
     url: '/student/activities',
     icon: <Activities />,
     activeIcon: <Activities color="#FFFFFF" size="17" />,
@@ -104,6 +104,18 @@ const items = [
     url: '/student/payments',
     icon: <Result />,
     activeIcon: <Result color="#FFFFFF" size="17" />,
+  },
+  {
+    title: 'Announcement',
+    url: '/student/announcements',
+    icon: <Annoucement />,
+    activeIcon: <Annoucement color="#FFFFFF" size="17" />,
+  },
+  {
+    title: 'Suggestion box',
+    url: '/student/suggestion-box',
+    icon: <Annoucement />,
+    activeIcon: <Annoucement color="#FFFFFF" size="17" />,
   },
 ];
 

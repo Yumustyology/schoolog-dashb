@@ -4,7 +4,7 @@ import CircleMark from '../../atoms/icons/CircleMark';
 import { cn } from '@/lib/utils';
 import { Inter_400, Inter_800 } from '@/app/lib/config/font.config';
 import Button from '../../atoms/form/Button';
-import AuthWrapper from '../../atoms/form/AuthWrapper';
+import AuthWrapper from '../../atoms/form/auth/AuthWrapper';
 
 function IsVerified() {
   return (

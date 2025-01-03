@@ -1,4 +1,4 @@
-import AuthWrapper from '@/app/components/atoms/form/AuthWrapper';
+import AuthWrapper from '@/app/components/atoms/form/auth/AuthWrapper';
 import AccountName from '@/app/components/molecules/auth/AccountName';
 import {
   poppins_400,

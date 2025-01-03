@@ -12,11 +12,17 @@ import {
   Inter_600,
   poppins_400,
   poppins_500,
+  poppins_600,
 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
 import { Card, Drawer, Typography } from '@material-tailwind/react';
 import { useState } from 'react';
 import { DrawerSide } from '../DrawerSide';
+import SearchInput from '@/app/components/atoms/form/SearchInput';
+import SelectComp from '@/app/components/atoms/form/Select';
+import Timetable from '@/app/components/atoms/icons/dashboard/SideBar/Timetable';
+import { DatePicker } from '@/app/components/atoms/form/DatePicker';
+import EyeClose from '@/app/components/atoms/icons/EyeClose';
 
 // Type for a single table description
 type TableDescription = {
@@ -93,10 +99,54 @@ const TABLE_ROWS: TableRow[] = [
 ];
 
 export function PaymentTable(): JSX.Element {
+  const [open, setOpen] = useState(false);
+
+  const openDrawer = () => setOpen(true);
+  const closeDrawer = () => setOpen(false);
+
   return (
-    <Card className="h-full w-full overflow-scroll p-3.5 mt-8">
-      <div>
-        <h3>Payments histories </h3>
+    <Card className="shadow-none h-full w-full overflow-scroll p-6 mt-8">
+      <div className="flex items-center justify-between">
+        <h3 className={cn('text-gray1 text-xl mb-6', poppins_600.className)}>
+          Payments histories
+        </h3>
+        <div className="flex gap-6 items-center mb-6">
+          <SearchInput
+            className="bg-gray4"
+            placeholder="Search payment history"
+          />
+          <SelectComp
+            placeholder="All type"
+            triggerClasses={cn(
+              poppins_400.className,
+              'text-xs cursor-pointer text-gray6 2 text-center gap-1.5 w-max border-gray4  flex justify-between rounded-full h-[38px] items-center px-3 py-1.5'
+            )}
+            value=""
+            onValueChange={console.log}
+            options={[
+              {
+                id: 'all',
+                name: 'All',
+              },
+              {
+                id: 'jss2',
+                name: 'JSS2',
+              },
+              {
+                id: 'jss3',
+                name: 'JSS3',
+              },
+            ]}
+          />
+          <DatePicker
+            calenderContainerClassName={cn('mr-10')}
+            className={cn(
+              'text-xs cursor-pointer text-gray6 2 w-[180px] border border-gray4 flex justify-between rounded-full h-[38px] items-center px-3 py-1.5',
+              poppins_400.className
+            )}
+            placeholder={'Pick date'}
+          />
+        </div>
       </div>
 
       <table className="w-full min-w-max table-auto text-left">
@@ -106,7 +156,7 @@ export function PaymentTable(): JSX.Element {
               <th key={head} className="bg-[#FBFBFB] p-4">
                 <Typography
                   variant="small"
-                  className="font-normal text-gray1 leading-none opacity-70"
+                  className={cn("font-normal text-gray1 leading-none opacity-70", poppins_400.className)}
                 >
                   {head}
                 </Typography>
@@ -125,16 +175,15 @@ export function PaymentTable(): JSX.Element {
                   <td className={classes}>
                     <Typography
                       variant="small"
-                      className="font-normal text-gray1 flex items-center gap-3"
+                      className={cn("font-normal text-gray1 flex items-center gap-3", poppins_400.className)}
                     >
-                      {' '}
                       <AcrobatPdfIcon /> <span> {paymentID}</span>
                     </Typography>
                   </td>
                   <td className={classes}>
                     <Typography
                       variant="small"
-                      className="font-normal text-gray1"
+                      className={cn("font-normal text-gray1",poppins_400.className)}
                     >
                       {amount}
                     </Typography>
@@ -142,7 +191,7 @@ export function PaymentTable(): JSX.Element {
                   <td className={classes}>
                     <Typography
                       variant="small"
-                      className="font-normal text-gray1"
+                      className={cn("font-normal text-gray1",poppins_400.className)}
                     >
                       {paymentType}
                     </Typography>
@@ -150,7 +199,7 @@ export function PaymentTable(): JSX.Element {
                   <td className={classes}>
                     <Typography
                       variant="small"
-                      className="font-normal text-gray1"
+                      className={cn("font-normal text-gray1",poppins_400.className)}
                     >
                       {date}
                     </Typography>
@@ -175,12 +224,14 @@ export function PaymentTable(): JSX.Element {
                   </td>
                   <td className={classes}>
                     <Button
+                    onClick={openDrawer}
                       className={cn(
-                        'bg-gray7 text-gray6 flex gap-3 text-sm',
+                        'bg-gray7 text-gray6 flex gap-3 text-sm rounded-full',
                         poppins_400.className
                       )}
                     >
-                      <DownloadIcon /> <span>Download file</span>
+                      <EyeClose /> 
+                      <span>View</span>
                     </Button>
                   </td>
                 </tr>
@@ -190,7 +241,8 @@ export function PaymentTable(): JSX.Element {
         </tbody>
       </table>
 
-      <DrawerSide title="Invoice #1838942022" subtitle="Transaction ID">
+      <DrawerSide open={open} close={closeDrawer}  title="Invoice #1838942022" subtitle="Transaction ID">
+        <>
         <div className="p-6 overflow-y-auto max-h-[calc(100vh-140px)]">
           <div className="mt-6">
             <div className="flex justify-between items-center">
@@ -203,50 +255,50 @@ export function PaymentTable(): JSX.Element {
                 >
                   ₦78,000
                 </h2>
-                <p className="text-sm text-gray">Amount</p>
+                <p className={cn("text-sm text-gray",poppins_400.className)}>Amount</p>
               </Typography>
 
               <Button
                 round
-                className="bg-[#ECFDF3] border border-[#ABEFC6] text-xs text-[#067647]"
+                className={cn("bg-[#ECFDF3] border border-[#ABEFC6] text-xs text-[#067647]",poppins_400.className)}
               >
-                {' '}
-                Completed
+                Success
               </Button>
             </div>
 
             <div className="bg-[#F8F8F8] border border-gray4 p-6 mt-10 rounded-xl w-full">
-              <header></header>
+              <Button className={cn("h-[30px] text-xs bg-white border border-gray5 text-gray1 mb-6 py-[6px] px-[12px] rounded-full")}>Transaction summary</Button>
 
               <div
                 className={cn(' flex flex-col gap-4', poppins_400.className)}
               >
-                <div className="flex justify-between">
+                <div className="flex justify-between py-4">
                   <p className="text-sm text-gray6">Payment type</p>
                   <p className="text-gray1">School fee</p>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between py-4">
                   <p className="text-sm text-gray6">Paid by</p>
                   <p className="text-gray1">Muhammad Jamiu</p>
                 </div>
-                <div className="flex justify-between">
+                <div className="flex justify-between py-4">
                   <p className="text-sm text-gray6">Date</p>
                   <p className="text-gray1">11/12/2060</p>
                 </div>
               </div>
             </div>
           </div>
-        </div>
-        <div className="px-6 mt-6">
+        <div className="px-6">
           <Button
             round
             wide
-            className="absolute bottom-3 bg-[#E9F8EF] left-0 right-0 w-full text-primary flex gap-3"
+            className={cn("bg-[#E9F8EF] h-[52px] mt-[8dvh] w-full text-primary flex gap-3",poppins_400.className)}
           >
             {' '}
-            <DownloadIcon color="#21B55A" /> <span>Download file </span>{' '}
+            <DownloadIcon size='20' color="#21B55A" /> <span>Download file </span>{' '}
           </Button>
         </div>
+        </div>
+        </>
       </DrawerSide>
     </Card>
   );

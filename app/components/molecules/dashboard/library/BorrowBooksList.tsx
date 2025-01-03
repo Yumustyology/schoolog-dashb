@@ -1,7 +1,7 @@
 import { biologyTextbook, mathTextbook } from '@/app/assets';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
-import { Borrowedbooks } from '@/type';
+import { Borrowedbooks } from '@/types';
 import Image from 'next/image';
 import React from 'react';
 
@@ -65,11 +65,18 @@ const borrowedBooks: Borrowedbooks = [
 
 function BorrowBooksList() {
   return (
-    <div className="grid grid-cols-5 gap-4">
+    <div className="grid grid-cols-3 laptop:grid-cols-4 lgDesktop:grid-cols-5 gap-6">
       {borrowedBooks.map((book) => (
-        <div className="w-[190px]">
+        <div
+          key={book.title}
+          className="min-w-[200px] flex flex-col gap-2 mb-6"
+        >
           <div className="relative">
-            <Image src={book.coverImage} alt={book.coverImage} />
+            <Image
+              className="w-full"
+              src={book.coverImage}
+              alt={book.coverImage}
+            />
 
             {book.dueStatus ? (
               <p>

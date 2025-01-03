@@ -1,5 +1,5 @@
 import Search from '@/app/components/atoms/form/SearchInput';
-import { DatePicker } from '@/app/components/atoms/dashboard/materials/DatePicker';
+import { DatePicker } from '@/app/components/atoms/form/DatePicker';
 import { SelectSubject } from '@/app/components/atoms/dashboard/materials/SelectSubject';
 import ExcelIcon from '@/app/components/atoms/icons/dashboard/materials/Excel';
 import FolderIcon from '@/app/components/atoms/icons/dashboard/materials/Folder';
@@ -61,21 +61,24 @@ function page() {
       name: 'File name goes here.extension',
       size: '760KB',
       date: '28/03/2024',
-    }
+    },
   ];
 
   return (
-    <MaterialsList materials={materials} breadcrumb={[
-      {
-      isActive:false,
-      label: "materials",
-      href: "/student/materials"
-    },
-      {
-      isActive:true,
-      label: "123",
-    }
-  ]} />
+    <MaterialsList
+      materials={materials}
+      breadcrumb={[
+        {
+          isActive: false,
+          label: 'materials',
+          href: '/student/materials',
+        },
+        {
+          isActive: true,
+          label: '123',
+        },
+      ]}
+    />
   );
 }
 

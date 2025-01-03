@@ -46,7 +46,7 @@ const FormModal: React.FC<ModalProps> = ({
             round
             wide
             className={cn(
-              'bg-transparent border text-primary w-full text-xl border-primary h-[44px]',
+              'bg-transparent border text-primary w-full text-base border-primary h-[44px]',
               Inter_500.className
             )}
           >
@@ -57,7 +57,7 @@ const FormModal: React.FC<ModalProps> = ({
             round
             wide
             className={cn(
-              'text-xl bg-primary text-white h-[44px] ',
+              'text-base bg-primary text-white h-[44px] ',
               Inter_500.className
             )}
           >

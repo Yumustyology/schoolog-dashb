@@ -1,4 +1,11 @@
-import React, { Dispatch, forwardRef, SetStateAction, useEffect, useImperativeHandle, useRef } from 'react';
+import React, {
+  Dispatch,
+  forwardRef,
+  SetStateAction,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 import {
   Dialog,
   DialogHeader,
@@ -62,14 +69,20 @@ export function ImageViewModal() {
             </p>
           </div>
 
-          <Button onClick={handleOpen} className="!py-0 !px-0 bg-gray3 rounded-full h-[40px] w-[40px]">
+          <Button
+            onClick={handleOpen}
+            className="!py-0 !px-0 bg-gray3 rounded-full h-[40px] w-[40px]"
+          >
             <Cancel strokeColor="#FFFFFF" />
           </Button>
         </DialogHeader>
         <DialogBody className="">
-          <CarouselImage setActiveFooterImg={(arg)=>{
-            setActiveIndex(arg)
-          }} ref={carouselImageRef} />
+          <CarouselImage
+            setActiveFooterImg={(arg) => {
+              setActiveIndex(arg);
+            }}
+            ref={carouselImageRef}
+          />
         </DialogBody>
         <DialogFooter className="border-t border-[#4F4F4F] flex justify-start gap-3">
           {footerImages.map((image, index) => (
@@ -94,56 +107,56 @@ export function ImageViewModal() {
 import { Carousel } from '@material-tailwind/react';
 import Button from '../atoms/form/Button';
 
-export const CarouselImage = forwardRef<carouselImageRefType, { setActiveFooterImg: Dispatch<SetStateAction<number>> }>(
-  (props:{setActiveFooterImg:any}, ref) => {
-  
-    let setActiveIndexTab: (arg: number) => void;
-    let activeTab: number = 0;
-    useImperativeHandle(ref, () => ({
-      setActiveIndexTab,
-    }));
+export const CarouselImage = forwardRef<
+  carouselImageRefType,
+  { setActiveFooterImg: Dispatch<SetStateAction<number>> }
+>((props: { setActiveFooterImg: any }, ref) => {
+  let setActiveIndexTab: (arg: number) => void;
+  let activeTab: number = 0;
+  useImperativeHandle(ref, () => ({
+    setActiveIndexTab,
+  }));
 
-    useEffect(()=>props.setActiveFooterImg(activeTab),[activeTab])
-    return (
-      <Carousel
-        className="rounded-xl"
-        navigation={({ setActiveIndex, activeIndex, length }) => {
-          setActiveIndexTab = setActiveIndex;
-          props?.setActiveFooterImg(activeIndex)
-          return (
-            <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
-              {new Array(length).fill('').map((_, i) => (
-                <span
-                  key={i}
-                  className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
-                    activeIndex === i ? 'w-8 bg-white' : 'w-4 bg-white/50'
-                  }`}
-                  onClick={() => {
-                    setActiveIndex(i)
-                  }}
-                />
-              ))}
-            </div>
-          );
-        }}
-      >
-        <Image
-          onClick={() => setActiveIndexTab(2)}
-          src={largeUploadedAssignment}
-          alt="Assignment"
-          className="object-cover"
-        />
-        <Image
-          src={largeUploadedAssignment}
-          alt="Assignment"
-          className="object-cover"
-        />
-        <Image
-          src={largeUploadedAssignment}
-          alt="Assignment"
-          className="object-cover"
-        />
-      </Carousel>
-    );
-  }
-);
+  useEffect(() => props.setActiveFooterImg(activeTab), [activeTab]);
+  return (
+    <Carousel
+      className="rounded-xl"
+      navigation={({ setActiveIndex, activeIndex, length }) => {
+        setActiveIndexTab = setActiveIndex;
+        props?.setActiveFooterImg(activeIndex);
+        return (
+          <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
+            {new Array(length).fill('').map((_, i) => (
+              <span
+                key={i}
+                className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
+                  activeIndex === i ? 'w-8 bg-white' : 'w-4 bg-white/50'
+                }`}
+                onClick={() => {
+                  setActiveIndex(i);
+                }}
+              />
+            ))}
+          </div>
+        );
+      }}
+    >
+      <Image
+        onClick={() => setActiveIndexTab(2)}
+        src={largeUploadedAssignment}
+        alt="Assignment"
+        className="object-cover"
+      />
+      <Image
+        src={largeUploadedAssignment}
+        alt="Assignment"
+        className="object-cover"
+      />
+      <Image
+        src={largeUploadedAssignment}
+        alt="Assignment"
+        className="object-cover"
+      />
+    </Carousel>
+  );
+});

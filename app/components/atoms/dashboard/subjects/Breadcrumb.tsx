@@ -11,15 +11,14 @@ import {
 import { cn } from '@/lib/utils';
 import { poppins_400, poppins_700 } from '@/app/lib/config/font.config';
 
-
 export interface BreadcrumbItemType {
   label: string;
-  href?: string; 
+  href?: string;
   isActive: boolean;
 }
 
 interface BreadcrumbBoxProps {
-  crumbs: BreadcrumbItemType[]; 
+  crumbs: BreadcrumbItemType[];
 }
 
 export default function BreadcrumbBox({ crumbs }: BreadcrumbBoxProps) {

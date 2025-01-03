@@ -15,8 +15,12 @@ import {
 import { cn } from '@/lib/utils';
 import { Card, Typography } from '@material-tailwind/react';
 import { useState } from 'react';
+import { ResultTable } from './ResultTable';
+import EyeOpen from '@/app/components/atoms/icons/EyeOpen';
+import FormModal from '../FormModal';
+import Input from '@/app/components/atoms/form/Input';
+import SelectComp from '@/app/components/atoms/form/Select';
 
-// Type for a single table description
 type TableDescription = {
   id: number;
   class: string;
@@ -24,19 +28,8 @@ type TableDescription = {
   date: string;
   time: string;
   number_of_subjects: number;
+  paid?: boolean;
   open: boolean;
-};
-
-// Type for each row in the table
-type TableRow = {
-  serialnumber: string;
-  subject: string;
-  firstCA: number;
-  secondCA: number;
-  examScore: number;
-  total: number;
-  grade: string;
-  status: 'Good' | 'Pass' | 'Fail' | 'Fair';
 };
 
 const tableDescription: TableDescription[] = [
@@ -47,6 +40,7 @@ const tableDescription: TableDescription[] = [
     date: 'Nov 12, 2024',
     time: '9am',
     number_of_subjects: 7,
+    paid: false,
     open: false,
   },
   {
@@ -55,77 +49,15 @@ const tableDescription: TableDescription[] = [
     term: 'second',
     date: 'Dec 12, 2024',
     time: '10am',
+    paid: true,
     number_of_subjects: 6,
     open: false,
   },
 ];
 
-const TABLE_HEAD: string[] = [
-  'S/N',
-  'Subject',
-  'First CA',
-  'Second CA',
-  'Exam',
-  'Total',
-  'Grade',
-  'Status',
-];
-
-const TABLE_ROWS: TableRow[] = [
-  {
-    serialnumber: '01',
-    subject: 'Mathematics',
-    firstCA: 16,
-    secondCA: 18,
-    examScore: 60,
-    total: 90,
-    grade: 'A',
-    status: 'Pass',
-  },
-  {
-    serialnumber: '02',
-    subject: 'English',
-    firstCA: 14,
-    secondCA: 16,
-    examScore: 55,
-    total: 85,
-    grade: 'B',
-    status: 'Fair',
-  },
-  {
-    serialnumber: '03',
-    subject: 'Physics',
-    firstCA: 18,
-    secondCA: 17,
-    examScore: 62,
-    total: 97,
-    grade: 'A',
-    status: 'Fail',
-  },
-  {
-    serialnumber: '04',
-    subject: 'Chemistry',
-    firstCA: 16,
-    secondCA: 19,
-    examScore: 60,
-    total: 95,
-    grade: 'A',
-    status: 'Good',
-  },
-  {
-    serialnumber: '05',
-    subject: 'Biology',
-    firstCA: 15,
-    secondCA: 17,
-    examScore: 58,
-    total: 90,
-    grade: 'B',
-    status: 'Pass',
-  },
-];
-
 export function ResultLists(): JSX.Element {
   const [openTable, setOpenTable] = useState<Record<number, boolean>>({});
+  const [viewResultModalOpen, setViewResultModalOpen] = useState(false);
 
   const toggleDrawer = (id: number): void => {
     setOpenTable((prevState) => ({
@@ -135,183 +67,163 @@ export function ResultLists(): JSX.Element {
   };
 
   return (
-    <Card className="h-full w-full overflow-scroll p-3.5 mt-8">
-      {tableDescription.map((description) => (
-        <div key={description.id}>
-          <div className="flex justify-between items-center mb-6 border-[#E0E0E0] border p-3.5 rounded-md">
-            <div>
-              <h4
-                className={cn('text-sm text-gray6 mb-1.5', Inter_500.className)}
-              >
-                {description.class} {description.term} term result
-              </h4>
-              <div
-                className={cn(
-                  'flex items-center gap-2 text-gray3 text-xs',
-                  poppins_400.className
-                )}
-              >
-                <span className="text-gray3 text-xs">
-                  {description.number_of_subjects} subjects
-                </span>
-                <Dot size={1} />
-                <span className="text-gray3 text-xs">
-                  {description.date} - {description.time}
-                </span>
-              </div>
-            </div>
-            <div className="flex items-center gap-3.5">
-              {openTable[description.id] && (
-                <Button
-                  round
+    <>
+      <Card className="h-full w-full overflow-scroll p-3.5 mt-8 shadow-none">
+        <SelectComp
+          placeholder="All Class"
+          className=""
+          triggerClasses={cn(
+            poppins_400.className,
+            'mb-6 text-xs cursor-pointer text-gray6 2 text-center gap-1.5 w-max border-gray4 flex justify-between rounded-full h-[38px] items-center px-3 py-2'
+          )}
+          value=""
+          onValueChange={console.log}
+          options={[
+            {
+              id: 'all',
+              name: 'All Class',
+            },
+            {
+              id: 'jss1',
+              name: 'JSS1',
+            },
+            {
+              id: 'jss2',
+              name: 'JSS2',
+            },
+            {
+              id: 'jss3',
+              name: 'JSS3',
+            },
+          ]}
+        />
+        {tableDescription.map((description) => (
+          <div
+            key={description.id}
+            className={cn(
+              'border-[#E0E0E0] border mb-6 rounded-md',
+              description.paid ? '' : 'bg-[#F8F8F8]'
+            )}
+          >
+            <div className="flex justify-between items-center p-3.5">
+              <div>
+                <h4
                   className={cn(
-                    'text-primary text-[16px] flex gap-4 bg-primary1',
-                    Inter_600.className
+                    'text-sm text-gray6 mb-1.5',
+                    Inter_500.className
                   )}
                 >
-                  <ScreenIcon /> <span>Full screen</span>
-                </Button>
-              )}
-              <Button
-                round
-                className={cn(
-                  'text-white text-[16px] flex gap-4 bg-primary',
-                  Inter_600.className
+                  {description.class} {description.term} term result
+                </h4>
+                <div
+                  className={cn(
+                    'flex items-center gap-2 text-gray3 text-xs',
+                    poppins_400.className
+                  )}
+                >
+                  <span className="text-gray3 text-xs">
+                    {description.number_of_subjects} subjects
+                  </span>
+                  <Dot size={1} />
+                  <span className="text-gray3 text-xs">
+                    {description.date} - {description.time}
+                  </span>
+                </div>
+              </div>
+              <div className="flex items-center gap-3.5">
+                {openTable[description.id] ? (
+                  description.paid ? (
+                    <Button
+                      to="/student/results/ss1/1st"
+                      round
+                      className={cn(
+                        'text-primary text-[16px] flex gap-4 bg-primary1',
+                        Inter_600.className
+                      )}
+                    >
+                      <ScreenIcon /> <span>Full screen</span>
+                    </Button>
+                  ) : null
+                ) : null}
+
+                {description.paid ? (
+                  <Button
+                    round
+                    className={cn(
+                      'text-white text-[16px] flex gap-4 bg-primary',
+                      Inter_600.className
+                    )}
+                  >
+                    <DownloadIcon size="20" color="#ffffff" />{' '}
+                    <span>Download</span>
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => setViewResultModalOpen(true)}
+                    round
+                    className={cn(
+                      'text-gray3 text-[16px] flex gap-4 bg-[#EAEAEA]',
+                      Inter_600.className
+                    )}
+                  >
+                    <EyeOpen color="#828282" size="20" /> <span>View</span>
+                  </Button>
                 )}
-              >
-                <DownloadIcon size="20" color="#ffffff" /> <span>Download</span>
-              </Button>
-              <div
-                className="cursor-pointer"
-                onClick={() => toggleDrawer(description.id)}
-              >
-                {openTable[description.id] ? <ShowArrow /> : <HideArrow />}
+
+                <div
+                  className={cn(
+                    'cursor-pointer transform transition-transform duration-300',
+                    openTable[description.id] ? 'rotate-180' : 'rotate-0'
+                  )}
+                  onClick={() =>
+                    description.paid
+                      ? toggleDrawer(description.id)
+                      : setViewResultModalOpen(true)
+                  }
+                >
+                  <HideArrow />
+                </div>
               </div>
             </div>
+
+            <div
+              className={cn(
+                'overflow-hidden transition-all duration-500 ease-in-out px-3.5',
+                openTable[description.id] ? 'max-h-[1000px] mt-4' : 'max-h-0'
+              )}
+            >
+              <ResultTable />
+            </div>
+          </div>
+        ))}
+      </Card>
+
+      <FormModal
+        isOpen={viewResultModalOpen}
+        onClose={() => setViewResultModalOpen(false)}
+        title="Check result"
+      >
+        <div>
+          <div>
+            <h2 className={cn('text-2xl text-gray1 ', Inter_600.className)}>
+              Input <span className="text-primary"> result code </span>
+            </h2>
+            <p className={cn('text-sm text-gray mt-1', Inter_400.className)}>
+              Input the 5 unique code issued to your parents after purchasing
+              the report card pass
+            </p>
           </div>
 
-          {openTable[description.id] && (
-            <table className="w-full min-w-max table-auto text-left">
-              <thead>
-                <tr>
-                  {TABLE_HEAD.map((head) => (
-                    <th key={head} className="bg-[#FBFBFB] p-4">
-                      <Typography
-                        variant="small"
-                        className="font-normal text-gray1 leading-none opacity-70"
-                      >
-                        {head}
-                      </Typography>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {TABLE_ROWS.map(
-                  (
-                    {
-                      serialnumber,
-                      subject,
-                      firstCA,
-                      secondCA,
-                      examScore,
-                      total,
-                      grade,
-                      status,
-                    },
-                    index
-                  ) => {
-                    const isLast = index === TABLE_ROWS.length - 1;
-                    const classes = isLast
-                      ? 'p-4'
-                      : 'p-4 border-b border-gray4';
-
-                    return (
-                      <tr key={serialnumber}>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            className="font-normal text-gray1"
-                          >
-                            {serialnumber}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            className="font-normal text-gray1"
-                          >
-                            {subject}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            className="font-normal text-gray1"
-                          >
-                            {firstCA}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            className="font-normal text-gray1"
-                          >
-                            {secondCA}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            className="font-normal text-gray1"
-                          >
-                            {examScore}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            className="font-normal text-gray1"
-                          >
-                            {total}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            className="font-normal text-gray1"
-                          >
-                            {grade}
-                          </Typography>
-                        </td>
-                        <td className={classes}>
-                          <Typography
-                            variant="small"
-                            className={cn(
-                              'font-normal rounded-full w-[92px] py-1.5 px-8 ',
-                              status === 'Pass'
-                                ? 'text-primary bg-primary1'
-                                : status === 'Good'
-                                  ? 'text-[#F2994A] bg-[#F2994A14]'
-                                  : status === 'Fair'
-                                    ? 'text-[#F2994A] bg-[#F2994A14]'
-                                    : status === 'Fail'
-                                      ? 'text-[#EB5757] bg-[#EB575714]'
-                                      : 'text-gray-600 bg-gray-200'
-                            )}
-                          >
-                            {status}
-                          </Typography>
-                        </td>
-                      </tr>
-                    );
-                  }
-                )}
-              </tbody>
-            </table>
-          )}
+          <div className="mt-10">
+            <Input
+              label="Report card code"
+              labelClassName="-mb-3"
+              placeholder="Input code"
+              className="h-[56px] mt-6 border border-gray2 rounded-md"
+            />
+          </div>
         </div>
-      ))}
-    </Card>
+      </FormModal>
+    </>
   );
 }

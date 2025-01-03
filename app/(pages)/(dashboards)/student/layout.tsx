@@ -31,7 +31,7 @@ export default async function Layout({
           <div className=" w-full bg-white py-3">
             <div className="flex  items-center">
               <SidebarTrigger />
-              <Search placeholderName="Search projects, users and resources" />
+              <Search placeholder="Search projects, users and resources" />
             </div>
           </div>
           <div className="p-8 h-full bg-[#F8F8F8]">{children}</div>

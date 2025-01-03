@@ -1,21 +1,29 @@
 import React from 'react';
 import Search from '@/app/components/atoms/form/SearchInput';
-import { DatePicker } from '@/app/components/atoms/dashboard/materials/DatePicker';
+import { DatePicker } from '@/app/components/atoms/form/DatePicker';
 import { SelectSubject } from '@/app/components/atoms/dashboard/materials/SelectSubject';
 import Material from './Material';
 import { MaterialType } from '@/types/materials.types';
-import BreadcrumbBox, { BreadcrumbItemType } from '@/app/components/atoms/dashboard/subjects/Breadcrumb';
+import BreadcrumbBox, {
+  BreadcrumbItemType,
+} from '@/app/components/atoms/dashboard/subjects/Breadcrumb';
 
 interface MaterialsListProps {
   materials: MaterialType[];
-  breadcrumb: BreadcrumbItemType[]
+  breadcrumb: BreadcrumbItemType[];
 }
-const MaterialsList: React.FC<MaterialsListProps> = ({ materials,breadcrumb }) => {
+const MaterialsList: React.FC<MaterialsListProps> = ({
+  materials,
+  breadcrumb,
+}) => {
   return (
     <div>
       <BreadcrumbBox crumbs={breadcrumb} />
       <div className="flex w-[600px] gap-4">
-        <Search className="border-gray4 bg-white" placeholder="Search materials, Subject" />
+        <Search
+          className="border-gray4 bg-white"
+          placeholder="Search materials, Subject"
+        />
         <SelectSubject />
         <DatePicker />
       </div>

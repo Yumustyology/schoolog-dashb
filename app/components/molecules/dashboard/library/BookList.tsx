@@ -1,7 +1,7 @@
 import { mathTextbook } from '@/app/assets';
 import { poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
-import { AvailbeBooks } from '@/type';
+import { AvailbeBooks } from '@/types';
 import Image from 'next/image';
 import React from 'react';
 
@@ -45,10 +45,13 @@ const availbleBooksList: AvailbeBooks = [
 ];
 function BookList() {
   return (
-    <div className="grid grid-cols-5">
+    <div className="grid grid-cols-3 laptop:grid-cols-4 lgDesktop:grid-cols-5 gap-6">
       {availbleBooksList.map((book) => (
-        <div key={book.title} className="w-[200px] flex flex-col gap-2 mb-6">
-          <Image src={book.coverImage} alt={book.title} />
+        <div
+          key={book.title}
+          className="min-w-[200px] flex flex-col gap-2 mb-6"
+        >
+          <Image className="w-full" src={book.coverImage} alt={book.title} />
           <h2 className={cn('text-sm text-black2', poppins_400.className)}>
             {book.title}
           </h2>

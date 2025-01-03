@@ -1,5 +1,5 @@
 import Search from '@/app/components/atoms/form/SearchInput';
-import { DatePicker } from '@/app/components/atoms/dashboard/materials/DatePicker';
+import { DatePicker } from '@/app/components/atoms/form/DatePicker';
 import { SelectSubject } from '@/app/components/atoms/dashboard/materials/SelectSubject';
 import ExcelIcon from '@/app/components/atoms/icons/dashboard/materials/Excel';
 import FolderIcon from '@/app/components/atoms/icons/dashboard/materials/Folder';
@@ -121,14 +121,16 @@ function page() {
   ];
 
   return (
-    <MaterialsList breadcrumb={[
-         {
-      isActive:true,
-      label: "materials",
-      href: "/student/materials"
-         }
-  ]}
-   materials={materials} />
+    <MaterialsList
+      breadcrumb={[
+        {
+          isActive: true,
+          label: 'materials',
+          href: '/student/materials',
+        },
+      ]}
+      materials={materials}
+    />
   );
 }
 
