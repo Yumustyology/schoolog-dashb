@@ -18,10 +18,7 @@ const DashboardWelcomeCard = ({
       )}
     >
       {getRandomBinary() ? <Meteors number={20} /> : <Particles />}
-      {/* <Meteors number={20} /> <Particles /> */}
-      {/* <div className="w-[180px] h-[180px] tablet:w-[200px] tablet:h-[200px] rounded-full border-8 border-[#00B59566] absolute -top-[150px] right-[90px] --tablet:-right-[180px]-tablet:-top-[3px]"></div> */}
-      {/* <div className="w-[180px] h-[180px] tablet:w-[200px] tablet:h-[200px] rounded-full border-8 border-[#00B59566] absolute top-[150px] left-[40px]"></div> */}
-
+   
       <div className="w-[180px] h-[180px] tablet:w-[274px] rounded-full tablet:h-[200px]  bg-[#00B59566] absolute -left-[90px] -top-[40px] tablet:-left-[197px] tablet:-top-[100px]"></div>
       <div className="w-[180px] h-[180px] tablet:w-[274px] rounded-full tablet:h-[200px] bg-[#00B59566] absolute -right-[190px] top-[40px] tablet:top-[100px]"></div>
 
