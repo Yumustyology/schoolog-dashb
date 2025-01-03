@@ -1,5 +1,5 @@
 'use client';
-import Search from '@/app/components/atoms/Search';
+import Search from '@/app/components/atoms/form/SearchInput';
 import { DatePicker } from '@/app/components/atoms/dashboard/materials/DatePicker';
 import Button from '@/app/components/atoms/form/Button';
 import { DrawerSide } from '@/app/components/molecules/dashboard/DrawerSide';

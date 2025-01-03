@@ -3,32 +3,25 @@ import DownloadIcon from '@/app/components/atoms/icons/dashboard/DownloadIcon';
 import WordIcon from '@/app/components/atoms/icons/dashboard/materials/Word';
 import { Inter_500, poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
+import { MaterialType } from '@/types/materials.types';
+import Link from 'next/link';
 import React from 'react';
-type MaterialsProps = {
-  type: string;
-  icon: React.ReactNode;
-  name: string;
-  size: string;
-  date: string;
-};
 
-function Materials({ ...material }: MaterialsProps) {
+function Material({ ...material }: MaterialType) {
   return (
-    <div className="w-[180px] p-3 rounded-[12px] bg-white flex flex-col justify-center gap-4 relative">
+    <div className="min-w-[180px] p-3 py-6 rounded-[12px] bg-white flex flex-col justify-center gap-4 relative">
       {material.type === 'material' && (
-        <div className="absolute top-2 right-3 h-[30px] w-[30px] flex justify-center items-center bg-[#F5F5F5]  rounded-full">
+        <div className="cursor-pointer absolute top-2.5 right-3 h-[30px] w-[30px] flex justify-center items-center bg-[#F5F5F5]  rounded-full">
           <DownloadIcon />
         </div>
       )}
-      <div className="mx-auto">
+      <Link href={"/student/materials/123"} className="cursor-pointer mx-auto">
         {material.icon}
-        {/* <WordIcon /> */}
-      </div>
+      </Link>
       <div
-        className={cn('text-black1 text-center text-sm ', Inter_500.className)}
+        className={cn('cursor-pointer text-black1 text-center text-sm ', Inter_500.className)}
       >
-        <h3> {material.name} </h3>
-        {/* <h3> Indices and its equations folder </h3> */}
+        <h3>{material.name}</h3>
       </div>
       <p
         className={cn(
@@ -36,11 +29,10 @@ function Materials({ ...material }: MaterialsProps) {
           poppins_400.className
         )}
       >
-        {' '}
         706KB <Dot size={1} /> 28/03/2024
       </p>
     </div>
   );
 }
 
-export default Materials;
+export default Material;

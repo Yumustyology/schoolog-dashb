@@ -11,15 +11,15 @@ import {
 import { cn } from '@/lib/utils';
 import { poppins_400, poppins_700 } from '@/app/lib/config/font.config';
 
-// Define the types for the breadcrumb items
-interface BreadcrumbItemType {
+
+export interface BreadcrumbItemType {
   label: string;
-  href?: string; // Optional href for active items
+  href?: string; 
   isActive: boolean;
 }
 
 interface BreadcrumbBoxProps {
-  crumbs: BreadcrumbItemType[]; // Array of breadcrumb items
+  crumbs: BreadcrumbItemType[]; 
 }
 
 export default function BreadcrumbBox({ crumbs }: BreadcrumbBoxProps) {

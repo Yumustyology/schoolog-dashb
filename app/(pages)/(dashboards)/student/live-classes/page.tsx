@@ -41,7 +41,7 @@ const page = () => {
           <div className="p-2 flex items-center justify-between  w-full mb-4">
             <Input
               placeholder="Search class"
-              className="w-[231px] h-[38px] rounded-full  bg-[#F7F7F7] border border-[#F2F2F2]"
+              className="w-[231px] h-[38px] rounded-full  bg-[#F7F7F7] border border-gray4"
             />
             <TabsHeader
               className="transition-all text-sm px-2 py-2 w-[340px] bg-[#F1F1F1] h-[53px] rounded-full"

@@ -76,7 +76,7 @@ export function AssignmentList({ className, ...props }: AssignmentListProps) {
           {notifications.map((notification, index) => (
             <div
               key={index}
-              className="border-b p-3.5 rounded-b-lg border-b-[#F2F2F2] mb-4 last:mb-0 grid grid-cols-[1fr_auto] items-center"
+              className="border-b p-3.5 rounded-b-lg border-b-gray4 mb-4 last:mb-0 grid grid-cols-[1fr_auto] items-center"
             >
               <div>
                 <p

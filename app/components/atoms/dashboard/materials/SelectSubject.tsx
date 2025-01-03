@@ -13,12 +13,11 @@ import {
 export function SelectSubject() {
   return (
     <Select>
-      <SelectTrigger className="w-[180px]">
-        <SelectValue placeholder="Select a fruit" />
+      <SelectTrigger className="rounded-full w-[300px]">
+        <SelectValue placeholder="Select subjects" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          <SelectLabel>Select subjects</SelectLabel>
           <SelectItem value="biology">Biology</SelectItem>
           <SelectItem value="english">English</SelectItem>
           <SelectItem value="chemistry">Chemistry</SelectItem>

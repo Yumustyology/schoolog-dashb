@@ -18,7 +18,7 @@ export function DatePicker() {
 
   return (
     <Popover>
-      <PopoverTrigger asChild>
+      <PopoverTrigger asChild className='w-[180px] rounded-full'>
         <Button
           variant={'outline'}
           className={cn(

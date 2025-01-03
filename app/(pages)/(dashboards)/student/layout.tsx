@@ -2,7 +2,7 @@ import { cookies } from 'next/headers';
 import NextTopLoader from 'nextjs-toploader';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/app/components/molecules/dashboard/AsideBar';
-import Search from '@/app/components/atoms/Search';
+import Search from '@/app/components/atoms/form/SearchInput';
 
 export default async function Layout({
   children,

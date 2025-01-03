@@ -52,7 +52,7 @@ function page() {
         <Tabs value={activeBooksTab}>
           <div className="flex justify-between items-center">
             <div className="flex gap-6 ">
-              <div className="flex justify-start gap-6 bg-[#F7F7F7] border border-[#F2f2f2] rounded-[100px] mb-6 p-2 h-[38px] w-[200px]">
+              <div className="flex justify-start gap-6 bg-[#F7F7F7] border border-gray4 rounded-[100px] mb-6 p-2 h-[38px] w-[200px]">
                 <svg
                   width="18"
                   height="18"
