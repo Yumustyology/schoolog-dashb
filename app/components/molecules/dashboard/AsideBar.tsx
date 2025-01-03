@@ -37,6 +37,9 @@ import Link from 'next/link';
 import Result from '../../atoms/icons/dashboard/SideBar/Result';
 import Image from 'next/image';
 import Settings from '../../atoms/icons/dashboard/SideBar/Settings';
+import LiveClassIcon from '../../atoms/icons/dashboard/SideBar/LiveClassIcon';
+import PaymentIcon from '../../atoms/icons/dashboard/SideBar/PaymentIcon';
+import SuggestionBoxIcon from '../../atoms/icons/dashboard/SideBar/SuggestionBoxIcon';
 
 const items = [
   {
@@ -64,16 +67,16 @@ const items = [
     activeIcon: <Timetable color="#FFFFFF" size="17" />,
   },
   {
+    title: 'Live classes',
+    url: '/student/live-classes',
+    icon: <LiveClassIcon />,
+    activeIcon: <LiveClassIcon color="#FFFFFF" size="17" />,
+  },
+  {
     title: 'Attendance',
     url: '/student/attendance',
     icon: <Attendance />,
     activeIcon: <Attendance color="#FFFFFF" size="17" />,
-  },
-  {
-    title: 'Live classes',
-    url: '/student/live-classes',
-    icon: <Material />,
-    activeIcon: <Material color="#FFFFFF" size="17" />,
   },
   {
     title: 'Library',
@@ -102,8 +105,8 @@ const items = [
   {
     title: 'Payments',
     url: '/student/payments',
-    icon: <Result />,
-    activeIcon: <Result color="#FFFFFF" size="17" />,
+    icon: <PaymentIcon />,
+    activeIcon: <PaymentIcon color="#FFFFFF" size="17" />,
   },
   {
     title: 'Announcement',
@@ -114,8 +117,8 @@ const items = [
   {
     title: 'Suggestion box',
     url: '/student/suggestion-box',
-    icon: <Annoucement />,
-    activeIcon: <Annoucement color="#FFFFFF" size="17" />,
+    icon: <SuggestionBoxIcon />,
+    activeIcon: <SuggestionBoxIcon color="#FFFFFF" size="17" />,
   },
 ];
 
