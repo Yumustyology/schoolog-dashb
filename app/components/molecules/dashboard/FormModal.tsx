@@ -1,15 +1,18 @@
 'use client';
-// components/Modal.tsx
-import React from 'react';
+
+import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
 
 import { cn } from '@/lib/utils';
-import { Inter_400, Inter_500 } from '@/app/lib/config/font.config';
+import { Inter_500 } from '@/app/lib/config/font.config';
 import Button from '../../atoms/form/Button';
 import Cancel from '../../atoms/icons/ModalIcons/Cancel';
 
 interface ModalProps {
   isOpen?: boolean;
   onClose?: () => void;
+  backClick?: () => void;
+  proceedClick?: () => void;
   children?: React.ReactNode;
   title: string;
   body?: string;
@@ -20,15 +23,29 @@ const FormModal: React.FC<ModalProps> = ({
   onClose,
   children,
   title,
-  body,
+  backClick,
+  proceedClick,
 }) => {
-  if (!isOpen) return null; // Don't render modal if it's not open
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isOpen && onClose) {
+        onClose();
+      }
+    };
 
-  return (
-    <div className="fixed inset-0 bg-[rgb(0,0,0,0.25)] flex items-center  justify-center z-50 w-full ">
-      <div className="bg-white rounded-lg tablet:w-[550px]   xxs:w-full shadow-lg">
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  const modalContent = (
+    <div className="z-[1000] fixed inset-0 bg-[rgb(0,0,0,0.25)] flex items-center justify-center w-full">
+      <div className="bg-white rounded-lg tablet:w-[550px] xxs:w-full shadow-lg">
         <div className="flex justify-between items-center mb-2 px-8 py-2">
-          <h2 className={cn('text-lg ', Inter_500.className)}> {title}</h2>
+          <h2 className={cn('text-lg', Inter_500.className)}> {title}</h2>
           <button
             onClick={onClose}
             className="text-gray-500 hover:text-gray-800 bg-gray4 rounded-full"
@@ -38,36 +55,38 @@ const FormModal: React.FC<ModalProps> = ({
         </div>
         <div className="border-b border-gray4"></div>
 
-        <main className="px-8 py-6 max-h-[400px] overflow-scroll">
+        <main className="px-8 py-6 max-h-[400px] overflow-auto sidebar-scroll">
           {children}
         </main>
-        <div className="w-full mt-8 mb-6 text-center flex justify-center gap-4 px-8  ">
+        <div className="w-full mt-8 mb-6 text-center flex justify-center gap-4 px-8">
           <Button
             round
+            onClick={backClick}
             wide
             className={cn(
               'bg-transparent border text-primary w-full text-base border-primary h-[44px]',
               Inter_500.className
             )}
           >
-            {' '}
-            Back{' '}
+            Back
           </Button>
           <Button
             round
+            onClick={proceedClick}
             wide
             className={cn(
-              'text-base bg-primary text-white h-[44px] ',
+              'text-base bg-primary text-white h-[44px]',
               Inter_500.className
             )}
           >
-            {' '}
-            Proceed{' '}
+            Proceed
           </Button>
         </div>
       </div>
     </div>
   );
+
+  return ReactDOM.createPortal(modalContent, document.body);
 };
 
 export default FormModal;

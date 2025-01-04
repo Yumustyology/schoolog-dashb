@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Request() {
+function RequestIcon() {
   return (
     <svg
       width="118"
@@ -43,4 +43,4 @@ function Request() {
   );
 }
 
-export default Request;
+export default RequestIcon;
