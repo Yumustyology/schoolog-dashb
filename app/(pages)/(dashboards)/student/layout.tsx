@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers';
+import NextTopLoader from 'nextjs-toploader';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/app/components/molecules/dashboard/AsideBar';
 import Search from '@/app/components/atoms/Search';
@@ -12,19 +13,30 @@ export default async function Layout({
   const defaultOpen = cookieStore.get('sidebar:state')?.value === 'true';
 
   return (
-    <SidebarProvider defaultOpen={defaultOpen} className="flex">
-      <div>
+    <>
+      <NextTopLoader
+        color="#34AD5D"
+        initialPosition={0.09}
+        crawlSpeed={100}
+        height={3}
+        crawl={false}
+        showSpinner={false}
+        easing="ease"
+        speed={100}
+        shadow="0 0 10px #34AD5D,0 0 5px #34AD5D"
+      />
+      <SidebarProvider defaultOpen={defaultOpen}>
         <AppSidebar />
-      </div>
-      <main className="w-full pl-1">
-        <div className="bg-white py-3">
-          <div className="flex items-center">
-            <SidebarTrigger />
-            <Search placeholderName="Search projects, users and resources" />
+        <main className="w-screen pl-1">
+          <div className=" w-full bg-white py-3">
+            <div className="flex  items-center">
+              <SidebarTrigger />
+              <Search placeholderName="Search projects, users and resources" />
+            </div>
           </div>
-        </div>
-        <div className="p-8 h-full bg-[#F8F8F8]">{children}</div>
-      </main>
-    </SidebarProvider>
+          <div className="p-8 h-full bg-[#F8F8F8]">{children}</div>
+        </main>
+      </SidebarProvider>
+    </>
   );
 }

@@ -36,6 +36,8 @@ import { Switch } from '@/components/ui/switch';
 import Link from 'next/link';
 import ModeSwitch from '../../organisms/ModeSwitch';
 import Result from '../../atoms/icons/dashboard/SideBar/Result';
+import SugeestionBox from '../../atoms/icons/dashboard/SideBar/SugeestionBox';
+import Payment from '../../atoms/icons/dashboard/SideBar/Payment';
 
 const items = [
   {
@@ -101,8 +103,14 @@ const items = [
   {
     title: 'Payments',
     url: '/student/payments',
-    icon: <Result/>,
-    activeIcon: <Result color="#FFFFFF" size="17" />,
+    icon: <Payment/>,
+    activeIcon: <Payment color="#FFFFFF" size="17" />,
+  },
+  {
+    title: 'Suggestion Box',
+    url: '/student/suggestions-box',
+    icon: <SugeestionBox/>,
+    activeIcon: <SugeestionBox color="#FFFFFF" size="17" />,
   },
 ];
 export function AppSidebar() {
@@ -143,7 +151,7 @@ export function AppSidebar() {
             <SidebarMenuItem>
               <SidebarMenuButton asChild>
                 <Link
-                  href="/"
+                  href="/student/settings"
                   className="flex items-center px-4 py-2 text-gray-300 hover:bg-gray-700 rounded-md"
                 >
                   <Settings />
