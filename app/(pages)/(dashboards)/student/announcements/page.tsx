@@ -48,23 +48,23 @@ const announcements: Announcements = [
   },
 ];
 function page() {
-    const [open, setOpen] = useState(false);
-  
-    const openDrawer = () => setOpen(true);
-    const closeDrawer = () => setOpen(false);
+  const [open, setOpen] = useState(false);
+
+  const openDrawer = () => setOpen(true);
+  const closeDrawer = () => setOpen(false);
   return (
     <div className="bg-white w-full p-6 mt-6 rounded-lg  h-auto">
       <div className="flex items-center mb-8 gap-4 w-1/2">
         <Search placeholder="Search Title and keywords" />
-        <DatePicker className='w-max' />
+        <DatePicker className="w-max" />
       </div>
       <div className="flex flex-col gap-4">
         {announcements.map((announcement, index) => {
           return (
             <Button
-            wide
-            onClick={openDrawer}
-              childrenClassName="w-full !justify-between items-start gap-8" 
+              wide
+              onClick={openDrawer}
+              childrenClassName="w-full !justify-between items-start gap-8"
               className="!justify-start text-left items-start flex p-3 bg-[#F8F8F8] border border-[#E5E5EA] rounded-md"
               key={index}
             >
@@ -88,7 +88,7 @@ function page() {
             </Button>
           );
         })}
-         <footer className="mt-6 flex justify-between items-center">
+        <footer className="mt-6 flex justify-between items-center">
           <div className="flex gap-4 items-center">
             <h5> Showing </h5>
             <SelectBox />
@@ -100,7 +100,12 @@ function page() {
         </footer>
       </div>
 
-      <DrawerSide open={open} close={closeDrawer} title="Announcement details" subtitle="21/05/2024">
+      <DrawerSide
+        open={open}
+        close={closeDrawer}
+        title="Announcement details"
+        subtitle="21/05/2024"
+      >
         <div className="p-6 overflow-y-auto max-h-[calc(100vh-140px)]">
           <div className="mt-6">
             <Typography>
@@ -136,7 +141,7 @@ function page() {
         </div>
         <div className="px-6 mt-6">
           <Button
-          onClick={closeDrawer}
+            onClick={closeDrawer}
             round
             wide
             className="absolute bottom-3 bg-primary left-0 right-0 w-full text-white flex gap-3"

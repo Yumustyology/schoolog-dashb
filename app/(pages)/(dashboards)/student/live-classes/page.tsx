@@ -12,7 +12,7 @@ import {
   Tab,
   TabPanel,
 } from '@material-tailwind/react';
-import useActiveTab from '@/app/lib/hooks/useActiveTab'; 
+import useActiveTab from '@/app/lib/hooks/useActiveTab';
 import Search from '@/app/components/atoms/form/SearchInput';
 
 const page = () => {
@@ -34,12 +34,14 @@ const page = () => {
   return (
     <main className="">
       <div>
-        <BreadcrumbBox crumbs={[
-          {
-            label: "Live classes",
-            isActive:true
-          }
-        ]} />
+        <BreadcrumbBox
+          crumbs={[
+            {
+              label: 'Live classes',
+              isActive: true,
+            },
+          ]}
+        />
       </div>
       <div className="bg-white p-6 rounded-xl mt-3">
         <Tabs value={activeTab}>
