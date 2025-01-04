@@ -27,80 +27,85 @@ import React from 'react';
 function ActivitiesAndEvents() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isRequestModalOpen, setIsRequestModalOpen] = React.useState(false);
-  const [openDrawer,setOpenDrawer] = React.useState(false);
+  const [openDrawer, setOpenDrawer] = React.useState(false);
 
   const onClose = () => setIsModalOpen(false);
   return (
     <>
-    <div className="w-full">
-      <section className="grid desktop:grid-cols-3 xlgDesktop:grid-cols-4 gap-6">
-        {activitiesAndEvents.map((activitiesAndEvent:any) => {
-          return (
-            <div
-              key={activitiesAndEvent.title}
-              className="flex flex-col gap-4 w-full --max-w-[333px] bg-white flex-1"
-            >
-              <div className="h-[161px] relative">
-                <Image
-                  onClick={()=>setOpenDrawer(true)}
-                  className="w-[333px]- w-full h-[161px] object-cover rounded-[8px]"
-                  src={activitiesAndEvent.image}
-                  alt={activitiesAndEvent.title}
-                />
-                <p
-                  className={cn(
-                    'border border-[#FFFFFFA6] absolute top-3 right-3  bg-[#00000059] text-white rounded-[32px] py-1 px-2 ',
-                    poppins_500.className
-                  )}
-                >
-                  {activitiesAndEvent.price}
-                </p>
-              </div>
-              <div className=" flex flex-col gap-3">
-                <h2
-                onClick={()=>setOpenDrawer(true)}
-                  className={cn('text-base text-gray1', poppins_500.className)}
-                >
-                  {activitiesAndEvent.title}
-                </h2>
+      <div className="w-full">
+        <section className="grid desktop:grid-cols-3 xlgDesktop:grid-cols-4 gap-6">
+          {activitiesAndEvents.map((activitiesAndEvent: any) => {
+            return (
+              <div
+                key={activitiesAndEvent.title}
+                className="flex flex-col gap-4 w-full --max-w-[333px] bg-white flex-1"
+              >
+                <div className="h-[161px] relative">
+                  <Image
+                    onClick={() => setOpenDrawer(true)}
+                    className="w-[333px]- w-full h-[161px] object-cover rounded-[8px]"
+                    src={activitiesAndEvent.image}
+                    alt={activitiesAndEvent.title}
+                  />
+                  <p
+                    className={cn(
+                      'border border-[#FFFFFFA6] absolute top-3 right-3  bg-[#00000059] text-white rounded-[32px] py-1 px-2 ',
+                      poppins_500.className
+                    )}
+                  >
+                    {activitiesAndEvent.price}
+                  </p>
+                </div>
+                <div className=" flex flex-col gap-3">
+                  <h2
+                    onClick={() => setOpenDrawer(true)}
+                    className={cn(
+                      'text-base text-gray1',
+                      poppins_500.className
+                    )}
+                  >
+                    {activitiesAndEvent.title}
+                  </h2>
 
-                <div
-                  className={cn(
-                    'flex items-center gap-2 text-gray3 text-sm',
-                    poppins_500.className
-                  )}
-                >
-                  <span className="text-gray3">{activitiesAndEvent.type} </span>
-                  <Dot />
-                  <span>{activitiesAndEvent.mode}</span>
-                </div>
-                <div
-                  className={cn(
-                    'flex items-center gap-2 text-gray6 text-xs',
-                    poppins_400.className
-                  )}
-                >
-                  <span className="flex items-center gap-1">
-                    <CalendarIcon />
-                    {activitiesAndEvent.date}{' '}
-                  </span>
-                  <span className="flex items-center gap-1">
-                    <CategoryIcon />
-                    {activitiesAndEvent.category}
-                  </span>
+                  <div
+                    className={cn(
+                      'flex items-center gap-2 text-gray3 text-sm',
+                      poppins_500.className
+                    )}
+                  >
+                    <span className="text-gray3">
+                      {activitiesAndEvent.type}{' '}
+                    </span>
+                    <Dot />
+                    <span>{activitiesAndEvent.mode}</span>
+                  </div>
+                  <div
+                    className={cn(
+                      'flex items-center gap-2 text-gray6 text-xs',
+                      poppins_400.className
+                    )}
+                  >
+                    <span className="flex items-center gap-1">
+                      <CalendarIcon />
+                      {activitiesAndEvent.date}{' '}
+                    </span>
+                    <span className="flex items-center gap-1">
+                      <CategoryIcon />
+                      {activitiesAndEvent.category}
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
-      </section>
-  
+            );
+          })}
+        </section>
+
         <FormModal
           isOpen={isModalOpen}
           onClose={onClose}
-          proceedClick={()=>{
-            onClose()
-            setIsRequestModalOpen(true)
+          proceedClick={() => {
+            onClose();
+            setIsRequestModalOpen(true);
           }}
           backClick={onClose}
           title="Registration form"
@@ -148,36 +153,46 @@ function ActivitiesAndEvents() {
             </div>
           </div>
         </FormModal>
-    
 
-  
-                <Modal isOpen={isRequestModalOpen} onClose={()=>setIsRequestModalOpen(false)} title="Request">
-                    <div className="flex flex-col items-center justify-center">
-                        <div className="mb-8">
-                            <RequestIcon />
-                        </div>
-                        <h3 className={cn('text-lg', Inter_600.className)}>
-                            {' '}
-                            Request sent{' '}
-                        </h3>
-                        <p
-                            className={cn(
-                                'text-center text-gray3 mt-4 px-3',
-                                Inter_400.className
-                            )}
-                        >
-                            You will be notified once the admin accept your request
-                        </p>
-                    </div>
+        <Modal
+          isOpen={isRequestModalOpen}
+          onClose={() => setIsRequestModalOpen(false)}
+          title="Request"
+        >
+          <div className="flex flex-col items-center justify-center">
+            <div className="mb-8">
+              <RequestIcon />
+            </div>
+            <h3 className={cn('text-lg', Inter_600.className)}>
+              {' '}
+              Request sent{' '}
+            </h3>
+            <p
+              className={cn(
+                'text-center text-gray3 mt-4 px-3',
+                Inter_400.className
+              )}
+            >
+              You will be notified once the admin accept your request
+            </p>
+          </div>
 
-                    <Button onClick={()=>setIsRequestModalOpen(false)} wide round className="h-12 mt-7">
-                        Okay
-                    </Button>
-                </Modal>
-          
-    </div>
+          <Button
+            onClick={() => setIsRequestModalOpen(false)}
+            wide
+            round
+            className="h-12 mt-7"
+          >
+            Okay
+          </Button>
+        </Modal>
+      </div>
 
-     <DrawerSide open={openDrawer} close={()=>setOpenDrawer(false)} title="Event Details">
+      <DrawerSide
+        open={openDrawer}
+        close={() => setOpenDrawer(false)}
+        title="Event Details"
+      >
         <div className="sidebar-scroll-- p-6 overflow-y-auto max-h-[calc(100vh-140px)]">
           <div className="relative h-[233px]">
             <Image

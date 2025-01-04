@@ -36,7 +36,7 @@ export function DrawerSide({
     };
   }, []);
 
-   useEffect(() => {
+  useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && open && close) {
         close();
@@ -48,11 +48,11 @@ export function DrawerSide({
       document.removeEventListener('keydown', handleKeyDown);
     };
   }, [open, close]);
-  
+
   if (!portalRoot) return null;
 
   const drawerContent = (
-    <Drawer className='' placement="right" open={open} size={494}>
+    <Drawer className="" placement="right" open={open} size={494}>
       <div className="bg-primary text-white text-[16px] flex justify-between items-center w-full p-4">
         <div>
           <p className={cn('text-[16px]', Inter_600.className)}> {title}</p>
