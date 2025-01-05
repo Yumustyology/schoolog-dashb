@@ -1,26 +1,26 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { Label, Pie, PieChart, LabelProps } from "recharts";
+import * as React from 'react';
+import { Label, Pie, PieChart, LabelProps } from 'recharts';
 
 import {
   ChartContainer,
   ChartTooltip,
   ChartTooltipContent,
-} from "@/components/ui/chart";
-import { CardContent } from "@/components/ui/card";
+} from '@/components/ui/chart';
+import { CardContent } from '@/components/ui/card';
 
 interface ChartData {
-  status: "present" | "absent";
+  status: 'present' | 'absent';
   // status: "present" | "late" | "absent";
   count: number;
   fill: string;
 }
 
 const chartData: ChartData[] = [
-  { status: "present", count: 275, fill: "hsl(var(--chart-1))" },
+  { status: 'present', count: 275, fill: 'hsl(var(--chart-1))' },
   // { status: "late", count: 200, fill: "hsl(var(--chart-2))" },
-  { status: "absent", count: 287, fill: "hsl(var(--chart-3))" },
+  { status: 'absent', count: 287, fill: 'hsl(var(--chart-3))' },
 ];
 
 interface ChartConfigItem {
@@ -30,16 +30,16 @@ interface ChartConfigItem {
 
 const chartConfig: Record<string, ChartConfigItem> = {
   present: {
-    label: "Present",
-    color: "hsl(var(--chart-1))",
+    label: 'Present',
+    color: 'hsl(var(--chart-1))',
   },
   // late: {
   //   label: "Late",
   //   color: "hsl(var(--chart-2))",
   // },
   absent: {
-    label: "Absent",
-    color: "hsl(var(--chart-3))",
+    label: 'Absent',
+    color: 'hsl(var(--chart-3))',
   },
 };
 
@@ -74,7 +74,7 @@ function DoughnutChart() {
             >
               <Label
                 content={({ viewBox }: LabelProps) => {
-                  if (viewBox && "cx" in viewBox && "cy" in viewBox) {
+                  if (viewBox && 'cx' in viewBox && 'cy' in viewBox) {
                     return (
                       <text
                         x={viewBox.cx}
