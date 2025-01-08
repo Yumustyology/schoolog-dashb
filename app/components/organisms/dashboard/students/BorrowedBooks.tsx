@@ -1,15 +1,14 @@
-import FormModal from '@/app/components/molecules/dashboard/FormModal'
-import BorrowBooksList from '@/app/components/molecules/dashboard/library/BorrowBooksList'
+import FormModal from '@/app/components/molecules/dashboard/FormModal';
+import BorrowBooksList from '@/app/components/molecules/dashboard/library/BorrowBooksList';
 
-import React from 'react'
+import React from 'react';
 
 function BorrowedBooks() {
-    return (
-        <div>
-            <BorrowBooksList />
-          
-        </div>
-    )
+  return (
+    <div>
+      <BorrowBooksList />
+    </div>
+  );
 }
 
-export default BorrowedBooks
+export default BorrowedBooks;

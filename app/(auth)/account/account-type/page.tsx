@@ -1,5 +1,5 @@
 'use client';
-import AuthWrapper from '@/app/components/atoms/form/AuthWrapper';
+import AuthWrapper from '@/app/components/atoms/form/auth/AuthWrapper';
 import Admin from '@/app/components/atoms/icons/AuthTypeIcons/Admin';
 import Parent from '@/app/components/atoms/icons/AuthTypeIcons/Parent';
 import Student from '@/app/components/atoms/icons/AuthTypeIcons/Student';

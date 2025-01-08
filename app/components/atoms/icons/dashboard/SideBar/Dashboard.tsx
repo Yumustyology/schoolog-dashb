@@ -26,7 +26,7 @@ function Dashboard({
       <path
         d="M4.1665 18.3334H5.83317C7.49984 18.3334 8.33317 17.5001 8.33317 15.8334V14.1667C8.33317 12.5001 7.49984 11.6667 5.83317 11.6667H4.1665C2.49984 11.6667 1.6665 12.5001 1.6665 14.1667V15.8334C1.6665 17.5001 2.49984 18.3334 4.1665 18.3334Z"
         stroke={color}
-       strokeWidth="1.5"
+        strokeWidth="1.5"
         strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -34,7 +34,7 @@ function Dashboard({
       <path
         d="M4.99984 8.33341C6.84079 8.33341 8.33317 6.84103 8.33317 5.00008C8.33317 3.15913 6.84079 1.66675 4.99984 1.66675C3.15889 1.66675 1.6665 3.15913 1.6665 5.00008C1.6665 6.84103 3.15889 8.33341 4.99984 8.33341Z"
         stroke={color}
-       strokeWidth="1.5"
+        strokeWidth="1.5"
         strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -42,7 +42,7 @@ function Dashboard({
       <path
         d="M14.9998 18.3334C16.8408 18.3334 18.3332 16.841 18.3332 15.0001C18.3332 13.1591 16.8408 11.6667 14.9998 11.6667C13.1589 11.6667 11.6665 13.1591 11.6665 15.0001C11.6665 16.841 13.1589 18.3334 14.9998 18.3334Z"
         stroke={color}
-       strokeWidth="1.5"
+        strokeWidth="1.5"
         strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"

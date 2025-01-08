@@ -19,8 +19,8 @@ import React from 'react';
 
 function AsignedTeacher() {
   return (
-    <Card className="bg-white py-6 px-6 rounded-md col-span-2 border-none ">
-      <CardHeader className="bg-[#f8f8f8] rounded-[58px] py-2 mb-6 ">
+    <Card className="bg-white py-6 px-6 rounded-md col-span-2 border-none">
+      <CardHeader className="bg-[#f8f8f8] rounded-full py-2 mb-6">
         <div className="flex gap-5">
           <Image src={teacherImg2} alt="teacher-image" />
           <div>
@@ -87,7 +87,7 @@ function AsignedTeacher() {
       <CardFooter className="px-0 py-0 mt-6 w-full">
         <Button wide round className="h-[45px]">
           <Message color="#FFFFFF" />
-          <p className="ml-2">Message</p>
+          <p className="ml-2">Message Teacher</p>
         </Button>
       </CardFooter>
     </Card>

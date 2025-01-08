@@ -49,7 +49,19 @@ function page() {
   return (
     <main className="">
       <div>
-        <BreadcrumbBox />
+        <BreadcrumbBox
+          crumbs={[
+            {
+              label: 'Subjects',
+              isActive: false,
+              href: '/students/subjects',
+            },
+            {
+              label: 'Biology',
+              isActive: true,
+            },
+          ]}
+        />
 
         <div className="flex space-x-3 mt-4">
           <div className="w-[446px]">
@@ -63,7 +75,7 @@ function page() {
         <div className="bg-white w-full p-6 mt-6 rounded-lg min-h-[398px] h-auto">
           <Tabs value={activeTopicAssignmtentTab}>
             <div className="flex justify-between items-center">
-              <div className="flex justify-start gap-6 bg-[#F7F7F7] border border-[#F2f2f2] rounded-[100px] mb-6 p-2 h-[38px] w-[327px]">
+              <div className="flex justify-start gap-6 bg-[#F7F7F7] border border-gray4 rounded-[100px] mb-6 p-2 h-[38px] w-[327px]">
                 <svg
                   width="18"
                   height="18"

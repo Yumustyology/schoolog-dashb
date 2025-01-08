@@ -14,10 +14,10 @@ import teacherImg2 from './images/Frame 1000001843.png';
 import avatar from './images/avatar.png';
 import uploadedAssignment from './images/uploaded-assignment.png';
 import largeUploadedAssignment from './images/largeUploadedAssignment.png';
-import activities1 from './images/activities1.png'
-import activities2 from './images/activities2.png'
-import mathTextbook from './images/mathTextbook.png'
-import biologyTextbook from './images/BiologyTextbook.png'
+import activities1 from './images/activities1.png';
+import activities2 from './images/activities2.png';
+import mathTextbook from './images/mathTextbook.png';
+import biologyTextbook from './images/BiologyTextbook.png';
 // import mathTextook from './images/math/mathTextook.png'
 // import BiologyTextbook from '.images/BiologyTextbook.png'
 
@@ -44,5 +44,4 @@ export {
   biologyTextbook,
   // mathTextook,
   // BiologyTextbook
-  
 };

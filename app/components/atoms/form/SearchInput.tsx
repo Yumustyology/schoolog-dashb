@@ -1,14 +1,21 @@
+import { cn } from '@/lib/utils';
 import React from 'react';
 type SearchProps = {
-  placeholderName: string;
+  placeholder: string;
+  className?: string;
 };
 
-function Search({ placeholderName }: SearchProps) {
+function SearchInput({ placeholder, className }: SearchProps) {
   return (
-    <div className="flex justify-start items-center gap-3 bg-[#F9FAFB] rounded-full py-2 px-4 w-full border border-gray4">
+    <div
+      className={cn(
+        'flex justify-start items-center gap-3 bg-white rounded-full py-2 px-4 pl-3 placeholder:text-base w-full border border-gray4',
+        className
+      )}
+    >
       <svg
-        width="14"
-        height="14"
+        width="20"
+        height="20"
         viewBox="0 0 24 24"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
@@ -31,11 +38,11 @@ function Search({ placeholderName }: SearchProps) {
 
       <input
         type="search"
-        placeholder={placeholderName}
-        className="bg-transparent outline-none  text-gray1 text-sm w-full"
+        placeholder={placeholder}
+        className="placeholder-poppins bg-transparent outline-none  text-gray1 text-sm w-full"
       />
     </div>
   );
 }
 
-export default Search;
+export default SearchInput;

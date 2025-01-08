@@ -2,7 +2,8 @@ import { cookies } from 'next/headers';
 import NextTopLoader from 'nextjs-toploader';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/app/components/molecules/dashboard/AsideBar';
-import Search from '@/app/components/atoms/Search';
+import Search from '@/app/components/atoms/form/SearchInput';
+import Header from '@/app/components/molecules/dashboard/Header';
 
 export default async function Layout({
   children,
@@ -29,10 +30,7 @@ export default async function Layout({
         <AppSidebar />
         <main className="w-screen pl-1">
           <div className=" w-full bg-white py-3">
-            <div className="flex  items-center">
-              <SidebarTrigger />
-              <Search placeholderName="Search projects, users and resources" />
-            </div>
+            <Header/>
           </div>
           <div className="p-8 h-full bg-[#F8F8F8]">{children}</div>
         </main>

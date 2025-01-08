@@ -27,6 +27,7 @@ import Timetable from '@/app/components/atoms/icons/dashboard/SideBar/Timetable'
 import GradesAnalytics from '@/app/components/molecules/dashboard/analytics/GradesAnalytics';
 import AssignmentAnalytics from '@/app/components/molecules/dashboard/analytics/AssignmentAnalytics';
 import AttendanceAnalytics from '@/app/components/molecules/dashboard/analytics/AttendanceAnalytics';
+import { DatePicker } from '@/app/components/atoms/form/DatePicker';
 
 function StudentDashboard() {
   const todayClassesTabs = [
@@ -189,14 +190,14 @@ function StudentDashboard() {
                     </Tab>
                   ))}
                 </TabsHeader>
-                <div
+
+                <DatePicker
                   className={cn(
-                    'text-xs cursor-pointer text-gray6 2 w-[101px] border-gray4 bg-[#F7F7F8] flex justify-between rounded-full h-[30px] items-center px-3 py-1.5',
+                    'text-xs cursor-pointer text-gray6 2 w-[101px] border-gray4 bg-[#F7F7F8] flex justify-between rounded-full h-[38px] items-center px-3 py-1.5',
                     poppins_400.className
                   )}
-                >
-                  Pick date <Timetable height="16" width="16" />
-                </div>
+                  placeholder={'Pick date'}
+                />
               </div>
               <TabsBody>
                 {analyticsTabs.map(({ value, content }) => (

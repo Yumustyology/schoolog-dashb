@@ -102,8 +102,10 @@ body {
 /* SCROLL HIDDEN */
 
 /* Hide scrollbar but keep scroll functionality */
-::-webkit-scrollbar {
-  display: none;
+@media (min-width: 1024px) {
+  .scrollbar-hidden::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 html {
@@ -117,8 +119,13 @@ html {
 
 /* For webkit-based browsers (Chrome, Safari) */
 
+.placeholder-poppins::placeholder {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+}
+
 .sidebar-scroll::-webkit-scrollbar {
-  width: 4px;
+  width: 5px;
 }
 
 .sidebar-scroll::-webkit-scrollbar-thumb {

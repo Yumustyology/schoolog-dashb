@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Cancel({ strokeColor = "#4F4F4F" }: { strokeColor?: string }) {
+function Cancel({ strokeColor = '#4F4F4F' }: { strokeColor?: string }) {
   return (
     <svg
       width="43"

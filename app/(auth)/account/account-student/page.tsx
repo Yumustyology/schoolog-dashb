@@ -12,7 +12,7 @@ import {
 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
 import React from 'react';
-import AuthWrapper from '@/app/components/atoms/form/AuthWrapper';
+import AuthWrapper from '@/app/components/atoms/form/auth/AuthWrapper';
 
 function page() {
   const [isModalOpen, setIsModalOpen] = React.useState(true);

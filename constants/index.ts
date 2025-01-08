@@ -15,8 +15,6 @@ import {
 } from '@/app/assets';
 import { ActivitiesAndEvent } from '@/type';
 
-
-
 export const subjects = [
   {
     textbookImg: biology,
@@ -101,8 +99,6 @@ export const subjects = [
   },
 ];
 
-
-
 export const avatars = [
   {
     avater: avatar,
@@ -126,7 +122,7 @@ export const activitiesAndEvents: ActivitiesAndEvent = [
     mode: 'Physical',
     date: '16/03/202',
     category: 'For all students',
-    price: 'FREE'
+    price: 'FREE',
   },
   {
     image: activities1,
@@ -135,7 +131,7 @@ export const activitiesAndEvents: ActivitiesAndEvent = [
     mode: 'Physical',
     date: '16/03/202',
     category: 'For all students',
-    price: 'N5,000'
+    price: 'N5,000',
   },
   {
     image: activities1,
@@ -144,7 +140,7 @@ export const activitiesAndEvents: ActivitiesAndEvent = [
     mode: 'Physical',
     date: '16/03/202',
     category: 'For all students',
-    price: 'N5,000'
+    price: 'N5,000',
   },
   {
     image: activities1,
@@ -153,12 +149,9 @@ export const activitiesAndEvents: ActivitiesAndEvent = [
     mode: 'Physical',
     date: '16/03/202',
     category: 'For all students',
-    price: 'N5,000'
+    price: 'N5,000',
   },
-  
-
-  
-]
+];
 
 export const registeredActivitiesAndEvents: ActivitiesAndEvent = [
   {
@@ -168,7 +161,7 @@ export const registeredActivitiesAndEvents: ActivitiesAndEvent = [
     mode: 'Physical',
     date: '16/03/202',
     category: 'For all students',
-    price: 'FREE'
+    price: 'FREE',
   },
   {
     image: activities1,
@@ -177,11 +170,6 @@ export const registeredActivitiesAndEvents: ActivitiesAndEvent = [
     mode: 'Physical',
     date: '16/03/202',
     category: 'For all students',
-    price: 'N5,000'
+    price: 'N5,000',
   },
-
-  
-
-  
-]
-
+];

@@ -8,7 +8,7 @@ import {
   poppins_600,
 } from '@/app/lib/config/font.config';
 import Button from '@/app/components/atoms/form/Button';
-import AuthWrapper from '@/app/components/atoms/form/AuthWrapper';
+import AuthWrapper from '@/app/components/atoms/form/auth/AuthWrapper';
 
 function Register() {
   return (

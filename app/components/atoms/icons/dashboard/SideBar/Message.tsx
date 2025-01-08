@@ -26,21 +26,21 @@ function Message({
       <path
         d="M13.3305 9.16667H13.338"
         stroke={color}
-       strokeWidth="2"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M9.99607 9.16667H10.0036"
         stroke={color}
-       strokeWidth="2"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
       <path
         d="M6.66209 9.16667H6.66957"
         stroke={color}
-       strokeWidth="2"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
