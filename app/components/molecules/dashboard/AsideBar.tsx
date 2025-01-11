@@ -116,12 +116,11 @@ const items = [
   },
   {
     title: 'Suggestion box',
-    url: '/student/suggestion-box',
+    url: '/student/suggestions-box',
     icon: <SuggestionBoxIcon />,
     activeIcon: <SuggestionBoxIcon color="#FFFFFF" size="17" />,
   },
 ];
-
 export function AppSidebar() {
   const pathname = usePathname();
   const { state } = useSidebar();

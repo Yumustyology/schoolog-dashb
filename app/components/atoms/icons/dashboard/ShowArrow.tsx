@@ -12,10 +12,10 @@ function ShowArrow() {
       <path
         d="M4.07992 15.5508L10.5999 9.03078C11.3699 8.26078 12.6299 8.26078 13.3999 9.03078L19.9199 15.5508"
         stroke="#292D32"
-        stroke-width="1.5"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

@@ -30,8 +30,8 @@ function DownloadIcon({
       <path
         d="M12.8332 5.83366V8.75033C12.8332 11.667 11.6665 12.8337 8.74984 12.8337H5.24984C2.33317 12.8337 1.1665 11.667 1.1665 8.75033V5.25033C1.1665 2.33366 2.33317 1.16699 5.24984 1.16699H8.1665"
         stroke={color}
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M12.8332 5.83366H10.4998C8.74984 5.83366 8.1665 5.25033 8.1665 3.50033V1.16699L12.8332 5.83366Z"

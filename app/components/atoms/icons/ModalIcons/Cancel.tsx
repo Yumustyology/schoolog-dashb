@@ -28,3 +28,5 @@ function Cancel({ strokeColor = '#4F4F4F' }: { strokeColor?: string }) {
 }
 
 export default Cancel;
+
+

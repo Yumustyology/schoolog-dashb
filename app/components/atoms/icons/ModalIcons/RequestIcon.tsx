@@ -17,7 +17,7 @@ function RequestIcon() {
         r="39.9814"
         fill="#E9F8EF"
         stroke="white"
-        stroke-width="2.22634"
+        strokeWidth="2.22634"
       />
       <mask
         id="mask0_577_23527"
