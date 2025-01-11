@@ -27,7 +27,7 @@ function AnswerBox({
   mark,
   answerType = 'text',
   questionType = 'text',
-  multipleChoice
+  multipleChoice,
 }: AnswerBoxProps) {
   return (
     <div className="grid w-full gap-4">

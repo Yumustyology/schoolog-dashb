@@ -24,7 +24,7 @@ const MaterialsList: React.FC<MaterialsListProps> = ({
           className="border-gray4 bg-white"
           placeholder="Search materials, Subject"
         />
-        <SelectSubject className='w-[200px]'/>
+        <SelectSubject className="w-[200px]" />
         <DatePicker />
       </div>
 

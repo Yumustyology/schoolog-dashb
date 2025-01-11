@@ -76,8 +76,10 @@ function page() {
         <div className="bg-white w-full p-6 mt-6 rounded-lg min-h-[398px] h-auto">
           <Tabs value={activeTopicAssignmtentTab}>
             <div className="flex justify-between items-center">
-            
-              <SearchInput placeholder='search' className='bg-[#F7F7F7] border border-gray4 rounded-[100px] mb-6 p-2 h-[38px] max-w-[327px]' />
+              <SearchInput
+                placeholder="search"
+                className="bg-[#F7F7F7] border border-gray4 rounded-[100px] mb-6 p-2 h-[38px] max-w-[327px]"
+              />
 
               <TabsHeader
                 className="transition-all text-sm px-2 py-2 mb-6 w-[340px] bg-[#F1F1F1] h-[53px] rounded-full"

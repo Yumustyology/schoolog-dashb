@@ -622,4 +622,3 @@ const ModeSwitch = ({ className }: { className?: string }) => {
 };
 
 export default ModeSwitch;
-

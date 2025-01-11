@@ -1,16 +1,11 @@
-import { teacherImg } from '@/app/assets';
 import BreadcrumbBox from '@/app/components/atoms/dashboard/subjects/Breadcrumb';
 import PaginationBox from '@/app/components/atoms/dashboard/subjects/Pagination';
 import SelectBox from '@/app/components/atoms/dashboard/subjects/Select';
 import SubjectCard from '@/app/components/atoms/dashboard/subjects/SubjectCart';
-import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
-import { Select } from '@/components/ui/select';
 import { subjects } from '@/constants';
 import React from 'react';
 
-const breadcrumbs = [
-  { label: 'Subjects', isActive: true },
-];
+const breadcrumbs = [{ label: 'Subjects', isActive: true }];
 function page() {
   return (
     <main className="w-full">

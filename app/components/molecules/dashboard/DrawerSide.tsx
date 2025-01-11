@@ -11,14 +11,23 @@ export function DrawerSide({
   subtitle,
   open,
   close,
+  className,
 }: {
   children: React.ReactNode;
   title: string;
   subtitle?: string;
   open: boolean;
   close?: () => void;
+  className?: string;
 }) {
   const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : 'auto';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [open]);
 
   useEffect(() => {
     let portalDiv = document.getElementById('drawer-portal');
@@ -52,7 +61,12 @@ export function DrawerSide({
   if (!portalRoot) return null;
 
   const drawerContent = (
-    <Drawer className="" placement="right" open={open} size={494}>
+    <Drawer
+      className={cn('', className)}
+      placement="right"
+      open={open}
+      size={494}
+    >
       <div className="bg-primary text-white text-[16px] flex justify-between items-center w-full p-4">
         <div>
           <p className={cn('text-[16px]', Inter_600.className)}> {title}</p>

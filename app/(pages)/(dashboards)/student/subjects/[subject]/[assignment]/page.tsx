@@ -59,7 +59,8 @@ function page() {
           </h2>
           <p
             className={cn('text-sm text-[#475467] mb-4', poppins_400.className)}
-          >Assignment instruction goes here
+          >
+            Assignment instruction goes here
           </p>
         </div>
 
