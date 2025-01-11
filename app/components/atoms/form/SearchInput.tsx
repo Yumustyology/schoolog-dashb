@@ -1,3 +1,4 @@
+import { poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
 import React from 'react';
 type SearchProps = {
@@ -39,7 +40,7 @@ function SearchInput({ placeholder, className }: SearchProps) {
       <input
         type="search"
         placeholder={placeholder}
-        className="placeholder-poppins bg-transparent outline-none  text-gray1 text-sm w-full"
+        className={cn("placeholder-poppins placeholder:text-sm placeholder:text-gray3 bg-transparent outline-none text-gray1 text-sm w-full",poppins_400.className)}
       />
     </div>
   );

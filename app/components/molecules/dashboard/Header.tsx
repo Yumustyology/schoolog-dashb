@@ -75,7 +75,7 @@ function Header() {
       <div className="flex items-center justify-between">
         <div className="flex  items-center w-2/4">
           <SidebarTrigger />
-          <SearchInput placeholder="Search projects, users and resources" />
+          <SearchInput className='border h-[38px] bg-[#F9FAFB] ml-8 border-gray4 max-w-96' placeholder="Search projects, users and resources" />
         </div>
         <div className="flex items-center gap-6 mr-4">
           <div className="cursor-pointer h-10 w-10 rounded-full bg-[#F7F7F8] flex items-center justify-center relative">
