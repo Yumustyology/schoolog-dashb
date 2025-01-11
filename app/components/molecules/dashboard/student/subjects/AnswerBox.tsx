@@ -12,6 +12,7 @@ type AnswerBoxProps = {
   mark: number;
   answerType?: 'upload' | 'select' | 'text';
   questionType?: 'images' | 'text';
+  multipleChoice?: boolean;
 };
 
 const options: Option[] = [
@@ -26,6 +27,7 @@ function AnswerBox({
   mark,
   answerType = 'text',
   questionType = 'text',
+  multipleChoice
 }: AnswerBoxProps) {
   return (
     <div className="grid w-full gap-4">
@@ -63,7 +65,7 @@ function AnswerBox({
           id="answer"
         />
       ) : answerType == 'select' ? (
-        <RadioButtons options={options} />
+        <RadioButtons multipleChoice={multipleChoice} options={options} />
       ) : (
         answerType == 'upload' && <UploadAnswerComp />
       )}

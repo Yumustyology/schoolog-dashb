@@ -12,11 +12,11 @@ import {
 import { Inter_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
 
-export function SelectSubject() {
+export function SelectSubject({className}:{className?:string}) {
   return (
     <Select>
       <SelectTrigger
-        className={cn('rounded-full w-[170px]', Inter_400.className)}
+        className={cn('rounded-full min-w-[130px]', Inter_400.className,className)}
       >
         <SelectValue placeholder="Select subjects" />
       </SelectTrigger>

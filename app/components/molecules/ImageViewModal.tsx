@@ -104,6 +104,7 @@ export function ImageViewModal() {
   );
 }
 
+
 import { Carousel } from '@material-tailwind/react';
 import Button from '../atoms/form/Button';
 
@@ -111,8 +112,10 @@ export const CarouselImage = forwardRef<
   carouselImageRefType,
   { setActiveFooterImg: Dispatch<SetStateAction<number>> }
 >((props: { setActiveFooterImg: any }, ref) => {
+
   let setActiveIndexTab: (arg: number) => void;
   let activeTab: number = 0;
+
   useImperativeHandle(ref, () => ({
     setActiveIndexTab,
   }));

@@ -32,12 +32,12 @@ function page() {
           {
             isActive: false,
             label: 'Subjects',
-            href: '/students/subjects',
+            href: '/student/subjects',
           },
           {
             isActive: false,
             label: 'Biology',
-            href: '/students/subjects/biology',
+            href: '/student/subjects/biology',
           },
           {
             isActive: true,
@@ -59,9 +59,7 @@ function page() {
           </h2>
           <p
             className={cn('text-sm text-[#475467] mb-4', poppins_400.className)}
-          >
-            {' '}
-            Assignment instruction goes here{' '}
+          >Assignment instruction goes here
           </p>
         </div>
 
@@ -74,6 +72,7 @@ function page() {
             question="How can it help reduce the risk of cardiovascular diseases?"
             mark={5}
             answerType="select"
+            // multipleChoice
           />
           <AnswerBox
             question="What are the potential health benefits of adopting a plant-based diet?"
@@ -96,8 +95,7 @@ function page() {
                 Inter_600.className
               )}
             >
-              {' '}
-              <SubmitIcon /> <span>Submit</span>{' '}
+              <SubmitIcon /> <span>Submit</span>
             </Button>
 
             <Button
@@ -107,8 +105,7 @@ function page() {
                 Inter_600.className
               )}
             >
-              {' '}
-              <DraftIcon /> <span> Draft </span>{' '}
+              <DraftIcon /> <span> Draft </span>
             </Button>
           </div>
         </div>

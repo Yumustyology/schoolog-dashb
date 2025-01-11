@@ -6,12 +6,9 @@ import SubjectCard from '@/app/components/atoms/dashboard/subjects/SubjectCart';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { Select } from '@/components/ui/select';
 import { subjects } from '@/constants';
-import { cn } from '@/lib/utils';
-import Image from 'next/image';
 import React from 'react';
 
 const breadcrumbs = [
-  { label: 'Home', href: '/student', isActive: false },
   { label: 'Subjects', isActive: true },
 ];
 function page() {

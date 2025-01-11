@@ -23,6 +23,7 @@ const YNmodal: React.FC<ModalProps> = ({
   submit,
   body,
 }) => {
+  
   if (!isOpen) return null;
 
   return (

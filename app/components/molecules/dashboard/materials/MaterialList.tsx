@@ -19,12 +19,12 @@ const MaterialsList: React.FC<MaterialsListProps> = ({
   return (
     <div>
       <BreadcrumbBox crumbs={breadcrumb} />
-      <div className="flex w-[600px] gap-4">
+      <div className="flex max-w-[42vw] gap-4">
         <Search
           className="border-gray4 bg-white"
           placeholder="Search materials, Subject"
         />
-        <SelectSubject />
+        <SelectSubject className='w-[200px]'/>
         <DatePicker />
       </div>
 
