@@ -13,7 +13,7 @@ import {
   TabPanel,
 } from '@material-tailwind/react';
 import useActiveTab from '@/app/lib/hooks/useActiveTab';
-import Input from '@/app/components/atoms/form/Input';
+import Search from '@/app/components/atoms/form/SearchInput';
 
 const page = () => {
   const data = [
@@ -34,14 +34,21 @@ const page = () => {
   return (
     <main className="">
       <div>
-        <BreadcrumbBox />
+        <BreadcrumbBox
+          crumbs={[
+            {
+              label: 'Live classes',
+              isActive: true,
+            },
+          ]}
+        />
       </div>
       <div className="bg-white p-6 rounded-xl mt-3">
         <Tabs value={activeTab}>
           <div className="p-2 flex items-center justify-between  w-full mb-4">
-            <Input
+            <Search
               placeholder="Search class"
-              className="w-[231px] h-[38px] rounded-full  bg-[#F7F7F7] border border-[#F2F2F2]"
+              className="w-[231px] h-[38px] rounded-full  bg-[#F7F7F7] border border-gray4"
             />
             <TabsHeader
               className="transition-all text-sm px-2 py-2 w-[340px] bg-[#F1F1F1] h-[53px] rounded-full"

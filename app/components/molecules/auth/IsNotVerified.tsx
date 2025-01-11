@@ -13,7 +13,7 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import React from 'react';
 import Button from '../../atoms/form/Button';
-import AuthWrapper from '../../atoms/form/AuthWrapper';
+import AuthWrapper from '../../atoms/form/auth/AuthWrapper';
 // import { Button } from '../../atoms/form/Button';
 
 type IsNotVerifiedProps = {

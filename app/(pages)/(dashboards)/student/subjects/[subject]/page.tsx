@@ -1,23 +1,115 @@
-import { biology1, teacherImg, teacherImg2 } from '@/app/assets';
+'use client';
+import { useState } from 'react';
 import BreadcrumbBox from '@/app/components/atoms/dashboard/subjects/Breadcrumb';
-import Button from '@/app/components/atoms/form/Button';
-import Message from '@/app/components/atoms/icons/dashboard/SideBar/Message';
+import AsignedTeacher from '@/app/components/molecules/dashboard/student/subjects/AsignedTeacher';
+import SubjectSchedule from '@/app/components/molecules/dashboard/student/subjects/SubjectSchedule';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
+import {
+  Tab,
+  TabPanel,
+  Tabs,
+  TabsBody,
+  TabsHeader,
+} from '@material-tailwind/react';
 import Image from 'next/image';
 import React from 'react';
+import { Search } from 'lucide-react';
+import Topics from '@/app/components/organisms/dashboard/students/Topics';
+import Assignments from '@/app/components/organisms/dashboard/students/Assignments';
+import SearchInput from '@/app/components/atoms/form/SearchInput';
 
 function page() {
+  const todayClassesTabs = [
+    {
+      label: 'Topics',
+      value: 'topics',
+      content: <Topics />,
+    },
+    {
+      label: 'Assignments',
+      value: 'assignments',
+      content: <Assignments />,
+    },
+  ];
+
+  const [activeTopicAssignmtentTab, setActiveTopicAssignmentTab] =
+    useState('topics');
+
+  const handleTopicAssignmentTabClick = (tabValue: string) => {
+    setActiveTopicAssignmentTab(tabValue);
+    const urlParams = new URLSearchParams(window.location.search);
+    urlParams.set('tab', tabValue);
+    window.history.pushState(
+      {},
+      '',
+      `${window.location.pathname}?${urlParams}`
+    );
+  };
+
   return (
     <main className="">
       <div>
-        <BreadcrumbBox />
+        <BreadcrumbBox
+          crumbs={[
+            {
+              label: 'Subjects',
+              isActive: false,
+              href: '/student/subjects',
+            },
+            {
+              label: 'Biology',
+              isActive: true,
+            },
+          ]}
+        />
 
-        <div className="grid grid-cols-3 gap-6">
-          <SubjectSchedule />
-          <AssignedTeacher />
+        <div className="flex space-x-3 mt-4">
+          <div className="w-[446px]">
+            <SubjectSchedule />
+          </div>
+          <div className="flex-1 ">
+            <AsignedTeacher />
+          </div>
         </div>
 
+        <div className="bg-white w-full p-6 mt-6 rounded-lg min-h-[398px] h-auto">
+          <Tabs value={activeTopicAssignmtentTab}>
+            <div className="flex justify-between items-center">
+              <SearchInput
+                placeholder="search"
+                className="bg-[#F7F7F7] border border-gray4 rounded-[100px] mb-6 p-2 h-[38px] max-w-[327px]"
+              />
+
+              <TabsHeader
+                className="transition-all text-sm px-2 py-2 mb-6 w-[340px] bg-[#F1F1F1] h-[53px] rounded-full"
+                indicatorProps={{
+                  className: 'bg-transparent rounded-full shadow-none',
+                }}
+              >
+                {todayClassesTabs.map(({ label, value }) => (
+                  <Tab
+                    onClick={() => handleTopicAssignmentTabClick(value)}
+                    className={cn('text-sm text-center', poppins_500.className)}
+                    activeClassName="rounded-full text-white bg-[#21B55A]"
+                    key={value}
+                    value={value}
+                  >
+                    {label}
+                  </Tab>
+                ))}
+              </TabsHeader>
+            </div>
+
+            <TabsBody className="w-full p-0">
+              {todayClassesTabs.map(({ value, content }) => (
+                <TabPanel key={value} value={value} className="p-0">
+                  {content}
+                </TabPanel>
+              ))}
+            </TabsBody>
+          </Tabs>
+        </div>
         <section></section>
       </div>
     </main>
@@ -25,99 +117,3 @@ function page() {
 }
 
 export default page;
-
-export const SubjectSchedule = () => {
-  return (
-    <div className="bg-white flex flex-col gap-6 py-6 px-5 rounded-md mt-4">
-      <header className="flex gap-3 mb-4">
-        <div>
-          <Image src={biology1} alt="Subject Image" />
-        </div>
-        <div>
-          <h1 className={cn('text-sm text-[#101828]', poppins_500.className)}>
-            Biology
-          </h1>
-          <p className={cn('text-sm text-gray', poppins_400.className)}>
-            {' '}
-            <span className="text-primary">4</span>/32 topics covered
-          </p>
-        </div>
-      </header>
-
-      <main className="flex justify-between items-center mb-4">
-        <div>
-          <h3 className={cn('text-sm text-[#101828]', poppins_500.className)}>
-            Monday - 22nd Nov, 2024
-          </h3>
-          <p className={cn('text-sm text-gray', poppins_400.className)}>
-            Next class
-          </p>
-        </div>
-
-        <div>
-          <h3 className={cn('text-sm text-[#101828]', poppins_500.className)}>
-            9:00am{' '}
-          </h3>
-          <p className={cn('text-sm text-gray', poppins_400.className)}>
-            Next class time
-          </p>
-        </div>
-      </main>
-
-      <footer>
-        <p className={cn('text-sm text-gray', poppins_400.className)}>
-          Next class topic
-        </p>
-        <h3 className={cn('text-sm text-[#101828]', poppins_500.className)}>
-          Teacher Professional Development and Student Outcomes
-        </h3>
-      </footer>
-    </div>
-  );
-};
-
-export const AssignedTeacher = () => {
-  return (
-    <div className="bg-white flex flex-col gap-6 py-6 px-5 rounded-md mt-4 col-span-2">
-      <header>
-        <div className="bg-[#f8f8f8] rounded-full py-3 px-2 flex gap-5">
-          <Image src={teacherImg2} alt="teacher-image" />
-          <div>
-            <h3 className={cn('text-sm text-[#101828]', poppins_500.className)}>
-              Jimoh Jamiu
-            </h3>
-            <p className={cn('text-sm text-gray', poppins_400.className)}>
-              {' '}
-              Biology Teacher
-            </p>
-          </div>
-        </div>
-      </header>
-      <main className="flex justify-between items-center mb-4">
-        <div>
-          <h3 className={cn('text-sm text-[#101828]', poppins_500.className)}>
-            jimohjamiu200@gmail.com
-          </h3>
-          <p className={cn('text-sm text-gray', poppins_400.className)}>
-            Email
-          </p>
-        </div>
-
-        <div>
-          <h3 className={cn('text-sm text-[#101828]', poppins_500.className)}>
-            07045321256{' '}
-          </h3>
-          <p className={cn('text-sm text-gray', poppins_400.className)}>
-            Phone number
-          </p>
-        </div>
-      </main>
-      <footer>
-        <Button wide>
-          <Message />
-          <p className="ml-2">Message</p>
-        </Button>
-      </footer>
-    </div>
-  );
-};

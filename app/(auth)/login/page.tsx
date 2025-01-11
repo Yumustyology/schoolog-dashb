@@ -1,4 +1,4 @@
-import AuthWrapper from '@/app/components/atoms/form/AuthWrapper';
+import AuthWrapper from '@/app/components/atoms/form/auth/AuthWrapper';
 import Button from '@/app/components/atoms/form/Button';
 import Input from '@/app/components/atoms/form/Input';
 import {

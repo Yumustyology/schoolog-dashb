@@ -73,7 +73,7 @@ export function BestPerformingSubjectsList({
           {notifications.map((notification, index) => (
             <div
               key={index}
-              className="border p-4 border-[#F2F2F2] bg-[#FCFCFC] rounded-lg mb-4 last:mb-0 grid grid-cols-[1fr_auto] items-center"
+              className="border p-4 border-gray4 bg-[#FCFCFC] rounded-lg mb-4 last:mb-0 grid grid-cols-[1fr_auto] items-center"
             >
               <div>
                 <p
