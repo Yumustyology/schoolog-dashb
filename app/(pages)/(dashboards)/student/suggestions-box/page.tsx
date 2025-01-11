@@ -1,4 +1,5 @@
 'use client';
+import BreadcrumbBox from '@/app/components/atoms/dashboard/subjects/Breadcrumb';
 import Button from '@/app/components/atoms/form/Button';
 import Input from '@/app/components/atoms/form/Input';
 import LibraryIcon from '@/app/components/atoms/icons/dashboard/LibraryIcon';
@@ -57,20 +58,21 @@ function page() {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <h3 className={cn('text-primary text-[16px]', poppins_600.className)}>
-          {' '}
-          Suggestions{' '}
-        </h3>
+        <BreadcrumbBox className="mb-0" crumbs={[
+          {
+            isActive: true,
+            label: "Suggestions",
+          }
+        ]} />
         <Button
           round
           className={cn(
-            'text-white text-[16px]  flex gap-4 py-3 px-8 bg-primary ',
+            'text-white text-[16px] flex gap-4 py-3 px-8 bg-primary ',
             Inter_600.className
           )}
           onClick={() => setSuggestionFormModalOpen(true)}
         >
-          {' '}
-          Make suggestion{' '}
+          Make suggestion
         </Button>
       </div>
 
@@ -79,14 +81,12 @@ function page() {
           return (
             <div
               key={index}
-              className="flex flex-col gap-3 w-[333px] border bg-[#fcfcfc] border-gray4 p-3.5 rounded-md"
+              className="flex flex-col gap-3 w-full border bg-[#fcfcfc] border-gray4 p-3.5 rounded-md"
             >
               <h4 className={cn('text-black text-sm', poppins_500.className)}>
-                {' '}
                 {suggestionBox.title}{' '}
               </h4>
               <p className={cn('text-gray1 text-xs', poppins_400.className)}>
-                {' '}
                 {suggestionBox.content}{' '}
               </p>
             </div>
