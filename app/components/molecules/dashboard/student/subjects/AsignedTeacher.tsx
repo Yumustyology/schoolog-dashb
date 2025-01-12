@@ -1,6 +1,6 @@
 import { teacherImg2 } from '@/app/assets';
 import Button from '@/app/components/atoms/form/Button';
-import Message from '@/app/components/atoms/icons/dashboard/SideBar/Message';
+import Message from '@/app/components/atoms/icons/SideBar/Message';
 import {
   Inter_500,
   poppins_400,

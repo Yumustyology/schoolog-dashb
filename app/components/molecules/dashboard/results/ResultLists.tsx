@@ -1,16 +1,10 @@
 'use client';
-import Dot from '@/app/components/atoms/dashboard/subjects/Dot';
-import Button from '@/app/components/atoms/form/Button';
-import DownloadIcon from '@/app/components/atoms/icons/dashboard/DownloadIcon';
-import ScreenIcon from '@/app/components/atoms/icons/dashboard/ScreenIcon';
-import ShowArrow from '@/app/components/atoms/icons/dashboard/ShowArrow';
-import HideArrow from '@/app/components/atoms/icons/dashboard/SideBar/HideArrow';
+
 import {
   Inter_400,
   Inter_500,
   Inter_600,
   poppins_400,
-  poppins_500,
 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
 import { Card, Typography } from '@material-tailwind/react';
@@ -20,6 +14,11 @@ import EyeOpen from '@/app/components/atoms/icons/EyeOpen';
 import FormModal from '../FormModal';
 import Input from '@/app/components/atoms/form/Input';
 import SelectComp from '@/app/components/atoms/form/Select';
+import HideArrow from '@/app/components/atoms/icons/SideBar/HideArrow';
+import Button from '@/app/components/atoms/form/Button';
+import DownloadIcon from '@/app/components/atoms/icons/dashboard/DownloadIcon';
+import ScreenIcon from '@/app/components/atoms/icons/dashboard/ScreenIcon';
+import Dot from '@/app/components/atoms/dashboard/subjects/Dot';
 
 type TableDescription = {
   id: number;
