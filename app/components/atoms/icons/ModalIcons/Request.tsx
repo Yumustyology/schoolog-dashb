@@ -9,7 +9,7 @@ function Request() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle cx="59" cy="59" r="59" fill="#21B55A" fill-opacity="0.06" />
+      <circle cx="59" cy="59" r="59" fill="#21B55A" fillOpacity="0.06" />
       <circle cx="59.0001" cy="59.2943" r="35.8997" fill="#E9F8EF" />
       <circle
         cx="59"
