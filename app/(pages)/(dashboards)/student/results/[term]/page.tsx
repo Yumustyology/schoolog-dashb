@@ -1,13 +1,12 @@
-
-import { ResultTable } from '@/app/components/molecules/dashboard/results/ResultTable'
-import React from 'react'
+import { ResultTable } from '@/app/components/molecules/dashboard/results/ResultTable';
+import React from 'react';
 
 function page() {
   return (
     <div>
-        <ResultTable/>
+      <ResultTable />
     </div>
-  )
+  );
 }
 
-export default page
+export default page;

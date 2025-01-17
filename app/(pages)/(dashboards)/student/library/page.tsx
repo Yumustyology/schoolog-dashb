@@ -9,13 +9,7 @@ import {
 } from '@material-tailwind/react';
 import { cn } from '@/lib/utils';
 import { poppins_500 } from '@/app/lib/config/font.config';
-import Assignments from '@/app/components/organisms/dashboard/students/Assignments';
 import { SelectSubject } from '@/app/components/atoms/dashboard/materials/SelectSubject';
-import { DatePicker } from '@/app/components/atoms/form/DatePicker';
-import ActivitiesAndEvents from '@/app/components/organisms/dashboard/students/ActivitiesAndEvents';
-import RegisteredActivitiesAndEvents from '@/app/components/organisms/dashboard/students/RegisteredActivitiesAndEvents';
-import CalendarActivities from '@/app/components/organisms/dashboard/students/CalendarActivities';
-import { DrawerSide } from '@/app/components/molecules/dashboard/DrawerSide';
 import BorrowBooksList from '@/app/components/molecules/dashboard/library/BorrowBooksList';
 import AvailableBooks from '@/app/components/organisms/dashboard/students/AvailableBooks';
 

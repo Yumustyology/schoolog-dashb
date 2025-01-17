@@ -1,5 +1,5 @@
-// components/Modal.tsx
-import React from 'react';
+import React, { useEffect } from 'react';
+import ReactDOM from 'react-dom';
 import Cancel from '../atoms/icons/ModalIcons/Cancel';
 import { cn } from '@/lib/utils';
 import { Inter_500 } from '@/app/lib/config/font.config';
@@ -12,11 +12,24 @@ interface ModalProps {
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title }) => {
-  if (!isOpen) return null; // Don't render modal if it's not open
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape' && isOpen && onClose) {
+        onClose();
+      }
+    };
 
-  return (
+    document.addEventListener('keydown', handleKeyDown);
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  const modalContent = (
     <div className="fixed inset-0 bg-[rgb(0,0,0,0.25)] flex items-center p-6 justify-center z-50 w-full ">
-      <div className="bg-white rounded-lg tablet:w-[434px]  xxs:w-full shadow-lg">
+      <div className="bg-white rounded-lg tablet:w-[434px] xxs:w-full shadow-lg">
         <div className="flex justify-between items-center mb-2 px-8 py-2">
           <h2 className={cn('text-lg ', Inter_500.className)}> {title}</h2>
           <button
@@ -31,6 +44,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title }) => {
       </div>
     </div>
   );
+
+  return ReactDOM.createPortal(modalContent, document.body);
 };
 
 export default Modal;

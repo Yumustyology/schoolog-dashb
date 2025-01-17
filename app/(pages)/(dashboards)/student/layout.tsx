@@ -30,7 +30,7 @@ export default async function Layout({
         <AppSidebar />
         <main className="w-screen pl-1">
           <div className=" w-full bg-white py-3">
-            <Header/>
+            <Header />
           </div>
           <div className="p-8 h-full bg-[#F8F8F8]">{children}</div>
         </main>

@@ -30,4 +30,3 @@ export type Announcements = {
   content: string;
   date: string;
 }[];
-

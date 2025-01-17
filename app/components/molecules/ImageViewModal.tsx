@@ -113,6 +113,7 @@ export const CarouselImage = forwardRef<
 >((props: { setActiveFooterImg: any }, ref) => {
   let setActiveIndexTab: (arg: number) => void;
   let activeTab: number = 0;
+
   useImperativeHandle(ref, () => ({
     setActiveIndexTab,
   }));

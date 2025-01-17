@@ -32,7 +32,6 @@ import Activities from '../../atoms/icons/dashboard/SideBar/Activities';
 import Logout from '../../atoms/icons/dashboard/SideBar/Logout';
 import { usePathname } from 'next/navigation';
 import Library from '../../atoms/icons/dashboard/SideBar/Library';
-import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import Result from '../../atoms/icons/dashboard/SideBar/Result';
 import Image from 'next/image';
@@ -46,79 +45,79 @@ const items = [
     title: 'Dashboard',
     url: '/student',
     icon: <Dashboard />,
-    activeIcon: <Dashboard color="#FFFFFF" size="17" />,
+    activeIcon: <Dashboard color="#FFFFFF" />,
   },
   {
     title: 'Subjects',
     url: '/student/subjects',
     icon: <Subjects />,
-    activeIcon: <Subjects color="#FFFFFF" size="17" />,
+    activeIcon: <Subjects color="#FFFFFF" />,
   },
   {
     title: 'Materials',
     url: '/student/materials',
     icon: <Material />,
-    activeIcon: <Material color="#FFFFFF" size="17" />,
+    activeIcon: <Material color="#FFFFFF" />,
   },
   {
     title: 'Timetable',
     url: '/student/timetable',
     icon: <Timetable />,
-    activeIcon: <Timetable color="#FFFFFF" size="17" />,
+    activeIcon: <Timetable color="#FFFFFF" />,
   },
   {
     title: 'Live classes',
     url: '/student/live-classes',
     icon: <LiveClassIcon />,
-    activeIcon: <LiveClassIcon color="#FFFFFF" size="17" />,
+    activeIcon: <LiveClassIcon color="#FFFFFF" />,
   },
   {
     title: 'Attendance',
     url: '/student/attendance',
     icon: <Attendance />,
-    activeIcon: <Attendance color="#FFFFFF" size="17" />,
+    activeIcon: <Attendance color="#FFFFFF" />,
   },
   {
     title: 'Library',
     url: '/student/library',
     icon: <Library />,
-    activeIcon: <Library color="#FFFFFF" size="17" />,
+    activeIcon: <Library color="#FFFFFF" />,
   },
   {
     title: 'Message',
     url: '/student/message',
     icon: <Message />,
-    activeIcon: <Message color="#FFFFFF" size="17" />,
+    activeIcon: <Message color="#FFFFFF" />,
   },
   {
     title: 'Activities & events',
     url: '/student/activities',
     icon: <Activities />,
-    activeIcon: <Activities color="#FFFFFF" size="17" />,
+    activeIcon: <Activities color="#FFFFFF" />,
   },
   {
     title: 'Results',
     url: '/student/results',
     icon: <Result />,
-    activeIcon: <Result color="#FFFFFF" size="17" />,
+    activeIcon: <Result color="#FFFFFF" />,
   },
   {
     title: 'Payments',
     url: '/student/payments',
     icon: <PaymentIcon />,
-    activeIcon: <PaymentIcon color="#FFFFFF" size="17" />,
+    activeIcon: <PaymentIcon color="#FFFFFF" />,
   },
   {
     title: 'Announcement',
     url: '/student/announcements',
     icon: <Annoucement />,
-    activeIcon: <Annoucement color="#FFFFFF" size="17" />,
+    activeIcon: <Annoucement color="#FFFFFF" />,
   },
   {
     title: 'Suggestion box',
     url: '/student/suggestions-box',
     icon: <SuggestionBoxIcon />,
-    activeIcon: <SuggestionBoxIcon color="#FFFFFF" size="17" />,
+    activeIcon: <SuggestionBoxIcon color="#FFFFFF" />,
   },
 ];
 export function AppSidebar() {
@@ -200,7 +199,16 @@ export function AppSidebar() {
                 asChild
               >
                 <Link href="/student/settings">
-                  <Settings />
+                  {pathname === '/student/settings' ? (
+                    <div>
+                      <Settings color="#FFFFFF" />
+                    </div>
+                  ) : (
+                    <div>
+                      <Settings />
+                    </div>
+                  )}
+
                   <span>Settings</span>
                 </Link>
               </SidebarMenuButton>

@@ -24,7 +24,10 @@ module.exports = withMT({
         gray5: '#E0E0E0',
         gray6: '#4F4F4F',
         gray7: '#F4F4F4',
+        gray8: '#1D4241',
+        gray9: '#434343',
         white: '#FFFFFF',
+        red: '#EB5757',
         background: 'var(--background)',
         foreground: 'var(--foreground)',
         sidebar: {

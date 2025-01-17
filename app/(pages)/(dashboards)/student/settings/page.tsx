@@ -11,6 +11,7 @@ import EditProfile from '@/app/components/organisms/settings/EditProfile';
 import SecuritySettings from '@/app/components/organisms/settings/SecuritySettings';
 import NotificationSettings from '@/app/components/organisms/settings/NotificationSettings';
 import PreferenceSettings from '@/app/components/organisms/settings/PreferenceSettings';
+import { teacherImg2 } from '@/app/assets';
 
 const page = () => {
   const data = [
@@ -44,12 +45,7 @@ const page = () => {
         <div className="w-full h-[289px] rounded-t-lg overflow-hidden bg-white relative">
           <SettingCardBg />
           <div className="h-[110px] w-[110px] border-[3px] border-white rounded-full absolute top-16 left-6 overflow-hidden">
-            <Image
-              alt="avatar"
-              height={130}
-              width={130}
-              src={'/assets/images/avatar.png'}
-            />
+            <Image alt="avatar" height={130} width={130} src={teacherImg2} />
           </div>
           <div className="absolute pt-6 left-36 w-full">
             <p className={cn(Inter_600.className, 'text-xl text-black mb-1.5')}>
