@@ -346,7 +346,7 @@ function CalendarActivities() {
           height="129"
           rx="7.5"
           fill="#56CCF2"
-          fill-opacity="0.08"
+          fillOpacity="0.08"
         />
         <rect
           x="148.5"
@@ -400,7 +400,7 @@ function CalendarActivities() {
           height="129"
           rx="7.5"
           fill="#EB5757"
-          fill-opacity="0.08"
+          fillOpacity="0.08"
         />
         <rect
           x="320.5"
@@ -454,7 +454,7 @@ function CalendarActivities() {
           height="129"
           rx="7.5"
           fill="#27AE60"
-          fill-opacity="0.08"
+          fillOpacity="0.08"
         />
         <rect
           x="682.5"
@@ -512,7 +512,7 @@ function CalendarActivities() {
           height="129"
           rx="7.5"
           fill="#F2C94C"
-          fill-opacity="0.08"
+          fillOpacity="0.08"
         />
         <rect
           x="860.5"
@@ -558,7 +558,7 @@ function CalendarActivities() {
           height="129"
           rx="7.5"
           fill="#2D9CDB"
-          fill-opacity="0.08"
+          fillOpacity="0.08"
         />
         <rect
           x="860.5"
@@ -614,7 +614,7 @@ function CalendarActivities() {
             height="130"
             rx="8"
             fill="#F2994A"
-            fill-opacity="0.08"
+            fillOpacity="0.08"
             shape-rendering="crispEdges"
           />
           <rect

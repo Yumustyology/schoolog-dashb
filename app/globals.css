@@ -204,3 +204,26 @@ html {
     @apply bg-background text-foreground;
   }
 }
+
+
+
+
+
+/* BIG_REACT_CALENDAR_STYLE */
+
+/* .rbc-event {
+  background-color: #4CAF50 !important;
+  color: white !important;
+  height: fit-content !important;
+  border-radius: 5px;
+  padding: 5px;
+} */
+
+.rbc-day, .rbc-day-bg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center !important;
+  height: 100%;
+  vertical-align: middle;
+}

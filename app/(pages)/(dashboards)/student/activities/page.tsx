@@ -15,6 +15,8 @@ import RegisteredActivitiesAndEvents from '@/app/components/organisms/dashboard/
 import CalendarActivities from '@/app/components/organisms/dashboard/students/CalendarActivities';
 import SelectComp from '@/app/components/atoms/form/Select';
 import SearchInput from '@/app/components/atoms/form/SearchInput';
+import { MyActivitiesCalendar } from '@/app/components/organisms/dashboard/MyActivitiesCalendar';
+// import MyActivitiesCalendar from '@/app/components/organisms/dashboard/MyActivitiesCalendar';
 
 function page() {
   const todayClassesTabs = [
@@ -31,7 +33,7 @@ function page() {
     {
       label: 'Calender',
       value: 'calender',
-      content: <CalendarActivities />,
+      content: <MyActivitiesCalendar />,
     },
   ];
 
