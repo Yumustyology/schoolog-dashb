@@ -1,46 +1,14 @@
-// 'use client';
-
-// import { ToolbarProps as RBBToolbarProps } from 'react-big-calendar';
-// import React, { useState } from 'react';
-// import { DatePicker } from '../../atoms/form/DatePicker';
-// import { cn } from '@/lib/utils';
-// import { poppins_400, poppins_600 } from '@/app/lib/config/font.config';
-// import moment from 'moment';
-
-// export const CalendarHeader = (toolbarProps: RBBToolbarProps) => {
-//   const { label, onNavigate, onView, views, view } = toolbarProps;
-//   console.log(toolbarProps)
-//   const currentYear = moment().year();
-
-//   return (
-//     <div className="flex justify-between items-center mb-4">
-//       <div className={cn('text-left text-2xl text-[#071E3B]', poppins_600.className)}>{currentYear} calendar</div>
-
-//     </div>
-//   );
-// };
-
-// <DatePicker
-// className={cn(
-//   'text-[11px] cursor-pointer text-gray6 2 w-[157px] border-gray4 bg-[#F7F7F8] flex justify-between rounded-full h-[38px] items-center p-2.5',
-//   poppins_400.className
-// )}
-// // placeholder={moment(Date.now()).format('EEEE/MMMM/d')}
-// placeholder={moment(Date.now()).format('dddd, MMMM D')}
-// />
-
 'use client';
 
 import { ToolbarProps as RBBToolbarProps } from 'react-big-calendar';
-import React from 'react';
+import React, { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { poppins_400, poppins_600 } from '@/app/lib/config/font.config';
-import moment from 'moment';
 import Button from '../../atoms/form/Button';
 
 export const CalendarHeader = (toolbarProps: RBBToolbarProps) => {
   const { label, onNavigate, onView, views, view } = toolbarProps;
-  const currentYear = moment().year();
+  
 
   return (
     <div className="flex justify-between items-center my-7">

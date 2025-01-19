@@ -123,7 +123,7 @@ function Header() {
               ))}
             </div>
           ) : (
-            <div className="flex w-full h-screen">
+            <div className="flex w-full h-[25rem]">
               <div className="flex flex-col justify-center items-center text-center mx-auto h-full my-auto">
                 <NotificationBigIcon />
                 <h1

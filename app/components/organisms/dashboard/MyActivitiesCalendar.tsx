@@ -128,7 +128,7 @@ export const MyActivitiesCalendar = () => (
       events={activitiesAndEvents}
       startAccessor="start"
       endAccessor="end"
-      defaultView="week"
+      defaultView="month"
       style={{ height: 800 }}
       components={{
         toolbar: CalendarHeader,
