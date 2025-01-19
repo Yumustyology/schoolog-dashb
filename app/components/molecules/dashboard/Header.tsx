@@ -123,7 +123,7 @@ function Header() {
               ))}
             </div>
           ) : (
-            <div className="flex w-full h-full">
+            <div className="flex w-full h-screen">
               <div className="flex flex-col justify-center items-center text-center mx-auto h-full my-auto">
                 <NotificationBigIcon />
                 <h1
@@ -173,7 +173,7 @@ const HeaderInfo = ({ truncateLength = 0 }: { truncateLength?: number }) => (
 );
 
 export function ProfileMenu() {
-  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(true);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   return (
     <>
       <Menu>
