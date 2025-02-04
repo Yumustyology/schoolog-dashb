@@ -84,12 +84,7 @@ export function OverAllBestSubjectsList({
                 >
                   {notification.title}
                 </p>
-                <p
-                  className={cn(
-                    'text-[#4F4F4F] text-xs',
-                    poppins_400.className
-                  )}
-                >
+                <p className={cn('text-gray6 text-xs', poppins_400.className)}>
                   {notification.description}
                 </p>
               </div>

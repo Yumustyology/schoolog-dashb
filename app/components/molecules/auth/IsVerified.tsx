@@ -18,7 +18,7 @@ function IsVerified() {
           <div className="text-center">
             <h1
               className={cn(
-                'mb-4 text-[28px] text-[#101828]',
+                'mb-4 text-[28px] text-black1',
                 Inter_800.className
               )}
             >

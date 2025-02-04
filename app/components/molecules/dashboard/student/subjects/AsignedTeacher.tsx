@@ -1,6 +1,6 @@
 import { teacherImg2 } from '@/app/assets';
 import Button from '@/app/components/atoms/form/Button';
-import Message from '@/app/components/atoms/icons/dashboard/SideBar/Message';
+import Message from '@/app/components/atoms/icons/SideBar/Message';
 import {
   Inter_500,
   poppins_400,
@@ -40,7 +40,7 @@ function AsignedTeacher() {
       <CardContent className="flex flex-col gap-6 w-full px-0 ">
         <section className="flex justify-between items-center w-full">
           <div>
-            <h3 className={cn('text-sm text-[#101828]', Inter_500.className)}>
+            <h3 className={cn('text-sm text-black1', Inter_500.className)}>
               jimohjamiu200@gmail.com
             </h3>
             <p className={cn('text-sm text-gray', poppins_400.className)}>
@@ -49,7 +49,7 @@ function AsignedTeacher() {
           </div>
 
           <div>
-            <h3 className={cn('text-sm text-[#101828]', poppins_500.className)}>
+            <h3 className={cn('text-sm text-black1', poppins_500.className)}>
               07045321256{' '}
             </h3>
             <p className={cn('text-sm text-gray', poppins_400.className)}>
@@ -60,7 +60,7 @@ function AsignedTeacher() {
 
         <section className="flex justify-between items-center">
           <div>
-            <h3 className={cn('text-sm text-[#101828]', poppins_500.className)}>
+            <h3 className={cn('text-sm text-black1', poppins_500.className)}>
               Admin Office
             </h3>
             <p className={cn('text-sm text-gray', poppins_400.className)}>
@@ -69,7 +69,7 @@ function AsignedTeacher() {
           </div>
 
           <div>
-            <h3 className={cn('text-sm text-[#101828]', poppins_500.className)}>
+            <h3 className={cn('text-sm text-black1', poppins_500.className)}>
               9:00am - 12:00pm
             </h3>
             <p

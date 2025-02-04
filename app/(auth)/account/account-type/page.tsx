@@ -23,17 +23,14 @@ function page() {
           <div className="mb-12">
             <h1
               className={cn(
-                'text-[#101828] text-3xl leading-10',
+                'text-black1 text-3xl leading-10',
                 poppins_600.className
               )}
             >
               Select Your <span className="text-primary"> Account Type </span>
             </h1>
             <p
-              className={cn(
-                'text-[#4F4F4F] text-base mt-4',
-                poppins_400.className
-              )}
+              className={cn('text-gray6 text-base mt-4', poppins_400.className)}
             >
               Lorem ipsum dolor sit amet consectetur. Blandit nibh convallis et
               imperdiet lobortis et. Egestas vitae bibendum morbi.

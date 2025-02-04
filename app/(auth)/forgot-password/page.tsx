@@ -12,10 +12,7 @@ function ForgotPassword() {
         <div className="flex flex-col gap-4  ">
           <div className="mx-auto w-full xxs:px-2 tablet:px-10  laptop:px-28">
             <h2
-              className={cn(
-                'text-[#101828] text-2xl mb-4',
-                Inter_800.className
-              )}
+              className={cn('text-black1 text-2xl mb-4', Inter_800.className)}
             >
               Forgot Password
             </h2>

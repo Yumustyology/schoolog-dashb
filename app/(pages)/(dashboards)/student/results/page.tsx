@@ -37,7 +37,7 @@ function page() {
         <div className="bg-white px-8 py-6 mt-6 rounded-lg h-[398px] flex-1">
           <div className="flex justify-between items-center">
             <p className={cn('text-gray6 text-[16px]', poppins_500.className)}>
-              Attendance metrics
+              Results
             </p>
 
             <SelectComp

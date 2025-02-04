@@ -4,7 +4,7 @@ import axios, {
   InternalAxiosRequestConfig,
 } from 'axios';
 import localforage from 'localforage';
-import showToast from '../utils/toast';
+// import showToast from '../utils/toast';
 import { appConfig } from './app.config';
 
 export const baseURL = `${appConfig.axiosBaseUrl}/user/`;
@@ -21,11 +21,11 @@ export const redirectUser = async (response: AxiosResponse) => {
   const { origin, pathname } = window.location;
 
   if (response.status === 401) {
-    showToast(
-      response.data?.message ||
-        'Login has expired, kindly login again to proceed',
-      'error'
-    );
+    // showToast(
+    //   response.data?.message ||
+    //     'Login has expired, kindly login again to proceed',
+    //   'error'
+    // );
     setTimeout(async () => {
       await localforage.clear();
       sessionStorage.setItem('returnTo', pathname);

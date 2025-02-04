@@ -1,6 +1,5 @@
 import Dot from '@/app/components/atoms/dashboard/subjects/Dot';
 import DownloadIcon from '@/app/components/atoms/icons/dashboard/DownloadIcon';
-import WordIcon from '@/app/components/atoms/icons/dashboard/materials/Word';
 import { Inter_500, poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
 import { MaterialType } from '@/types/materials.types';

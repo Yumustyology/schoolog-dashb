@@ -1,7 +1,5 @@
 import {
-  Inter_400,
-  poppins_400,
-  poppins_500,
+  Inter_400
 } from '@/app/lib/config/font.config';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';

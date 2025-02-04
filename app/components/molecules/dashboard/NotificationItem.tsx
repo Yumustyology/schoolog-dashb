@@ -2,11 +2,11 @@ import { Inter_500, poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
 import Image, { StaticImageData } from 'next/image';
 import React from 'react';
-import HideArrow from '../../atoms/icons/dashboard/SideBar/HideArrow';
+import HideArrow from '../../atoms/icons/SideBar/HideArrow';
 import ClockIcon from '../../atoms/icons/ClockIcon';
-import Result from '../../atoms/icons/dashboard/SideBar/Result';
-import Payment from '../../atoms/icons/dashboard/SideBar/Payment';
-import Annoucement from '../../atoms/icons/dashboard/SideBar/Annoucement';
+import Result from '../../atoms/icons/SideBar/Result';
+import Payment from '../../atoms/icons/SideBar/Payment';
+import Annoucement from '../../atoms/icons/SideBar/Annoucement';
 import Ripples from 'react-ripples';
 
 export type NotificationItemProps = {

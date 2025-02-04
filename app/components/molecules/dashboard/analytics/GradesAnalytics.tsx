@@ -1,7 +1,8 @@
+'use client';
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 import ArrowUpIcon from '@/app/components/atoms/icons/ArrowUpIcon';
 import {
   Inter_400,
-  Inter_500,
   Inter_800,
   poppins_500,
 } from '@/app/lib/config/font.config';
@@ -110,7 +111,7 @@ const GradesAnalytics = () => {
   return (
     <div>
       <div className="flex items-end gap-3">
-        <p className="text-[#101828] flex gap-1 items-end">
+        <p className="text-black1 flex gap-1 items-end">
           <h2 className={cn(Inter_800.className, 'text-3xl')}>90</h2>
           <span className={Inter_400.className}>/</span>
           <span className={cn(Inter_400.className, 'text-gray3')}>

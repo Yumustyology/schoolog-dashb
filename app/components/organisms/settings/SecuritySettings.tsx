@@ -9,9 +9,7 @@ const SecuritySettings = () => {
     <div>
       <div className="flex items-start justify-between pb-4 border-b border-b-[#E5E5EA] mb-8">
         <div>
-          <h2
-            className={cn(Inter_600.className, 'text-[#101828] mb-2 text-lg')}
-          >
+          <h2 className={cn(Inter_600.className, 'text-black1 mb-2 text-lg')}>
             Security Settings
           </h2>
           <p className={cn(Inter_400.className, 'text-[#475467] text-sm')}>
@@ -23,10 +21,7 @@ const SecuritySettings = () => {
         <Button className="bg-transparent h-32 text-left flex gap-12 justify-between items-center border border-[#E5E5EA] p-5 rounded-lg">
           <div>
             <h2
-              className={cn(
-                `mb-2 text-base text-[#101828]`,
-                Inter_600.className
-              )}
+              className={cn(`mb-2 text-base text-black1`, Inter_600.className)}
             >
               Change password
             </h2>
@@ -42,10 +37,7 @@ const SecuritySettings = () => {
         <Button className="text-left bg-transparent h-32 cursor-pointer flex gap-12 justify-between items-center border border-[#E5E5EA] p-5 rounded-lg">
           <div>
             <h2
-              className={cn(
-                `mb-2 text-base text-[#101828]`,
-                Inter_600.className
-              )}
+              className={cn(`mb-2 text-base text-black1`, Inter_600.className)}
             >
               Active sessions
             </h2>

@@ -1,13 +1,8 @@
 'use client';
-import { Calendar, Home, Inbox, Search } from 'lucide-react';
-
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
@@ -15,112 +10,19 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
-import {
-  Inter_400,
-  Inter_500,
-  Inter_800,
-  poppins_600,
-} from '@/app/lib/config/font.config';
-import Dashboard from '../../atoms/icons/dashboard/SideBar/Dashboard';
-import Subjects from '../../atoms/icons/dashboard/SideBar/Subjects';
-import Material from '../../atoms/icons/dashboard/SideBar/Material';
-import Timetable from '../../atoms/icons/dashboard/SideBar/Timetable';
-import Attendance from '../../atoms/icons/dashboard/SideBar/Attendance';
-import Message from '../../atoms/icons/dashboard/SideBar/Message';
-import Annoucement from '../../atoms/icons/dashboard/SideBar/Annoucement';
-import Activities from '../../atoms/icons/dashboard/SideBar/Activities';
-import Logout from '../../atoms/icons/dashboard/SideBar/Logout';
+import { Inter_500 } from '@/app/lib/config/font.config';
+import Logout from '../../atoms/icons/SideBar/Logout';
 import { usePathname } from 'next/navigation';
-import Library from '../../atoms/icons/dashboard/SideBar/Library';
 import Link from 'next/link';
-import Result from '../../atoms/icons/dashboard/SideBar/Result';
 import Image from 'next/image';
-import Settings from '../../atoms/icons/dashboard/SideBar/Settings';
-import LiveClassIcon from '../../atoms/icons/dashboard/SideBar/LiveClassIcon';
-import PaymentIcon from '../../atoms/icons/dashboard/SideBar/PaymentIcon';
-import SuggestionBoxIcon from '../../atoms/icons/dashboard/SideBar/SuggestionBoxIcon';
+import Settings from '../../atoms/icons/SideBar/Settings';
+import { shoolSidebarItems, studentSidebarItems } from '@/app/lib/sidebarData';
 
-const items = [
-  {
-    title: 'Dashboard',
-    url: '/student',
-    icon: <Dashboard />,
-    activeIcon: <Dashboard color="#FFFFFF" />,
-  },
-  {
-    title: 'Subjects',
-    url: '/student/subjects',
-    icon: <Subjects />,
-    activeIcon: <Subjects color="#FFFFFF" />,
-  },
-  {
-    title: 'Materials',
-    url: '/student/materials',
-    icon: <Material />,
-    activeIcon: <Material color="#FFFFFF" />,
-  },
-  {
-    title: 'Timetable',
-    url: '/student/timetable',
-    icon: <Timetable />,
-    activeIcon: <Timetable color="#FFFFFF" />,
-  },
-  {
-    title: 'Live classes',
-    url: '/student/live-classes',
-    icon: <LiveClassIcon />,
-    activeIcon: <LiveClassIcon color="#FFFFFF" />,
-  },
-  {
-    title: 'Attendance',
-    url: '/student/attendance',
-    icon: <Attendance />,
-    activeIcon: <Attendance color="#FFFFFF" />,
-  },
-  {
-    title: 'Library',
-    url: '/student/library',
-    icon: <Library />,
-    activeIcon: <Library color="#FFFFFF" />,
-  },
-  {
-    title: 'Message',
-    url: '/student/message',
-    icon: <Message />,
-    activeIcon: <Message color="#FFFFFF" />,
-  },
-  {
-    title: 'Activities & events',
-    url: '/student/activities',
-    icon: <Activities />,
-    activeIcon: <Activities color="#FFFFFF" />,
-  },
-  {
-    title: 'Results',
-    url: '/student/results',
-    icon: <Result />,
-    activeIcon: <Result color="#FFFFFF" />,
-  },
-  {
-    title: 'Payments',
-    url: '/student/payments',
-    icon: <PaymentIcon />,
-    activeIcon: <PaymentIcon color="#FFFFFF" />,
-  },
-  {
-    title: 'Announcement',
-    url: '/student/announcements',
-    icon: <Annoucement />,
-    activeIcon: <Annoucement color="#FFFFFF" />,
-  },
-  {
-    title: 'Suggestion box',
-    url: '/student/suggestions-box',
-    icon: <SuggestionBoxIcon />,
-    activeIcon: <SuggestionBoxIcon color="#FFFFFF" />,
-  },
-];
-export function AppSidebar() {
+export function AppSidebar({
+  type,
+}: {
+  type: 'school' | 'student' | 'parent';
+}) {
   const pathname = usePathname();
   const { state } = useSidebar();
 
@@ -153,7 +55,12 @@ export function AppSidebar() {
         >
           <SidebarGroup>
             <SidebarMenu className="flex flex-col gap-3">
-              {items.map((item) => (
+              {(type == 'student'
+                ? studentSidebarItems
+                : type == 'school'
+                  ? shoolSidebarItems
+                  : []
+              ).map((item) => (
                 <SidebarMenuItem className="w-full" key={item.title}>
                   <SidebarMenuButton
                     className={cn(

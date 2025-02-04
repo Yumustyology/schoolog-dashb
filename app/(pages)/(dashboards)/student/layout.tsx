@@ -1,8 +1,7 @@
 import { cookies } from 'next/headers';
 import NextTopLoader from 'nextjs-toploader';
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/app/components/molecules/dashboard/AsideBar';
-import Search from '@/app/components/atoms/form/SearchInput';
 import Header from '@/app/components/molecules/dashboard/Header';
 
 export default async function Layout({
@@ -27,7 +26,7 @@ export default async function Layout({
         shadow="0 0 10px #34AD5D,0 0 5px #34AD5D"
       />
       <SidebarProvider defaultOpen={defaultOpen}>
-        <AppSidebar />
+        <AppSidebar type="student" />
         <main className="w-screen pl-1">
           <div className=" w-full bg-white py-3">
             <Header />

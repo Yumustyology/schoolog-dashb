@@ -1,11 +1,9 @@
 import Link from 'next/link';
 import React from 'react';
-import Student from '../../atoms/icons/AuthTypeIcons/Student';
 import { cn } from '@/lib/utils';
 import {
   poppins_400,
   poppins_500,
-  poppins_600,
 } from '@/app/lib/config/font.config';
 type AccountType = {
   Type: React.FC;
@@ -26,9 +24,7 @@ function AccountType({ Type, name, description }: AccountType) {
       </div>
 
       <div>
-        <h3
-          className={cn('text-[#101828] text-base mb-2', poppins_500.className)}
-        >
+        <h3 className={cn('text-black1 text-base mb-2', poppins_500.className)}>
           {' '}
           {name}{' '}
         </h3>

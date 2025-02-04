@@ -2,7 +2,7 @@ import { poppins_500, poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import React from 'react';
-import Timetable from '../../icons/dashboard/SideBar/Timetable';
+import Timetable from '../../icons/SideBar/Timetable';
 import DiscoverIcon from '../../icons/DiscoverIcon';
 
 const UpcomingEventPillBox = ({ subject }: { subject?: any }) => {

@@ -3,7 +3,6 @@ import CalendarIcon from '@/app/components/atoms/icons/dashboard/CalendarIcon';
 import CategoryIcon from '@/app/components/atoms/icons/dashboard/CategoryIcon';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import {
-  activitiesAndEvents,
   registeredActivitiesAndEvents,
 } from '@/constants';
 import { cn } from '@/lib/utils';

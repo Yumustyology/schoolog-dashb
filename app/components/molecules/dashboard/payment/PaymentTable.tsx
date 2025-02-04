@@ -1,41 +1,22 @@
 'use client';
-import Dot from '@/app/components/atoms/dashboard/subjects/Dot';
 import Button from '@/app/components/atoms/form/Button';
 import DownloadIcon from '@/app/components/atoms/icons/dashboard/DownloadIcon';
-import ScreenIcon from '@/app/components/atoms/icons/dashboard/ScreenIcon';
-import ShowArrow from '@/app/components/atoms/icons/dashboard/ShowArrow';
-import HideArrow from '@/app/components/atoms/icons/dashboard/SideBar/HideArrow';
 import AcrobatPdfIcon from '@/app/components/atoms/icons/dashboard/materials/AcrobatPdfIcon';
 import {
-  Inter_400,
-  Inter_500,
-  Inter_600,
   poppins_400,
   poppins_500,
   poppins_600,
 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
-import { Card, Drawer, Typography } from '@material-tailwind/react';
+import { Card, Typography } from '@material-tailwind/react';
 import { useState } from 'react';
 import { DrawerSide } from '../DrawerSide';
 import SearchInput from '@/app/components/atoms/form/SearchInput';
 import SelectComp from '@/app/components/atoms/form/Select';
-import Timetable from '@/app/components/atoms/icons/dashboard/SideBar/Timetable';
 import { DatePicker } from '@/app/components/atoms/form/DatePicker';
 import EyeClose from '@/app/components/atoms/icons/EyeClose';
 
-// Type for a single table description
-type TableDescription = {
-  id: number;
-  class: string;
-  term: string;
-  date: string;
-  time: string;
-  number_of_subjects: number;
-  open: boolean;
-};
 
-// Type for each row in the table
 type TableRow = {
   paymentID: string;
   amount: string;
@@ -269,7 +250,7 @@ export function PaymentTable(): JSX.Element {
                 <Typography>
                   <h2
                     className={cn(
-                      'text-[16px] text-[#101828] mb-1.5',
+                      'text-[16px] text-black1 mb-1.5',
                       poppins_500.className
                     )}
                   >

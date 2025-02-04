@@ -6,12 +6,14 @@ import Link from 'next/link';
 
 const DashboardLinkBox = ({
   title,
+  baseText,
   count,
   to,
   icon,
   iconBgColor,
 }: {
   title?: string;
+  baseText?: string | ReactNode;
   count: string | ReactNode;
   to: string;
   icon: ReactNode;
@@ -51,14 +53,17 @@ const DashboardLinkBox = ({
         <p
           className={cn(
             'text-gray6 text-sm font-normal',
+            baseText && 'text-base text-gray1',
             poppins_400.className
           )}
         >
-          View all
+          {baseText || 'View all'}
         </p>
-        <Link href={to}>
-          <ArrowRightIcon />
-        </Link>
+        {to ? (
+          <Link href={to}>
+            <ArrowRightIcon />
+          </Link>
+        ) : null}
       </div>
     </div>
   );

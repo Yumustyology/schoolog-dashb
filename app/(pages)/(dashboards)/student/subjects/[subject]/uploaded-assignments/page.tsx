@@ -27,15 +27,14 @@ function page() {
   const onClose = () => setIsModalOpen(false);
   return (
     <main className="">
-      <BreadcrumbBox />
+      <BreadcrumbBox crumbs={[
+        {isActive: true,label: 'foo'}
+      ]} />
 
       <div className="bg-white w-full p-6 mt-6 rounded-lg min-h-[826px] h-auto relative">
         <div className="border-b border-[#E5E5EA] mb-8">
           <h2
-            className={cn(
-              'text-[#101828] text-xl mb-3 ',
-              poppins_500.className
-            )}
+            className={cn('text-black1 text-xl mb-3 ', poppins_500.className)}
           >
             The Impact of Social Media Marketing on Brand Loyalty Among
             Millennials
@@ -58,7 +57,7 @@ function page() {
           <div className="mt-[49px]">
             <h2
               className={cn(
-                'text-[#101828] text-[18px] mb-2',
+                'text-black1 text-[18px] mb-2',
                 poppins_500.className
               )}
             >
@@ -103,6 +102,7 @@ function page() {
       </div>
       {isModalOpen && (
         <YNmodal
+        submit={()=>console.log('ff')}
           isOpen={true}
           onClose={onClose}
           title="Submit assignment"

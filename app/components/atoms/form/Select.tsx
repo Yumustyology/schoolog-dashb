@@ -59,7 +59,7 @@ const SelectComp: React.FC<SelectCompProps> = ({
         <label
           htmlFor={htmlFor}
           className={cn(
-            'block text-left w-full text-base mb-2 text-[#4F4F4F]',
+            'block text-left w-full text-base mb-2 text-gray6',
             labelClassName,
             poppins_400.className
           )}

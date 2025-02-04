@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 
 const ModeSwitch = ({ className }: { className?: string }) => {
@@ -6,7 +7,9 @@ const ModeSwitch = ({ className }: { className?: string }) => {
 
   const toggle = () => {
     if (syncChecked) {
-      document.body.setAttribute('data-dark-mode', !isPressed + '');
+      if (typeof window !== 'undefined') {
+        document.body.setAttribute('data-dark-mode', !isPressed + '');
+      }
     }
     setIsPressed(!isPressed);
   };
@@ -80,7 +83,7 @@ const ModeSwitch = ({ className }: { className?: string }) => {
                 />
                 <path
                   fill="url(#b)"
-                  fill-opacity=".4"
+                  fillOpacity=".4"
                   fill-rule="evenodd"
                   d="M709.7 164.481c-17.939 14.394-28.018 37.148-28.018 57.504h61.648c.087-13.669 11.194-24.723 24.883-24.723h18.56c13.689 0 24.796 11.054 24.883 24.723H873c0-20.356-10.078-43.11-28.018-57.504C827.043 150.086 802.711 142 777.341 142c-25.37 0-49.701 8.086-67.641 22.481Z"
                   clipRule="evenodd"
@@ -146,12 +149,12 @@ const ModeSwitch = ({ className }: { className?: string }) => {
                 />
                 <path
                   fill="#6FB7D6"
-                  fill-opacity=".53"
+                  fillOpacity=".53"
                   d="M415 372.657 643.398 213v159.657H415Z"
                 />
                 <path
                   fill="url(#c)"
-                  fill-opacity=".4"
+                  fillOpacity=".4"
                   d="M415 372.657 643.398 213v159.657H415Z"
                 />
                 <path fill="#000" d="M59.871 212.892H95.35v656.367H59.871z" />
@@ -179,7 +182,7 @@ const ModeSwitch = ({ className }: { className?: string }) => {
                 />
                 <path
                   fill="url(#e)"
-                  fill-opacity=".4"
+                  fillOpacity=".4"
                   fill-rule="evenodd"
                   d="M1359.3 372.549H159.657v337.053H949.06l410.24-236.853v-100.2Z"
                   clipRule="evenodd"
@@ -194,13 +197,13 @@ const ModeSwitch = ({ className }: { className?: string }) => {
                 />
                 <path
                   fill="url(#g)"
-                  fill-opacity=".3"
+                  fillOpacity=".3"
                   d="M192.919 709.602h443.492V798.3H192.919z"
                 />
                 <path fill="#FF0B0B" d="M192.919.016h443.492v88.698H192.919z" />
                 <path
                   fill="url(#h)"
-                  fill-opacity=".28"
+                  fillOpacity=".28"
                   d="M192.919.016h443.492v88.698H192.919z"
                 />
                 <path
@@ -209,7 +212,7 @@ const ModeSwitch = ({ className }: { className?: string }) => {
                 />
                 <path
                   fill="url(#i)"
-                  fill-opacity=".2"
+                  fillOpacity=".2"
                   d="M1175.25 396.941h221.746v44.349H1175.25z"
                 />
                 <path
@@ -218,7 +221,7 @@ const ModeSwitch = ({ className }: { className?: string }) => {
                 />
                 <path
                   fill="url(#j)"
-                  fill-opacity=".2"
+                  fillOpacity=".2"
                   d="M1301.65 212.892H1448l-90.92 159.657h-148.57l93.14-159.657Z"
                 />
                 <circle cx="476.754" cy="869.259" r="68.741" fill="url(#k)" />
@@ -485,7 +488,7 @@ const ModeSwitch = ({ className }: { className?: string }) => {
                   cy="143"
                   r="140"
                   fill="url(#aa)"
-                  fill-opacity=".2"
+                  fillOpacity=".2"
                 />
                 <circle
                   cx="158"
@@ -512,7 +515,7 @@ const ModeSwitch = ({ className }: { className?: string }) => {
                 />
                 <path
                   fill="url(#bb)"
-                  fill-opacity=".5"
+                  fillOpacity=".5"
                   fill-rule="evenodd"
                   d="M267.721 234.712C241.49 266.061 202.073 286 158 286c-43.749 0-82.91-19.647-109.141-50.598-11.328-8.104-27.18-7.069-37.353 3.104-11.325 11.325-11.325 29.687 0 41.012l44.548 44.548A28.99 28.99 0 0 0 63 329.203V407c0 12.15 9.85 22 22 22h44c12.15 0 22-9.85 22-22v-28.517c2.123.341 4.293.517 6.5.517 2.555 0 5.06-.236 7.5-.69V407c0 12.15 9.85 22 22 22h44c12.15 0 22-9.85 22-22V328.972a29.004 29.004 0 0 0 6.518-4.906l44.548-44.548c11.325-11.325 11.325-29.687 0-41.012-9.875-9.875-25.099-11.139-36.345-3.794Z"
                   clipRule="evenodd"
