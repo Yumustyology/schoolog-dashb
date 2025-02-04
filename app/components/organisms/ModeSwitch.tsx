@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 
 const ModeSwitch = ({ className }: { className?: string }) => {
@@ -6,7 +7,9 @@ const ModeSwitch = ({ className }: { className?: string }) => {
 
   const toggle = () => {
     if (syncChecked) {
-      document.body.setAttribute('data-dark-mode', !isPressed + '');
+      if (typeof window !== 'undefined') {
+        document.body.setAttribute('data-dark-mode', !isPressed + '');
+      }
     }
     setIsPressed(!isPressed);
   };

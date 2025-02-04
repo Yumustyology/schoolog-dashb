@@ -12,7 +12,7 @@ function SubjectSchedule() {
         <div className="flex  gap-3">
           <Image src={biology1} alt="Subject Image" />
           <div>
-            <h1 className={cn('text-sm text-[#101828]', poppins_500.className)}>
+            <h1 className={cn('text-sm text-black1', poppins_500.className)}>
               Biology
             </h1>
             <p className={cn('text-sm text-gray', poppins_400.className)}>
@@ -26,7 +26,7 @@ function SubjectSchedule() {
       <CardContent className="flex flex-col p-0 gap-8 pb-[59px]">
         <main className="flex justify-between items-center">
           <div>
-            <h3 className={cn('text-sm text-[#101828]', poppins_500.className)}>
+            <h3 className={cn('text-sm text-black1', poppins_500.className)}>
               Monday - 22nd Nov, 2024
             </h3>
             <p className={cn('text-sm text-gray', poppins_400.className)}>
@@ -35,7 +35,7 @@ function SubjectSchedule() {
           </div>
 
           <div>
-            <h3 className={cn('text-sm text-[#101828]', poppins_500.className)}>
+            <h3 className={cn('text-sm text-black1', poppins_500.className)}>
               9:00am{' '}
             </h3>
             <p className={cn('text-sm text-gray', poppins_400.className)}>

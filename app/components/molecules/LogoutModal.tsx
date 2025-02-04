@@ -1,6 +1,5 @@
 'use client';
-// components/Modal.tsx
-import React, { useState } from 'react';
+import React from 'react';
 import Cancel from '../atoms/icons/ModalIcons/Cancel';
 import Button from '../atoms/form/Button';
 import { cn } from '@/lib/utils'; // Import the 'cn' utility function if it's defined elsewhere
@@ -27,7 +26,7 @@ const LogoutModal = ({
             <Cancel />
           </Button>
         </div>
-        <div className='flex items-center justify-center mb-4'>
+        <div className="flex items-center justify-center mb-4">
           <LogoutModalICon />
         </div>
 

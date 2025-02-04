@@ -1,14 +1,19 @@
+'use client';
 import { useState, useEffect } from 'react';
 
 const useActiveTab = (name: string, data: { value: string }[]) => {
-  const [activeTab, setActiveTab] = useState<string>(() => {
-    if (typeof window === 'undefined') return data[0]?.value || '';
+  const getInitialTab = () => {
+    if (typeof window === 'undefined' || data.length === 0) {
+      return data[0]?.value || '';
+    }
     const urlParams = new URLSearchParams(window.location.search);
     const tabFromUrl = urlParams.get(`${name}-tab`);
-    return tabFromUrl && data.some((item) => item.value === tabFromUrl)
+    return data.some((item) => item.value === tabFromUrl)
       ? tabFromUrl
       : data[0]?.value;
-  });
+  };
+  const initialTab = getInitialTab();
+  const [activeTab, setActiveTab] = useState<string>(initialTab || '');
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -18,6 +23,16 @@ const useActiveTab = (name: string, data: { value: string }[]) => {
 
     if (tabFromUrl && data.some((item) => item.value === tabFromUrl)) {
       setActiveTab(tabFromUrl);
+    } else if (!tabFromUrl) {
+      const fallbackValue = data[0]?.value;
+      if (fallbackValue) {
+        urlParams.set(`${name}-tab`, fallbackValue);
+        window.history.replaceState(
+          {},
+          '',
+          `${window.location.pathname}?${urlParams}`
+        );
+      }
     }
   }, [name, data]);
 

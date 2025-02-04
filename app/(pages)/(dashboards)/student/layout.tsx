@@ -26,7 +26,7 @@ export default async function Layout({
         shadow="0 0 10px #34AD5D,0 0 5px #34AD5D"
       />
       <SidebarProvider defaultOpen={defaultOpen}>
-        <AppSidebar type='student' />
+        <AppSidebar type="student" />
         <main className="w-screen pl-1">
           <div className=" w-full bg-white py-3">
             <Header />

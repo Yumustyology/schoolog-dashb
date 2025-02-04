@@ -11,14 +11,18 @@ import {
   Avatar,
 } from '@material-tailwind/react';
 import { cn, truncateText } from '@/lib/utils';
-import { Inter_500, Inter_600, poppins_400, poppins_500 } from '@/app/lib/config/font.config';
+import {
+  Inter_500,
+  Inter_600,
+  poppins_400,
+  poppins_500,
+} from '@/app/lib/config/font.config';
 import DownArrow from '../../atoms/icons/dashboard/DownArrow';
 import ProfileIcon from '../../atoms/icons/ProfileIcon';
 import LogoutIcon from '../../atoms/icons/LogoutIcon';
 import Ripples from 'react-ripples';
 import { DrawerSide } from './DrawerSide';
 import NotificationItem, { NotificationItemProps } from './NotificationItem';
-import { biology1, teacherImg2 } from '@/app/assets';
 import Link from 'next/link';
 import LogoutModal from '../LogoutModal';
 import NotificationBigIcon from '../../atoms/icons/ModalIcons/NotificationBigIcon';

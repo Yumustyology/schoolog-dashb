@@ -1,6 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 import { AxiosResponse } from 'axios';
-import axiosConfig, { redirectUser } from '../config/axios.config';
-import { handleError } from '../utils/handleError';
+import axiosConfig from '../config/axios.config';
 
 const handleRequest = async <T>(
   request: Promise<AxiosResponse<T>>
@@ -8,7 +8,7 @@ const handleRequest = async <T>(
   try {
     return await request;
   } catch (e: any) {
-    handleError(e);
+    // handleError(e);
     throw e;
   }
 };

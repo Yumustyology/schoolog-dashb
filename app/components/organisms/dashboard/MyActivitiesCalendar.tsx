@@ -4,9 +4,11 @@ import { Calendar, momentLocalizer } from 'react-big-calendar';
 import moment from 'moment';
 import 'react-big-calendar/lib/css/react-big-calendar.css';
 import { CalendarHeader } from '../../molecules/dashboard/CalendarHeader';
+import { cn } from '@/lib/utils';
+import { poppins_400 } from '@/app/lib/config/font.config';
 
-const image =
-  'https://s3-alpha-sig.figma.com/img/8a09/8ce1/c44d7c312754dac3775d3216a9946b7b?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Qo6pmW7VSJY9qaQaTtqf32Mf5ETEVLDu61vfbLXBDrE3lKFiYsWqVutB0zIFODfieyhIvfA6o39epMtvFxqTN5Cw8VkvoY3dAA1nsTLZAT3Vo7l4Vy0P6K1FEOu7JpDZc0pDxY2xCfbbsjAd8iDEcLzar66DYqszqx0twjsI-WaQyFtaOaC~1C8WhWCIueK~6MArw~NSckCFme-6NUX62Oo5qfIzuvR7RjOY8dJgBFjzXapV4d8QYTjVILK98kLk9rvZEgxropfYvmd6x7R5Lp~60oM90SSMb0cQV3EBWuM8uFtaesjCHOJS8Dsu9XdQlCSBb6gwgA3OZzDcSSWicw__';
+// const image =
+  // 'https://s3-alpha-sig.figma.com/img/8a09/8ce1/c44d7c312754dac3775d3216a9946b7b?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Qo6pmW7VSJY9qaQaTtqf32Mf5ETEVLDu61vfbLXBDrE3lKFiYsWqVutB0zIFODfieyhIvfA6o39epMtvFxqTN5Cw8VkvoY3dAA1nsTLZAT3Vo7l4Vy0P6K1FEOu7JpDZc0pDxY2xCfbbsjAd8iDEcLzar66DYqszqx0twjsI-WaQyFtaOaC~1C8WhWCIueK~6MArw~NSckCFme-6NUX62Oo5qfIzuvR7RjOY8dJgBFjzXapV4d8QYTjVILK98kLk9rvZEgxropfYvmd6x7R5Lp~60oM90SSMb0cQV3EBWuM8uFtaesjCHOJS8Dsu9XdQlCSBb6gwgA3OZzDcSSWicw__';
 
 type ActivityEvent = {
   eventName: string;
@@ -61,9 +63,7 @@ const activitiesAndEvents: ActivityEvent[] = [
   },
 ];
 
-
 const localizer = momentLocalizer(moment);
-
 
 const eventStyleGetter = (event: ActivityEvent) => {
   let backgroundColor = 'lightgray';
@@ -111,15 +111,15 @@ const eventStyleGetter = (event: ActivityEvent) => {
   };
 };
 
-
 const EventContent = ({ event }: { event: ActivityEvent }) => (
-  <div className="flex items-center h-full">
+  <div className="p-2 flex items-center h-full">
     <div>
-      <p className="text-xs font-semibold">{event.eventName}</p>
+      <p className={cn('text-xs font-semibold', poppins_400.className)}>
+        {event.eventName}
+      </p>
     </div>
   </div>
 );
-
 
 export const MyActivitiesCalendar = () => (
   <div>
@@ -128,13 +128,15 @@ export const MyActivitiesCalendar = () => (
       events={activitiesAndEvents}
       startAccessor="start"
       endAccessor="end"
+      className={cn('', poppins_400.className)}
       defaultView="month"
       style={{ height: 800 }}
       components={{
-        toolbar: CalendarHeader,
-        event: EventContent, // Custom event content
+        // TODO check later
+        // toolbar: CalendarHeader,
+        event: EventContent,
       }}
-      eventPropGetter={(event) => eventStyleGetter(event as ActivityEvent)} // Apply custom styles
+      eventPropGetter={(event) => eventStyleGetter(event as ActivityEvent)}
     />
   </div>
 );

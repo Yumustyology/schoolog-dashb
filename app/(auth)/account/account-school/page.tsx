@@ -1,8 +1,9 @@
+"use client"; 
 import AuthWrapper from '@/app/components/atoms/form/auth/AuthWrapper';
 import AccountName from '@/app/components/molecules/auth/AccountName';
+import PageNumber from '@/app/components/molecules/auth/PageNumber';
 import {
   poppins_400,
-  poppins_500,
   poppins_600,
 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
@@ -18,7 +19,7 @@ function page() {
           <div className="mb-12">
             <h1
               className={cn(
-                'text-[#101828] mb-2 text-3xl leading-10',
+                'text-black1 mb-2 text-3xl leading-10',
                 poppins_600.className
               )}
             >
@@ -82,16 +83,3 @@ function page() {
 
 export default page;
 
-export const PageNumber = () => {
-  return (
-    <div>
-      <p className={cn('text-base text-gray3', poppins_600.className)}>
-        <span className="text-primary">1 </span>/2
-      </p>
-      <div className="flex gap-2 mb-2">
-        <div className="h-[4px] w-[31px] bg-primary"></div>
-        <div className="h-[4px] w-[31px] bg-[#F2EEFB]"></div>
-      </div>
-    </div>
-  );
-};

@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 import { getRequest, postRequest } from '../service/apiRequests';
 
 export const fetchProfileDetails = async (id?: string): Promise<any> => {

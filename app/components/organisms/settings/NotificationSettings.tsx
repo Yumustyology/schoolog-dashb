@@ -94,9 +94,7 @@ const NotificationSettings = () => {
     <div>
       <div className="flex items-start justify-between pb-4 border-b border-b-[#E5E5EA] mb-8">
         <div>
-          <h2
-            className={cn(Inter_600.className, 'text-[#101828] mb-2 text-lg')}
-          >
+          <h2 className={cn(Inter_600.className, 'text-black1 mb-2 text-lg')}>
             Notification preference
           </h2>
           <p className={cn(Inter_400.className, 'text-[#475467] text-sm')}>
@@ -108,9 +106,7 @@ const NotificationSettings = () => {
       <div className="">
         <div className="flex gap-14 justify-between">
           <div>
-            <h2
-              className={cn(Inter_600.className, 'text-[#101828] mb-3 text-lg')}
-            >
+            <h2 className={cn(Inter_600.className, 'text-black1 mb-3 text-lg')}>
               In App notification
             </h2>
             <p className={cn(Inter_400.className, 'text-[#475467] text-sm')}>
@@ -122,9 +118,7 @@ const NotificationSettings = () => {
         <div className="border border-[#EAECF0] my-6" />
         <div className="flex gap-14 justify-between">
           <div>
-            <h2
-              className={cn(Inter_600.className, 'text-[#101828] mb-3 text-lg')}
-            >
+            <h2 className={cn(Inter_600.className, 'text-black1 mb-3 text-lg')}>
               Email Notification
             </h2>
             <p className={cn(Inter_400.className, 'text-[#475467] text-sm')}>

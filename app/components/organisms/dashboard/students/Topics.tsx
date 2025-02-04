@@ -7,8 +7,6 @@ import { cn } from '@/lib/utils';
 import {
   Card,
   CardBody,
-  CardFooter,
-  IconButton,
   Tooltip,
   Typography,
 } from '@material-tailwind/react';

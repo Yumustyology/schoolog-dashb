@@ -1,8 +1,11 @@
-import { teacherImg, teacherImg2 } from '@/app/assets'; 
+'use client';
+import { teacherImg, teacherImg2 } from '@/app/assets';
+import Button from '@/app/components/atoms/form/Button';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
+import { generateTimetableTimeSlots } from '@/app/lib/utils/generateTimetableTimeSlots';
 import { cn } from '@/lib/utils';
-import React from 'react';
-
+import React, { useState } from 'react';
+import { CiAlignBottom, CiAlignRight } from 'react-icons/ci';
 
 type TimetableSlot = {
   subject: string;
@@ -40,7 +43,6 @@ const subjectColors: {
   'Free Period': { bgColor: 'bg-yellow-300', borderColor: 'border-yellow-700' },
 };
 
-// Teacher Info Component
 const TeacherInfo: React.FC<{ name: string; avatar: string }> = ({
   name,
   avatar,
@@ -64,22 +66,24 @@ const TimetableSlotComponent: React.FC<{
   teacherName: string;
   teacherAvatar: any;
 }> = ({ subject, time, teacherName, teacherAvatar }) => {
-    const isFreeOrBreakTime = subject === 'Free Period' || subject === 'Break Time';
+  const isFreeOrBreakTime =
+    subject === 'Free Period' || subject === 'Break Time';
   return (
-    
     <div
-      className={`px-3 py-3 m-1.5 text-left rounded-lg text-sm text-gray1 h-[130px] ${subjectColors[subject]?.bgColor} border ${subjectColors[subject]?.borderColor}`}
+      className={`px-3 py-3 m-1.5 text-left rounded-lg text-sm text-gray1 h-[130px] ${subjectColors[subject]?.bgColor} border ${subjectColors[subject]?.borderColor} flex flex-col justify-between`}
     >
-      <p className={cn('text-sm text-gray1', poppins_500.className)}>
-        {subject}
-      </p>
-      <p className={cn('text-xs text-gray3 mt-2.5', poppins_400.className)}>
-        {time}
-      </p>
+      <div>
+        <p className={cn('text-sm text-gray1', poppins_500.className)}>
+          {subject}
+        </p>
+        <p className={cn('text-xs text-gray3 mt-2.5', poppins_400.className)}>
+          {time}
+        </p>
+      </div>
 
       {/* Render teacher info only if subject is not "Free Period" */}
       {!isFreeOrBreakTime && (
-        <div className="mt-11">
+        <div className="mt-11--">
           <TeacherInfo name={teacherName} avatar={teacherAvatar} />
         </div>
       )}
@@ -89,6 +93,7 @@ const TimetableSlotComponent: React.FC<{
 
 const url =
   'https://s3-alpha-sig.figma.com/img/8a09/8ce1/c44d7c312754dac3775d3216a9946b7b?Expires=1737331200&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=Qo6pmW7VSJY9qaQaTtqf32Mf5ETEVLDu61vfbLXBDrE3lKFiYsWqVutB0zIFODfieyhIvfA6o39epMtvFxqTN5Cw8VkvoY3dAA1nsTLZAT3Vo7l4Vy0P6K1FEOu7JpDZc0pDxY2xCfbbsjAd8iDEcLzar66DYqszqx0twjsI-WaQyFtaOaC~1C8WhWCIueK~6MArw~NSckCFme-6NUX62Oo5qfIzuvR7RjOY8dJgBFjzXapV4d8QYTjVILK98kLk9rvZEgxropfYvmd6x7R5Lp~60oM90SSMb0cQV3EBWuM8uFtaesjCHOJS8Dsu9XdQlCSBb6gwgA3OZzDcSSWicw__';
+
 const TimetableComponent: React.FC = () => {
   const timetableData: Timetable = {
     Monday: [
@@ -96,7 +101,7 @@ const TimetableComponent: React.FC = () => {
         subject: 'Mathematics',
         time: '8:10 AM - 8:50 AM',
         teacherName: 'Mr. Smith',
-        teacherAvatar: url, // Ensure this points to an actual image path
+        teacherAvatar: url,
       },
       {
         subject: 'Free Period ',
@@ -311,133 +316,171 @@ const TimetableComponent: React.FC = () => {
         teacherAvatar: url,
       },
     ],
-
-    // Add data for Wednesday, Thursday, and Friday as needed...
   };
 
+  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+
+  const [isVertical, setIsVertical] = useState(true);
+
+  const startTime = '08:10';
+  const endTime = '15:30';
+  const interval = 40;
+  // const overrides = [
+  //   { start: '11:30', end: '12:00', interval: 30 },
+  //   { start: '14:00', end: '14:20', interval: 20 },
+  // ];
+  const numberOfPeriods = 12;
+
+  const result = generateTimetableTimeSlots(
+    startTime,
+    endTime,
+    interval,
+    [],
+    // overrides,
+    numberOfPeriods
+  );
+
+  console.log(result);
+
   return (
-    <div className="overflow-x-auto py-6">
-      <table
-        className={cn(
-          'min-w-full text-xs text-center text-gray-500',
-          poppins_500.className
-        )}
-      >
-        <thead
+    <>
+      <div className="flex items-center gap-2 -mb-2">
+        <Button
+          outlined
+          className="p-1 bg-transparent"
+          onClick={() => setIsVertical(true)}
+        >
+          <CiAlignBottom color="#21B55A" size={30} />
+        </Button>
+        <Button
+          outlined
+          className="p-1 bg-transparent"
+          onClick={() => setIsVertical(false)}
+        >
+          <CiAlignRight color="#21B55A" size={30} />
+        </Button>
+      </div>
+
+      <div className="overflow-x-auto py-6">
+        <table
           className={cn(
-            'text-xl text-gray uppercase bg-[#F7F7F7] p-2',
+            'min-w-full text-xs text-center text-gray-500',
             poppins_500.className
           )}
         >
-          <tr>
-            <th scope="col" className="px-6 py-3 text-gray">
-              Time
-            </th>
-            <th scope="col" className="px-6 py-3 text-gray">
-              Monday
-            </th>
-            <th scope="col" className="px-6 py-3 text-gray">
-              Tuesday
-            </th>
-            <th scope="col" className="px-6 py-3 text-gray">
-              Wednesday
-            </th>
-            <th scope="col" className="px-6 py-3 text-gray">
-              Thursday
-            </th>
-            <th scope="col" className="px-6 py-3 text-gray">
-              Friday
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {timetableData.Monday.map((slot, index) => (
-            <tr key={index} className="bg-white border-b hover:bg-gray-50">
-              {/* Time column */}
-              <td className="px-2 py-4 text-xs text-gray">{slot.time}</td>
+          {isVertical ? (
+            <>
+              <thead
+                className={cn(
+                  'text-xl text-gray uppercase bg-[#F7F7F7] p-2',
+                  poppins_500.className
+                )}
+              >
+                <tr>
+                  <th scope="col" className="px-6 py-3 text-gray">
+                    Time
+                  </th>
+                  {days.map((day, index) => (
+                    <th key={day} scope="col" className="px-6 py-3 text-gray">
+                      {day}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {/* Iterate over each subject slot by index */}
+                {Array.from({
+                  length: Math.max(
+                    ...Object.values(timetableData).map((day) => day.length)
+                  ),
+                }).map((_, rowIndex) => (
+                  <tr
+                    key={rowIndex}
+                    className="bg-white border-b hover:bg-gray-50"
+                  >
+                    {/* Render the time for each slot */}
+                    <td className="px-2 py-4 text-xs text-gray-500">
+                      {result.timeSlots[rowIndex] || 'No Time'}
+                    </td>
 
-              {/* Monday */}
-              <td>
-                <TimetableSlotComponent
-                  subject={slot.subject}
-                  time={slot.time}
-                  teacherName={slot.teacherName}
-                  teacherAvatar={slot.teacherAvatar}
-                />
-              </td>
-
-              {/* Tuesday */}
-              <td>
-                <TimetableSlotComponent
-                  subject={
-                    timetableData.Tuesday[index]?.subject || 'No Subject'
-                  }
-                  time={timetableData.Tuesday[index]?.time || 'No Time'}
-                  teacherName={
-                    timetableData.Tuesday[index]?.teacherName || 'No Teacher'
-                  }
-                  teacherAvatar={
-                    timetableData.Tuesday[index]?.teacherAvatar || {
-                      teacherImg,
-                    }
-                  }
-                />
-              </td>
-
-              {/* Wednesday */}
-              <td>
-                <TimetableSlotComponent
-                  subject={
-                    timetableData.Wednesday?.[index]?.subject || 'No Subject'
-                  }
-                  time={timetableData.Wednesday?.[index]?.time || 'No Time'}
-                  teacherName={
-                    timetableData.Wednesday?.[index]?.teacherName ||
-                    'No Teacher'
-                  }
-                  teacherAvatar={
-                    timetableData.Wednesday?.[index]?.teacherAvatar ||
-                    teacherImg
-                  }
-                />
-              </td>
-
-              {/* Thursday */}
-              <td>
-                <TimetableSlotComponent
-                  subject={
-                    timetableData.Thursday?.[index]?.subject || 'No Subject'
-                  }
-                  time={timetableData.Thursday?.[index]?.time || 'No Time'}
-                  teacherName={
-                    timetableData.Thursday?.[index]?.teacherName || 'No Teacher'
-                  }
-                  teacherAvatar={
-                    timetableData.Thursday?.[index]?.teacherAvatar || teacherImg
-                  }
-                />
-              </td>
-
-              {/* Friday */}
-              <td>
-                <TimetableSlotComponent
-                  subject={
-                    timetableData.Friday?.[index]?.subject || 'No Subject'
-                  }
-                  time={timetableData.Friday?.[index]?.time || 'No Time'}
-                  teacherName={
-                    timetableData.Friday?.[index]?.teacherName || 'No Teacher'
-                  }
-                  teacherAvatar={
-                    timetableData.Friday?.[index]?.teacherAvatar || teacherImg
-                  }
-                />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
+                    {/* Render the subject for each day in this row */}
+                    {days.map((day) => {
+                      const slot = timetableData[day]?.[rowIndex]; // Get the slot for this day and row
+                      return (
+                        <td key={`${day}-${rowIndex}`} className="px-2 py-4">
+                          {slot ? (
+                            <TimetableSlotComponent
+                              subject={slot.subject || 'No Subject'}
+                              time={slot.time || 'No Time'}
+                              teacherName={slot.teacherName || 'No Teacher'}
+                              teacherAvatar={slot.teacherAvatar || teacherImg}
+                            />
+                          ) : (
+                            'No Slot'
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                ))}
+              </tbody>
+            </>
+          ) : (
+            <>
+              <thead
+                className={cn(
+                  'text-xl text-gray uppercase bg-[#F7F7F7] p-2',
+                  poppins_500.className
+                )}
+              >
+                <tr>
+                  <th scope="col" className="px-6 py-3 text-gray">
+                    Time
+                  </th>
+                  {timetableData.Monday.map((slot, index) => (
+                    <th scope="col" className="px-6 text-xs py-3 text-gray">
+                      {slot.time}
+                    </th>
+                  ))}
+                </tr>
+              </thead>
+              <tbody>
+                {days?.map((day) => (
+                  <>
+                    <tr className="bg-white border-b hover:bg-gray-50">
+                      <td className="px-2 py-4 text-xs text-gray">{day}</td>
+                      {timetableData[day]?.map((slot, index) => (
+                        <>
+                          <td>
+                            <TimetableSlotComponent
+                              subject={
+                                timetableData[day]?.[index]?.subject ||
+                                'No Subject'
+                              }
+                              time={
+                                timetableData[day]?.[index]?.time || 'No Time'
+                              }
+                              teacherName={
+                                timetableData[day]?.[index]?.teacherName ||
+                                'No Teacher'
+                              }
+                              teacherAvatar={
+                                timetableData[day]?.[index]?.teacherAvatar ||
+                                teacherImg
+                              }
+                            />
+                          </td>
+                        </>
+                      ))}
+                    </tr>
+                  </>
+                ))}
+              </tbody>
+            </>
+          )}
+        </table>
+      </div>
+    </>
   );
 };
 

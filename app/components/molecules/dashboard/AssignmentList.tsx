@@ -89,7 +89,7 @@ export function AssignmentList({ className, ...props }: AssignmentListProps) {
                 </p>
                 <p
                   className={cn(
-                    'text-[#4F4F4F] text-xs gap-1.5 flex items-center',
+                    'text-gray6 text-xs gap-1.5 flex items-center',
                     poppins_400.className
                   )}
                 >

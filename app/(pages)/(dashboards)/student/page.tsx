@@ -23,11 +23,11 @@ import {
 } from '@material-tailwind/react';
 import TodayClassesList from '@/app/components/molecules/dashboard/TodayClassesList';
 import UpcomingEventLists from '@/app/components/molecules/dashboard/UpcomingEventsList';
-import Timetable from '@/app/components/atoms/icons/dashboard/SideBar/Timetable';
 import GradesAnalytics from '@/app/components/molecules/dashboard/analytics/GradesAnalytics';
 import AssignmentAnalytics from '@/app/components/molecules/dashboard/analytics/AssignmentAnalytics';
 import AttendanceAnalytics from '@/app/components/molecules/dashboard/analytics/AttendanceAnalytics';
 import { DatePicker } from '@/app/components/atoms/form/DatePicker';
+import useActiveTab from '@/app/lib/hooks/useActiveTab';
 
 function StudentDashboard() {
   const todayClassesTabs = [
@@ -61,55 +61,14 @@ function StudentDashboard() {
     },
   ];
 
-  const [activeTodayClassesTab, setActiveTodayClassesTab] =
-    useState('todays-classes');
-  const [activeAnalyticsTab, setActiveAnalyticsTab] = useState('grades');
-
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const todaysClassesTabFromUrl = urlParams.get('tab');
-    const analyticsTabFromUrl = urlParams.get('analytics-tab');
-
-    if (
-      todaysClassesTabFromUrl &&
-      todayClassesTabs.some((item) => item.value === todaysClassesTabFromUrl)
-    ) {
-      setActiveTodayClassesTab(todaysClassesTabFromUrl);
-    } else {
-      setActiveTodayClassesTab('todays-classes');
-    }
-
-    if (
-      analyticsTabFromUrl &&
-      todayClassesTabs.some((item) => item.value === analyticsTabFromUrl)
-    ) {
-      setActiveAnalyticsTab(analyticsTabFromUrl);
-    } else {
-      setActiveAnalyticsTab('todays-classes');
-    }
-  }, []);
-
-  const handleTodayClassTabClick = (tabValue: string) => {
-    setActiveTodayClassesTab(tabValue);
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set('tab', tabValue);
-    window.history.pushState(
-      {},
-      '',
-      `${window.location.pathname}?${urlParams}`
-    );
-  };
-
-  const handleAnalyticsTabClick = (tabValue: string) => {
-    setActiveAnalyticsTab(tabValue);
-    const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set('analytic-tab', tabValue);
-    window.history.pushState(
-      {},
-      '',
-      `${window.location.pathname}?${urlParams}`
-    );
-  };
+  const { activeTab: activeAnalyticsTab, handleTabClick } = useActiveTab(
+    'analytic',
+    analyticsTabs
+  );
+  const {
+    activeTab: activeTodayClassesTab,
+    handleTabClick: handleTodayClassTabClick,
+  } = useActiveTab('todays-classes', todayClassesTabs);
 
   return (
     <div>
@@ -177,7 +136,7 @@ function StudentDashboard() {
                 >
                   {analyticsTabs.map(({ label, value }) => (
                     <Tab
-                      onClick={() => handleAnalyticsTabClick(value)}
+                      onClick={() => handleTabClick(value)}
                       className={cn(
                         'text-sm text-center',
                         poppins_500.className

@@ -10,9 +10,7 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 import { cn } from '@/lib/utils';
-import {
-  Inter_500,
-} from '@/app/lib/config/font.config';
+import { Inter_500 } from '@/app/lib/config/font.config';
 import Logout from '../../atoms/icons/SideBar/Logout';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
@@ -20,8 +18,11 @@ import Image from 'next/image';
 import Settings from '../../atoms/icons/SideBar/Settings';
 import { shoolSidebarItems, studentSidebarItems } from '@/app/lib/sidebarData';
 
-
-export function AppSidebar({type}:{type:"school"|"student"|"parent"}) {
+export function AppSidebar({
+  type,
+}: {
+  type: 'school' | 'student' | 'parent';
+}) {
   const pathname = usePathname();
   const { state } = useSidebar();
 
@@ -54,7 +55,12 @@ export function AppSidebar({type}:{type:"school"|"student"|"parent"}) {
         >
           <SidebarGroup>
             <SidebarMenu className="flex flex-col gap-3">
-              {(type == "student" ? studentSidebarItems : type == "school" ? shoolSidebarItems : []).map((item) => (
+              {(type == 'student'
+                ? studentSidebarItems
+                : type == 'school'
+                  ? shoolSidebarItems
+                  : []
+              ).map((item) => (
                 <SidebarMenuItem className="w-full" key={item.title}>
                   <SidebarMenuButton
                     className={cn(

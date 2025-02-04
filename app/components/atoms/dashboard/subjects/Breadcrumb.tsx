@@ -22,9 +22,12 @@ interface BreadcrumbBoxProps {
   className?: string;
 }
 
-export default function BreadcrumbBox({ crumbs,className }: BreadcrumbBoxProps) {
+export default function BreadcrumbBox({
+  crumbs,
+  className,
+}: BreadcrumbBoxProps) {
   return (
-    <Breadcrumb className={cn("mb-8",className)}>
+    <Breadcrumb className={cn('mb-8', className)}>
       <BreadcrumbList>
         {crumbs.map((crumb, index) => {
           const isLast = index === crumbs.length - 1;

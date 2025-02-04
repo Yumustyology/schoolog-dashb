@@ -62,7 +62,7 @@ export function ImageViewModal() {
         handler={handleOpen}
         className="bg-[#232323] rounded-xl "
       >
-        <DialogHeader className="justify-between border-b border-[#4F4F4F]">
+        <DialogHeader className="justify-between border-b border-gray6">
           <div>
             <p className={cn('text-white text-[18px]', poppins_500.className)}>
               Assignment questions
@@ -84,7 +84,7 @@ export function ImageViewModal() {
             ref={carouselImageRef}
           />
         </DialogBody>
-        <DialogFooter className="border-t border-[#4F4F4F] flex justify-start gap-3">
+        <DialogFooter className="border-t border-gray6 flex justify-start gap-3">
           {footerImages.map((image, index) => (
             <Image
               key={index}

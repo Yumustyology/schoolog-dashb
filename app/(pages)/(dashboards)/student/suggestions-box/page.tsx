@@ -58,12 +58,15 @@ function page() {
   return (
     <div>
       <div className="flex justify-between items-center">
-        <BreadcrumbBox className="mb-0" crumbs={[
-          {
-            isActive: true,
-            label: "Suggestions",
-          }
-        ]} />
+        <BreadcrumbBox
+          className="mb-0"
+          crumbs={[
+            {
+              isActive: true,
+              label: 'Suggestions',
+            },
+          ]}
+        />
         <Button
           round
           className={cn(

@@ -157,9 +157,7 @@ const RadioButtons: React.FC<RadioButtonsProps> = ({
 const UploadAnswerComp = () => {
   return (
     <div className="">
-      <h2
-        className={cn('text-[#101828] text-[18px] mb-2', poppins_500.className)}
-      >
+      <h2 className={cn('text-black1 text-[18px] mb-2', poppins_500.className)}>
         Your answers
       </h2>
       <p className={cn('text-[#475467] text-sm  ', poppins_400.className)}>

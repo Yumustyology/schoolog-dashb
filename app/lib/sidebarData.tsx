@@ -1,20 +1,20 @@
-import Activities from "../components/atoms/icons/SideBar/Activities";
-import Annoucement from "../components/atoms/icons/SideBar/Annoucement";
-import Attendance from "../components/atoms/icons/SideBar/Attendance";
-import Dashboard from "../components/atoms/icons/SideBar/Dashboard";
-import Library from "../components/atoms/icons/SideBar/Library";
-import LiveClassIcon from "../components/atoms/icons/SideBar/LiveClassIcon";
-import Material from "../components/atoms/icons/SideBar/Material";
-import Message from "../components/atoms/icons/SideBar/Message";
-import PaymentIcon from "../components/atoms/icons/SideBar/PaymentIcon";
-import Result from "../components/atoms/icons/SideBar/Result";
-import Subjects from "../components/atoms/icons/SideBar/Subjects";
-import SuggestionBoxIcon from "../components/atoms/icons/SideBar/SuggestionBoxIcon";
-import Timetable from "../components/atoms/icons/SideBar/Timetable";
-import ClassesIcon from "../components/atoms/icons/SideBar/ClassesIcon";
-import ParentsIcon from "../components/atoms/icons/SideBar/ParentsIcon";
-import StudentsIcon from "../components/atoms/icons/SideBar/StudentsIcon";
-import FinanceIcon from "../components/atoms/icons/SideBar/FinanceIcon";
+import Activities from '../components/atoms/icons/SideBar/Activities';
+import Annoucement from '../components/atoms/icons/SideBar/Annoucement';
+import Attendance from '../components/atoms/icons/SideBar/Attendance';
+import Dashboard from '../components/atoms/icons/SideBar/Dashboard';
+import Library from '../components/atoms/icons/SideBar/Library';
+import LiveClassIcon from '../components/atoms/icons/SideBar/LiveClassIcon';
+import Material from '../components/atoms/icons/SideBar/Material';
+import Message from '../components/atoms/icons/SideBar/Message';
+import PaymentIcon from '../components/atoms/icons/SideBar/PaymentIcon';
+import Result from '../components/atoms/icons/SideBar/Result';
+import Subjects from '../components/atoms/icons/SideBar/Subjects';
+import SuggestionBoxIcon from '../components/atoms/icons/SideBar/SuggestionBoxIcon';
+import Timetable from '../components/atoms/icons/SideBar/Timetable';
+import ClassesIcon from '../components/atoms/icons/SideBar/ClassesIcon';
+import ParentsIcon from '../components/atoms/icons/SideBar/ParentsIcon';
+import StudentsIcon from '../components/atoms/icons/SideBar/StudentsIcon';
+import FinanceIcon from '../components/atoms/icons/SideBar/FinanceIcon';
 
 export const studentSidebarItems = [
   {
@@ -116,7 +116,7 @@ export const shoolSidebarItems = [
     icon: <ClassesIcon />,
     activeIcon: <ClassesIcon color="#FFFFFF" />,
   },
-   {
+  {
     title: 'Students',
     url: '/school/students',
     icon: <StudentsIcon />,
@@ -134,7 +134,7 @@ export const shoolSidebarItems = [
     icon: <Timetable />,
     activeIcon: <Timetable color="#FFFFFF" />,
   },
-    {
+  {
     title: 'Attendance',
     url: '/school/attendance',
     icon: <Attendance />,

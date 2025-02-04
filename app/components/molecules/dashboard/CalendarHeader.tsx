@@ -1,14 +1,13 @@
 'use client';
 
 import { ToolbarProps as RBBToolbarProps } from 'react-big-calendar';
-import React, { useState } from 'react';
+import React from 'react';
 import { cn } from '@/lib/utils';
 import { poppins_400, poppins_600 } from '@/app/lib/config/font.config';
 import Button from '../../atoms/form/Button';
 
 export const CalendarHeader = (toolbarProps: RBBToolbarProps) => {
   const { label, onNavigate, onView, views, view } = toolbarProps;
-  
 
   return (
     <div className="flex justify-between items-center my-7">
@@ -52,7 +51,8 @@ export const CalendarHeader = (toolbarProps: RBBToolbarProps) => {
 
       {/* View Selectors */}
       <div className="flex gap-2">
-        {views.map((availableView) => (
+        {/* TODO:check later */}
+        {/* {views.map((availableView) => (
           <button
             key={availableView}
             onClick={() => onView(availableView)}
@@ -66,7 +66,7 @@ export const CalendarHeader = (toolbarProps: RBBToolbarProps) => {
           >
             {availableView.charAt(0).toUpperCase() + availableView.slice(1)}
           </button>
-        ))}
+        ))} */}
       </div>
     </div>
   );

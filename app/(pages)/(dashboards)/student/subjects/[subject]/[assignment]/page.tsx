@@ -49,10 +49,7 @@ function page() {
       <div className="bg-white w-full p-6 mt-6 rounded-lg min-h-[398px] h-auto">
         <div className="border-b border-[#E5E5EA] mb-8">
           <h2
-            className={cn(
-              'text-[#101828] text-xl mb-3 ',
-              poppins_500.className
-            )}
+            className={cn('text-black1 text-xl mb-3 ', poppins_500.className)}
           >
             The Impact of Social Media Marketing on Brand Loyalty Among
             Millennials
