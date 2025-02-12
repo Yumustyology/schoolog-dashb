@@ -1,9 +1,11 @@
+'use client'
 import React from 'react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import Link from 'next/link';
 import { OptionIcon } from '@/app/components/atoms/icons/Icons';
+import OptionsSubjectDropdown from '../atoms/OptionsSubjectDropdown';
 
 interface Subject {
   id: number;
@@ -27,27 +29,9 @@ interface SubjectCardProps {
 
 const SubjectCard: React.FC<SubjectCardProps> = ({ subject, role }) => {
     const [isOpen, setIsOpen] = React.useState(false);
-    const dropdownRef = React.useRef(null);
-  
-    const toggleDropdown = () => {
-      setIsOpen(!isOpen);
-    };
-  
-    // Close dropdown if clicked outside
-    React.useEffect(() => {
-      const handleClickOutside = (event: any) => {
-        if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
-          setIsOpen(false);
-        }
-      };
-  
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, []);
+
   return (
-    <div key={subject.subject} className="flex flex-col gap-4 min-w-[300px]">
+    <div key={subject.id} className="flex flex-col gap-4 min-w-[300px] relative">
       <Link href={`/${role}/subjects/1234`}>
         <Image
           className="w-full"
@@ -56,7 +40,7 @@ const SubjectCard: React.FC<SubjectCardProps> = ({ subject, role }) => {
         />
       </Link>
       <div className="flex flex-col gap-3">
-        <Link href={`/${role}/subjects/1234`}>
+        {/* <Link href={`/${role}/subjects/1234`}> */}
           <div className='flex justify-between items-center'>
             <h3
               className={cn(
@@ -68,12 +52,16 @@ const SubjectCard: React.FC<SubjectCardProps> = ({ subject, role }) => {
             </h3>
             {role === 'school' && (
               <div>
-                <OptionIcon />
+                <div onClick={()=>{setIsOpen(!isOpen)}}>
+                  
+                <OptionIcon/>
+                </div>
+
+                <OptionsSubjectDropdown isOpen={isOpen}/>
               </div>
-              <OptionsSubjectSUbjectDropdown 
             )}
           </div>
-        </Link>
+        {/* </Link> */}
         <p className={cn('text-sm text-gray6', poppins_400.className)}>
           {subject.currentTopic}
         </p>
