@@ -12,6 +12,7 @@ module.exports = withMT({
     extend: {
       colors: {
         primary: '#21B55A',
+        light: '#E9F8EF',
         primary1: 'rgba(33, 181, 90, 0.12)',
         black1: '#101828',
         black2: '#071E3B',
@@ -27,8 +28,8 @@ module.exports = withMT({
         gray8: '#1D4241',
         gray9: '#434343',
         white: '#FFFFFF',
-        red: '#EB5757',
-        danger: '#D92D20',
+        r: '#EB5757',
+        r2: '#D92D20',
         background: 'var(--background)',
         foreground: 'var(--foreground)',
         sidebar: {

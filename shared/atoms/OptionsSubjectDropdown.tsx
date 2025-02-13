@@ -38,11 +38,11 @@ function OptionsSubjectDropdown({ isOpen }: { isOpen: boolean }) {
         Archive
       </button>
       <button
-        className={cn('flex items-center gap-4 text-sm text-danger ', Inter_500.className)}
+        className={cn('flex items-center gap-4 text-sm text-r2 ', Inter_500.className)}
         role="menuitem"
       >
         <DeleteIcon />
-        <span className='text-danger'>
+        <span className='text-r2'>
           Delete
         </span>
       </button>
