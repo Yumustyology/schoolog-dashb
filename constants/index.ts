@@ -12,90 +12,145 @@ import {
   nutrition,
   physics,
   teacherImg,
+  teacherImg2,
 } from '@/app/assets';
 import { ActivitiesAndEvent } from '@/type';
 
-export const subjects = [
+export const subjectsList = [
   {
+    id: 1,
     textbookImg: biology,
     subject: 'Biology',
-    textbookName: 'Teacher Professional Development and Student Outcomes',
+    currentTopic: 'Teacher Professional Development and Student Outcomes',
     teacher: 'Esther Ezike',
     teacherImg: teacherImg,
     number_of_topics: '10',
     number_of_topics_covered: '4',
+    students: [
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+      { name: 'Jamiu Yusuf', image: teacherImg2 }
+    ]
   },
   {
+    id: 2,
     textbookImg: chemistry,
     subject: 'Chemistry',
-    textbookName: 'Teacher Professional Development and Student Outcomes',
+    currentTopic: 'Teacher Professional Development and Student Outcomes',
     teacher: 'Esther Ezike',
     teacherImg: teacherImg,
     number_of_topics: '10',
     number_of_topics_covered: '4',
+    students: [
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+      { name: 'Jamiu Yusuf', image: teacherImg2 }
+    ]
   },
   {
+    id: 3,
     textbookImg: agricultural,
     subject: 'Agricultural Science',
-    textbookName: 'Teacher Professional Development and Student Outcomes',
+    currentTopic: 'Teacher Professional Development and Student Outcomes',
     teacher: 'Esther Ezike',
     teacherImg: teacherImg,
     number_of_topics: '10',
     number_of_topics_covered: '4',
+    students: [
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+      { name: 'Jamiu Yusuf', image: teacherImg2 }
+    ]
   },
   {
+    id: 4,
     textbookImg: computer,
     subject: 'Computer',
-    textbookName: 'Teacher Professional Development and Student Outcomes',
+    currentTopic: 'Teacher Professional Development and Student Outcomes',
     teacher: 'Esther Ezike',
     teacherImg: teacherImg,
     number_of_topics: '10',
     number_of_topics_covered: '4',
+    students: [
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+      { name: 'Jamiu Yusuf', image: teacherImg2 }
+    ]
   },
   {
+    id: 5,
     textbookImg: economics,
     subject: 'Economics',
-    textbookName: 'Teacher Professional Development and Student Outcomes',
+    currentTopic: 'Teacher Professional Development and Student Outcomes',
     teacher: 'Esther Ezike',
     teacherImg: teacherImg,
     number_of_topics: '10',
     number_of_topics_covered: '4',
+    students: [
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+      { name: 'Jamiu Yusuf', image: teacherImg2 }
+    ]
   },
   {
+    id: 6,
     textbookImg: geography,
     subject: 'Geography',
-    textbookName: 'Teacher Professional Development and Student Outcomes',
+    currentTopic: 'Teacher Professional Development and Student Outcomes',
     teacher: 'Esther Ezike',
     teacherImg: teacherImg,
     number_of_topics: '10',
     number_of_topics_covered: '4',
+    students: [
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+      { name: 'Jamiu Yusuf', image: teacherImg2 }
+    ]
   },
   {
+    id: 7,
     textbookImg: mathematics,
     subject: 'Mathematics',
-    textbookName: 'Teacher Professional Development and Student Outcomes',
+    currentTopic: 'Teacher Professional Development and Student Outcomes',
     teacher: 'Esther Ezike',
     teacherImg: teacherImg,
     number_of_topics: '10',
     number_of_topics_covered: '4',
+    students: [
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+      { name: 'Jamiu Yusuf', image: teacherImg2 }
+    ]
   },
   {
+    id: 8,
     textbookImg: nutrition,
     subject: 'Nutrition',
-    textbookName: 'Teacher Professional Development and Student Outcomes',
+    currentTopic: 'Teacher Professional Development and Student Outcomes',
     teacher: 'Esther Ezike',
     teacherImg: teacherImg,
     number_of_topics: '10',
     number_of_topics_covered: '4',
+    students: [
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+      { name: 'Jamiu Yusuf', image: teacherImg2 }
+    ]
   },
   {
+    id: 9,
     textbookImg: physics,
     subject: 'Physics',
-    textbookName: 'Teacher Professional Development and Student Outcomes',
+    currentTopic: 'Teacher Professional Development and Student Outcomes',
     teacher: 'Esther Ezike',
     teacherImg: teacherImg,
     number_of_topics: '10',
     number_of_topics_covered: '4',
+    students: [
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+      { name: 'Jamiu Yusuf', image: teacherImg2 }
+    ]
   },
 ];
 

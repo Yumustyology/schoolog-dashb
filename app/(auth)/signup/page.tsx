@@ -21,7 +21,7 @@ function Register() {
           )}
         >
           <h1 className={cn('text-[26px] mb-2', poppins_600.className)}>
-            Welcome to <span className="text-primary"> EduSpaher </span>
+            Welcome to <span className="text-primary"> Schholog+ </span>
           </h1>
           <p className={cn('text-gray text-sm', Inter_400.className)}>
             Lorem ipsum dolor sit amet consectetur. <br /> Sapien ipsum lorem

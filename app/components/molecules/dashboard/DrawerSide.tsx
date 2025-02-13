@@ -23,16 +23,18 @@ export function DrawerSide({
 }) {
   const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
 
-  useEffect(() => {
-    document.body.style.overflow = open ? 'hidden' : 'auto';
+useEffect(() => {
+  if (typeof window !== "undefined") {
+    document.body.style.overflow = open ? "hidden" : "auto";
     return () => {
-      document.body.style.overflow = '';
+      document.body.style.overflow = "";
     };
-  }, [open]);
+  }
+}, [open]);
 
   useEffect(() => {
     let portalDiv = document.getElementById('drawer-portal');
-    if (!portalDiv) {
+    if (!portalDiv &&  (typeof window !== "undefined") ) {
       portalDiv = document.createElement('div');
       portalDiv.id = 'drawer-portal';
       document.body.appendChild(portalDiv);
