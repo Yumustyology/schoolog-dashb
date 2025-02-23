@@ -1,18 +1,35 @@
+"use client";
 import { poppins_600 } from "@/app/lib/config/font.config";
 import { cn } from "@/lib/utils";
+interface ProgressIndicatorProps {
+  totalSteps: number;
+  activeStep: number;
+}
 
-const PageNumber = () => {
+export default function ProgressPageNumber({
+  totalSteps,
+  activeStep,
+}: ProgressIndicatorProps) {
   return (
     <div>
-      <p className={cn('text-base text-gray3', poppins_600.className)}>
-        <span className="text-primary">1 </span>/2
+      {/* Step Counter */}
+      <p className={cn("text-base text-gray3", poppins_600.className)}>
+        <span className="text-primary">{activeStep} </span>/ {totalSteps}
       </p>
+
+      {/* Progress Bars */}
       <div className="flex gap-2 mb-2">
-        <div className="h-[4px] w-[31px] bg-primary"></div>
-        <div className="h-[4px] w-[31px] bg-[#F2EEFB]"></div>
+        {Array.from({ length: totalSteps }, (_, index) => (
+          <div
+            key={index}
+            className={`h-[4px] w-[31px] ${
+              index < activeStep ? "bg-primary" : "bg-[#F2EEFB]"
+            }`}
+          ></div>
+        ))}
       </div>
     </div>
   );
-};
+}
 
-export default PageNumber
+

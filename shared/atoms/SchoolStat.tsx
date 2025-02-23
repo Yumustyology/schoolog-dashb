@@ -3,11 +3,10 @@ import { cn } from "@/lib/utils";
 
 export default function SchoolStats() {
     return (
-        
-            <section className="grid grid-cols-2 gap-6 w-full">
-                {/* Total Students */}
-                <div className="flex flex-col items-start">
-                    <h3 className={cn('text-sm text-black1', poppins_500.className)}>
+        <section className='flex flex-col gap-6 w-full'>
+            <div className='flex  items-center'>
+                <div className='flex-1 '>
+                    <h3 className={cn('text-sm text-black1 mb-1.5', poppins_500.className)}>
                         150
                     </h3>
                     <p className={cn('text-sm text-gray', poppins_400.className)}>
@@ -15,19 +14,20 @@ export default function SchoolStats() {
                     </p>
                 </div>
 
-                {/* Average Performance */}
-                <div className="flex flex-col items-start">
-                    <h3 className={cn('text-sm text-black1 text-right', poppins_500.className)}>
+                <div>
+                    <h3 className={cn('text-sm text-black1 items-end text-right mb-1.5', poppins_500.className)}>
                         90%
                     </h3>
                     <p className={cn('text-sm text-gray', poppins_400.className)}>
                         Average Performance
                     </p>
                 </div>
+            </div>
 
-                {/* Teacher Attendance */}
-                <div className="flex flex-col items-start">
-                    <h3 className={cn('text-sm text-black1', poppins_500.className)}>
+            <div className='flex items-center'>
+
+                <div className='flex-1'>
+                    <h3 className={cn('text-sm text-black1 mb-1.5', poppins_500.className)}>
                         80%
                     </h3>
                     <p className={cn('text-sm text-gray', poppins_400.className)}>
@@ -35,19 +35,20 @@ export default function SchoolStats() {
                     </p>
                 </div>
 
-                {/* Student Attendance */}
-                <div className="flex flex-col items-start">
-                    <h3 className={cn('text-sm text-black1', poppins_500.className)}>
+                <div>
+                    <h3 className={cn('text-sm text-black1 text-right mb-1.5', poppins_500.className)}>
                         90%
                     </h3>
                     <p className={cn('text-sm text-gray', poppins_400.className)}>
                         Student attendance
                     </p>
                 </div>
+            </div>
 
-                {/* Curriculum Covered */}
-                <div className="flex flex-col items-start">
-                    <h3 className={cn('text-sm text-black1', poppins_500.className)}>
+            <div className='flex justify-between items-center'>
+
+                <div className='flex-1'>
+                    <h3 className={cn('text-sm text-black1 mb-1.5', poppins_500.className)}>
                         52%
                     </h3>
                     <p className={cn('text-sm text-gray', poppins_400.className)}>
@@ -55,16 +56,16 @@ export default function SchoolStats() {
                     </p>
                 </div>
 
-                {/* Resources */}
-                <div className="flex flex-col items-start">
-                    <h3 className={cn('text-sm text-black1', poppins_500.className)}>
+                <div>
+                    <h3 className={cn('text-sm text-black1 text-right', poppins_500.className)}>
                         52
                     </h3>
                     <p className={cn('text-sm text-gray', poppins_400.className)}>
                         Resources
                     </p>
                 </div>
-            </section>
+            </div>
+        </section>
 
     );
 }

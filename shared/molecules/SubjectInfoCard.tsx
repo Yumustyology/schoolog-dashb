@@ -44,7 +44,7 @@ function SubjectInfoCard({ role }: { role: "school" | "student" | "parent" }) {
                 </div>
             </CardHeader>
 
-            <CardContent className="flex flex-col p-0 gap-8 pb-[59px]">
+            <CardContent className="flex flex-col p-0 gap-8">
                 <main className="flex justify-between items-center">
                     {role == "student" && (
                         <>
@@ -70,70 +70,8 @@ function SubjectInfoCard({ role }: { role: "school" | "student" | "parent" }) {
                     }
 
                     {role == "school" && (
-                        <section className='flex flex-col gap-6 w-full'>
-                            <div className='flex  items-center'>
-                                <div className='flex-1 '>
-                                    <h3 className={cn('text-sm text-black1 mb-1.5', poppins_500.className)}>
-                                        150
-                                    </h3>
-                                    <p className={cn('text-sm text-gray', poppins_400.className)}>
-                                        Total Students
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <h3 className={cn('text-sm text-black1 items-end text-right mb-1.5', poppins_500.className)}>
-                                        90%
-                                    </h3>
-                                    <p className={cn('text-sm text-gray', poppins_400.className)}>
-                                        Average Performance
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className='flex items-center'>
-
-                                <div className='flex-1'>
-                                    <h3 className={cn('text-sm text-black1 mb-1.5', poppins_500.className)}>
-                                        80%
-                                    </h3>
-                                    <p className={cn('text-sm text-gray', poppins_400.className)}>
-                                        Teacher attendance
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <h3 className={cn('text-sm text-black1 text-right mb-1.5', poppins_500.className)}>
-                                        90%
-                                    </h3>
-                                    <p className={cn('text-sm text-gray', poppins_400.className)}>
-                                        Student attendance
-                                    </p>
-                                </div>
-                            </div>
-
-                            <div className='flex justify-between items-center'>
-
-                                <div className='flex-1'>
-                                    <h3 className={cn('text-sm text-black1 mb-1.5', poppins_500.className)}>
-                                        52%
-                                    </h3>
-                                    <p className={cn('text-sm text-gray', poppins_400.className)}>
-                                        Curriculum Covered
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <h3 className={cn('text-sm text-black1 text-right', poppins_500.className)}>
-                                        52
-                                    </h3>
-                                    <p className={cn('text-sm text-gray', poppins_400.className)}>
-                                        Resources
-                                    </p>
-                                </div>
-                            </div>
-                        </section>
-                        // <SchoolStats/>
+                        
+                        <SchoolStats/>
                     )
                     }
 
@@ -152,18 +90,18 @@ function SubjectInfoCard({ role }: { role: "school" | "student" | "parent" }) {
                 }
 
                 {role === 'school' && (
-                    <div className='flex justify-between'>
-                        <Button round flat className={cn('flex  text-r2 h-[48px] w-[191px] border border-r2',)} >
+                    <div className='flex space-x-4'>
+                        <Button round flat className={cn('flex text-r2 h-[48px] w-[191px] border border-r2',)} >
                             <DeleteIcon />
-                            <span className='text-r2'>
+                            <span className={cn('text-base text-r2', poppins_500.className )}>
                                 Delete Subject
                             </span>
                         </Button>
 
-                        <Button round className={cn('flex  text-r2 h-[48px] w-[191px] bg-yellow-800',)} >
-                            < ArchiveIcon/>
-                            <span className='text-r2'>
-                                Archive
+                        <Button round className={cn('flex h-[48px] w-[191px] bg-light',)} >
+                            < ArchiveIcon color='#21B55A'/>
+                            <span className={cn('text-base text-primary', poppins_500.className )}>
+                                Archive Subject
                             </span>
                         </Button>
 

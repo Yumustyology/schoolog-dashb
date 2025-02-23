@@ -1,8 +1,6 @@
 'use client';
 import { useState } from 'react';
 import BreadcrumbBox from '@/app/components/atoms/dashboard/subjects/Breadcrumb';
-import AsignedTeacher from '@/app/components/molecules/dashboard/student/subjects/AsignedTeacher';
-import SubjectSchedule from '@/app/components/molecules/dashboard/student/subjects/SubjectSchedule';
 import { Inter_500, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
 import {
@@ -12,15 +10,126 @@ import {
     TabsBody,
     TabsHeader,
 } from '@material-tailwind/react';
-import Image from 'next/image';
 import React from 'react';
-import { Search } from 'lucide-react';
 import Topics from '@/app/components/organisms/dashboard/students/Topics';
 import Assignments from '@/app/components/organisms/dashboard/students/Assignments';
 import SearchInput from '@/app/components/atoms/form/SearchInput';
 import SubjectInfoCard from '@/shared/molecules/SubjectInfoCard';
 import Button from '@/app/components/atoms/form/Button';
 import { EditIcon, UploadIcon } from '@/app/components/atoms/icons/Icons';
+import AssignedTeacherCard from '@/shared/molecules/AssignedTeacherCard';
+
+import MaterialsList from '@/app/components/molecules/dashboard/materials/MaterialList';
+import StudentsList from '@/app/components/organisms/StudentsList';
+import FolderIcon from '@/app/components/atoms/icons/dashboard/materials/Folder';
+import PdfIcon from '@/app/components/atoms/icons/dashboard/materials/Pdf';
+import WordIcon from '@/app/components/atoms/icons/dashboard/materials/Word';
+import ExcelIcon from '@/app/components/atoms/icons/dashboard/materials/Excel';
+import MediumIcon from '@/app/components/atoms/icons/dashboard/materials/Medium';
+import ImageIcon from '@/app/components/atoms/icons/dashboard/materials/Image';
+import { MaterialType } from '@/types';
+
+
+export const materials: MaterialType = [
+    {
+      type: 'folder',
+      icon: <FolderIcon/>,
+      name: 'Indices and its equations folder',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <FolderIcon/>,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <PdfIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <WordIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <ExcelIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <MediumIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <ExcelIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <ImageIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <PdfIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <WordIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <ExcelIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <MediumIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <ExcelIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <ImageIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+  ];
 
 function page() {
     const role = "school"
@@ -31,9 +140,19 @@ function page() {
             content: <Topics />,
         },
         {
-            label: 'Assignments',
-            value: 'assignments',
-            content: <Assignments />,
+            label: 'Student',
+            value: 'student_list',
+            content: <StudentsList/>,
+        },
+        {
+            label: 'Resources',
+            value: 'resources',
+            content: <MaterialsList materials={materials}/>,
+        },
+        {
+            label: 'Discussions',
+            value: 'discussions',
+            content: <Topics />,
         },
     ];
 
@@ -88,12 +207,12 @@ function page() {
 
                 </div>
 
-                <div className="flex space-x-3 mt-4">
+                <div className="flex flex-1 space-x-3 mt-4">
                     <div className="w-[446px]">
                         <SubjectInfoCard role={role} />
                     </div>
                     <div className="flex-1 ">
-                        <AsignedTeacher />
+                        <AssignedTeacherCard role='school'/>
                     </div>
                 </div>
 
@@ -106,7 +225,7 @@ function page() {
                             />
 
                             <TabsHeader
-                                className="transition-all text-sm px-2 py-2 mb-6 w-[340px] bg-[#F1F1F1] h-[53px] rounded-full"
+                                className="transition-all text-sm px-2 py-2 mb-6 w-[502px] bg-[#F1F1F1] h-[53px] rounded-full"
                                 indicatorProps={{
                                     className: 'bg-transparent rounded-full shadow-none',
                                 }}

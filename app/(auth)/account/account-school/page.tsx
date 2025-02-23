@@ -1,7 +1,8 @@
 "use client"; 
 import AuthWrapper from '@/app/components/atoms/form/auth/AuthWrapper';
 import AccountName from '@/app/components/molecules/auth/AccountName';
-import PageNumber from '@/app/components/molecules/auth/PageNumber';
+import ProgressPageNumber from '@/app/components/molecules/auth/PageNumber';
+// import PageNumber from '@/app/components/molecules/auth/PageNumber';
 import {
   poppins_400,
   poppins_600,
@@ -13,7 +14,7 @@ function page() {
   return (
     <AuthWrapper>
       <main className="w-full min-h-screen py-28 px-36">
-        <PageNumber />
+        <ProgressPageNumber activeStep={1} totalSteps={2} />
 
         <div className="  flex flex-col items-center justify-center  mx-auto">
           <div className="mb-12">

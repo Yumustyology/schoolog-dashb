@@ -228,3 +228,4 @@ export const registeredActivitiesAndEvents: ActivitiesAndEvent = [
     price: 'N5,000',
   },
 ];
+
