@@ -1,8 +1,8 @@
-import React from "react";
+import React from 'react';
 
 function Library({
-  color = "#828282",
-  size = "20",
+  color = '#828282',
+  size = '20',
 }: {
   color?: string;
   size?: string;

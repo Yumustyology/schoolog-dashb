@@ -5,7 +5,7 @@ import {
   Inter_500,
   poppins_400,
   poppins_500,
-} from "@/app/lib/config/font.config";
+} from '@/app/lib/config/font.config';
 import {
   Card,
   CardContent,
@@ -25,12 +25,12 @@ function AsignedTeacher() {
           <Image src={teacherImg2} alt="teacher-image" />
           <div>
             <h3
-              className={cn("text-sm text-gray6 mb-1", poppins_500.className)}
+              className={cn('text-sm text-gray6 mb-1', poppins_500.className)}
             >
               Jimoh Jamiu
             </h3>
-            <p className={cn("text-sm text-gray3", poppins_400.className)}>
-              {" "}
+            <p className={cn('text-sm text-gray3', poppins_400.className)}>
+              {' '}
               Biology Teacher
             </p>
           </div>
@@ -40,19 +40,19 @@ function AsignedTeacher() {
       <CardContent className="flex flex-col gap-6 w-full px-0 ">
         <section className="flex justify-between items-center w-full">
           <div>
-            <h3 className={cn("text-sm text-black1", Inter_500.className)}>
+            <h3 className={cn('text-sm text-black1', Inter_500.className)}>
               jimohjamiu200@gmail.com
             </h3>
-            <p className={cn("text-sm text-gray3", poppins_400.className)}>
+            <p className={cn('text-sm text-gray3', poppins_400.className)}>
               Email
             </p>
           </div>
 
           <div>
-            <h3 className={cn("text-sm text-black1", poppins_500.className)}>
-              07045321256{" "}
+            <h3 className={cn('text-sm text-black1', poppins_500.className)}>
+              07045321256{' '}
             </h3>
-            <p className={cn("text-sm text-gray3", poppins_400.className)}>
+            <p className={cn('text-sm text-gray3', poppins_400.className)}>
               Phone number
             </p>
           </div>
@@ -60,22 +60,22 @@ function AsignedTeacher() {
 
         <section className="flex justify-between items-center">
           <div>
-            <h3 className={cn("text-sm text-black1", poppins_500.className)}>
+            <h3 className={cn('text-sm text-black1', poppins_500.className)}>
               Admin Office
             </h3>
-            <p className={cn("text-sm text-gray3", poppins_400.className)}>
+            <p className={cn('text-sm text-gray3', poppins_400.className)}>
               Office
             </p>
           </div>
 
           <div>
-            <h3 className={cn("text-sm text-black1", poppins_500.className)}>
+            <h3 className={cn('text-sm text-black1', poppins_500.className)}>
               9:00am - 12:00pm
             </h3>
             <p
               className={cn(
-                "text-sm text-gray3 text-right",
-                poppins_400.className,
+                'text-sm text-gray3 text-right',
+                poppins_400.className
               )}
             >
               Time on seat

@@ -5,38 +5,38 @@ import {
   TabPanel,
   Tabs,
   TabsBody,
-  TabsHeader, 
-} from "@material-tailwind/react";
-import { poppins_500 } from "@/app/lib/config/font.config";
-import { SelectSubject } from "@/app/components/atoms/dashboard/materials/SelectSubject";
-import BorrowBooksList from "@/app/components/molecules/dashboard/library/BorrowBooksList";
-import AvailableBooks from "@/app/components/organisms/dashboard/students/AvailableBooks";
-import { cn } from "@/app/lib/utils";
+  TabsHeader,
+} from '@material-tailwind/react';
+import { poppins_500 } from '@/app/lib/config/font.config';
+import { SelectSubject } from '@/app/components/atoms/dashboard/materials/SelectSubject';
+import BorrowBooksList from '@/app/components/molecules/dashboard/library/BorrowBooksList';
+import AvailableBooks from '@/app/components/organisms/dashboard/students/AvailableBooks';
+import { cn } from '@/app/lib/utils';
 
 function Library() {
   const todayClassesTabs = [
     {
-      label: "Available books",
-      value: "activities",
+      label: 'Available books',
+      value: 'activities',
       content: <AvailableBooks />,
     },
     {
-      label: "Borrowed books",
-      value: "your_activities",
+      label: 'Borrowed books',
+      value: 'your_activities',
       content: <BorrowBooksList />,
     },
   ];
 
-  const [activeBooksTab, setActiveBooksTab] = useState("activities");
+  const [activeBooksTab, setActiveBooksTab] = useState('activities');
 
   const handleBooksTabClick = (tabValue: string) => {
     setActiveBooksTab(tabValue);
     const urlParams = new URLSearchParams(window.location.search);
-    urlParams.set("tab", tabValue);
+    urlParams.set('tab', tabValue);
     window.history.pushState(
       {},
-      "",
-      `${window.location.pathname}?${urlParams}`,
+      '',
+      `${window.location.pathname}?${urlParams}`
     );
   };
 

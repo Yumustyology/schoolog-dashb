@@ -59,7 +59,7 @@ export function CountriesSelect({
               <SelectItem key={name} value={name}>
                 <div className="flex items-center gap-2">
                   <Image
-                  alt={`${name}-flag`}
+                    alt={`${name}-flag`}
                     src={flags.svg}
                     className="h-5 w-5 rounded-full object-cover"
                   />

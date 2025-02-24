@@ -1,5 +1,5 @@
-            import { Carousel } from '@material-tailwind/react';
-            import Button from '../atoms/form/Button';
+import { Carousel } from '@material-tailwind/react';
+import Button from '../atoms/form/Button';
 import React, {
   Dispatch,
   forwardRef,
@@ -106,7 +106,6 @@ export function ImageViewModal() {
   );
 }
 
-
 export const CarouselImage = forwardRef<
   carouselImageRefType,
   { setActiveFooterImg: Dispatch<SetStateAction<number>> }
@@ -162,4 +161,4 @@ export const CarouselImage = forwardRef<
   );
 });
 
-CarouselImage.displayName = "CarouselImage";
+CarouselImage.displayName = 'CarouselImage';

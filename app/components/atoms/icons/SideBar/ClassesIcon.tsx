@@ -1,7 +1,6 @@
 import React from 'react';
 
 const ClassesIcon = ({ color = '#828282' }: { color?: string }) => {
-
   return (
     <svg
       width="20"

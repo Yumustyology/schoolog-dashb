@@ -11,25 +11,25 @@ import {
   TabsBody,
   Tab,
   TabPanel,
-} from "@material-tailwind/react";
-import useActiveTab from "@/app/lib/hooks/useActiveTab";
-import Search from "@/app/components/atoms/form/SearchInput";
+} from '@material-tailwind/react';
+import useActiveTab from '@/app/lib/hooks/useActiveTab';
+import Search from '@/app/components/atoms/form/SearchInput';
 
 const Page = () => {
   const data = [
     {
-      label: "Upcoming lives",
-      value: "upcoming-lives",
+      label: 'Upcoming lives',
+      value: 'upcoming-lives',
       content: <LiveClassBox image />,
     },
     {
-      label: "Live classes",
-      value: "live-classes",
+      label: 'Live classes',
+      value: 'live-classes',
       content: <LiveClassBox prev image />,
     },
   ];
 
-  const { activeTab, handleTabClick } = useActiveTab("live-classes", data);
+  const { activeTab, handleTabClick } = useActiveTab('live-classes', data);
 
   return (
     <main className="">
@@ -37,7 +37,7 @@ const Page = () => {
         <BreadcrumbBox
           crumbs={[
             {
-              label: "Live classes",
+              label: 'Live classes',
               isActive: true,
             },
           ]}
@@ -53,13 +53,13 @@ const Page = () => {
             <TabsHeader
               className="transition-all text-sm px-2 py-2 w-[340px] bg-[#F1F1F1] h-[53px] rounded-full"
               indicatorProps={{
-                className: "bg-transparent rounded-full shadow-none",
+                className: 'bg-transparent rounded-full shadow-none',
               }}
             >
               {data.map(({ label, value }) => (
                 <Tab
                   onClick={() => handleTabClick(value)}
-                  className={cn("text-sm text-center", poppins_500.className)}
+                  className={cn('text-sm text-center', poppins_500.className)}
                   activeClassName="rounded-full text-white bg-[#21B55A]"
                   key={value}
                   value={value}
@@ -92,14 +92,14 @@ const LiveClassBox = ({ image, prev }: { prev?: boolean; image?: boolean }) => {
   return (
     <div
       className={cn(
-        "p-3 border border-gray5 rounded-lg min-w-[365px]--max-w-[355px] flex flex-col justify-between",
+        'p-3 border border-gray5 rounded-lg min-w-[365px]--max-w-[355px] flex flex-col justify-between'
       )}
     >
       <div className="flex gap-[14px]">
         {image && (
           <Image
             alt="cover-image"
-            src={"/assets/images/cover-subject.png"}
+            src={'/assets/images/cover-subject.png'}
             height={54}
             width={70}
           />
@@ -107,26 +107,26 @@ const LiveClassBox = ({ image, prev }: { prev?: boolean; image?: boolean }) => {
         <div>
           <p
             className={cn(
-              "flex-shrink-0 text-gray1 text-base mb-3",
-              poppins_500.className,
+              'flex-shrink-0 text-gray1 text-base mb-3',
+              poppins_500.className
             )}
           >
             Biology
           </p>
-          <p className={cn("text-sm text-gray3", poppins_400.className)}>
+          <p className={cn('text-sm text-gray3', poppins_400.className)}>
             Introduction to state of matter
           </p>
         </div>
       </div>
       <div
         className={cn(
-          "text-sm text-gray3 flex gap-2 mt-3.5 items-center",
-          poppins_400.className,
+          'text-sm text-gray3 flex gap-2 mt-3.5 items-center',
+          poppins_400.className
         )}
       >
         <Image
           alt="avatar"
-          src={"/assets/images/avatar.png"}
+          src={'/assets/images/avatar.png'}
           height={24}
           width={24}
         />

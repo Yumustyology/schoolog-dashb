@@ -1,5 +1,5 @@
-"use client";
-import React, { useState } from "react";
+'use client';
+import React, { useState } from 'react';
 
 const ModeSwitch = ({ className }: { className?: string }) => {
   const [isPressed, setIsPressed] = useState(false);

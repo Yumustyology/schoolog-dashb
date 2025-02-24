@@ -7,9 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  poppins_400,
-} from '@/app/lib/config/font.config';
+import { poppins_400 } from '@/app/lib/config/font.config';
 
 interface Option {
   id: string;

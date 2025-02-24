@@ -114,7 +114,7 @@ export function StudentsListTable(): JSX.Element {
                 total,
                 grade,
                 status,
-                rank
+                rank,
               },
               index
             ) => {
@@ -202,7 +202,7 @@ export function StudentsListTable(): JSX.Element {
                       {grade}
                     </Typography>
                   </td>
-                   <td className={classes}>
+                  <td className={classes}>
                     <Typography
                       variant="small"
                       className={cn(

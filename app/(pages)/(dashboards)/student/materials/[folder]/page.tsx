@@ -16,46 +16,46 @@ function page() {
 
   const materials: Materials = [
     {
-      type: "material",
+      type: 'material',
       icon: <FolderIcon />,
-      name: "File name goes here.extension",
-      size: "760KB",
-      date: "28/03/2024",
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
     },
     {
-      type: "material",
+      type: 'material',
       icon: <PdfIcon />,
-      name: "File name goes here.extension",
-      size: "760KB",
-      date: "28/03/2024",
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
     },
     {
-      type: "material",
+      type: 'material',
       icon: <WordIcon />,
-      name: "File name goes here.extension",
-      size: "760KB",
-      date: "28/03/2024",
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
     },
     {
-      type: "material",
+      type: 'material',
       icon: <ExcelIcon />,
-      name: "File name goes here.extension",
-      size: "760KB",
-      date: "28/03/2024",
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
     },
     {
-      type: "material",
+      type: 'material',
       icon: <MediumIcon />,
-      name: "File name goes here.extension",
-      size: "760KB",
-      date: "28/03/2024",
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
     },
     {
-      type: "material",
+      type: 'material',
       icon: <ExcelIcon />,
-      name: "File name goes here.extension",
-      size: "760KB",
-      date: "28/03/2024",
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
     },
   ];
 
@@ -65,12 +65,12 @@ function page() {
       breadcrumb={[
         {
           isActive: false,
-          label: "materials",
-          href: "/student/materials",
+          label: 'materials',
+          href: '/student/materials',
         },
         {
           isActive: true,
-          label: "123",
+          label: '123',
         },
       ]}
     />

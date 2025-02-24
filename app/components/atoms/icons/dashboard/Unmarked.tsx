@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-function Unmarked({ color = "#BDBDBD" }: { color?: string }) {
+function Unmarked({ color = '#BDBDBD' }: { color?: string }) {
   return (
     <svg
       width="20"

@@ -15,11 +15,7 @@ function LogoutModalICon() {
         stroke="#EB5757"
         strokeWidth="1.5"
       />
-      <path
-        d="M27.0001 24H15.6201"
-        stroke="#EB5757"
-        strokeWidth="1.5"
-      />
+      <path d="M27.0001 24H15.6201" stroke="#EB5757" strokeWidth="1.5" />
       <path
         d="M17.85 20.6484L14.5 23.9984L17.85 27.3484"
         stroke="#EB5757"

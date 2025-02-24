@@ -36,57 +36,57 @@ const TABLE_ROWS: TableRow[] = [
   {
     subject: 'Muh Jamiu',
     studentId: '172928739HD',
-       guardian: "Bello Sambo",
+    guardian: 'Bello Sambo',
     amount: 60,
     total: 90,
-    title: "School fee",
+    title: 'School fee',
     classGrade: 'JSS1',
-    dueDate: "30/12/2024",
+    dueDate: '30/12/2024',
     status: 'Pass',
   },
   {
     subject: 'Muh Jamiu',
     studentId: '172928739HD',
-       guardian: "Bello Sambo",
+    guardian: 'Bello Sambo',
     amount: 55,
     total: 85,
-    title: "School fee",
+    title: 'School fee',
     classGrade: 'JSS2',
-    dueDate: "30/12/2024",
+    dueDate: '30/12/2024',
     status: 'Fair',
   },
   {
     subject: 'Muh Jamiu',
     studentId: '172928739HD',
-      guardian: "Bello Sambo",
+    guardian: 'Bello Sambo',
     amount: 62,
     total: 97,
     classGrade: 'SS1',
-    title: "School fee",
-    dueDate: "30/12/2024",
+    title: 'School fee',
+    dueDate: '30/12/2024',
     status: 'Fail',
   },
   {
     subject: 'Muh Jamiu',
     studentId: '172928739HD',
-    guardian: "Bello Sambo",
+    guardian: 'Bello Sambo',
     amount: 60,
     total: 95,
-    title: "School fee",
+    title: 'School fee',
     classGrade: 'SS3',
-    dueDate: "30/12/2024",
+    dueDate: '30/12/2024',
     status: 'Good',
   },
   {
     subject: 'Muh Jamiu',
     studentId: '172928739HD',
-    guardian: "Bello Sambo",
+    guardian: 'Bello Sambo',
     amount: 58,
     total: 90,
     classGrade: 'JSS3',
-    dueDate: "30/12/2024",
+    dueDate: '30/12/2024',
     status: 'Pass',
-    title: "School fee",
+    title: 'School fee',
   },
 ];
 
@@ -123,7 +123,7 @@ export function AdminPaymentListTable(): JSX.Element {
                 classGrade,
                 status,
                 dueDate,
-                title
+                title,
               },
               index
             ) => {
@@ -146,7 +146,7 @@ export function AdminPaymentListTable(): JSX.Element {
                       {subject}
                     </Typography>
                   </td>
-                   <td className={classes}>
+                  <td className={classes}>
                     <Typography
                       variant="small"
                       className={cn(
@@ -177,10 +177,10 @@ export function AdminPaymentListTable(): JSX.Element {
                         poppins_400.className
                       )}
                     >
-                     {classGrade}
+                      {classGrade}
                     </Typography>
                   </td>
-                   <td className={classes}>
+                  <td className={classes}>
                     <Typography
                       variant="small"
                       className={cn(
@@ -188,7 +188,7 @@ export function AdminPaymentListTable(): JSX.Element {
                         poppins_400.className
                       )}
                     >
-                     {title}
+                      {title}
                     </Typography>
                   </td>
                   <td className={classes}>

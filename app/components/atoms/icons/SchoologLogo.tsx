@@ -68,7 +68,7 @@ const SchoologLogo = () => {
       <g opacity="0.74">
         <mask
           id="mask0_1213_18815"
-          style={{ maskType: "luminance" }}
+          style={{ maskType: 'luminance' }}
           maskUnits="userSpaceOnUse"
           x="188"
           y="4"

@@ -5,7 +5,7 @@ declare module 'use-react-countries' {
       svg: string;
       png?: string;
     };
-    [key: string]: unknown; 
+    [key: string]: unknown;
   }
 
   export interface UseCountriesResult {

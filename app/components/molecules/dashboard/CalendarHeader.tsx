@@ -52,7 +52,7 @@ export const CalendarHeader = (toolbarProps: RBBToolbarProps) => {
       {/* View Selectors */}
       <div className="flex gap-2">
         {/* TODO:check later */}
-        {views.map((availableView:string) => (
+        {views.map((availableView: string) => (
           <button
             key={availableView}
             onClick={() => onView(availableView)}
@@ -66,7 +66,7 @@ export const CalendarHeader = (toolbarProps: RBBToolbarProps) => {
           >
             {availableView.charAt(0).toUpperCase() + availableView.slice(1)}
           </button>
-        ))} 
+        ))}
       </div>
     </div>
   );

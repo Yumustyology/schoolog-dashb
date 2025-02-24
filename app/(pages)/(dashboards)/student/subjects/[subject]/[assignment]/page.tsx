@@ -129,14 +129,14 @@ function page() {
           <div className="mb-8">
             <Review />
           </div>
-          <h3 className={cn("text-lg", Inter_600.className)}>
-            {" "}
-            Assignment submitted{" "}
+          <h3 className={cn('text-lg', Inter_600.className)}>
+            {' '}
+            Assignment submitted{' '}
           </h3>
           <p
             className={cn(
-              "text-center text-gray3 mt-4 px-3",
-              Inter_400.className,
+              'text-center text-gray3 mt-4 px-3',
+              Inter_400.className
             )}
           >
             You have successfully submitted your assignment

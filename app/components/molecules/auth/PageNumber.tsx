@@ -1,5 +1,5 @@
-import { poppins_600 } from "@/app/lib/config/font.config";
-import { cn } from "@/lib/utils";
+import { poppins_600 } from '@/app/lib/config/font.config';
+import { cn } from '@/lib/utils';
 
 const PageNumber = () => {
   return (
@@ -15,4 +15,4 @@ const PageNumber = () => {
   );
 };
 
-export default PageNumber
+export default PageNumber;

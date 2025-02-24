@@ -16,7 +16,6 @@ import SelectComp from '@/app/components/atoms/form/Select';
 import { DatePicker } from '@/app/components/atoms/form/DatePicker';
 import EyeClose from '@/app/components/atoms/icons/EyeClose';
 
-
 type TableRow = {
   paymentID: string;
   amount: string;

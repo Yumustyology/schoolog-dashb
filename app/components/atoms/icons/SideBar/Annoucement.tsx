@@ -3,7 +3,6 @@ import React from 'react';
 function Annoucement({
   color = '#828282',
   size = '20',
-
 }: {
   color?: string;
   size?: string;

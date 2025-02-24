@@ -5,7 +5,6 @@ function Attendance({
   width = '20',
   color = '#828282',
   size = '20',
-
 }: {
   height?: string;
   width?: string;

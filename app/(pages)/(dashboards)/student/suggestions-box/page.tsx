@@ -9,40 +9,40 @@ import {
   Inter_600,
   poppins_400,
   poppins_500,
-} from "@/app/lib/config/font.config";
-import { cn } from "@/app/lib/utils";
-import React from "react";
+} from '@/app/lib/config/font.config';
+import { cn } from '@/app/lib/utils';
+import React from 'react';
 
 const suggestionBox = [
   {
     id: 1,
-    title: "Suggestion title goes here ",
+    title: 'Suggestion title goes here ',
     content:
-      "Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper",
+      'Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper',
   },
   {
     id: 2,
-    title: "Suggestion title goes here ",
+    title: 'Suggestion title goes here ',
     content:
-      "Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper",
+      'Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper',
   },
   {
     id: 3,
-    title: "Suggestion title goes here ",
+    title: 'Suggestion title goes here ',
     content:
-      "Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper",
+      'Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper',
   },
   {
     id: 4,
-    title: "Suggestion title goes here ",
+    title: 'Suggestion title goes here ',
     content:
-      "Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper",
+      'Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper',
   },
   {
     id: 4,
-    title: "Suggestion title goes here ",
+    title: 'Suggestion title goes here ',
     content:
-      "Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper",
+      'Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper',
   },
 ];
 
@@ -58,7 +58,7 @@ function Page() {
           crumbs={[
             {
               isActive: true,
-              label: "Suggestions",
+              label: 'Suggestions',
             },
           ]}
         />

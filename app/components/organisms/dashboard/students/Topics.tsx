@@ -4,12 +4,7 @@ import Marked from '@/app/components/atoms/icons/dashboard/Marked';
 import Unmarked from '@/app/components/atoms/icons/dashboard/Unmarked';
 import { Inter_500, poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
-import {
-  Card,
-  CardBody,
-  Tooltip,
-  Typography,
-} from '@material-tailwind/react';
+import { Card, CardBody, Tooltip, Typography } from '@material-tailwind/react';
 
 import React from 'react';
 type TopicsList = {
