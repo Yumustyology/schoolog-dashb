@@ -12,13 +12,12 @@ import { poppins_500 } from '@/app/lib/config/font.config';
 import { DatePicker } from '@/app/components/atoms/form/DatePicker';
 import ActivitiesAndEvents from '@/app/components/organisms/dashboard/students/ActivitiesAndEvents';
 import RegisteredActivitiesAndEvents from '@/app/components/organisms/dashboard/students/RegisteredActivitiesAndEvents';
-import CalendarActivities from '@/app/components/organisms/dashboard/students/CalendarActivities';
 import SelectComp from '@/app/components/atoms/form/Select';
 import SearchInput from '@/app/components/atoms/form/SearchInput';
 import { MyActivitiesCalendar } from '@/app/components/organisms/dashboard/MyActivitiesCalendar';
 // import MyActivitiesCalendar from '@/app/components/organisms/dashboard/MyActivitiesCalendar';
 
-function page() {
+function Page() {
   const todayClassesTabs = [
     {
       label: 'Activities & event',
@@ -111,4 +110,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

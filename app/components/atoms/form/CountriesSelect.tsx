@@ -9,6 +9,7 @@ import {
 } from '@/components/ui/select';
 import { poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
+import Image from 'next/image';
 
 export function CountriesSelect({
   labelClassName,
@@ -57,9 +58,9 @@ export function CountriesSelect({
             ({ name, flags }: { name: string; flags: { svg: string } }) => (
               <SelectItem key={name} value={name}>
                 <div className="flex items-center gap-2">
-                  <img
+                  <Image
+                    alt={`${name}-flag`}
                     src={flags.svg}
-                    alt={name}
                     className="h-5 w-5 rounded-full object-cover"
                   />
                   {name}

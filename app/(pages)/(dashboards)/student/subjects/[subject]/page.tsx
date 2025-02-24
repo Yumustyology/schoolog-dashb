@@ -3,7 +3,7 @@ import { useState } from 'react';
 import BreadcrumbBox from '@/app/components/atoms/dashboard/subjects/Breadcrumb';
 import AsignedTeacher from '@/app/components/molecules/dashboard/student/subjects/AsignedTeacher';
 import SubjectSchedule from '@/app/components/molecules/dashboard/student/subjects/SubjectSchedule';
-import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
+import { poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
 import {
   Tab,
@@ -12,14 +12,12 @@ import {
   TabsBody,
   TabsHeader,
 } from '@material-tailwind/react';
-import Image from 'next/image';
 import React from 'react';
-import { Search } from 'lucide-react';
 import Topics from '@/app/components/organisms/dashboard/students/Topics';
 import Assignments from '@/app/components/organisms/dashboard/students/Assignments';
 import SearchInput from '@/app/components/atoms/form/SearchInput';
 
-function page() {
+function Page() {
   const todayClassesTabs = [
     {
       label: 'Topics',
@@ -116,4 +114,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

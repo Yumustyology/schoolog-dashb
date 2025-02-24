@@ -15,7 +15,7 @@ import {
 import useActiveTab from '@/app/lib/hooks/useActiveTab';
 import Search from '@/app/components/atoms/form/SearchInput';
 
-const page = () => {
+const Page = () => {
   const data = [
     {
       label: 'Upcoming lives',
@@ -86,7 +86,7 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
 
 const LiveClassBox = ({ image, prev }: { prev?: boolean; image?: boolean }) => {
   return (

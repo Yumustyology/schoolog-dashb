@@ -29,8 +29,8 @@ export const subjectsList = [
     students: [
       { name: 'Jamiu Yusuf', image: teacherImg2 },
       { name: 'Jamiu Yusuf', image: teacherImg2 },
-      { name: 'Jamiu Yusuf', image: teacherImg2 }
-    ]
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+    ],
   },
   {
     id: 2,
@@ -44,8 +44,8 @@ export const subjectsList = [
     students: [
       { name: 'Jamiu Yusuf', image: teacherImg2 },
       { name: 'Jamiu Yusuf', image: teacherImg2 },
-      { name: 'Jamiu Yusuf', image: teacherImg2 }
-    ]
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+    ],
   },
   {
     id: 3,
@@ -59,8 +59,8 @@ export const subjectsList = [
     students: [
       { name: 'Jamiu Yusuf', image: teacherImg2 },
       { name: 'Jamiu Yusuf', image: teacherImg2 },
-      { name: 'Jamiu Yusuf', image: teacherImg2 }
-    ]
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+    ],
   },
   {
     id: 4,
@@ -74,8 +74,8 @@ export const subjectsList = [
     students: [
       { name: 'Jamiu Yusuf', image: teacherImg2 },
       { name: 'Jamiu Yusuf', image: teacherImg2 },
-      { name: 'Jamiu Yusuf', image: teacherImg2 }
-    ]
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+    ],
   },
   {
     id: 5,
@@ -89,8 +89,8 @@ export const subjectsList = [
     students: [
       { name: 'Jamiu Yusuf', image: teacherImg2 },
       { name: 'Jamiu Yusuf', image: teacherImg2 },
-      { name: 'Jamiu Yusuf', image: teacherImg2 }
-    ]
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+    ],
   },
   {
     id: 6,
@@ -104,8 +104,8 @@ export const subjectsList = [
     students: [
       { name: 'Jamiu Yusuf', image: teacherImg2 },
       { name: 'Jamiu Yusuf', image: teacherImg2 },
-      { name: 'Jamiu Yusuf', image: teacherImg2 }
-    ]
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+    ],
   },
   {
     id: 7,
@@ -119,8 +119,8 @@ export const subjectsList = [
     students: [
       { name: 'Jamiu Yusuf', image: teacherImg2 },
       { name: 'Jamiu Yusuf', image: teacherImg2 },
-      { name: 'Jamiu Yusuf', image: teacherImg2 }
-    ]
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+    ],
   },
   {
     id: 8,
@@ -134,8 +134,8 @@ export const subjectsList = [
     students: [
       { name: 'Jamiu Yusuf', image: teacherImg2 },
       { name: 'Jamiu Yusuf', image: teacherImg2 },
-      { name: 'Jamiu Yusuf', image: teacherImg2 }
-    ]
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+    ],
   },
   {
     id: 9,
@@ -149,8 +149,8 @@ export const subjectsList = [
     students: [
       { name: 'Jamiu Yusuf', image: teacherImg2 },
       { name: 'Jamiu Yusuf', image: teacherImg2 },
-      { name: 'Jamiu Yusuf', image: teacherImg2 }
-    ]
+      { name: 'Jamiu Yusuf', image: teacherImg2 },
+    ],
   },
 ];
 

@@ -24,7 +24,6 @@ jobs:
           npm ci
           npm install --include=optional sharp
 
-
       - name: Build Application
         run: npm run build
         env:
@@ -39,7 +38,7 @@ jobs:
 
       - name: Sync Build to S3
         run: |
-          aws s3 sync ./out s3://${{ secrets.S3_BUCKET_NAME }} \
+          aws s3 sync ./.next s3://${{ secrets.S3_BUCKET_NAME }} \
             --delete \
             --acl public-read \
             --cache-control "public, max-age=31536000, immutable"

@@ -7,11 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import {
-  Inter_500,
-  poppins_400,
-  poppins_500,
-} from '@/app/lib/config/font.config';
+import { poppins_400 } from '@/app/lib/config/font.config';
 
 interface Option {
   id: string;
@@ -51,7 +47,6 @@ const SelectComp: React.FC<SelectCompProps> = ({
   triggerClasses = '',
   contentClasses = '',
   labelClassName = '',
-  className,
 }) => {
   return (
     <div className={cn(selectClasses)}>

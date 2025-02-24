@@ -28,7 +28,7 @@ import { Calendar } from '@/components/ui/calendar';
 import { StudentsListTable } from '@/app/components/molecules/dashboard/student/StudentsListTable';
 import { AdminPaymentListTable } from '@/app/components/molecules/dashboard/payment/AdminPaymentListTable';
 
-const page = () => {
+const Page = () => {
   const [calenderDate, setCalenderDate] = React.useState<Date | undefined>();
 
   const analyticsTabs = [
@@ -212,4 +212,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

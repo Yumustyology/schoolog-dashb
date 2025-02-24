@@ -5,7 +5,7 @@ import SelectBox from '@/app/components/atoms/dashboard/subjects/Select';
 import AttendanceMetrics from '@/app/components/molecules/dashboard/analytics/AttendanceMetrics';
 import AttendanceList from '@/app/components/molecules/dashboard/attendance/AttendanceList';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
-import { cn } from '@/lib/utils';
+import { cn } from '@/app/lib/utils';
 import React from 'react';
 import { DateRangePicker } from '@/app/components/atoms/form/DateRangePicker';
 import DoughnutChart from '@/app/components/molecules/DoughnutChart';

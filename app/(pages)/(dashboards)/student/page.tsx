@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import AssignmentIcon from '@/app/components/atoms/icons/dashboard/AssignmentIcon';
 import EventsIcon from '@/app/components/atoms/icons/dashboard/EventsIcon';
 import SubjectIcon from '@/app/components/atoms/icons/dashboard/SubjectIcon';

@@ -1,11 +1,8 @@
-"use client"; 
+'use client';
 import AuthWrapper from '@/app/components/atoms/form/auth/AuthWrapper';
 import AccountName from '@/app/components/molecules/auth/AccountName';
 import PageNumber from '@/app/components/molecules/auth/PageNumber';
-import {
-  poppins_400,
-  poppins_600,
-} from '@/app/lib/config/font.config';
+import { poppins_400, poppins_600 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
 import React from 'react';
 
@@ -82,4 +79,3 @@ function page() {
 }
 
 export default page;
-

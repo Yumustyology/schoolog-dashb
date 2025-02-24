@@ -47,7 +47,7 @@ const announcements: Announcements = [
     date: '21/05/2015',
   },
 ];
-function page() {
+function Page() {
   const [open, setOpen] = useState(false);
 
   const openDrawer = () => setOpen(true);
@@ -154,4 +154,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

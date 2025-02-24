@@ -12,7 +12,7 @@ import {
   poppins_500,
   poppins_600,
 } from '@/app/lib/config/font.config';
-import { cn } from '@/lib/utils';
+import { cn } from '@/app/lib/utils';
 import React from 'react';
 
 function page() {

@@ -2,20 +2,15 @@
 import BreadcrumbBox from '@/app/components/atoms/dashboard/subjects/Breadcrumb';
 import Button from '@/app/components/atoms/form/Button';
 import Input from '@/app/components/atoms/form/Input';
-import LibraryIcon from '@/app/components/atoms/icons/dashboard/LibraryIcon';
 import SuggestionIcon from '@/app/components/atoms/icons/dashboard/SuggestionIcon';
 import Modal from '@/app/components/molecules/Modal';
-import FormModal from '@/app/components/molecules/dashboard/FormModal';
 import {
   Inter_400,
-  Inter_500,
   Inter_600,
   poppins_400,
   poppins_500,
-  poppins_600,
 } from '@/app/lib/config/font.config';
-import { cn } from '@/lib/utils';
-import { Content } from 'next/font/google';
+import { cn } from '@/app/lib/utils';
 import React from 'react';
 
 const suggestionBox = [
@@ -51,7 +46,7 @@ const suggestionBox = [
   },
 ];
 
-function page() {
+function Page() {
   const [suggestionFormModalOpen, setSuggestionFormModalOpen] =
     React.useState(false);
   const [modalOpen, setModalOpen] = React.useState(false);
@@ -169,4 +164,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

@@ -7,13 +7,13 @@ import {
   TabsBody,
   TabsHeader,
 } from '@material-tailwind/react';
-import { cn } from '@/lib/utils';
 import { poppins_500 } from '@/app/lib/config/font.config';
 import { SelectSubject } from '@/app/components/atoms/dashboard/materials/SelectSubject';
 import BorrowBooksList from '@/app/components/molecules/dashboard/library/BorrowBooksList';
 import AvailableBooks from '@/app/components/organisms/dashboard/students/AvailableBooks';
+import { cn } from '@/app/lib/utils';
 
-function page() {
+function Library() {
   const todayClassesTabs = [
     {
       label: 'Available books',
@@ -52,7 +52,7 @@ function page() {
                   height="18"
                   viewBox="0 0 24 24"
                   fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
+                  xmlns="http:/ /www.w3.org/2000/svg"
                 >
                   <path
                     d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
@@ -113,4 +113,4 @@ function page() {
   );
 }
 
-export default page;
+export default Library;

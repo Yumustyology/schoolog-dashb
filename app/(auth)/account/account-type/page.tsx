@@ -5,13 +5,8 @@ import Parent from '@/app/components/atoms/icons/AuthTypeIcons/Parent';
 import Student from '@/app/components/atoms/icons/AuthTypeIcons/Student';
 import Teacher from '@/app/components/atoms/icons/AuthTypeIcons/Teacher';
 import AccountType from '@/app/components/molecules/auth/AccountType';
-import {
-  poppins_400,
-  poppins_500,
-  poppins_600,
-} from '@/app/lib/config/font.config';
-import { cn } from '@/lib/utils';
-import Link from 'next/link';
+import { poppins_400, poppins_600 } from '@/app/lib/config/font.config';
+import { cn } from '@/app/lib/utils';
 
 import React from 'react';
 

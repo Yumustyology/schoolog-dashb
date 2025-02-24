@@ -1,8 +1,12 @@
-import { ArchiveIcon, DeleteIcon, EditIcon, VIsibilityIcon } from '@/app/components/atoms/icons/Icons';
+import {
+  ArchiveIcon,
+  DeleteIcon,
+  EditIcon,
+  VIsibilityIcon,
+} from '@/app/components/atoms/icons/Icons';
 import { Inter_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
-import React from 'react'
-
+import React from 'react';
 
 function OptionsSubjectDropdown({ isOpen }: { isOpen: boolean }) {
   if (!isOpen) {
@@ -15,7 +19,10 @@ function OptionsSubjectDropdown({ isOpen }: { isOpen: boolean }) {
       role="menu"
     >
       <button
-        className={cn('flex items-center gap-4 text-sm text-black1', Inter_500.className)}
+        className={cn(
+          'flex items-center gap-4 text-sm text-black1',
+          Inter_500.className
+        )}
         role="menuitem"
       >
         <VIsibilityIcon />
@@ -23,7 +30,10 @@ function OptionsSubjectDropdown({ isOpen }: { isOpen: boolean }) {
       </button>
 
       <button
-        className={cn('flex items-center gap-4 text-sm text-black1', Inter_500.className)}
+        className={cn(
+          'flex items-center gap-4 text-sm text-black1',
+          Inter_500.className
+        )}
         role="menuitem"
       >
         <EditIcon />
@@ -31,23 +41,27 @@ function OptionsSubjectDropdown({ isOpen }: { isOpen: boolean }) {
       </button>
 
       <button
-        className={cn('flex items-center gap-4 text-sm text-black1', Inter_500.className)}
+        className={cn(
+          'flex items-center gap-4 text-sm text-black1',
+          Inter_500.className
+        )}
         role="menuitem"
       >
         <ArchiveIcon />
         Archive
       </button>
       <button
-        className={cn('flex items-center gap-4 text-sm text-r2 ', Inter_500.className)}
+        className={cn(
+          'flex items-center gap-4 text-sm text-r2 ',
+          Inter_500.className
+        )}
         role="menuitem"
       >
         <DeleteIcon />
-        <span className='text-r2'>
-          Delete
-        </span>
+        <span className="text-r2">Delete</span>
       </button>
     </div>
   );
 }
 
-export default OptionsSubjectDropdown
+export default OptionsSubjectDropdown;

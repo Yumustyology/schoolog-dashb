@@ -1,10 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import { cn } from '@/lib/utils';
-import {
-  poppins_400,
-  poppins_500,
-} from '@/app/lib/config/font.config';
+import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 type AccountType = {
   Type: React.FC;
   name: string;

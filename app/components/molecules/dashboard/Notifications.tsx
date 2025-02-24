@@ -150,7 +150,7 @@ const notifications: NotificationsProp = [
 function Notifications() {
   const [open, setOpen] = useState(false);
 
-  const openDrawer = () => setOpen(true);
+  // const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
 
   return (

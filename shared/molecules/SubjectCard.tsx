@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import React from 'react';
 import Image from 'next/image';
 import { cn } from '@/lib/utils';
@@ -28,10 +28,13 @@ interface SubjectCardProps {
 }
 
 const SubjectCard: React.FC<SubjectCardProps> = ({ subject, role }) => {
-    const [isOpen, setIsOpen] = React.useState(false);
+  const [isOpen, setIsOpen] = React.useState(false);
 
   return (
-    <div key={subject.id} className="flex flex-col gap-4 min-w-[300px] relative">
+    <div
+      key={subject.id}
+      className="flex flex-col gap-4 min-w-[300px] relative"
+    >
       <Link href={`/${role}/subjects/1234`}>
         <Image
           className="w-full"
@@ -41,26 +44,29 @@ const SubjectCard: React.FC<SubjectCardProps> = ({ subject, role }) => {
       </Link>
       <div className="flex flex-col gap-3">
         {/* <Link href={`/${role}/subjects/1234`}> */}
-          <div className='flex justify-between items-center'>
-            <h3
-              className={cn(
-                'text-base text-gray1 font-semibold',
-                poppins_500.className
-              )}
-            >
-              {subject.subject}
-            </h3>
-            {role === 'school' && (
-              <div>
-                <div onClick={()=>{setIsOpen(!isOpen)}}>
-                  
-                <OptionIcon/>
-                </div>
-
-                <OptionsSubjectDropdown isOpen={isOpen}/>
-              </div>
+        <div className="flex justify-between items-center">
+          <h3
+            className={cn(
+              'text-base text-gray1 font-semibold',
+              poppins_500.className
             )}
-          </div>
+          >
+            {subject.subject}
+          </h3>
+          {role === 'school' && (
+            <div>
+              <div
+                onClick={() => {
+                  setIsOpen(!isOpen);
+                }}
+              >
+                <OptionIcon />
+              </div>
+
+              <OptionsSubjectDropdown isOpen={isOpen} />
+            </div>
+          )}
+        </div>
         {/* </Link> */}
         <p className={cn('text-sm text-gray6', poppins_400.className)}>
           {subject.currentTopic}

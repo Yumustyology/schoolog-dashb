@@ -2,7 +2,6 @@
 import ArrowUpIcon from '@/app/components/atoms/icons/ArrowUpIcon';
 import {
   Inter_400,
-  Inter_500,
   Inter_800,
   poppins_500,
 } from '@/app/lib/config/font.config';

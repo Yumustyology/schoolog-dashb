@@ -29,7 +29,7 @@ function AsignedTeacher() {
             >
               Jimoh Jamiu
             </h3>
-            <p className={cn('text-sm text-gray', poppins_400.className)}>
+            <p className={cn('text-sm text-gray3', poppins_400.className)}>
               {' '}
               Biology Teacher
             </p>
@@ -43,7 +43,7 @@ function AsignedTeacher() {
             <h3 className={cn('text-sm text-black1', Inter_500.className)}>
               jimohjamiu200@gmail.com
             </h3>
-            <p className={cn('text-sm text-gray', poppins_400.className)}>
+            <p className={cn('text-sm text-gray3', poppins_400.className)}>
               Email
             </p>
           </div>
@@ -52,7 +52,7 @@ function AsignedTeacher() {
             <h3 className={cn('text-sm text-black1', poppins_500.className)}>
               07045321256{' '}
             </h3>
-            <p className={cn('text-sm text-gray', poppins_400.className)}>
+            <p className={cn('text-sm text-gray3', poppins_400.className)}>
               Phone number
             </p>
           </div>
@@ -63,7 +63,7 @@ function AsignedTeacher() {
             <h3 className={cn('text-sm text-black1', poppins_500.className)}>
               Admin Office
             </h3>
-            <p className={cn('text-sm text-gray', poppins_400.className)}>
+            <p className={cn('text-sm text-gray3', poppins_400.className)}>
               Office
             </p>
           </div>
@@ -74,7 +74,7 @@ function AsignedTeacher() {
             </h3>
             <p
               className={cn(
-                'text-sm text-gray text-right',
+                'text-sm text-gray3 text-right',
                 poppins_400.className
               )}
             >

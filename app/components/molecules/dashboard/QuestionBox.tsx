@@ -1,6 +1,4 @@
-import {
-  Inter_400
-} from '@/app/lib/config/font.config';
+import { Inter_400 } from '@/app/lib/config/font.config';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { cn } from '@/lib/utils';

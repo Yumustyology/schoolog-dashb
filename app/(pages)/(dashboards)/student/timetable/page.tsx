@@ -1,5 +1,5 @@
 'use client';
-import { teacherImg, teacherImg2 } from '@/app/assets';
+import { teacherImg } from '@/app/assets';
 import Button from '@/app/components/atoms/form/Button';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { generateTimetableTimeSlots } from '@/app/lib/utils/generateTimetableTimeSlots';
@@ -380,7 +380,7 @@ const TimetableComponent: React.FC = () => {
                   <th scope="col" className="px-6 py-3 text-gray">
                     Time
                   </th>
-                  {days.map((day, index) => (
+                  {days.map((day) => (
                     <th key={day} scope="col" className="px-6 py-3 text-gray">
                       {day}
                     </th>
@@ -438,7 +438,11 @@ const TimetableComponent: React.FC = () => {
                     Time
                   </th>
                   {timetableData.Monday.map((slot, index) => (
-                    <th scope="col" className="px-6 text-xs py-3 text-gray">
+                    <th
+                      scope="col"
+                      key={index}
+                      className="px-6 text-xs py-3 text-gray"
+                    >
                       {slot.time}
                     </th>
                   ))}

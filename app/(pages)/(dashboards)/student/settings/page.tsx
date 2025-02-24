@@ -5,7 +5,7 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import { TabsHeader, TabsBody } from '@material-tailwind/react';
 import Tabs, { Tab, TabPanel } from '@material-tailwind/react/components/Tabs';
-import { cn } from '@/lib/utils';
+import { cn } from '@/app/lib/utils';
 import useActiveTab from '@/app/lib/hooks/useActiveTab';
 import EditProfile from '@/app/components/organisms/settings/EditProfile';
 import SecuritySettings from '@/app/components/organisms/settings/SecuritySettings';

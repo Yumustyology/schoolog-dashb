@@ -1,35 +1,27 @@
 'use client';
 
-import { uploadedAssignment } from '@/app/assets';
 import BreadcrumbBox from '@/app/components/atoms/dashboard/subjects/Breadcrumb';
 import Button from '@/app/components/atoms/form/Button';
-import Review from '@/app/components/atoms/icons/ModalIcons/Review';
 import DraftIcon from '@/app/components/atoms/icons/dashboard/DraftIcon';
 import SubmitIcon from '@/app/components/atoms/icons/dashboard/SubmitIcon';
 import { ImageViewModal } from '@/app/components/molecules/ImageViewModal';
-import Modal from '@/app/components/molecules/Modal';
 import YNmodal from '@/app/components/molecules/YNmodal';
-import AnswerBox from '@/app/components/molecules/dashboard/student/subjects/AnswerBox';
 import { UploadAnswer } from '@/app/components/molecules/dashboard/student/subjects/UploadAnswer';
 import {
-  Inter_400,
   Inter_600,
   poppins_400,
   poppins_500,
 } from '@/app/lib/config/font.config';
-import { cn } from '@/lib/utils';
-import Image from 'next/image';
+import { cn } from '@/app/lib/utils';
 import React from 'react';
 
-function page() {
+function Page() {
   const [isModalOpen, setIsModalOpen] = React.useState(true);
 
   const onClose = () => setIsModalOpen(false);
   return (
     <main className="">
-      <BreadcrumbBox crumbs={[
-        {isActive: true,label: 'foo'}
-      ]} />
+      <BreadcrumbBox crumbs={[{ isActive: true, label: 'foo' }]} />
 
       <div className="bg-white w-full p-6 mt-6 rounded-lg min-h-[826px] h-auto relative">
         <div className="border-b border-[#E5E5EA] mb-8">
@@ -102,7 +94,7 @@ function page() {
       </div>
       {isModalOpen && (
         <YNmodal
-        submit={()=>console.log('ff')}
+          submit={() => console.log('ff')}
           isOpen={true}
           onClose={onClose}
           title="Submit assignment"
@@ -113,4 +105,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;
