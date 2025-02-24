@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
 import Image from 'next/image';
 import React from 'react';
-import SchoolStats from '../atoms/SchoolStat';
+// import SchoolStats from '../atoms/SchoolStat';
 
 function SubjectInfoCard({ role }: { role: "school" | "student" | "parent" }) {
     return (

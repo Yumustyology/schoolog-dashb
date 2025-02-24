@@ -2,6 +2,7 @@
 import { poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
 import { Typography } from '@material-tailwind/react';
+import { JSX } from 'react';
 
 const TABLE_HEAD: string[] = [
   'S/N',

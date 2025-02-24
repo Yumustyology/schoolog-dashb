@@ -1,14 +1,14 @@
-'use client';
-import { DatePicker } from '@/app/components/atoms/form/DatePicker';
-import PaginationBox from '@/app/components/atoms/dashboard/subjects/Pagination';
-import SelectBox from '@/app/components/atoms/dashboard/subjects/Select';
-import AttendanceMetrics from '@/app/components/molecules/dashboard/analytics/AttendanceMetrics';
-import AttendanceList from '@/app/components/molecules/dashboard/attendance/AttendanceList';
-import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
-import { cn } from '@/lib/utils';
-import React from 'react';
-import { DateRangePicker } from '@/app/components/atoms/form/DateRangePicker';
-import DoughnutChart from '@/app/components/molecules/DoughnutChart';
+"use client";
+import { DatePicker } from "@/app/components/atoms/form/DatePicker";
+import PaginationBox from "@/app/components/atoms/dashboard/subjects/Pagination";
+import SelectBox from "@/app/components/atoms/dashboard/subjects/Select";
+import AttendanceMetrics from "@/app/components/molecules/dashboard/analytics/AttendanceMetrics";
+import AttendanceList from "@/app/components/molecules/dashboard/attendance/AttendanceList";
+import { poppins_400, poppins_500 } from "@/app/lib/config/font.config";
+import { cn } from "@/app/lib/utils";
+import React from "react";
+import { DateRangePicker } from "@/app/components/atoms/form/DateRangePicker";
+import DoughnutChart from "@/app/components/molecules/DoughnutChart";
 
 function page() {
   return (
@@ -16,21 +16,21 @@ function page() {
       <div className="flex gap-10">
         <div className="bg-white px-8 py-6 mt-6 rounded-lg h-[398px] flex-1">
           <div className="flex justify-between items-center">
-            <p className={cn('text-gray6 text-[16px]', poppins_500.className)}>
+            <p className={cn("text-gray6 text-[16px]", poppins_500.className)}>
               Attendance metrics
             </p>
             <DatePicker
               className={cn(
-                'text-xs cursor-pointer text-gray6 2 w-[101px] border-gray4 bg-[#F7F7F8] flex justify-between rounded-full h-[38px] items-center px-3 py-1.5',
-                poppins_400.className
+                "text-xs cursor-pointer text-gray6 2 w-[101px] border-gray4 bg-[#F7F7F8] flex justify-between rounded-full h-[38px] items-center px-3 py-1.5",
+                poppins_400.className,
               )}
-              placeholder={'Pick date'}
+              placeholder={"Pick date"}
             />
           </div>
           <AttendanceMetrics />
         </div>
         <div className="bg-white px-6 py-6 mt-6 rounded-lg h-[398px]">
-          <p className={cn('text-gray6 text-[16px]', poppins_500.className)}>
+          <p className={cn("text-gray6 text-[16px]", poppins_500.className)}>
             Summary
           </p>
           <div className="mt-8">

@@ -1,8 +1,10 @@
-const withMT = require('@material-tailwind/react/utils/withMT');
+import withMT from '@material-tailwind/react/utils/withMT';
 import defaultTheme from 'tailwindcss/defaultTheme';
+import type { Config } from 'tailwindcss';
+import tailwindAnimate from 'tailwindcss-animate';
 
 module.exports = withMT({
-  darkMode: ['class'],
+  darkMode: ['class', 'class'],
   content: [
     './pages/**/*.{js,ts,jsx,tsx,mdx}',
     './components/**/*.{js,ts,jsx,tsx,mdx}',
@@ -17,7 +19,6 @@ module.exports = withMT({
         black1: '#101828',
         black2: '#071E3B',
         gray1: '#333333',
-        gray: '#828282',
         gray2: '#D9DCE0',
         gray3: '#828282',
         'gray-line': '#EAECF0',
@@ -25,13 +26,13 @@ module.exports = withMT({
         gray5: '#E0E0E0',
         gray6: '#4F4F4F',
         gray7: '#F4F4F4',
+        gray: '#1D4241',
         gray8: '#1D4241',
         gray9: '#434343',
-        white: '#FFFFFF',
         r: '#EB5757',
         r2: '#D92D20',
-        background: 'var(--background)',
-        foreground: 'var(--foreground)',
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
         sidebar: {
           DEFAULT: 'hsl(var(--sidebar-background))',
           foreground: 'hsl(var(--sidebar-foreground))',
@@ -42,9 +43,6 @@ module.exports = withMT({
           border: 'hsl(var(--sidebar-border))',
           ring: 'hsl(var(--sidebar-ring))',
         },
-
-        // background: "hsl(var(--background))",
-        // foreground: "hsl(var(--foreground))",
         card: {
           DEFAULT: 'hsl(var(--card))',
           foreground: 'hsl(var(--card-foreground))',
@@ -73,11 +71,11 @@ module.exports = withMT({
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
         chart: {
-          1: 'hsl(var(--chart-1))',
-          2: 'hsl(var(--chart-2))',
-          3: 'hsl(var(--chart-3))',
-          4: 'hsl(var(--chart-4))',
-          5: 'hsl(var(--chart-5))',
+          '1': 'hsl(var(--chart-1))',
+          '2': 'hsl(var(--chart-2))',
+          '3': 'hsl(var(--chart-3))',
+          '4': 'hsl(var(--chart-4))',
+          '5': 'hsl(var(--chart-5))',
         },
       },
       borderRadius: {
@@ -109,11 +107,16 @@ module.exports = withMT({
           },
         },
         meteor: {
-          '0%': { transform: 'rotate(215deg) translateX(0)', opacity: 1 },
-          '70%': { opacity: 1 },
+          '0%': {
+            transform: 'rotate(215deg) translateX(0)',
+            opacity: '1',
+          },
+          '70%': {
+            opacity: '1',
+          },
           '100%': {
             transform: 'rotate(215deg) translateX(-500px)',
-            opacity: 0,
+            opacity: '0',
           },
         },
       },
@@ -138,5 +141,5 @@ module.exports = withMT({
     },
   },
 
-  plugins: [require('tailwindcss-animate')],
-});
+  plugins: [tailwindAnimate],
+} satisfies Config);

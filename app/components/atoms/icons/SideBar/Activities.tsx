@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
 function Activities({
-  color = '#828282',
-  size = '20',
+  color = "#828282",
+  size = "20",
 }: {
   color?: string;
   size?: string;

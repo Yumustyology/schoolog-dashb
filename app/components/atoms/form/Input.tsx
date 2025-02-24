@@ -6,7 +6,6 @@ import {
   FC,
   HTMLAttributes,
   HTMLInputTypeAttribute,
-  ReactNode,
   useState,
 } from 'react';
 import { ClassValue } from 'clsx';
@@ -35,8 +34,8 @@ type inputProps = {
   register?: any;
   disabled?: boolean;
   labelClassName?: string;
-  leftIcon?: ReactNode;
-  rightIcon?: ReactNode;
+  // leftIcon?: ReactNode;
+  // rightIcon?: ReactNode;
 } & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
   DetailedHTMLProps<
     React.InputHTMLAttributes<HTMLInputElement>,
@@ -56,7 +55,7 @@ const Input: FC<inputProps> = ({
   placeholder,
   errMsg,
   min,
-  handleBlur,
+  // handleBlur,
   max,
   maxLength,
   minLength,
@@ -64,8 +63,8 @@ const Input: FC<inputProps> = ({
   register,
   labelClassName,
   disabled,
-  leftIcon,
-  rightIcon,
+  // leftIcon,
+  // rightIcon,
   ...props
 }) => {
   const [passwordShown, setPasswordShown] = useState(false);

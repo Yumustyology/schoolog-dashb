@@ -1,11 +1,10 @@
 import { poppins_600 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
-import React from 'react'
-
+import React from 'react';
 
 export const StudentPageNumber = () => {
-    return (
-        <div>
+  return (
+    <div>
       <p className={cn('text-base text-gray3', poppins_600.className)}>
         <span className="text-primary">1 </span>/2
       </p>
@@ -17,4 +16,4 @@ export const StudentPageNumber = () => {
   );
 };
 
-export default StudentPageNumber
+export default StudentPageNumber;

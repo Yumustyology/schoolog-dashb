@@ -1,6 +1,7 @@
 import React from 'react';
 
 const FinanceIcon = ({ color = '#828282' }: { color?: string }) => {
+
   return (
     <svg
       width="20"

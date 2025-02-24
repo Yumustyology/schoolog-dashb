@@ -8,9 +8,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import {
-  Inter_500,
   poppins_400,
-  poppins_500,
 } from '@/app/lib/config/font.config';
 
 interface Option {
@@ -51,7 +49,6 @@ const SelectComp: React.FC<SelectCompProps> = ({
   triggerClasses = '',
   contentClasses = '',
   labelClassName = '',
-  className,
 }) => {
   return (
     <div className={cn(selectClasses)}>

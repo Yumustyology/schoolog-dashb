@@ -15,8 +15,8 @@ function page() {
 
       <div className="bg-white p-6 rounded-xl mt-3">
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xlgDesktop:grid-cols-4 gap-6">
-          {subjectsList.map((subject: any) => {
-            return <SubjectCard subject={subject} role={role}/>;
+          {subjectsList.map((subject: any, i:number) => {
+            return <SubjectCard key={i} subject={subject} role={role}/>;
           })}
         </section>
 

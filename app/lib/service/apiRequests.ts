@@ -1,9 +1,9 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-import { AxiosResponse } from 'axios';
-import axiosConfig from '../config/axios.config';
+import { AxiosResponse } from "axios";
+import axiosConfig from "../config/axios.config";
 
 const handleRequest = async <T>(
-  request: Promise<AxiosResponse<T>>
+  request: Promise<AxiosResponse<T>>,
 ): Promise<AxiosResponse<T> | void> => {
   try {
     return await request;

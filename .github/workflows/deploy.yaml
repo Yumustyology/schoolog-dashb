@@ -24,7 +24,6 @@ jobs:
           npm ci
           npm install --include=optional sharp
 
-
       - name: Build Application
         run: npm run build
         env:

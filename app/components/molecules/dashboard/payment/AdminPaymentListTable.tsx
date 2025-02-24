@@ -6,6 +6,7 @@ import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
 import { Typography } from '@material-tailwind/react';
 import Image from 'next/image';
+import { JSX } from 'react';
 
 const TABLE_HEAD: string[] = [
   'Student name',

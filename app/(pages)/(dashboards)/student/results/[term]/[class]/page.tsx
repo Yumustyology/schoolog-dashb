@@ -10,12 +10,12 @@ function page() {
       <BreadcrumbBox
         crumbs={[
           {
-            label: 'Results',
+            label: "Results",
             isActive: false,
-            href: '/student/results',
+            href: "/student/results",
           },
           {
-            label: 'SSS1 first term result',
+            label: "SSS1 first term result",
             isActive: true,
           },
         ]}

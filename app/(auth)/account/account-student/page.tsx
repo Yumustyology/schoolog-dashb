@@ -15,8 +15,7 @@ import React from 'react';
 import AuthWrapper from '@/app/components/atoms/form/auth/AuthWrapper';
 import StudentPageNumber from '@/app/components/molecules/auth/StudentPageNumber';
 
-function page() {
-  
+function Page() {
   const [isModalOpen, setIsModalOpen] = React.useState(true);
 
   const onClose = () => setIsModalOpen(false);
@@ -92,5 +91,4 @@ function page() {
   );
 }
 
-export default page;
-
+export default Page;

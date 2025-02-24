@@ -1,8 +1,8 @@
-import UploadIcon from '@/app/components/atoms/icons/dashboard/UploadIcon';
-import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { cn } from '@/lib/utils';
+import UploadIcon from "@/app/components/atoms/icons/dashboard/UploadIcon";
+import { poppins_400, poppins_500 } from "@/app/lib/config/font.config";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { cn } from "@/app/lib/utils";
 
 export function UploadAnswer() {
   return (

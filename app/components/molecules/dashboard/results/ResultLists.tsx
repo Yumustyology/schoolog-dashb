@@ -7,8 +7,8 @@ import {
   poppins_400,
 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
-import { Card, Typography } from '@material-tailwind/react';
-import { useState } from 'react';
+import { Card } from '@material-tailwind/react';
+import { JSX, useState } from 'react';
 import { ResultTable } from './ResultTable';
 import EyeOpen from '@/app/components/atoms/icons/EyeOpen';
 import FormModal from '../FormModal';

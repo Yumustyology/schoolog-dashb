@@ -132,8 +132,7 @@ export const MyActivitiesCalendar = () => (
       defaultView="month"
       style={{ height: 800 }}
       components={{
-        // TODO check later
-        // toolbar: CalendarHeader,
+        toolbar: CalendarHeader,
         event: EventContent,
       }}
       eventPropGetter={(event) => eventStyleGetter(event as ActivityEvent)}

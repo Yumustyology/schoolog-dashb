@@ -8,7 +8,7 @@ function page() {
       <BreadcrumbBox
         crumbs={[
           {
-            label: 'Payments',
+            label: "Payments",
             isActive: true,
           },
         ]}

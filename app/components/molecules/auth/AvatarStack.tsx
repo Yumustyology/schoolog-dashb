@@ -41,6 +41,7 @@ import { avatars } from '@/constants';
 import Image from 'next/image';
 import React from 'react';
 
+
 function AvatarStack() {
   return (
     <div className="relative flex">

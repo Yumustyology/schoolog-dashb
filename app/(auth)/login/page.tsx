@@ -6,7 +6,7 @@ import {
   poppins_400,
   poppins_600,
 } from '@/app/lib/config/font.config';
-import { cn } from '@/lib/utils';
+import { cn } from '@/app/lib/utils';
 import Link from 'next/link';
 import React from 'react';
 
@@ -23,7 +23,7 @@ function Login() {
           <h1 className={cn('text-[26px] mb-2', poppins_600.className)}>
             Welcome to <span className="text-primary"> EduSpaher </span>
           </h1>
-          <p className={cn('text-gray text-sm', Inter_400.className)}>
+          <p className={cn('text-gray3 text-sm', Inter_400.className)}>
             Lorem ipsum dolor sit amet consectetur. <br /> Sapien ipsum lorem
             volutpat magna tortor.
           </p>
@@ -71,7 +71,7 @@ function Login() {
           )}
         >
           <p className={cn('text-base', poppins_400.className)}>
-            Don't have an account?{' '}
+            Don&apos;t have an account?{' '}
             <Link href="signup" className={cn('text-primary')}>
               Sign up
             </Link>
