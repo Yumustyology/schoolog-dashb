@@ -1,9 +1,9 @@
 import { teacherImg2 } from '@/app/assets';
 import Button from '@/app/components/atoms/form/Button';
-import {
-  AddTeacherIcon,
-  ChangeTeacherIcon,
-} from '@/app/components/atoms/icons/Icons';
+// import {
+//   AddTeacherIcon,
+//   ChangeTeacherIcon,
+// } from '@/app/components/atoms/icons/Icons';
 import Message from '@/app/components/atoms/icons/SideBar/Message';
 import {
   Inter_500,
@@ -24,10 +24,10 @@ import React from 'react';
 function AssignedTeacherCard({
   role,
 }: {
-  role: 'school' | 'student' | 'parent';
+  role: 'school' | 'student' | 'parent' | 'school';
 }) {
   return (
-    <Card className="bg-white py-6 px-6 rounded-md col-span-2 border-none">
+    <Card className="bg-white py-6 px-6 min-h-[360px] rounded-md col-span-2 border-none">
       <CardHeader className="bg-[#f8f8f8] rounded-full py-2 mb-6">
         <div className="flex gap-5">
           <Image src={teacherImg2} alt="teacher-image" />
@@ -146,11 +146,11 @@ function AssignedTeacherCard({
         {role === 'school' && (
           <div className="flex gap-4">
             <Button round className="h-[45px] px-8 ">
-              <ChangeTeacherIcon />
+              {/* <ChangeTeacherIcon /> */}
               <p className="ml-2">Change Teacher</p>
             </Button>
             <Button round className="h-[45px] border px-8 bg-light">
-              <AddTeacherIcon />
+              {/* <AddTeacherIcon /> */}
               <p className="ml-2 text-primary">Add another Teacher</p>
             </Button>
           </div>

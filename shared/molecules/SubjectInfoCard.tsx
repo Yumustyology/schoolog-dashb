@@ -10,7 +10,7 @@ import React from 'react';
 
 function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {
   return (
-    <Card className="bg-white py-6 pb-10 px-6 rounded-md col-span-2 border-none">
+    <Card className="bg-white py-6 min-h-[360px] pb-10 px-6 rounded-md col-span-2 border-none">
       <CardHeader className="w-full p-0">
         <div className="flex items-center gap-3">
           <Image src={biology1} alt="Subject Image" />
@@ -48,7 +48,7 @@ function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {
       <CardContent className="flex flex-col p-0 gap-8">
         <main className="flex justify-between items-center">
           {role == 'student' && (
-            <>
+            <div className='flex justify-between items-center w-full mt-10'>
               <div>
                 <h3
                   className={cn('text-sm text-black1', poppins_500.className)}
@@ -70,7 +70,7 @@ function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {
                   Next class time
                 </p>
               </div>
-            </>
+            </div>
           )}
 
           {role == 'school' && (
@@ -170,7 +170,7 @@ function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {
         </main>
 
         {role === 'student' && (
-          <div>
+          <div className='mt-10'>
             <p className={cn('text-sm text-gray', poppins_400.className)}>
               Next class topic
             </p>

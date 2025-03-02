@@ -18,10 +18,6 @@ import SearchInput from '@/app/components/atoms/form/SearchInput';
 import SubjectInfoCard from '@/shared/molecules/SubjectInfoCard';
 import Button from '@/app/components/atoms/form/Button';
 import { EditIcon, UploadIcon } from '@/app/components/atoms/icons/Icons';
-import AssignedTeacherCard from '@/shared/molecules/AssignedTeacherCard';
-
-import MaterialsList from '@/app/components/molecules/dashboard/materials/MaterialList';
-import StudentsList from '@/app/components/organisms/StudentsList';
 import FolderIcon from '@/app/components/atoms/icons/dashboard/materials/Folder';
 import PdfIcon from '@/app/components/atoms/icons/dashboard/materials/Pdf';
 import WordIcon from '@/app/components/atoms/icons/dashboard/materials/Word';
@@ -29,6 +25,7 @@ import ExcelIcon from '@/app/components/atoms/icons/dashboard/materials/Excel';
 import MediumIcon from '@/app/components/atoms/icons/dashboard/materials/Medium';
 import ImageIcon from '@/app/components/atoms/icons/dashboard/materials/Image';
 import { MaterialType } from '@/types';
+import AssignedTeacherCard from '@/shared/molecules/AssignedTeacherCard';
 
 export const materials: MaterialType = [
   {
@@ -209,7 +206,7 @@ function SubjectInfoPage({subject}:{subject:string}) {
             <SubjectInfoCard role={role} />
           </div>
           <div className="flex-1 ">
-            <AsignedTeacher />
+            <AssignedTeacherCard role={role} />
           </div>
         </div>
 

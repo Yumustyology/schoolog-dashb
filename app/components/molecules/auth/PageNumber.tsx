@@ -1,6 +1,11 @@
 import { poppins_600 } from '@/app/lib/config/font.config';
 import { cn } from '@/lib/utils';
 
+type ProgressIndicatorProps = {
+  totalSteps: number,
+  activeStep: number,
+}
+
 export default function ProgressPageNumber({
   totalSteps,
   activeStep,
@@ -26,5 +31,3 @@ export default function ProgressPageNumber({
     </div>
   );
 }
-
-export default PageNumber;
