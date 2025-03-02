@@ -1,8 +1,7 @@
-import React, { useReducer, useState } from "react";
-import WeekDetail from "./WeekDetail";
-import Input from "@/app/components/atoms/form/Input";
-import Button from "@/app/components/atoms/form/Button";
-
+import React, { useReducer, useState } from 'react';
+import WeekDetail from './WeekDetail';
+import Input from '@/app/components/atoms/form/Input';
+import Button from '@/app/components/atoms/form/Button';
 
 interface TermState {
   id: number;
@@ -12,23 +11,24 @@ interface TermState {
 }
 
 type Action =
-  | { type: "ADD_WEEK"; payload: TermState }
-  | { type: "REMOVE_WEEK"; payload: { id: number } }
-  | { type: "EDIT_WEEK"; payload: { id: number; topic: string; brief: string } }
-  | { type: "CLEAR_WEEKS" };
+  | { type: 'ADD_WEEK'; payload: TermState }
+  | { type: 'REMOVE_WEEK'; payload: { id: number } }
+  | { type: 'EDIT_WEEK'; payload: { id: number; topic: string; brief: string } }
+  | { type: 'CLEAR_WEEKS' };
 
 // Initial state (empty array of TermState objects)
 const initialState: TermState[] = [];
 
-
 function reducer(state: TermState[], action: Action): TermState[] {
   switch (action.type) {
-    case "ADD_WEEK":
+    case 'ADD_WEEK':
       return [...state, action.payload];
 
-    case "REMOVE_WEEK": {
+    case 'REMOVE_WEEK': {
       // Remove the week
-      const updatedState = state.filter((week) => week.id !== action.payload.id);
+      const updatedState = state.filter(
+        (week) => week.id !== action.payload.id
+      );
 
       // Reassign week numbers sequentially from 1
       return updatedState.map((week, index) => ({
@@ -37,14 +37,18 @@ function reducer(state: TermState[], action: Action): TermState[] {
       }));
     }
 
-    case "EDIT_WEEK":
+    case 'EDIT_WEEK':
       return state.map((week) =>
         week.id === action.payload.id
-          ? { ...week, topic: action.payload.topic, brief: action.payload.brief }
+          ? {
+              ...week,
+              topic: action.payload.topic,
+              brief: action.payload.brief,
+            }
           : week
       );
 
-    case "CLEAR_WEEKS":
+    case 'CLEAR_WEEKS':
       return [];
 
     default:
@@ -52,10 +56,9 @@ function reducer(state: TermState[], action: Action): TermState[] {
   }
 }
 
-
 function Term() {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [formData, setFormData] = useState({ topic: "", brief: "" });
+  const [formData, setFormData] = useState({ topic: '', brief: '' });
   const [editWeek, setEditWeek] = useState<number | null>(null); // Track which week is being edited
 
   console.log(state);
@@ -72,22 +75,23 @@ function Term() {
     const { topic, brief } = formData;
 
     if (!topic.trim() || !brief.trim()) {
-      alert("Please fill in both fields.");
+      alert('Please fill in both fields.');
       return;
     }
 
     if (editWeek !== null) {
       // If editing an existing week
       dispatch({
-        type: "EDIT_WEEK",
+        type: 'EDIT_WEEK',
         payload: { id: editWeek, topic, brief },
       });
       setEditWeek(null);
     } else {
       // If adding a new week
-      const lastWeekNumber = state.length > 0 ? state[state.length - 1].week : 0;
+      const lastWeekNumber =
+        state.length > 0 ? state[state.length - 1].week : 0;
       dispatch({
-        type: "ADD_WEEK",
+        type: 'ADD_WEEK',
         payload: {
           id: Date.now(),
           week: lastWeekNumber + 1,
@@ -97,12 +101,12 @@ function Term() {
       });
     }
 
-    setFormData({ topic: "", brief: "" });
+    setFormData({ topic: '', brief: '' });
   };
 
   // Handle deleting a week
   const handleRemoveWeek = (id: number) => {
-    dispatch({ type: "REMOVE_WEEK", payload: { id } });
+    dispatch({ type: 'REMOVE_WEEK', payload: { id } });
   };
 
   // Handle editing a week
@@ -148,7 +152,7 @@ function Term() {
         />
 
         <Button type="submit">
-          {editWeek !== null ? "Update Week" : "Add Week"}
+          {editWeek !== null ? 'Update Week' : 'Add Week'}
         </Button>
       </form>
     </div>

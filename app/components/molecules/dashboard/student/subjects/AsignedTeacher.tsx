@@ -19,7 +19,7 @@ import React from 'react';
 
 function AsignedTeacher() {
   return (
-    <Card className="bg-white py-6 px-6 rounded-md col-span-2 border-none">
+    <Card className="bg-white py-6 px-6  min-h-[360px] rounded-md col-span-2 border-none">
       <CardHeader className="bg-[#f8f8f8] rounded-full py-2 mb-6">
         <div className="flex gap-5">
           <Image src={teacherImg2} alt="teacher-image" />

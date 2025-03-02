@@ -117,7 +117,6 @@ function page() {
   ];
 
   return (
-
     <>
       <MaterialsList
         breadcrumb={[
@@ -134,5 +133,3 @@ function page() {
 }
 
 export default page;
-
-

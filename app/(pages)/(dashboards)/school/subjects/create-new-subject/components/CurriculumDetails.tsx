@@ -34,22 +34,21 @@
 //   );
 // }
 
-
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
-} from "@/components/ui/accordion";
-import Term from "./Term";
+} from '@/components/ui/accordion';
+import Term from './Term';
 
 export function TermAccordion() {
   const terms = useMemo(
     () => [
-      { id: "first-term", label: "First Term", content: <Term /> },
-      { id: "second-term", label: "Second Term", content: "s" },
-      { id: "third-term", label: "Third Term", content: "s" },
+      { id: 'first-term', label: 'First Term', content: <Term /> },
+      { id: 'second-term', label: 'Second Term', content: 's' },
+      { id: 'third-term', label: 'Third Term', content: 's' },
     ],
     []
   );

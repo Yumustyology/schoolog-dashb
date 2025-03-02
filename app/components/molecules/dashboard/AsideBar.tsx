@@ -21,10 +21,11 @@ import { shoolSidebarItems, studentSidebarItems } from '@/app/lib/sidebarData';
 export function AppSidebar({
   type,
 }: {
-  type: 'school' | 'student' | 'parent';
+  type: 'school' | 'student' | 'teacher' | 'parent';
 }) {
   const pathname = usePathname();
   const { state } = useSidebar();
+  const cleanedPath = pathname.replace(/\/$/, '');
 
   return (
     <Sidebar collapsible="icon" className="h-screen w-64 border-none bg-white">
@@ -65,7 +66,7 @@ export function AppSidebar({
                   <SidebarMenuButton
                     className={cn(
                       'py-5 rounded-full text-gray3',
-                      pathname === item.url
+                      cleanedPath === item.url
                         ? 'hover:bg-primary bg-primary text-white hover:text-white'
                         : 'hover:bg-gray2 hover:text-gray3 '
                     )}
@@ -78,7 +79,7 @@ export function AppSidebar({
                         Inter_500.className
                       )}
                     >
-                      {pathname === item.url ? (
+                      {cleanedPath === item.url ? (
                         <div>{item.activeIcon}</div>
                       ) : (
                         <div>{item.icon}</div>
@@ -99,14 +100,14 @@ export function AppSidebar({
               <SidebarMenuButton
                 className={cn(
                   'py-5 rounded-full text-gray3 flex items-center px-4 text-gray-300 hover:bg-gray-700',
-                  pathname === '/student/settings'
+                  cleanedPath === '/student/settings'
                     ? 'hover:bg-primary bg-primary text-white hover:text-white'
                     : 'hover:bg-gray2 hover:text-gray3 '
                 )}
                 asChild
               >
                 <Link href="/student/settings">
-                  {pathname === '/student/settings' ? (
+                  {cleanedPath === '/student/settings' ? (
                     <div>
                       <Settings color="#FFFFFF" />
                     </div>

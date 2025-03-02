@@ -38,4 +38,3 @@ export type MaterialType = {
   size: string;
   date: string;
 }[];
-

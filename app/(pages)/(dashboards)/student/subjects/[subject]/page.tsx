@@ -66,8 +66,7 @@ function Page() {
 
         <div className="flex space-x-3 mt-4">
           <div className="w-[446px]">
-            <SubjectInfoCard role={role}/>
-            
+            <SubjectInfoCard role={role} />
           </div>
           <div className="flex-1 ">
             <AssignedTeacherCard role={role} />

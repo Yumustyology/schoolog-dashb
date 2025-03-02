@@ -8,7 +8,7 @@ export default function ProgressPageNumber({
   return (
     <div>
       {/* Step Counter */}
-      <p className={cn("text-base text-gray3", poppins_600.className)}>
+      <p className={cn('text-base text-gray3', poppins_600.className)}>
         <span className="text-primary">{activeStep} </span>/ {totalSteps}
       </p>
 
@@ -18,7 +18,7 @@ export default function ProgressPageNumber({
           <div
             key={index}
             className={`h-[4px] w-[31px] ${
-              index < activeStep ? "bg-primary" : "bg-[#F2EEFB]"
+              index < activeStep ? 'bg-primary' : 'bg-[#F2EEFB]'
             }`}
           ></div>
         ))}
@@ -26,7 +26,5 @@ export default function ProgressPageNumber({
     </div>
   );
 }
-
-
 
 export default PageNumber;

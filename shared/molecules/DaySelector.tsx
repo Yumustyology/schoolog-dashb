@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Select,
   SelectContent,
@@ -8,20 +8,22 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
-import { poppins_400 } from "@/app/lib/config/font.config";
+} from '@/components/ui/select';
+import { Label } from '@/components/ui/label';
+import { cn } from '@/lib/utils';
+import { poppins_400 } from '@/app/lib/config/font.config';
 
 export function DaySelector() {
-  const [selectedDay, setSelectedDay] = useState("");
+  const [selectedDay, setSelectedDay] = useState('');
 
-  const days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
 
   return (
     <>
-    <Label className={cn('text-base text-gray6 mb-2', poppins_400.className )}>Select day</Label>
-   
+      <Label className={cn('text-base text-gray6 mb-2', poppins_400.className)}>
+        Select day
+      </Label>
+
       <Select onValueChange={setSelectedDay}>
         <SelectTrigger className="w-full bg-gray4 bg-opacity-55 text-sm text-gray">
           <SelectValue placeholder="Select Day" />

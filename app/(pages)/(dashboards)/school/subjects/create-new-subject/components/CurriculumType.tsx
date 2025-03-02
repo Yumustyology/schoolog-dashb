@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { useState } from "react";
+import { useState } from 'react';
 import {
   Select,
   SelectContent,
@@ -8,18 +8,18 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 export function CurriculumType() {
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption, setSelectedOption] = useState('');
 
   const options = [
-    { value: "cls", label: "Upload .cls file" },
-    { value: "manual", label: "Manual Input" },
-    { value: "waec", label: "Waec Standard Curriculum" },
-    { value: "neco", label: "Neco Standard Curriculum" },
-    { value: "ube", label: " UBE Curriculum" },
-    { value: "subeb", label: "SUBEB Curriculum" },
+    { value: 'cls', label: 'Upload .cls file' },
+    { value: 'manual', label: 'Manual Input' },
+    { value: 'waec', label: 'Waec Standard Curriculum' },
+    { value: 'neco', label: 'Neco Standard Curriculum' },
+    { value: 'ube', label: ' UBE Curriculum' },
+    { value: 'subeb', label: 'SUBEB Curriculum' },
   ];
 
   return (
