@@ -224,3 +224,53 @@ export function UploadIcon() {
     </svg>
   );
 }
+
+
+export function Upload_Icon2({ color = "#21B55A" }: { color?: string }) {
+  return (
+    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M9 17.5V11.5L7 13.5" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M9 11.5L11 13.5" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M22 10.5V15.5C22 20.5 20 22.5 15 22.5H9C4 22.5 2 20.5 2 15.5V9.5C2 4.5 4 2.5 9 2.5H14" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M22 10.5H18C15 10.5 14 9.5 14 6.5V2.5L22 10.5Z" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+
+  )
+}
+
+
+export function CloseIcon({ color = "#EB5757" }: { color?: string }) {
+  return (
+    <svg width="15" height="14" viewBox="0 0 15 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M3.98633 10.5088L11.0127 3.48246" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M11.0127 10.5175L3.98633 3.49121" stroke={color} strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+
+
+  )
+}
+
+
+export const DragIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="#828282"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <circle cx="5" cy="8" r="1" />
+    <circle cx="5" cy="16" r="1" />
+    <circle cx="12" cy="8" r="1" />
+    <circle cx="12" cy="16" r="1" />
+    <circle cx="19" cy="8" r="1" />
+    <circle cx="19" cy="16" r="1" />
+  </svg>
+);
+
+
+

@@ -117,17 +117,22 @@ function page() {
   ];
 
   return (
-    <MaterialsList
-      breadcrumb={[
-        {
-          isActive: true,
-          label: 'materials',
-          href: '/student/materials',
-        },
-      ]}
-      materials={materials}
-    />
+
+    <>
+      <MaterialsList
+        breadcrumb={[
+          {
+            isActive: true,
+            label: 'materials',
+            href: '/student/materials',
+          },
+        ]}
+        materials={materials}
+      />
+    </>
   );
 }
 
 export default page;
+
+

@@ -18,6 +18,119 @@ import SearchInput from '@/app/components/atoms/form/SearchInput';
 import SubjectInfoCard from '@/shared/molecules/SubjectInfoCard';
 import Button from '@/app/components/atoms/form/Button';
 import { EditIcon, UploadIcon } from '@/app/components/atoms/icons/Icons';
+import AssignedTeacherCard from '@/shared/molecules/AssignedTeacherCard';
+
+import MaterialsList from '@/app/components/molecules/dashboard/materials/MaterialList';
+import StudentsList from '@/app/components/organisms/StudentsList';
+import FolderIcon from '@/app/components/atoms/icons/dashboard/materials/Folder';
+import PdfIcon from '@/app/components/atoms/icons/dashboard/materials/Pdf';
+import WordIcon from '@/app/components/atoms/icons/dashboard/materials/Word';
+import ExcelIcon from '@/app/components/atoms/icons/dashboard/materials/Excel';
+import MediumIcon from '@/app/components/atoms/icons/dashboard/materials/Medium';
+import ImageIcon from '@/app/components/atoms/icons/dashboard/materials/Image';
+import { MaterialType } from '@/types';
+
+
+export const materials: MaterialType = [
+    {
+      type: 'folder',
+      icon: <FolderIcon/>,
+      name: 'Indices and its equations folder',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <FolderIcon/>,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <PdfIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <WordIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <ExcelIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <MediumIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <ExcelIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <ImageIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <PdfIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <WordIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <ExcelIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <MediumIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <ExcelIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+    {
+      type: 'material',
+      icon: <ImageIcon />,
+      name: 'File name goes here.extension',
+      size: '760KB',
+      date: '28/03/2024',
+    },
+  ];
 
 function Page() {
   const role = 'school';

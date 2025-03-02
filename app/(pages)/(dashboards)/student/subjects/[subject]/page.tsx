@@ -16,6 +16,8 @@ import React from 'react';
 import Topics from '@/app/components/organisms/dashboard/students/Topics';
 import Assignments from '@/app/components/organisms/dashboard/students/Assignments';
 import SearchInput from '@/app/components/atoms/form/SearchInput';
+import SubjectInfoCard from '@/shared/molecules/SubjectInfoCard';
+import AssignedTeacherCard from '@/shared/molecules/AssignedTeacherCard';
 
 function Page() {
   const todayClassesTabs = [
@@ -64,10 +66,11 @@ function Page() {
 
         <div className="flex space-x-3 mt-4">
           <div className="w-[446px]">
-            <SubjectSchedule />
+            <SubjectInfoCard role={role}/>
+            
           </div>
           <div className="flex-1 ">
-            <AsignedTeacher />
+            <AssignedTeacherCard role={role} />
           </div>
         </div>
 

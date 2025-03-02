@@ -30,3 +30,12 @@ export type Announcements = {
   content: string;
   date: string;
 }[];
+
+export type MaterialType = {
+  type: string;
+  icon: React.ReactNode;
+  name: string;
+  size: string;
+  date: string;
+}[];
+

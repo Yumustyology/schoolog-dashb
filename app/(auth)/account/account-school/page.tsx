@@ -10,7 +10,7 @@ function page() {
   return (
     <AuthWrapper>
       <main className="w-full min-h-screen py-28 px-36">
-        <PageNumber />
+        <ProgressPageNumber activeStep={1} totalSteps={2} />
 
         <div className="  flex flex-col items-center justify-center  mx-auto">
           <div className="mb-12">
