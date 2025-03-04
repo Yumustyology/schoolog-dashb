@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react';
 import NextTopLoader from 'nextjs-toploader';
 import { SidebarProvider } from '@/components/ui/sidebar';
-import { AppSidebar } from '@/app/components/molecules/dashboard/AsideBar';
-import Header from '@/app/components/molecules/dashboard/Header';
+import { AppSidebar } from '@/components/molecules/dashboard/AsideBar';
+import Header from '@/components/molecules/dashboard/Header';
 
 export default function LayoutClient({
   children,

@@ -1,5 +1,5 @@
 'use client';
-import SettingCardBg from '@/app/components/atoms/images/SettingCardBg';
+import SettingCardBg from '@/components/atoms/images/SettingCardBg';
 import { Inter_400, Inter_600 } from '@/app/lib/config/font.config';
 import Image from 'next/image';
 import React, { useState } from 'react';
@@ -7,10 +7,10 @@ import { TabsHeader, TabsBody } from '@material-tailwind/react';
 import Tabs, { Tab, TabPanel } from '@material-tailwind/react/components/Tabs';
 import { cn } from '@/app/lib/utils';
 import useActiveTab from '@/app/lib/hooks/useActiveTab';
-import EditProfile from '@/app/components/organisms/settings/EditProfile';
-import SecuritySettings from '@/app/components/organisms/settings/SecuritySettings';
-import NotificationSettings from '@/app/components/organisms/settings/NotificationSettings';
-import PreferenceSettings from '@/app/components/organisms/settings/PreferenceSettings';
+import EditProfile from '@/components/organisms/settings/EditProfile';
+import SecuritySettings from '@/components/organisms/settings/SecuritySettings';
+import NotificationSettings from '@/components/organisms/settings/NotificationSettings';
+import PreferenceSettings from '@/components/organisms/settings/PreferenceSettings';
 import { teacherImg2 } from '@/app/assets';
 
 const page = () => {

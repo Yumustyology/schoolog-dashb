@@ -1,22 +1,22 @@
 'use client';
 import React from 'react';
-import { DatePicker } from '@/app/components/atoms/form/DatePicker';
-import AssignmentIcon from '@/app/components/atoms/icons/dashboard/AssignmentIcon';
-import ParentIcon from '@/app/components/atoms/icons/dashboard/ParentIcon';
-import SchoolAdminWelcomeSection from '@/app/components/atoms/icons/dashboard/SchoolAdminWelcomeSection';
-import StaffsIcon from '@/app/components/atoms/icons/dashboard/StaffsIcon';
-import StudentsIcon from '@/app/components/atoms/icons/SideBar/StudentsIcon';
-import AssignmentAnalytics from '@/app/components/molecules/dashboard/analytics/AssignmentAnalytics';
-import AttendanceAnalytics from '@/app/components/molecules/dashboard/analytics/AttendanceAnalytics';
-import GradesAnalytics from '@/app/components/molecules/dashboard/analytics/GradesAnalytics';
-import DashboardLinkBox from '@/app/components/molecules/dashboard/DashboardLinkBox';
+import { DatePicker } from '@/components/atoms/form/DatePicker';
+import AssignmentIcon from '@/components/atoms/icons/dashboard/AssignmentIcon';
+import ParentIcon from '@/components/atoms/icons/dashboard/ParentIcon';
+import SchoolAdminWelcomeSection from '@/components/atoms/icons/dashboard/SchoolAdminWelcomeSection';
+import StaffsIcon from '@/components/atoms/icons/dashboard/StaffsIcon';
+import StudentsIcon from '@/components/atoms/icons/SideBar/StudentsIcon';
+import AssignmentAnalytics from '@/components/molecules/dashboard/analytics/AssignmentAnalytics';
+import AttendanceAnalytics from '@/components/molecules/dashboard/analytics/AttendanceAnalytics';
+import GradesAnalytics from '@/components/molecules/dashboard/analytics/GradesAnalytics';
+import DashboardLinkBox from '@/components/molecules/dashboard/DashboardLinkBox';
 import {
   poppins_500,
   poppins_400,
   poppins_600,
 } from '@/app/lib/config/font.config';
 import useActiveTab from '@/app/lib/hooks/useActiveTab';
-import { cn } from '@/lib/utils';
+import { cn } from '@/app/lib/utils';
 import {
   Tabs,
   TabsHeader,
@@ -25,8 +25,8 @@ import {
   TabPanel,
 } from '@material-tailwind/react';
 import { Calendar } from '@/components/ui/calendar';
-import { StudentsListTable } from '@/app/components/molecules/dashboard/student/StudentsListTable';
-import { AdminPaymentListTable } from '@/app/components/molecules/dashboard/payment/AdminPaymentListTable';
+import { StudentsListTable } from '@/components/molecules/dashboard/student/StudentsListTable';
+import { AdminPaymentListTable } from '@/components/molecules/dashboard/payment/AdminPaymentListTable';
 
 const Page = () => {
   const [calenderDate, setCalenderDate] = React.useState<Date | undefined>();

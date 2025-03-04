@@ -1,12 +1,12 @@
 'use client';
 
-import BreadcrumbBox from '@/app/components/atoms/dashboard/subjects/Breadcrumb';
-import Button from '@/app/components/atoms/form/Button';
-import DraftIcon from '@/app/components/atoms/icons/dashboard/DraftIcon';
-import SubmitIcon from '@/app/components/atoms/icons/dashboard/SubmitIcon';
-import { ImageViewModal } from '@/app/components/molecules/ImageViewModal';
-import YNmodal from '@/app/components/molecules/YNmodal';
-import { UploadAnswer } from '@/app/components/molecules/dashboard/student/subjects/UploadAnswer';
+import BreadcrumbBox from '@/components/atoms/dashboard/subjects/Breadcrumb';
+import Button from '@/components/atoms/form/Button';
+import DraftIcon from '@/components/atoms/icons/dashboard/DraftIcon';
+import SubmitIcon from '@/components/atoms/icons/dashboard/SubmitIcon';
+import { ImageViewModal } from '@/components/molecules/ImageViewModal';
+import YNmodal from '@/components/molecules/YNmodal';
+import { UploadAnswer } from '@/components/molecules/dashboard/student/subjects/UploadAnswer';
 import {
   Inter_600,
   poppins_400,

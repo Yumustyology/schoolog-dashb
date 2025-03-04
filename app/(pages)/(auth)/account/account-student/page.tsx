@@ -1,19 +1,19 @@
 'use client';
-import Button from '@/app/components/atoms/form/Button';
-import Review from '@/app/components/atoms/icons/ModalIcons/Review';
-import Modal from '@/app/components/molecules/Modal';
-import AccountName from '@/app/components/molecules/auth/AccountName';
-import Input from '@/app/components/atoms/form/Input';
+import Button from '@/components/atoms/form/Button';
+import Review from '@/components/atoms/icons/ModalIcons/Review';
+import Modal from '@/components/molecules/Modal';
+import AccountName from '@/components/molecules/auth/AccountName';
+import Input from '@/components/atoms/form/Input';
 import {
   Inter_400,
   Inter_600,
   poppins_400,
   poppins_600,
 } from '@/app/lib/config/font.config';
-import { cn } from '@/lib/utils';
+import { cn } from '@/app/lib/utils';
 import React from 'react';
-import AuthWrapper from '@/app/components/atoms/form/auth/AuthWrapper';
-import StudentPageNumber from '@/app/components/molecules/auth/StudentPageNumber';
+import AuthWrapper from '@/components/atoms/form/auth/AuthWrapper';
+import StudentPageNumber from '@/components/molecules/auth/StudentPageNumber';
 
 function Page() {
   const [isModalOpen, setIsModalOpen] = React.useState(true);

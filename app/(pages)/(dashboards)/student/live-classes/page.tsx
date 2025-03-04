@@ -1,8 +1,8 @@
 'use client';
-import BreadcrumbBox from '@/app/components/atoms/dashboard/subjects/Breadcrumb';
-import Button from '@/app/components/atoms/form/Button';
+import BreadcrumbBox from '@/components/atoms/dashboard/subjects/Breadcrumb';
+import Button from '@/components/atoms/form/Button';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
-import { cn } from '@/lib/utils';
+import { cn } from '@/app/lib/utils';
 import Image from 'next/image';
 import React from 'react';
 import {
@@ -13,7 +13,7 @@ import {
   TabPanel,
 } from '@material-tailwind/react';
 import useActiveTab from '@/app/lib/hooks/useActiveTab';
-import Search from '@/app/components/atoms/form/SearchInput';
+import Search from '@/components/atoms/form/SearchInput';
 
 const Page = () => {
   const data = [

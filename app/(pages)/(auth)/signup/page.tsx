@@ -1,14 +1,14 @@
 import React from 'react';
 import Link from 'next/link';
-import Input from '@/app/components/atoms/form/Input';
-import { cn } from '@/lib/utils';
+import Input from '@/components/atoms/form/Input';
+import { cn } from '@/app/lib/utils';
 import {
   Inter_400,
   poppins_400,
   poppins_600,
 } from '@/app/lib/config/font.config';
-import Button from '@/app/components/atoms/form/Button';
-import AuthWrapper from '@/app/components/atoms/form/auth/AuthWrapper';
+import Button from '@/components/atoms/form/Button';
+import AuthWrapper from '@/components/atoms/form/auth/AuthWrapper';
 
 function Register() {
   return (

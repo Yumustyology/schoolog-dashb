@@ -1,8 +1,8 @@
-import AuthWrapper from '@/app/components/atoms/form/auth/AuthWrapper';
-import Button from '@/app/components/atoms/form/Button';
-import Input from '@/app/components/atoms/form/Input';
+import AuthWrapper from '@/components/atoms/form/auth/AuthWrapper';
+import Button from '@/components/atoms/form/Button';
+import Input from '@/components/atoms/form/Input';
 import { Inter_400, Inter_800 } from '@/app/lib/config/font.config';
-import { cn } from '@/lib/utils';
+import { cn } from '@/app/lib/utils';
 import React from 'react';
 
 function ResetPassword() {

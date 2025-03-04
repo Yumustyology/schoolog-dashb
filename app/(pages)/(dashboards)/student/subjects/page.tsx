@@ -1,9 +1,9 @@
-import BreadcrumbBox from '@/app/components/atoms/dashboard/subjects/Breadcrumb';
-import PaginationBox from '@/app/components/atoms/dashboard/subjects/Pagination';
-import SelectBox from '@/app/components/atoms/dashboard/subjects/Select';
+import { subjectsList } from '@/app/constants';
+import BreadcrumbBox from '@/components/atoms/dashboard/subjects/Breadcrumb';
+import PaginationBox from '@/components/atoms/dashboard/subjects/Pagination';
+import SelectBox from '@/components/atoms/dashboard/subjects/Select';
 
-import { subjectsList } from '@/constants';
-import SubjectCard from '@/shared/molecules/SubjectCard';
+import SubjectCard from '@/components/molecules/dashboard/subjects/SubjectCard';
 import React from 'react';
 
 const breadcrumbs = [{ label: 'Subjects', isActive: true }];

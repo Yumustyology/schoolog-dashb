@@ -1,5 +1,5 @@
 import React from 'react';
-import IsVerified from '@/app/components/molecules/auth/IsVerified';
+import IsVerified from '@/components/molecules/auth/IsVerified';
 
 function Verification() {
   return <IsVerified />;

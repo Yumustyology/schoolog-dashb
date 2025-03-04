@@ -1,4 +1,4 @@
-import { ResultTable } from '@/app/components/molecules/dashboard/results/ResultTable';
+import { ResultTable } from '@/components/molecules/dashboard/results/ResultTable';
 import React from 'react';
 
 function page() {

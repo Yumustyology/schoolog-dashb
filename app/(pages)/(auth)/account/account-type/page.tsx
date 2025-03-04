@@ -1,10 +1,10 @@
 'use client';
-import AuthWrapper from '@/app/components/atoms/form/auth/AuthWrapper';
-import Admin from '@/app/components/atoms/icons/AuthTypeIcons/Admin';
-import Parent from '@/app/components/atoms/icons/AuthTypeIcons/Parent';
-import Student from '@/app/components/atoms/icons/AuthTypeIcons/Student';
-import Teacher from '@/app/components/atoms/icons/AuthTypeIcons/Teacher';
-import AccountType from '@/app/components/molecules/auth/AccountType';
+import AuthWrapper from '@/components/atoms/form/auth/AuthWrapper';
+import Admin from '@/components/atoms/icons/AuthTypeIcons/Admin';
+import Parent from '@/components/atoms/icons/AuthTypeIcons/Parent';
+import Student from '@/components/atoms/icons/AuthTypeIcons/Student';
+import Teacher from '@/components/atoms/icons/AuthTypeIcons/Teacher';
+import AccountType from '@/components/molecules/auth/AccountType';
 import { poppins_400, poppins_600 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 

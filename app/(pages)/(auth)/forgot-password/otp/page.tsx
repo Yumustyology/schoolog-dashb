@@ -1,4 +1,4 @@
-import IsNotVerified from '@/app/components/molecules/auth/IsNotVerified';
+import IsNotVerified from '@/components/molecules/auth/IsNotVerified';
 import React from 'react';
 
 function page() {

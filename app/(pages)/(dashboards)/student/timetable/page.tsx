@@ -1,9 +1,9 @@
 'use client';
 import { teacherImg } from '@/app/assets';
-import Button from '@/app/components/atoms/form/Button';
+import Button from '@/components/atoms/form/Button';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
-import { generateTimetableTimeSlots } from '@/app/lib/utils/generateTimetableTimeSlots';
-import { cn } from '@/lib/utils';
+import { generateTimetableTimeSlots } from ''@/app/lib/utils'/generateTimetableTimeSlots';
+import { cn } from '@/app/lib/utils';
 import React, { useState } from 'react';
 import { CiAlignBottom, CiAlignRight } from 'react-icons/ci';
 

@@ -1,9 +1,9 @@
 'use client';
-import BreadcrumbBox from '@/app/components/atoms/dashboard/subjects/Breadcrumb';
-import Button from '@/app/components/atoms/form/Button';
-import Input from '@/app/components/atoms/form/Input';
-import SuggestionIcon from '@/app/components/atoms/icons/dashboard/SuggestionIcon';
-import Modal from '@/app/components/molecules/Modal';
+import BreadcrumbBox from '@/components/atoms/dashboard/subjects/Breadcrumb';
+import Button from '@/components/atoms/form/Button';
+import Input from '@/components/atoms/form/Input';
+import SuggestionIcon from '@/components/atoms/icons/dashboard/SuggestionIcon';
+import Modal from '@/components/molecules/Modal';
 import {
   Inter_400,
   Inter_600,

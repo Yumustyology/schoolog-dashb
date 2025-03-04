@@ -1,8 +1,8 @@
 'use client';
 import { useState } from 'react';
-import BreadcrumbBox from '@/app/components/atoms/dashboard/subjects/Breadcrumb';
+import BreadcrumbBox from '@/components/atoms/dashboard/subjects/Breadcrumb';
 import { poppins_500 } from '@/app/lib/config/font.config';
-import { cn } from '@/lib/utils';
+import { cn } from '@/app/lib/utils';
 import {
   Tab,
   TabPanel,
@@ -11,13 +11,13 @@ import {
   TabsHeader,
 } from '@material-tailwind/react';
 import React from 'react';
-import Topics from '@/app/components/organisms/dashboard/students/Topics';
-import Assignments from '@/app/components/organisms/dashboard/students/Assignments';
-import SearchInput from '@/app/components/atoms/form/SearchInput';
-import SubjectInfoCard from '@/shared/molecules/SubjectInfoCard';
-import AssignedTeacherCard from '@/shared/molecules/AssignedTeacherCard';
+import Topics from '@/components/organisms/dashboard/students/Topics';
+import Assignments from '@/components/organisms/dashboard/students/Assignments';
+import SearchInput from '@/components/atoms/form/SearchInput';
+import SubjectInfoCard from '@/components/molecules/dashboard/subjects/SubjectInfoCard';
+import AssignedTeacherCard from '@/components/molecules/dashboard/AssignedTeacherCard';
 
-function Page({subject}:{subject:string}) {
+function Page({ subject }: { subject: string }) {
   const todayClassesTabs = [
     {
       label: 'Topics',

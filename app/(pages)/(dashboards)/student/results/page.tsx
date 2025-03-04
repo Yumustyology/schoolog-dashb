@@ -1,11 +1,11 @@
 'use client';
 
-import Button from '@/app/components/atoms/form/Button';
-import SelectComp from '@/app/components/atoms/form/Select';
-import DownloadIcon from '@/app/components/atoms/icons/dashboard/DownloadIcon';
-import PerformanceMetrics from '@/app/components/molecules/dashboard/analytics/PerformanceMetrics';
-import { ResultLists } from '@/app/components/molecules/dashboard/results/ResultLists';
-import { OverAllBestSubjectsList } from '@/app/components/molecules/dashboard/student/OverAllBestSubjects';
+import Button from '@/components/atoms/form/Button';
+import SelectComp from '@/components/atoms/form/Select';
+import DownloadIcon from '@/components/atoms/icons/dashboard/DownloadIcon';
+import PerformanceMetrics from '@/components/molecules/dashboard/analytics/PerformanceMetrics';
+import { ResultLists } from '@/components/molecules/dashboard/results/ResultLists';
+import { OverAllBestSubjectsList } from '@/components/molecules/dashboard/student/OverAllBestSubjects';
 import {
   Inter_600,
   poppins_400,

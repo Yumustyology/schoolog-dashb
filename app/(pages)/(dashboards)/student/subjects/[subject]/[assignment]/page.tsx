@@ -1,22 +1,22 @@
 'use client';
 
-import BreadcrumbBox from '@/app/components/atoms/dashboard/subjects/Breadcrumb';
-import Button from '@/app/components/atoms/form/Button';
-import Review from '@/app/components/atoms/icons/ModalIcons/Review';
-import DraftIcon from '@/app/components/atoms/icons/dashboard/DraftIcon';
-import SubmitIcon from '@/app/components/atoms/icons/dashboard/SubmitIcon';
-import { ImageViewModal } from '@/app/components/molecules/ImageViewModal';
-import Modal from '@/app/components/molecules/Modal';
-import YNmodal from '@/app/components/molecules/YNmodal';
-import AnswerBox from '@/app/components/molecules/dashboard/student/subjects/AnswerBox';
-import { UploadAnswer } from '@/app/components/molecules/dashboard/student/subjects/UploadAnswer';
+import BreadcrumbBox from '@/components/atoms/dashboard/subjects/Breadcrumb';
+import Button from '@/components/atoms/form/Button';
+import Review from '@/components/atoms/icons/ModalIcons/Review';
+import DraftIcon from '@/components/atoms/icons/dashboard/DraftIcon';
+import SubmitIcon from '@/components/atoms/icons/dashboard/SubmitIcon';
+import { ImageViewModal } from '@/components/molecules/ImageViewModal';
+import Modal from '@/components/molecules/Modal';
+import YNmodal from '@/components/molecules/YNmodal';
+import AnswerBox from '@/components/molecules/dashboard/student/subjects/AnswerBox';
+import { UploadAnswer } from '@/components/molecules/dashboard/student/subjects/UploadAnswer';
 import {
   Inter_400,
   Inter_600,
   poppins_400,
   poppins_500,
 } from '@/app/lib/config/font.config';
-import { cn } from '@/lib/utils';
+import { cn } from '@/app/lib/utils';
 import React from 'react';
 
 function page() {
