@@ -1,0 +1,80 @@
+import {
+  ArchiveIcon,
+  DeleteIcon,
+  EditIcon,
+  VIsibilityIcon,
+} from '@/components/atoms/icons/Icons';
+import { Inter_500 } from '@/app/lib/config/font.config';
+import { cn } from '@/app/lib/utils';
+import React, { useRef } from 'react';
+import { useClickAway } from 'react-use';
+
+function OptionsSubjectDropdown({
+  isOpen,
+  setIsOpen,
+}: {
+  isOpen: boolean;
+  setIsOpen: (arg: boolean) => void;
+}) {
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  useClickAway(dropdownRef, () => setIsOpen(false));
+
+  if (!isOpen) {
+    return null;
+  }
+
+  return (
+    <div
+      ref={dropdownRef}
+      className="absolute flex flex-col gap-3 right-0 mt-2 min-w-[173px] h-[164px] bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10 p-4"
+      role="menu"
+    >
+      <button
+        className={cn(
+          'flex items-center gap-4 text-sm text-black1',
+          Inter_500.className
+        )}
+        role="menuitem"
+      >
+        <VIsibilityIcon />
+        View Details
+      </button>
+
+      <button
+        className={cn(
+          'flex items-center gap-4 text-sm text-black1',
+          Inter_500.className
+        )}
+        role="menuitem"
+      >
+        <EditIcon />
+        Edit Curriculum
+      </button>
+
+      <button
+        className={cn(
+          'flex items-center gap-4 text-sm text-black1',
+          Inter_500.className
+        )}
+        role="menuitem"
+      >
+        <ArchiveIcon />
+        Archive
+      </button>
+
+      <button
+        className={cn(
+          'flex items-center gap-4 text-sm text-r2',
+          Inter_500.className
+        )}
+        role="menuitem"
+      >
+        <DeleteIcon />
+        <span className="text-r2">Delete</span>
+      </button>
+    </div>
+  );
+}
+
+export default OptionsSubjectDropdown;

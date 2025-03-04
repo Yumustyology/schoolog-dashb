@@ -8,9 +8,9 @@ import {
   TabsHeader,
 } from '@material-tailwind/react';
 import { poppins_500 } from '@/app/lib/config/font.config';
-import { SelectSubject } from '@/app/components/atoms/dashboard/materials/SelectSubject';
-import BorrowBooksList from '@/app/components/molecules/dashboard/library/BorrowBooksList';
-import AvailableBooks from '@/app/components/organisms/dashboard/students/AvailableBooks';
+import { SelectSubject } from '@/components/atoms/dashboard/materials/SelectSubject';
+import BorrowBooksList from '@/components/molecules/dashboard/library/BorrowBooksList';
+import AvailableBooks from '@/components/organisms/dashboard/students/AvailableBooks';
 import { cn } from '@/app/lib/utils';
 
 function Library() {

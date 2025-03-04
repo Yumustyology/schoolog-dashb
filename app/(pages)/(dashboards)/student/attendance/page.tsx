@@ -1,14 +1,14 @@
 'use client';
-import { DatePicker } from '@/app/components/atoms/form/DatePicker';
-import PaginationBox from '@/app/components/atoms/dashboard/subjects/Pagination';
-import SelectBox from '@/app/components/atoms/dashboard/subjects/Select';
-import AttendanceMetrics from '@/app/components/molecules/dashboard/analytics/AttendanceMetrics';
-import AttendanceList from '@/app/components/molecules/dashboard/attendance/AttendanceList';
+import { DatePicker } from '@/components/atoms/form/DatePicker';
+import PaginationBox from '@/components/atoms/dashboard/subjects/Pagination';
+import SelectBox from '@/components/atoms/dashboard/subjects/Select';
+import AttendanceMetrics from '@/components/molecules/dashboard/analytics/AttendanceMetrics';
+import AttendanceList from '@/components/molecules/dashboard/attendance/AttendanceList';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import React from 'react';
-import { DateRangePicker } from '@/app/components/atoms/form/DateRangePicker';
-import DoughnutChart from '@/app/components/molecules/DoughnutChart';
+import { DateRangePicker } from '@/components/atoms/form/DateRangePicker';
+import DoughnutChart from '@/components/molecules/DoughnutChart';
 
 function page() {
   return (

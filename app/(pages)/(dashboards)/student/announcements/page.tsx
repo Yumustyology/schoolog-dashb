@@ -1,19 +1,19 @@
 'use client';
-import Search from '@/app/components/atoms/form/SearchInput';
-import { DatePicker } from '@/app/components/atoms/form/DatePicker';
-import Button from '@/app/components/atoms/form/Button';
-import { DrawerSide } from '@/app/components/molecules/dashboard/DrawerSide';
+import Search from '@/components/atoms/form/SearchInput';
+import { DatePicker } from '@/components/atoms/form/DatePicker';
+import Button from '@/components/atoms/form/Button';
+import { DrawerSide } from '@/components/molecules/dashboard/DrawerSide';
 import {
   Inter_400,
   poppins_400,
   poppins_500,
 } from '@/app/lib/config/font.config';
-import { cn } from '@/lib/utils';
+import { cn } from '@/app/lib/utils';
 import { Typography } from '@material-tailwind/react';
 import React, { useState } from 'react';
 import { Announcements } from '@/types';
-import SelectBox from '@/app/components/atoms/dashboard/subjects/Select';
-import PaginationBox from '@/app/components/atoms/dashboard/subjects/Pagination';
+import SelectBox from '@/components/atoms/dashboard/subjects/Select';
+import PaginationBox from '@/components/atoms/dashboard/subjects/Pagination';
 
 const announcements: Announcements = [
   {

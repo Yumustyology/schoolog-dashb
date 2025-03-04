@@ -7,15 +7,15 @@ import {
   TabsBody,
   TabsHeader,
 } from '@material-tailwind/react';
-import { cn } from '@/lib/utils';
+import { cn } from '@/app/lib/utils';
 import { poppins_500 } from '@/app/lib/config/font.config';
-import { DatePicker } from '@/app/components/atoms/form/DatePicker';
-import ActivitiesAndEvents from '@/app/components/organisms/dashboard/students/ActivitiesAndEvents';
-import RegisteredActivitiesAndEvents from '@/app/components/organisms/dashboard/students/RegisteredActivitiesAndEvents';
-import SelectComp from '@/app/components/atoms/form/Select';
-import SearchInput from '@/app/components/atoms/form/SearchInput';
-import { MyActivitiesCalendar } from '@/app/components/organisms/dashboard/MyActivitiesCalendar';
-// import MyActivitiesCalendar from '@/app/components/organisms/dashboard/MyActivitiesCalendar';
+import { DatePicker } from '@/components/atoms/form/DatePicker';
+import ActivitiesAndEvents from '@/components/organisms/dashboard/students/ActivitiesAndEvents';
+import RegisteredActivitiesAndEvents from '@/components/organisms/dashboard/students/RegisteredActivitiesAndEvents';
+import SelectComp from '@/components/atoms/form/Select';
+import SearchInput from '@/components/atoms/form/SearchInput';
+import { MyActivitiesCalendar } from '@/components/organisms/dashboard/MyActivitiesCalendar';
+// import MyActivitiesCalendar from '@/components/organisms/dashboard/MyActivitiesCalendar';
 
 function Page() {
   const todayClassesTabs = [

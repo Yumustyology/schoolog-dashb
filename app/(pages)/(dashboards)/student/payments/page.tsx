@@ -1,5 +1,5 @@
-import BreadcrumbBox from '@/app/components/atoms/dashboard/subjects/Breadcrumb';
-import { PaymentTable } from '@/app/components/molecules/dashboard/payment/PaymentTable';
+import BreadcrumbBox from '@/components/atoms/dashboard/subjects/Breadcrumb';
+import { PaymentTable } from '@/components/molecules/dashboard/payment/PaymentTable';
 import React from 'react';
 
 function page() {

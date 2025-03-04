@@ -1,6 +1,6 @@
 'use client';
-import BreadcrumbBox from '@/app/components/atoms/dashboard/subjects/Breadcrumb';
-import { ResultTable } from '@/app/components/molecules/dashboard/results/ResultTable';
+import BreadcrumbBox from '@/components/atoms/dashboard/subjects/Breadcrumb';
+import { ResultTable } from '@/components/molecules/dashboard/results/ResultTable';
 import { Card } from '@material-tailwind/react';
 import React from 'react';
 

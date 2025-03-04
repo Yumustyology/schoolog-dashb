@@ -1,19 +1,19 @@
 'use client';
 import React from 'react';
-import AssignmentIcon from '@/app/components/atoms/icons/dashboard/AssignmentIcon';
-import EventsIcon from '@/app/components/atoms/icons/dashboard/EventsIcon';
-import SubjectIcon from '@/app/components/atoms/icons/dashboard/SubjectIcon';
-import SchoolBoy from '@/app/components/atoms/images/SchoolBoy';
-import { AssignmentList } from '@/app/components/molecules/dashboard/AssignmentList';
-import { BestPerformingSubjectsList } from '@/app/components/molecules/dashboard/BestPerformingSubjectsList';
-import DashboardLinkBox from '@/app/components/molecules/dashboard/DashboardLinkBox';
-import DashboardWelcomeCard from '@/app/components/molecules/dashboard/DashboardWelcomeCard';
+import AssignmentIcon from '@/components/atoms/icons/dashboard/AssignmentIcon';
+import EventsIcon from '@/components/atoms/icons/dashboard/EventsIcon';
+import SubjectIcon from '@/components/atoms/icons/dashboard/SubjectIcon';
+import SchoolBoy from '@/components/atoms/images/SchoolBoy';
+import { AssignmentList } from '@/components/molecules/dashboard/AssignmentList';
+import { BestPerformingSubjectsList } from '@/components/molecules/dashboard/BestPerformingSubjectsList';
+import DashboardLinkBox from '@/components/molecules/dashboard/DashboardLinkBox';
+import DashboardWelcomeCard from '@/components/molecules/dashboard/DashboardWelcomeCard';
 import {
   poppins_400,
   poppins_500,
   poppins_600,
 } from '@/app/lib/config/font.config';
-import { cn } from '@/lib/utils';
+import { cn } from '@/app/lib/utils';
 import {
   Tabs,
   TabsHeader,
@@ -21,12 +21,12 @@ import {
   Tab,
   TabPanel,
 } from '@material-tailwind/react';
-import TodayClassesList from '@/app/components/molecules/dashboard/TodayClassesList';
-import UpcomingEventLists from '@/app/components/molecules/dashboard/UpcomingEventsList';
-import GradesAnalytics from '@/app/components/molecules/dashboard/analytics/GradesAnalytics';
-import AssignmentAnalytics from '@/app/components/molecules/dashboard/analytics/AssignmentAnalytics';
-import AttendanceAnalytics from '@/app/components/molecules/dashboard/analytics/AttendanceAnalytics';
-import { DatePicker } from '@/app/components/atoms/form/DatePicker';
+import TodayClassesList from '@/components/molecules/dashboard/TodayClassesList';
+import UpcomingEventLists from '@/components/molecules/dashboard/UpcomingEventsList';
+import GradesAnalytics from '@/components/molecules/dashboard/analytics/GradesAnalytics';
+import AssignmentAnalytics from '@/components/molecules/dashboard/analytics/AssignmentAnalytics';
+import AttendanceAnalytics from '@/components/molecules/dashboard/analytics/AttendanceAnalytics';
+import { DatePicker } from '@/components/atoms/form/DatePicker';
 import useActiveTab from '@/app/lib/hooks/useActiveTab';
 
 function StudentDashboard() {
