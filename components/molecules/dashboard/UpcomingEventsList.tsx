@@ -1,6 +1,6 @@
 import React from 'react';
 import UpcomingEventPillBox from '../../atoms/dashboard/subjects/UpcomingEventPillBox';
-import { subjectsList } from '@/constants';
+import { subjectsList } from '@/app/constants';
 
 const UpcomingEventLists = () => {
   return (
