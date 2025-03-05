@@ -21,7 +21,7 @@ export default function TopSteps() {
     <div className="p-4 min-h-[80dvh] bg-white flex flex-col justify-between rounded-lg">
       <div className="w-[600px] mx-auto">
         <div className="">
-          <ProgressPageNumber /> 
+          <ProgressPageNumber />
           {steps[currentStep]}
         </div>
       </div>
