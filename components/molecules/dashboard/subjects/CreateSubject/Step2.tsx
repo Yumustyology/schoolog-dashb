@@ -4,14 +4,12 @@ import { Upload_Icon2 } from '@/components/atoms/icons/Icons';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import { CurriculumType } from './CurriculumType';
-import ProgressPageNumber from '@/components/molecules/auth/PageNumber';
 import { TermAccordion } from './CurriculumDetails';
 
 function Step2() {
   const [curriculumType, setCurriculumType] = React.useState('manual_input');
   return (
     <div>
-      <ProgressPageNumber activeStep={2} totalSteps={3} />
       <div className="mb-12 mt-6">
         <h2 className={cn('text-xltext-gray1 mb-1', poppins_500.className)}>
           Create Curriculum{' '}

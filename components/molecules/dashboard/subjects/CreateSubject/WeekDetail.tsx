@@ -1,9 +1,5 @@
 import Button from '@/components/atoms/form/Button';
-import {
-  CloseIcon,
-  DragIcon,
-  EditIcon,
-} from '@/components/atoms/icons/Icons';
+import { CloseIcon, DragIcon, EditIcon } from '@/components/atoms/icons/Icons';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import React from 'react';

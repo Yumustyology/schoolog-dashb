@@ -4,7 +4,7 @@ import Input from '@/components/atoms/form/Input';
 //   UploadImageIcon,
 //   Upload_Icon,
 // } from '@/components/atoms/icons/Icons';
-import ProgressPageNumber from '@/components/molecules/auth/PageNumber';
+// import ProgressPageNumber from '@/components/molecules/auth/PageNumber';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import React from 'react';
@@ -12,7 +12,6 @@ import React from 'react';
 function Step1() {
   return (
     <div>
-      <ProgressPageNumber activeStep={1} totalSteps={3} />
       <div className="mb-12 mt-6">
         <h2 className={cn('text-xltext-gray1 mb-1', poppins_500.className)}>
           Create Subject

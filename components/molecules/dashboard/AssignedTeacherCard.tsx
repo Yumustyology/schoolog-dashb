@@ -29,80 +29,86 @@ function AssignedTeacherCard({
   return (
     <Card className="bg-white py-6 px-6 flex flex-col justify-between min-h-[360px] rounded-md col-span-2 border-none">
       <div>
-      <CardHeader className="bg-[#f8f8f8] rounded-full py-2 mb-6">
-        <div className="flex gap-5">
-          <Image src={teacherImg2} alt="teacher-image" />
-          <div>
-            <h3
-              className={cn('text-sm text-gray6 mb-1', poppins_500.className)}
-            >
-              Jimoh Jamiu
-            </h3>
-            {role === 'student' && (
-              <p className={cn('text-sm text-gray', poppins_400.className)}>
-                Biology Teacher
-              </p>
-            )}
-
-            {role === 'school' && (
-              <div>
+        <CardHeader className="bg-[#f8f8f8] rounded-full py-2 mb-6">
+          <div className="flex gap-5">
+            <Image src={teacherImg2} alt="teacher-image" />
+            <div>
+              <h3
+                className={cn('text-sm text-gray6 mb-1', poppins_500.className)}
+              >
+                Jimoh Jamiu
+              </h3>
+              {role === 'student' && (
                 <p className={cn('text-sm text-gray', poppins_400.className)}>
-                  Assigned teacher
+                  Biology Teacher
+                </p>
+              )}
+
+              {role === 'school' && (
+                <div>
+                  <p className={cn('text-sm text-gray', poppins_400.className)}>
+                    Assigned teacher
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        </CardHeader>
+
+        {role === 'student' && (
+          <CardContent className="flex flex-col gap-6 w-full px-0 ">
+            <section className="flex justify-between items-center w-full">
+              <div>
+                <h3 className={cn('text-sm text-black1', Inter_500.className)}>
+                  jimohjamiu200@gmail.com
+                </h3>
+                <p className={cn('text-sm text-gray', poppins_400.className)}>
+                  Email
                 </p>
               </div>
-            )}
-          </div>
-        </div>
-      </CardHeader>
 
-      {role === 'student' && (
-        <CardContent className="flex flex-col gap-6 w-full px-0 ">
-          <section className="flex justify-between items-center w-full">
-            <div>
-              <h3 className={cn('text-sm text-black1', Inter_500.className)}>
-                jimohjamiu200@gmail.com
-              </h3>
-              <p className={cn('text-sm text-gray', poppins_400.className)}>
-                Email
-              </p>
-            </div>
+              <div>
+                <h3
+                  className={cn('text-sm text-black1', poppins_500.className)}
+                >
+                  07045321256{' '}
+                </h3>
+                <p className={cn('text-sm text-gray', poppins_400.className)}>
+                  Phone number
+                </p>
+              </div>
+            </section>
 
-            <div>
-              <h3 className={cn('text-sm text-black1', poppins_500.className)}>
-                07045321256{' '}
-              </h3>
-              <p className={cn('text-sm text-gray', poppins_400.className)}>
-                Phone number
-              </p>
-            </div>
-          </section>
+            <section className="flex justify-between items-center">
+              <div>
+                <h3
+                  className={cn('text-sm text-black1', poppins_500.className)}
+                >
+                  Admin Office
+                </h3>
+                <p className={cn('text-sm text-gray', poppins_400.className)}>
+                  Office
+                </p>
+              </div>
 
-          <section className="flex justify-between items-center">
-            <div>
-              <h3 className={cn('text-sm text-black1', poppins_500.className)}>
-                Admin Office
-              </h3>
-              <p className={cn('text-sm text-gray', poppins_400.className)}>
-                Office
-              </p>
-            </div>
-
-            <div>
-              <h3 className={cn('text-sm text-black1', poppins_500.className)}>
-                9:00am - 12:00pm
-              </h3>
-              <p
-                className={cn(
-                  'text-sm text-gray text-right',
-                  poppins_400.className
-                )}
-              >
-                Time on seat
-              </p>
-            </div>
-          </section>
-        </CardContent>
-      )}
+              <div>
+                <h3
+                  className={cn('text-sm text-black1', poppins_500.className)}
+                >
+                  9:00am - 12:00pm
+                </h3>
+                <p
+                  className={cn(
+                    'text-sm text-gray text-right',
+                    poppins_400.className
+                  )}
+                >
+                  Time on seat
+                </p>
+              </div>
+            </section>
+          </CardContent>
+        )}
       </div>
 
       {role === 'school' && (
