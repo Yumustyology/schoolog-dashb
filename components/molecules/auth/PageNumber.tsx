@@ -1,29 +1,30 @@
 import { poppins_600 } from '@/app/lib/config/font.config';
+import {
+  createSubjectSetStep,
+  createSubjectProgressState,
+  TOTAL_STEPS,
+} from '@/app/lib/entities/subject.entity';
 import { cn } from '@/app/lib/utils';
+import { useEntity } from 'simpler-state';
 
-type ProgressIndicatorProps = {
-  totalSteps: number;
-  activeStep: number;
-};
-
-export default function ProgressPageNumber({
-  totalSteps,
-  activeStep,
-}: ProgressIndicatorProps) {
+export default function ProgressPageNumber() {
+  const activeStep = useEntity(createSubjectProgressState);
+  const totalSteps = TOTAL_STEPS;
   return (
     <div>
       {/* Step Counter */}
       <p className={cn('text-base text-gray3', poppins_600.className)}>
-        <span className="text-primary">{activeStep} </span>/ {totalSteps}
+        <span className="text-primary">{activeStep + 1} </span>/ {totalSteps}
       </p>
 
       {/* Progress Bars */}
       <div className="flex gap-2 mb-2">
         {Array.from({ length: totalSteps }, (_, index) => (
           <div
+            onClick={() => createSubjectSetStep(index)}
             key={index}
             className={`rounded-full cursor-pointer h-[4px] w-[31px] ${
-              index < activeStep ? 'bg-primary' : 'bg-[#F2EEFB]'
+              index < activeStep + 1 ? 'bg-primary' : 'bg-[#F2EEFB]'
             }`}
           ></div>
         ))}

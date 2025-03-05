@@ -47,6 +47,7 @@
     "react-use": "^17.6.0",
     "recharts": "^2.15.0",
     "sharp": "^0.33.5",
+    "simpler-state": "^1.2.2",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "use-react-countries": "^2.0.1"
