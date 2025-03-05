@@ -15,9 +15,20 @@ import ClassesIcon from '@/components/atoms/icons/SideBar/ClassesIcon';
 import ParentsIcon from '@/components/atoms/icons/SideBar/ParentsIcon';
 import StudentsIcon from '@/components/atoms/icons/SideBar/StudentsIcon';
 import FinanceIcon from '@/components/atoms/icons/SideBar/FinanceIcon';
-// import FinanceIcon from '@/components/atoms/icons/SideBar/FinanceIcon';
+import StaffsIcon from '@/components/atoms/icons/dashboard/StaffsIcon';
 
-export const studentSidebarItems = [
+export type SidebarItemsType = {
+  title: string;
+  url?: string;
+  icon: JSX.Element;
+  activeIcon: JSX.Element;
+  subItems?: {
+    title: string;
+    url: string;
+  }[];
+}[];
+
+export const studentSidebarItems: SidebarItemsType = [
   {
     title: 'Dashboard',
     url: '/student',
@@ -98,7 +109,7 @@ export const studentSidebarItems = [
   },
 ];
 
-export const shoolSidebarItems = [
+export const shoolSidebarItems: SidebarItemsType = [
   {
     title: 'Dashboard',
     url: '/school',
@@ -129,6 +140,21 @@ export const shoolSidebarItems = [
     icon: <ParentsIcon />,
     activeIcon: <ParentsIcon color="#FFFFFF" />,
   },
+   {
+    title: 'Staffs',
+    icon: <StaffsIcon />,
+    activeIcon: <StaffsIcon color="#FFFFFF" />,
+    subItems: [
+      {
+        title: 'Teaching',
+        url: '/school/teaching-staffs',
+      },
+      {
+        title: 'Non Teaching',
+        url: '/school/non-teaching-staffs',
+      },
+    ],
+  },
   {
     title: 'Timetable',
     url: '/school/timetable',
@@ -155,9 +181,26 @@ export const shoolSidebarItems = [
   },
   {
     title: 'Finance',
-    url: '/school/finance',
     icon: <FinanceIcon />,
     activeIcon: <FinanceIcon color="#FFFFFF" />,
+    subItems: [
+      {
+        title: 'Summary',
+        url: '/school/finance',
+      },
+      {
+        title: 'Fee payments',
+        url: '/school/fee-payments',
+      },
+      {
+        title: 'Payrolls',
+        url: '/school/payrolls',
+      },
+      {
+        title: 'Invoice',
+        url: '/school/invoice',
+      },
+    ],
   },
   {
     title: 'Message',

@@ -7,6 +7,9 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarMenuSub,
+  SidebarMenuSubButton,
+  SidebarMenuSubItem,
   useSidebar,
 } from '@/components/ui/sidebar';
 import { cn } from '@/app/lib/utils';
@@ -17,6 +20,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Settings from '../../atoms/icons/SideBar/Settings';
 import { shoolSidebarItems, studentSidebarItems } from '@/app/lib/sidebarData';
+import { ChevronUp } from 'lucide-react';
+import { useRef, useState } from 'react';
 
 export function AppSidebar({
   type,
@@ -24,8 +29,28 @@ export function AppSidebar({
   type: 'school' | 'student' | 'teacher' | 'parent';
 }) {
   const pathname = usePathname();
-  const { state } = useSidebar();
+  const { state, setOpen } = useSidebar();
   const cleanedPath = pathname.replace(/\/$/, '');
+
+  const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
+  const submenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
+
+  const toggleMenu = (title: string, arg?: boolean) => {
+    setOpenMenus((prev) => {
+      const newState = { ...prev, [title]: arg ?? !prev[title] };
+
+      if (newState[title]) {
+        setTimeout(() => {
+          submenuRefs.current[title]?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'end',
+          });
+        }, 100); 
+      }
+
+      return newState;
+    });
+  };
 
   return (
     <Sidebar collapsible="icon" className="h-screen w-64 border-none bg-white">
@@ -61,34 +86,96 @@ export function AppSidebar({
                 : type == 'school'
                   ? shoolSidebarItems
                   : []
-              ).map((item) => (
-                <SidebarMenuItem className="w-full" key={item.title}>
-                  <SidebarMenuButton
-                    className={cn(
-                      'py-5 rounded-full text-gray3',
-                      cleanedPath === item.url
-                        ? 'hover:bg-primary bg-primary text-white hover:text-white'
-                        : 'hover:bg-gray2 hover:text-gray3 '
-                    )}
-                    asChild
-                  >
-                    <Link
-                      href={item.url}
+              ).map((item) => {
+                const isActive =
+                  cleanedPath === item.url ||
+                  item.subItems?.some((sub) => cleanedPath.startsWith(sub.url));
+                return (
+                  <SidebarMenuItem className="w-full" key={item.title}>
+                    <SidebarMenuButton
                       className={cn(
-                        `flex items-center gap-3 px-4 py-2 text-sm transition-colors duration-200`,
-                        Inter_500.className
+                        'py-5 rounded-full text-gray3',
+                        isActive
+                          ? 'hover:bg-primary bg-primary text-white hover:text-white'
+                          : 'hover:bg-gray2 hover:text-gray3 '
                       )}
+                      asChild
                     >
-                      {cleanedPath === item.url ? (
-                        <div>{item.activeIcon}</div>
-                      ) : (
-                        <div>{item.icon}</div>
-                      )}
-                      <span className="text-sm">{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+                      <Link
+                        href={item?.url || '#'}
+                        onClick={() => {
+                          if (item?.subItems?.length) {
+                            setOpen(true);
+                            if (state == 'expanded') {
+                              toggleMenu(item.title);
+                            } else {
+                              toggleMenu(item.title, true);
+                            }
+                          }
+                        }}
+                        className={cn(
+                          `flex items-center justify-between px-4 py-2 text-sm transition-colors duration-200`,
+                          Inter_500.className
+                        )}
+                      >
+                        <div
+                          className={cn(
+                            `flex items-center gap-3`,
+                            Inter_500.className
+                          )}
+                        >
+                          {isActive ? (
+                            <div>{item.activeIcon}</div>
+                          ) : (
+                            <div>{item.icon}</div>
+                          )}
+                          <span className="text-sm">{item.title}</span>
+                        </div>
+                        {item?.subItems && (
+                          <button className="transition-transform">
+                            <ChevronUp
+                              className={cn(
+                                'w-4 h-4 transition-transform duration-200',
+                                openMenus[item.title] ? 'rotate-180' : ''
+                              )}
+                            />
+                          </button>
+                        )}
+                      </Link>
+                    </SidebarMenuButton>
+
+                    {item.subItems && openMenus[item.title] && (
+                      <SidebarMenuSub
+                        ref={(el) => (submenuRefs.current[item.title] = el)}
+                        className="ml-6 mt-2 "
+                      >
+                        {item.subItems.map((subItem) => {
+                          const isSubActive = cleanedPath == subItem?.url;
+                          console.log(isSubActive);
+                          console.log('cleanedPath ', cleanedPath);
+                          return (
+                            <SidebarMenuSubItem key={subItem.title}>
+                              <SidebarMenuSubButton asChild>
+                                <Link
+                                  href={subItem.url}
+                                  className={cn(
+                                    'flex items-center gap-2 px-4 py-2 text-sm rounded-lg',
+                                    isSubActive
+                                      ? '!text-primary'
+                                      : 'hover:bg-gray-200'
+                                  )}
+                                >
+                                  <span>{subItem.title}</span>
+                                </Link>
+                              </SidebarMenuSubButton>
+                            </SidebarMenuSubItem>
+                          );
+                        })}
+                      </SidebarMenuSub>
+                    )}
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroup>
         </div>
