@@ -50,7 +50,7 @@ const SelectComp: React.FC<SelectCompProps> = ({
 }) => {
   return (
     <div className={cn(selectClasses)}>
-      {label && htmlFor && (
+      {label && (
         <label
           htmlFor={htmlFor}
           className={cn(

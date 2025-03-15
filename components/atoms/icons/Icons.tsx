@@ -82,11 +82,17 @@ export function VIsibilityIcon() {
     </svg>
   );
 }
-export function EditIcon({ color = '#828282' }: { color?: string }) {
+export function EditIcon({
+  color = '#828282',
+  size = 24,
+}: {
+  color?: string;
+  size?: number;
+}) {
   return (
     <svg
-      width="24"
-      height="24"
+      width={size}
+      height={size}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"

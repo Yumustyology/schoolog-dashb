@@ -140,7 +140,7 @@ export const shoolSidebarItems: SidebarItemsType = [
     icon: <ParentsIcon />,
     activeIcon: <ParentsIcon color="#FFFFFF" />,
   },
-   {
+  {
     title: 'Staffs',
     icon: <StaffsIcon />,
     activeIcon: <StaffsIcon color="#FFFFFF" />,
@@ -190,15 +190,15 @@ export const shoolSidebarItems: SidebarItemsType = [
       },
       {
         title: 'Fee payments',
-        url: '/school/fee-payments',
+        url: '/school/finance/fee-payments',
       },
       {
         title: 'Payrolls',
-        url: '/school/payrolls',
+        url: '/school/finance/payrolls',
       },
       {
         title: 'Invoice',
-        url: '/school/invoice',
+        url: '/school/finance/invoice',
       },
     ],
   },

@@ -45,7 +45,7 @@ export function AppSidebar({
             behavior: 'smooth',
             block: 'end',
           });
-        }, 100); 
+        }, 100);
       }
 
       return newState;

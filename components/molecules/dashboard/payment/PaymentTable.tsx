@@ -2,18 +2,11 @@
 import Button from '@/components/atoms/form/Button';
 import DownloadIcon from '@/components/atoms/icons/dashboard/DownloadIcon';
 import AcrobatPdfIcon from '@/components/atoms/icons/dashboard/materials/AcrobatPdfIcon';
-import {
-  poppins_400,
-  poppins_500,
-  poppins_600,
-} from '@/app/lib/config/font.config';
+import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import { Card, Typography } from '@material-tailwind/react';
 import { useState } from 'react';
 import { DrawerSide } from '../DrawerSide';
-import SearchInput from '@/components/atoms/form/SearchInput';
-import SelectComp from '@/components/atoms/form/Select';
-import { DatePicker } from '@/components/atoms/form/DatePicker';
 import EyeClose from '@/components/atoms/icons/EyeClose';
 
 type TableRow = {
@@ -22,114 +15,84 @@ type TableRow = {
   paymentType: string;
   date: string;
   status: 'Success' | 'Pending' | 'Failed';
+  studentName?: string;
 };
-
-const TABLE_HEAD: string[] = [
-  'Payment ID',
-  'Amount',
-  'Payment type',
-  'Date',
-  'Status',
-  '',
-];
 
 const TABLE_ROWS: TableRow[] = [
   {
-    paymentID: 'Invoice #1838942022',
+    studentName: 'Amina Bello',
+    paymentID: '#1838942022',
     amount: '64,000',
-    paymentType: 'School fees',
+    paymentType: 'School Fees',
     date: '14/3/2024',
     status: 'Success',
   },
   {
-    paymentID: 'Invoice #1838942022',
-    amount: '64,000',
-    paymentType: 'School fees',
-    date: '14/3/2024',
+    studentName: 'John Doe',
+    paymentID: '#1838942023',
+    amount: '45,500',
+    paymentType: 'Library Fees',
+    date: '15/3/2024',
+    status: 'Pending',
+  },
+  {
+    studentName: 'Chinwe Okeke',
+    paymentID: '#1838942024',
+    amount: '70,000',
+    paymentType: 'Hostel Fees',
+    date: '16/3/2024',
+    status: 'Failed',
+  },
+  {
+    studentName: 'Michael Johnson',
+    paymentID: '#1838942025',
+    amount: '50,000',
+    paymentType: 'School Fees',
+    date: '17/3/2024',
     status: 'Success',
   },
   {
-    paymentID: 'Invoice #1838942022',
-    amount: '64,000',
-    paymentType: 'School fees',
-    date: '14/3/2024',
+    studentName: 'Fatima Sani',
+    paymentID: '#1838942026',
+    amount: '30,000',
+    paymentType: 'PTA Levy',
+    date: '18/3/2024',
     status: 'Success',
   },
   {
-    paymentID: 'Invoice #1838942022',
-    amount: '64,000',
-    paymentType: 'School fees',
-    date: '14/3/2024',
-    status: 'Success',
-  },
-  {
-    paymentID: 'Invoice #1838942022',
-    amount: '64,000',
-    paymentType: 'School fees',
-    date: '14/3/2024',
-    status: 'Success',
-  },
-  {
-    paymentID: 'Invoice #1838942022',
-    amount: '64,000',
-    paymentType: 'School fees',
-    date: '14/3/2024',
-    status: 'Success',
+    studentName: 'Emeka Obi',
+    paymentID: '#1838942027',
+    amount: '55,000',
+    paymentType: 'Exam Fees',
+    date: '19/3/2024',
+    status: 'Pending',
   },
 ];
 
-export function PaymentTable(): JSX.Element {
+export function PaymentTable({
+  type = 'student',
+}: {
+  type: 'school' | 'student' | 'teacher' | 'parent';
+}): JSX.Element {
+  const TABLE_HEAD: string[] = ['Payment ID', 'Amount', 'Payment type'];
+
+  if (type === 'school' || type === 'teacher') {
+    TABLE_HEAD.push('Student');
+  } else if (type === 'parent') {
+    TABLE_HEAD.push('Ward');
+  }
+
+  TABLE_HEAD.push('Date', 'Status', '');
+
   const [open, setOpen] = useState(false);
 
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
 
   return (
-    <Card className="shadow-none h-full w-full overflow-scroll p-6 mt-8">
-      <div className="flex items-center justify-between">
-        <h3 className={cn('text-gray1 text-xl mb-6', poppins_600.className)}>
-          Payments histories
-        </h3>
-        <div className="flex gap-6 items-center mb-6">
-          <SearchInput
-            className="bg-gray4"
-            placeholder="Search payment history"
-          />
-          <SelectComp
-            placeholder="All type"
-            triggerClasses={cn(
-              poppins_400.className,
-              'text-xs cursor-pointer text-gray6 2 text-center gap-1.5 w-max border-gray4  flex justify-between rounded-full h-[38px] items-center px-3 py-1.5'
-            )}
-            value=""
-            onValueChange={console.log}
-            options={[
-              {
-                id: 'all',
-                name: 'All',
-              },
-              {
-                id: 'jss2',
-                name: 'JSS2',
-              },
-              {
-                id: 'jss3',
-                name: 'JSS3',
-              },
-            ]}
-          />
-          <DatePicker
-            calenderContainerClassName={cn('mr-10')}
-            className={cn(
-              'text-xs cursor-pointer text-gray6 2 w-[180px] border border-gray4 flex justify-between rounded-full h-[38px] items-center px-3 py-1.5',
-              poppins_400.className
-            )}
-            placeholder={'Pick date'}
-          />
-        </div>
-      </div>
-
-      <table className="w-full min-w-max table-auto text-left">
+    <Card className="shadow-none h-full w-full overflow-scroll">
+      {/* <table className="w-full min-w-max table-auto text-left"> */}
+      <table className="min-w-[800px] w-full table-auto text-left">
         <thead>
           <tr>
             {TABLE_HEAD.map((head) => (
@@ -163,7 +126,7 @@ export function PaymentTable(): JSX.Element {
                         poppins_400.className
                       )}
                     >
-                      <AcrobatPdfIcon /> <span> {paymentID}</span>
+                      <AcrobatPdfIcon /> <span>{paymentID}</span>
                     </Typography>
                   </td>
                   <td className={classes}>
@@ -188,6 +151,24 @@ export function PaymentTable(): JSX.Element {
                       {paymentType}
                     </Typography>
                   </td>
+
+                  {/* Conditionally render Student/Ward column */}
+                  {(type === 'school' ||
+                    type === 'teacher' ||
+                    type === 'parent') && (
+                    <td className={classes}>
+                      <Typography
+                        variant="small"
+                        className={cn(
+                          'font-normal text-gray1 truncate',
+                          poppins_400.className
+                        )}
+                      >
+                        Muhammad Jamiu
+                      </Typography>
+                    </td>
+                  )}
+
                   <td className={classes}>
                     <Typography
                       variant="small"
@@ -204,6 +185,7 @@ export function PaymentTable(): JSX.Element {
                     <Typography
                       variant="small"
                       className={cn(
+                        poppins_500.className,
                         'font-normal rounded-full w-[92px] text-center px-4.5 py-1.5 ',
                         status === 'Success'
                           ? 'text-primary bg-primary1'
@@ -239,11 +221,11 @@ export function PaymentTable(): JSX.Element {
       <DrawerSide
         open={open}
         close={closeDrawer}
-        title="Invoice #1838942022"
+        title="#1838942022"
         subtitle="Transaction ID"
       >
         <>
-          <div className="p-6 overflow-y-auto max-h-[calc(100vh-140px)]">
+          <div className="p-6 overflow-y-auto max-h-[90dvh] pb-10">
             <div className="mt-6">
               <div className="flex justify-between items-center">
                 <Typography>

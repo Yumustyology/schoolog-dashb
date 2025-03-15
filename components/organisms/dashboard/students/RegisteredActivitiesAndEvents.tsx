@@ -2,10 +2,10 @@ import Dot from '@/components/atoms/dashboard/subjects/Dot';
 import CalendarIcon from '@/components/atoms/icons/dashboard/CalendarIcon';
 import CategoryIcon from '@/components/atoms/icons/dashboard/CategoryIcon';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
-import { registeredActivitiesAndEvents } from '@/constants';
 import { cn } from '@/app/lib/utils';
 import Image from 'next/image';
 import React from 'react';
+import { registeredActivitiesAndEvents } from '@/app/constants';
 
 function RegisteredActivitiesAndEvents() {
   return (

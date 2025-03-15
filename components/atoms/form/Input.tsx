@@ -21,7 +21,7 @@ type inputProps = {
   id?: string;
   value?: string | number;
   required?: boolean;
-  handleChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleOnChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   handleBlur?: (e: React.FocusEvent<any>) => void;
   placeholder?: string;
   errMsg?: string | null;
@@ -49,7 +49,7 @@ const Input: FC<inputProps> = ({
   inputClassName,
   id,
   value,
-  handleChange,
+  handleOnChange,
   required = true,
   name = '',
   placeholder,
@@ -96,7 +96,7 @@ const Input: FC<inputProps> = ({
           value={value}
           required={required}
           name={name}
-          onChange={handleChange}
+          onChange={handleOnChange}
           type={passwordShown ? 'text' : type}
           id={id}
           placeholder={placeholder || ' '}

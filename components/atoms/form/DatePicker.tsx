@@ -12,6 +12,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
+import { poppins_400 } from '@/app/lib/config/font.config';
 
 export function DatePicker({
   className,
@@ -32,7 +33,8 @@ export function DatePicker({
           className={cn(
             'w-[280px] justify-start text-left font-normal',
             !date && 'text-muted-foreground',
-            className
+            className,
+            poppins_400.className
           )}
         >
           <CalendarIcon />

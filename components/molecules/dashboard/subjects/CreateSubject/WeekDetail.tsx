@@ -45,7 +45,7 @@ function WeekDetail({ week, handleRemoveWeek, handleEditWeek }: WeekProps) {
           className="bg-gray10 bg-opacity-10 rounded-full p-1.5"
           onClick={() => handleEditWeek(week)}
         >
-          <EditIcon color="#001F3F" size={14} />
+          <EditIcon color="#001F3F" size={18} />
         </Button>
 
         <Button

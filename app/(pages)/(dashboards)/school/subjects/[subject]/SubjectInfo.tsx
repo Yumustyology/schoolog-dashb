@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
 import BreadcrumbBox from '@/components/atoms/dashboard/subjects/Breadcrumb';
-import AsignedTeacher from '@/components/molecules/dashboard/student/subjects/AsignedTeacher';
 import { Inter_500, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import {
