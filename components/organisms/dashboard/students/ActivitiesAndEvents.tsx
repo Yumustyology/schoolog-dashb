@@ -18,11 +18,11 @@ import {
 } from '@/app/lib/config/font.config';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { activitiesAndEvents } from '@/app/constants';
 import { cn } from '@/app/lib/utils';
 import { Typography } from '@material-tailwind/react';
 import Image from 'next/image';
 import React from 'react';
-import { activitiesAndEvents } from '@/app/constants';
 
 function ActivitiesAndEvents() {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
