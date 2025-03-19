@@ -2,6 +2,9 @@ import React, { useReducer, useState } from 'react';
 import WeekDetail from './WeekDetail';
 import Input from '@/components/atoms/form/Input';
 import Button from '@/components/atoms/form/Button';
+import { AdditionIcon } from '@/components/atoms/icons/Icons';
+import { cn } from '@/app/lib/utils';
+import { poppins_500 } from '@/app/lib/config/font.config';
 
 interface TermState {
   id: number;
@@ -41,10 +44,10 @@ function reducer(state: TermState[], action: Action): TermState[] {
       return state.map((week) =>
         week.id === action.payload.id
           ? {
-              ...week,
-              topic: action.payload.topic,
-              brief: action.payload.brief,
-            }
+            ...week,
+            topic: action.payload.topic,
+            brief: action.payload.brief,
+          }
           : week
       );
 
@@ -63,8 +66,9 @@ function Term() {
 
   console.log(state);
 
-  // Handle input changes
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -140,19 +144,29 @@ function Term() {
         />
 
         <Input
-          id="topic-brief"
-          label="Topic brief"
-          type="text"
-          labelClassName="label mt-6"
-          className="input h-14 rounded-lg"
+          type="textarea"
+          label="Topic Brief"
+          id="description"
           name="brief"
           placeholder="Briefly introduce students to the topic"
+          rows={3}
+          required
+          labelClassName="label mt-4"
+          className="input"
+          inputClassName=""
           value={formData.brief}
           handleChange={handleChange}
+
         />
 
-        <Button type="submit">
-          {editWeek !== null ? 'Update Week' : 'Add Week'}
+        <Button wide round type="submit" className='bg-light text-primary mt-5'>
+          {editWeek !== null
+            ? 'Update Week'
+            : <span className={cn('text-base flex justify-center gap-2 p-1 items-center', poppins_500.className)}>
+              
+              <AdditionIcon color='#21b55a' /> 
+              Add new topic
+               </span>}
         </Button>
       </form>
     </div>

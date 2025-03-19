@@ -25,27 +25,31 @@ function WeekDetail({ week, handleRemoveWeek, handleEditWeek }: WeekProps) {
   console.log(week);
   return (
     <div className="flex items-center gap-4 w-full pr-4">
-      <div className="bg-[#f8f8f8] border border-gray4 rounded-[8px] my-4 p-3 w-full flex items-center gap-2">
+      <div className="flex items-center gap-2 w-full">
         <Button className="bg-transparent p-2">
           <DragIcon />
         </Button>
-        <div>
-          <h3 className={cn('text-sm mb-1', poppins_500.className)}>
-            {week.topic}
-            {/* Atomic nature and its fundamentals */}
-          </h3>
-          <p className={cn('text-xs text-gray', poppins_400.className)}>
-            Week {week.week}
-          </p>
+        <div className='bg-[#f8f8f8] border border-gray4 rounded-[8px] my-4 p-3 w-full'>
+
+          <div >
+            <h3 className={cn('text-sm mb-1', poppins_500.className)}>
+              {week.topic}
+              {/* Atomic nature and its fundamentals */}
+            </h3>
+            <p className={cn('text-xs text-gray', poppins_400.className)}>
+              Week {week.week}
+            </p>
+          </div>
+
         </div>
       </div>
 
       <div className="flex gap-2">
         <Button
-          className="bg-gray10 bg-opacity-10 rounded-full p-1.5"
+          className="bg-[#001F3F14] bg-opacity-10 rounded-full p-1.5"
           onClick={() => handleEditWeek(week)}
         >
-          <EditIcon color="#001F3F" size={14} />
+          <EditIcon color="#001F3F" size={"14"} />
         </Button>
 
         <Button

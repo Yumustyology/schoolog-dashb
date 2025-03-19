@@ -1,20 +1,17 @@
 'use client';
-
+import { selectedCurriculumType, setSelectedCurriculumType } from '@/app/lib/entities/subject.entity';
+import { Dropdown } from '@/components/atoms/form/Dropdown';
 import { useState } from 'react';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+import { useEntity } from 'simpler-state';
 
 export function CurriculumType() {
-  const [selectedOption, setSelectedOption] = useState('');
+  // const [selectedCurriculum, setSelectedCurriculum] = useState(null);
+  // const [selectedCurriculum, setSelectedCurriculum] = useState<string>(''); 
+  const selectedCurriculum = useEntity(selectedCurriculumType);
+  console.log(selectedCurriculum)
 
-  const options = [
-    { value: 'cls', label: 'Upload .cls file' },
+  const curriculums = [
+    { value: 'upload', label: 'Upload .cls file' },
     { value: 'manual', label: 'Manual Input' },
     { value: 'waec', label: 'Waec Standard Curriculum' },
     { value: 'neco', label: 'Neco Standard Curriculum' },
@@ -23,19 +20,6 @@ export function CurriculumType() {
   ];
 
   return (
-    <Select onValueChange={setSelectedOption}>
-      <SelectTrigger className="w-full bg-gray4 bg-opacity-55 text-sm text-gray">
-        <SelectValue placeholder="Select Curriculum Type" />
-      </SelectTrigger>
-      <SelectContent className="bg-white text-gray">
-        <SelectGroup>
-          {options.map((option) => (
-            <SelectItem key={option.value} value={option.value}>
-              {option.label}
-            </SelectItem>
-          ))}
-        </SelectGroup>
-      </SelectContent>
-    </Select>
+    <Dropdown options={curriculums} selectedOption={selectedCurriculum} onChange={setSelectedCurriculumType} placeholder="Select Curriculum" />
   );
 }

@@ -1,9 +1,5 @@
 import { teacherImg2 } from '@/app/assets';
 import Button from '@/components/atoms/form/Button';
-// import {
-//   AddTeacherIcon,
-//   ChangeTeacherIcon,
-// } from '@/components/atoms/icons/Icons';
 import Message from '@/components/atoms/icons/SideBar/Message';
 import {
   Inter_500,
@@ -20,14 +16,24 @@ import { cn } from '@/app/lib/utils';
 
 import Image from 'next/image';
 import React from 'react';
+import { AddTeacherIcon, ChangeTeacherIcon } from '@/components/atoms/icons/Icons';
+import Modal from '../Modal';
+import DropdownSearch from '@/components/atoms/form/DropdownSearch';
+import ImageOptionBox from '@/components/atoms/form/ImageOptionBox';
+import ChangeTeacherModal from '@/components/atoms/dashboard/subjects/subjectsInfoModals/ChangeTeacherModal';
+import { openChangeTeacherModal } from '@/app/lib/entities/subject.entity';
+
+
+
 
 function AssignedTeacherCard({
   role,
 }: {
   role: 'school' | 'student' | 'parent' | 'school';
 }) {
+  const [assignTeacherModal, setAssignTeacherModal] = React.useState(true);
   return (
-    <Card className="bg-white py-6 px-6 flex flex-col justify-between min-h-[360px] rounded-md col-span-2 border-none">
+    <Card className="bg-white py-6 px-6 flex flex-col justify-between h-[390px] rounded-md col-span-2 border-none">
       <div>
         <CardHeader className="bg-[#f8f8f8] rounded-full py-2 mb-6">
           <div className="flex gap-5">
@@ -153,20 +159,28 @@ function AssignedTeacherCard({
         )}
 
         {role === 'school' && (
-          <div className="flex gap-4">
-            <Button round className="h-[45px] px-8 ">
-              {/* <ChangeTeacherIcon /> */}
+          <div className="flex gap-4 w-full justify-between">
+            <Button round className="h-[45px] px-8 " onClick={openChangeTeacherModal}>
+              <ChangeTeacherIcon  />
               <p className="ml-2">Change Teacher</p>
             </Button>
             <Button round className="h-[45px] border px-8 bg-light">
-              {/* <AddTeacherIcon /> */}
+              <AddTeacherIcon />
               <p className="ml-2 text-primary">Add another Teacher</p>
             </Button>
           </div>
         )}
       </CardFooter>
+
+        <ChangeTeacherModal/>
     </Card>
+
+
   );
 }
 
 export default AssignedTeacherCard;
+
+
+
+

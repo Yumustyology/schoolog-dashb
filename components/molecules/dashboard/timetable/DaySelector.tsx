@@ -1,43 +1,29 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/app/lib/utils';
 import { poppins_400 } from '@/app/lib/config/font.config';
+import { Dropdown } from '@/components/atoms/form/Dropdown';
+
 
 export function DaySelector() {
-  const [selectedDay, setSelectedDay] = useState('');
 
-  const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+  const [selectedDay, setSelectedDay] = useState<String>('');
+  const days = [
+    { value: 'Monday', label: 'Monday' },
+    { value: 'Tuesday', label: 'Tuesday' },
+    { value: 'Wednesday', label: 'Wednesday' },
+    { value: 'Thursday', label: 'Thursday' },
+    { value: 'Friday', label: 'Friday' },
+  ]
 
   return (
     <>
       <Label className={cn('text-base text-gray6 mb-2', poppins_400.className)}>
         Select day
       </Label>
-
-      <Select onValueChange={setSelectedDay}>
-        <SelectTrigger className="w-full bg-gray4 bg-opacity-55 text-sm text-gray">
-          <SelectValue placeholder="Select Day" />
-        </SelectTrigger>
-        <SelectContent className="bg-white text-gray">
-          <SelectGroup>
-            {days.map((day) => (
-              <SelectItem key={day} value={day.toLowerCase()}>
-                {day}
-              </SelectItem>
-            ))}
-          </SelectGroup>
-        </SelectContent>
-      </Select>
+      <Dropdown options={days} onChange={setSelectedDay} placeholder="Select day" />
     </>
   );
 }

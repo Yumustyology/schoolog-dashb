@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import BreadcrumbBox from '@/components/atoms/dashboard/subjects/Breadcrumb';
-import AsignedTeacher from '@/components/molecules/dashboard/student/subjects/AsignedTeacher';
+// import AsignedTeacher from '@/components/molecules/dashboard/student/subjects/AsignedTeacher';
 import { Inter_500, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import {
@@ -24,8 +24,11 @@ import WordIcon from '@/components/atoms/icons/dashboard/materials/Word';
 import ExcelIcon from '@/components/atoms/icons/dashboard/materials/Excel';
 import MediumIcon from '@/components/atoms/icons/dashboard/materials/Medium';
 import ImageIcon from '@/components/atoms/icons/dashboard/materials/Image';
-import { MaterialType } from '@/types';
+// import { MaterialType } from '@/types';
 import AssignedTeacherCard from '@/components/molecules/dashboard/AssignedTeacherCard';
+import { MaterialType } from '@/app/types';
+import MaterialsList from '@/components/molecules/dashboard/materials/MaterialList';
+import StudentsList from '@/components/organisms/StudentsList';
 
 export const materials: MaterialType = [
   {
@@ -132,16 +135,26 @@ function SubjectInfoPage({ subject }: { subject: string }) {
   const role = 'school';
   const todayClassesTabs = [
     {
-      label: 'Topics',
-      value: 'topics',
-      content: <Topics />,
+        label: 'Curriculum',
+        value: 'topics',
+        content: <Topics />,
     },
     {
-      label: 'Assignments',
-      value: 'assignments',
-      content: <Assignments />,
+        label: 'Students',
+        value: 'student_list',
+        content: <StudentsList/>,
     },
-  ];
+    {
+        label: 'Resources',
+        value: 'resources',
+        content: <MaterialsList materials={materials}/>,
+    },
+    {
+        label: 'Discussions',
+        value: 'discussions',
+        content: <Topics />,
+    },
+];
 
   const [activeTopicAssignmtentTab, setActiveTopicAssignmentTab] =
     useState('topics');
@@ -218,7 +231,7 @@ function SubjectInfoPage({ subject }: { subject: string }) {
               />
 
               <TabsHeader
-                className="transition-all text-sm px-2 py-2 mb-6 w-[340px] bg-[#F1F1F1] h-[53px] rounded-full"
+                className="transition-all text-sm px-2 py-2 mb-6 w-[500px] bg-[#F1F1F1] h-[53px] rounded-full"
                 indicatorProps={{
                   className: 'bg-transparent rounded-full shadow-none',
                 }}

@@ -1,3 +1,4 @@
+import { CurriculumType } from '@/components/molecules/dashboard/subjects/CreateSubject/CurriculumType';
 import { entity } from 'simpler-state';
 
 export const TOTAL_STEPS = 3;
@@ -19,4 +20,22 @@ export const createSubjectPreviousStep = () => {
 export const createSubjectSetStep = (arg: number) => {
   if (arg > 3 || arg < 0) return;
   createSubjectProgressState.set(arg);
+};
+
+//Change Teacher Modal Control
+export const changeAssignedTeacherModal = entity(false);
+
+export const openChangeTeacherModal = () => {
+  changeAssignedTeacherModal.set(true);
+};
+
+export const closeChangeTeacherModal = () => {
+  changeAssignedTeacherModal.set(false);
+};
+
+
+//Select CurriculumType
+export const selectedCurriculumType = entity<string>("manual");
+export const setSelectedCurriculumType = (value: string) => {
+  selectedCurriculumType.set(value);
 };

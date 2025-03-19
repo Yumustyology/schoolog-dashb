@@ -31,6 +31,22 @@ function StudentsList() {
       attendance: 98,
       rank: 'First',
     },
+    {
+      studentImage: '',
+      studentName: 'Muhammad Jamiu',
+      ID: '172928739HD',
+      performance: 80,
+      attendance: 98,
+      rank: 'First',
+    },
+    {
+      studentImage: '',
+      studentName: 'Muhammad Jamiu',
+      ID: '172928739HD',
+      performance: 90,
+      attendance: 98,
+      rank: 'First',
+    },
   ];
 
   return (

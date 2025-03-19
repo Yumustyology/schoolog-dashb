@@ -10,9 +10,9 @@ import React from 'react';
 
 function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {
   return (
-    <Card className="bg-white py-6 min-h-[360px] pb-10 px-6 rounded-md col-span-2 border-none">
+    <Card className="bg-white py-6 h-[390px] pb-10 px-6 rounded-md col-span-2 border-none">
       <CardHeader className="w-full p-0">
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 mb-8">
           <Image src={biology1} alt="Subject Image" />
 
           {role === 'student' && (
@@ -195,10 +195,10 @@ function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {
 
             <Button
               round
-              className={cn('flex  text-r2 h-[48px] w-[191px] bg-yellow-800')}
+              className={cn('flex  text-primary h-[48px] w-[191px] bg-light')}
             >
-              <ArchiveIcon />
-              <span className="text-r2">Archive</span>
+              <ArchiveIcon color='#21B55A' />
+              <span className="text-primary">Archive</span>
             </Button>
           </div>
         )}
