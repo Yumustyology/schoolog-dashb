@@ -4,8 +4,10 @@ import { cn } from '@/app/lib/utils'
 import Image from 'next/image'
 import React from 'react'
 import { CancelDrawerIcon, DeleteModalIcon } from '../../icons/Icons'
+import SubjectModal from './subjectsInfoModals/SubjectModal'
 
-export const AssignedTeacherDetail = ({ name, img, subjectAssignedTo }: { name: string, img: any, subjectAssignedTo: string }) => {
+export const AssignedTeacherDetail = ({ name, img, subjectAssignedTo, setIsTeacherListOpen  }: { name: string, img: any, subjectAssignedTo: string, setIsTeacherListOpen: any }) => {
+    const [isRemoveTeacherModalOpen, setIsRemoveTeacherModal] = React.useState(false)
     return (
         <div>
             <div className="bg-[#f8f8f8] rounded-sm py-3 px-2 mb-6">
@@ -25,10 +27,13 @@ export const AssignedTeacherDetail = ({ name, img, subjectAssignedTo }: { name: 
 
                     </div>
 
-                    <CancelDrawerIcon />
+                    <div onClick={() => {setIsRemoveTeacherModal(true); }}>
+                        <CancelDrawerIcon />
+                    </div>
 
                 </div>
             </div>
+            <SubjectModal type='delete' title="Remove Teacher" content='Are you sure you want to remove Muhammad from mathematics teachers? ' icon={<CancelDrawerIcon />} open={isRemoveTeacherModalOpen} close={() => setIsRemoveTeacherModal(false)} />
         </div>
     )
 }
