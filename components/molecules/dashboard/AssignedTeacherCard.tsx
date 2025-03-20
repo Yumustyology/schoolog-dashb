@@ -22,6 +22,7 @@ import DropdownSearch from '@/components/atoms/form/DropdownSearch';
 import ImageOptionBox from '@/components/atoms/form/ImageOptionBox';
 import ChangeTeacherModal from '@/components/atoms/dashboard/subjects/subjectsInfoModals/ChangeTeacherModal';
 import { openChangeTeacherModal } from '@/app/lib/entities/subject.entity';
+import { TeachersListDrawer } from '@/components/atoms/dashboard/subjects/SubjectsDrawer/TeachersListDrawer';
 
 
 
@@ -32,31 +33,41 @@ function AssignedTeacherCard({
   role: 'school' | 'student' | 'parent' | 'school';
 }) {
   const [assignTeacherModal, setAssignTeacherModal] = React.useState(true);
+  const [isTeachersListOpen, setIsTeacherListOpen] = React.useState(false);
   return (
     <Card className="bg-white py-6 px-6 flex flex-col justify-between h-[390px] rounded-md col-span-2 border-none">
       <div>
         <CardHeader className="bg-[#f8f8f8] rounded-full py-2 mb-6">
           <div className="flex gap-5">
             <Image src={teacherImg2} alt="teacher-image" />
-            <div>
-              <h3
-                className={cn('text-sm text-gray6 mb-1', poppins_500.className)}
-              >
-                Jimoh Jamiu
-              </h3>
-              {role === 'student' && (
-                <p className={cn('text-sm text-gray', poppins_400.className)}>
-                  Biology Teacher
-                </p>
-              )}
+            <div className='flex justify-between items-center w-full'>
+              <div >
 
-              {role === 'school' && (
-                <div>
+                <h3
+                  className={cn('text-sm text-gray6 mb-1', poppins_500.className)}
+                >
+                  Jimoh Jamiu
+                </h3>
+                {role === 'student' && (
                   <p className={cn('text-sm text-gray', poppins_400.className)}>
-                    Assigned teacher
+                    Biology Teacher
                   </p>
-                </div>
-              )}
+                )}
+
+                {role === 'school' && (
+                  <div>
+                    <p className={cn('text-sm text-gray', poppins_400.className)}>
+                      Assigned teacher
+                    </p>
+                  </div>
+                )}
+              </div>
+              {role === 'school' &&
+                <Button round className={cn('text-primary bg-light text-sm ', poppins_400.className)}
+                onClick={()=>{setIsTeacherListOpen(true)}}>
+                  View all teachers
+                </Button>
+              }
             </div>
           </div>
         </CardHeader>
@@ -161,7 +172,7 @@ function AssignedTeacherCard({
         {role === 'school' && (
           <div className="flex gap-4 w-full justify-between">
             <Button round className="h-[45px] px-8 " onClick={openChangeTeacherModal}>
-              <ChangeTeacherIcon  />
+              <ChangeTeacherIcon />
               <p className="ml-2">Change Teacher</p>
             </Button>
             <Button round className="h-[45px] border px-8 bg-light">
@@ -172,8 +183,10 @@ function AssignedTeacherCard({
         )}
       </CardFooter>
 
-        <ChangeTeacherModal/>
+      <ChangeTeacherModal />
+      <TeachersListDrawer isTeacherListOpen={isTeachersListOpen} setIsTeacherListOpen={setIsTeacherListOpen}/>
     </Card>
+
 
 
   );

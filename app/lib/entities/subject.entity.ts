@@ -39,3 +39,16 @@ export const selectedCurriculumType = entity<string>("manual");
 export const setSelectedCurriculumType = (value: string) => {
   selectedCurriculumType.set(value);
 };
+
+
+
+
+//Archive Subject
+export const isArchive = entity(false);
+export const Archived = () => {
+  isArchive.set(true);
+};
+
+export const Unarchived = () => {
+  isArchive.set(false);
+};

@@ -1,6 +1,6 @@
 import React from 'react';
 
-export function AdditionIcon({color= "white"}:{color?: string}) {
+export function AdditionIcon({ color = "white" }: { color?: string }) {
   return (
     <svg
       width="20"
@@ -26,7 +26,7 @@ export function AdditionIcon({color= "white"}:{color?: string}) {
     </svg>
   );
 }
-export function SubtractionIcon({color}:{color?: string}) {
+export function SubtractionIcon({ color }: { color?: string }) {
   return (
     <svg width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
       <path d="M1 1H11" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
@@ -90,7 +90,7 @@ export function VIsibilityIcon() {
     </svg>
   );
 }
-export function EditIcon({ color = '#828282', size= "24" }: { color?: string, size?: string}) {
+export function EditIcon({ color = '#828282', size = "24" }: { color?: string, size?: string }) {
   return (
     <svg
       width={size}
@@ -178,6 +178,15 @@ export function ArchiveIcon({ color = "#828282" }: { color?: string }) {
         strokeLinejoin="round"
       />
     </svg>
+  );
+}
+export function UnarchiveIcon({ color = "#828282" }: { color?: string }) {
+  return (
+    <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M13.4833 10.0009C13.4833 11.6509 12.1499 12.9842 10.4999 12.9842C8.84993 12.9842 7.5166 11.6509 7.5166 10.0009C7.5166 8.35091 8.84993 7.01758 10.4999 7.01758C12.1499 7.01758 13.4833 8.35091 13.4833 10.0009Z" stroke="#21B55A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+      <path d="M10.5001 16.8913C13.4418 16.8913 16.1834 15.1579 18.0918 12.1579C18.8418 10.9829 18.8418 9.00794 18.0918 7.83294C16.1834 4.83294 13.4418 3.09961 10.5001 3.09961C7.55845 3.09961 4.81678 4.83294 2.90845 7.83294C2.15845 9.00794 2.15845 10.9829 2.90845 12.1579C4.81678 15.1579 7.55845 16.8913 10.5001 16.8913Z" stroke={color} stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+
   );
 }
 export function DeleteIcon({ color = '#D92D20' }: { color?: string }) {
@@ -338,5 +347,47 @@ export const ChangeTeacherIcon = () => (
     <path d="M16.0833 13.541C16.3333 14.441 17.0332 15.141 17.9332 15.391" stroke="white" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
     <path d="M3.34167 18.3333C3.34167 15.1083 6.55003 12.5 10.5 12.5C11.3667 12.5 12.2 12.625 12.975 12.8583" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
   </svg>
+
+);
+
+export const DeleteModalIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="48" height="48" rx="24" fill="#EB5757" fill-opacity="0.06" />
+    <path d="M33 17.9805C29.67 17.6505 26.32 17.4805 22.98 17.4805C21 17.4805 19.02 17.5805 17.04 17.7805L15 17.9805" stroke="#EB5757" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M20.5 16.97L20.72 15.66C20.88 14.71 21 14 22.69 14H25.31C27 14 27.13 14.75 27.28 15.67L27.5 16.97" stroke="#EB5757" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M30.8499 21.1406L30.1999 31.2106C30.0899 32.7806 29.9999 34.0006 27.2099 34.0006H20.7899C17.9999 34.0006 17.9099 32.7806 17.7999 31.2106L17.1499 21.1406" stroke="#EB5757" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M22.3301 28.5H25.6601" stroke="#EB5757" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M21.5 24.5H26.5" stroke="#EB5757" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+);
+export const ArchiveModalIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="48" height="48" rx="24" fill="#EB5757" fill-opacity="0.06" />
+    <path d="M26.5299 21.4699L21.4699 26.5299C20.8199 25.8799 20.4199 24.9899 20.4199 23.9999C20.4199 22.0199 22.0199 20.4199 23.9999 20.4199C24.9899 20.4199 25.8799 20.8199 26.5299 21.4699Z" stroke="#EB5757" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M29.8201 17.7705C28.0701 16.4505 26.0701 15.7305 24.0001 15.7305C20.4701 15.7305 17.1801 17.8105 14.8901 21.4105C13.9901 22.8205 13.9901 25.1905 14.8901 26.6005C15.6801 27.8405 16.6001 28.9105 17.6001 29.7705" stroke="#EB5757" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M20.4199 31.5297C21.5599 32.0097 22.7699 32.2697 23.9999 32.2697C27.5299 32.2697 30.8199 30.1897 33.1099 26.5897C34.0099 25.1797 34.0099 22.8097 33.1099 21.3997C32.7799 20.8797 32.4199 20.3897 32.0499 19.9297" stroke="#EB5757" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M27.5099 24.6992C27.2499 26.1092 26.0999 27.2592 24.6899 27.5192" stroke="#EB5757" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M21.47 26.5293L14 33.9993" stroke="#EB5757" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M34 14L26.53 21.47" stroke="#EB5757" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+
+);
+export const UnachiveModalIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="48" height="48" rx="24" fill="#E9F8EF" />
+    <path d="M27.5799 23.9999C27.5799 25.9799 25.9799 27.5799 23.9999 27.5799C22.0199 27.5799 20.4199 25.9799 20.4199 23.9999C20.4199 22.0199 22.0199 20.4199 23.9999 20.4199C25.9799 20.4199 27.5799 22.0199 27.5799 23.9999Z" stroke="#21B55A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M23.9998 32.2707C27.5298 32.2707 30.8198 30.1907 33.1098 26.5907C34.0098 25.1807 34.0098 22.8107 33.1098 21.4007C30.8198 17.8007 27.5298 15.7207 23.9998 15.7207C20.4698 15.7207 17.1798 17.8007 14.8898 21.4007C13.9898 22.8107 13.9898 25.1807 14.8898 26.5907C17.1798 30.1907 20.4698 32.2707 23.9998 32.2707Z" stroke="#21B55A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+
+
+);
+export const CancelDrawerIcon = () => (
+  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="32" height="32" rx="16" fill="#EB5757" fill-opacity="0.08" />
+    <path d="M11.7578 20.2383L20.2431 11.753" stroke="#EB5757" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+    <path d="M20.2431 20.247L11.7578 11.7617" stroke="#EB5757" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>
+
+
 
 );
