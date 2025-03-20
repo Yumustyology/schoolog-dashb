@@ -21,6 +21,7 @@ import CardPosIcon from '@/components/atoms/icons/dashboard/CardPosIcon';
 import ExportIcon from '@/components/atoms/icons/dashboard/ExportIcon';
 import { DuePaymentTable } from '@/components/molecules/dashboard/finance/DuePaymentTable';
 import { openPayForStudentModal } from '@/app/lib/entities/paymentCategory.entity';
+import PayForStudentModal from '@/components/molecules/dashboard/finance/PayForStudentModal';
 
 function Page() {
   const tablesTabs = [
@@ -142,6 +143,7 @@ function Page() {
           </TabsBody>
         </Tabs>
       </div>
+      <PayForStudentModal />
     </>
   );
 }

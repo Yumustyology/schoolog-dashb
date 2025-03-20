@@ -76,7 +76,7 @@ const ActivatePaymentModal = () => {
                 />
                 <label
                   htmlFor="terms2"
-                  className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  className="cursor-pointer text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
                 >
                   Activate payment now
                 </label>
