@@ -5,6 +5,7 @@ import NotificationBigIcon from '@/components/atoms/icons/ModalIcons/Notificatio
 import { DrawerSide } from '@/components/molecules/dashboard/DrawerSide'
 import React from 'react'
 import { AssignedTeacherDetail } from '../AssignedTeacherDetail'
+import Button from '@/components/atoms/form/Button'
 
 const teacherLists = [
     {
@@ -46,6 +47,7 @@ export const TeachersListDrawer = ({ isTeacherListOpen, setIsTeacherListOpen }: 
                             />
 
                         ))}
+                        <Button wide round className='bg-light text-primary py-3 mt-14'> Add teacher </Button>
                     </div>
                 ) : (
                     <div className="flex w-full h-[25rem]">

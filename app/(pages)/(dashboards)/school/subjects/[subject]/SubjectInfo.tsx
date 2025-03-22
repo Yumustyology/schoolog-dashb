@@ -29,6 +29,7 @@ import AssignedTeacherCard from '@/components/molecules/dashboard/AssignedTeache
 import { MaterialType } from '@/app/types';
 import MaterialsList from '@/components/molecules/dashboard/materials/MaterialList';
 import StudentsList from '@/components/organisms/StudentsList';
+import { UploadResourcesModal } from '@/components/atoms/dashboard/subjects/subjectsInfoModals/UploadResourcesModal';
 
 export const materials: MaterialType = [
   {
@@ -132,29 +133,33 @@ export const materials: MaterialType = [
 ];
 
 function SubjectInfoPage({ subject }: { subject: string }) {
+  const [isUploadResourceModalOpen, setIsResourceModalOpen] = React.useState(false)
+  const closeResourceModal = () => {
+    setIsResourceModalOpen(false);
+  }
   const role = 'school';
   const todayClassesTabs = [
     {
-        label: 'Curriculum',
-        value: 'topics',
-        content: <Topics />,
+      label: 'Curriculum',
+      value: 'topics',
+      content: <Topics />,
     },
     {
-        label: 'Students',
-        value: 'student_list',
-        content: <StudentsList/>,
+      label: 'Students',
+      value: 'student_list',
+      content: <StudentsList />,
     },
     {
-        label: 'Resources',
-        value: 'resources',
-        content: <MaterialsList materials={materials}/>,
+      label: 'Resources',
+      value: 'resources',
+      content: <MaterialsList materials={materials} />,
     },
     {
-        label: 'Discussions',
-        value: 'discussions',
-        content: <Topics />,
+      label: 'Discussions',
+      value: 'discussions',
+      content: <Topics />,
     },
-];
+  ];
 
   const [activeTopicAssignmtentTab, setActiveTopicAssignmentTab] =
     useState('topics');
@@ -203,6 +208,7 @@ function SubjectInfoPage({ subject }: { subject: string }) {
               round
               flat
               className="h-[48px] border border-primary ml-4  py-3 px-8 flex gap-2"
+              onClick={()=>{setIsResourceModalOpen(true)}}
             >
               {' '}
               <UploadIcon />
@@ -211,6 +217,7 @@ function SubjectInfoPage({ subject }: { subject: string }) {
               </span>
             </Button>
           </div>
+          <UploadResourcesModal isOpen={isUploadResourceModalOpen} setIsOpen={closeResourceModal} />
         </div>
 
         <div className="flex space-x-3 mt-4">

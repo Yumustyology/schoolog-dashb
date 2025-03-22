@@ -10,7 +10,7 @@ export const AssignedTeacherDetail = ({ name, img, subjectAssignedTo, setIsTeach
     const [isRemoveTeacherModalOpen, setIsRemoveTeacherModal] = React.useState(false)
     return (
         <div>
-            <div className="bg-[#f8f8f8] rounded-sm py-3 px-2 mb-6">
+            <div className="bg-[#f8f8f8] rounded-xl py-3 px-2 mb-6">
                 <div className="flex justify-between items-center gap-2">
                     <Image src={teacherImg2} alt="teacher-image" width={36} height={36} />
                     <div className='flex justify-between items-center w-full'>
