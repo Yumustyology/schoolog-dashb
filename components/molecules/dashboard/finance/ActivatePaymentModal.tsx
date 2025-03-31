@@ -6,7 +6,7 @@ import Button from '@/components/atoms/form/Button';
 import {
   activateFeeCategoryOpenState,
   closeActivateFeeCategoryModal,
-} from '@/app/lib/entities/paymentCategory.entity';
+} from '@/app/lib/entities/payment.entity';
 import { useEntity } from 'simpler-state';
 import { Checkbox } from '@/components/ui/checkbox';
 import { DatePicker } from '@/components/atoms/form/DatePicker';

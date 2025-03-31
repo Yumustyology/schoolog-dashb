@@ -9,7 +9,7 @@ import { useEntity } from 'simpler-state';
 import {
   closeDeleteFeeCategoryModal,
   deleteFeeCategoryOpenState,
-} from '@/app/lib/entities/paymentCategory.entity';
+} from '@/app/lib/entities/payment.entity';
 import { BsTrash3 } from 'react-icons/bs';
 
 const DeleteFeeModal = () => {

@@ -5,7 +5,7 @@ import {
   closeFeeCategoryModal,
   closePayForStudentModal,
   payForStudentOpenState,
-} from '@/app/lib/entities/paymentCategory.entity';
+} from '@/app/lib/entities/payment.entity';
 import { useEntity } from 'simpler-state';
 import Input from '@/components/atoms/form/Input';
 import NoticeMarquee from '@/components/atoms/form/NoticeMarquee';

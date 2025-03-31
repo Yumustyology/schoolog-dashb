@@ -6,7 +6,7 @@ import Button from '@/components/atoms/form/Button';
 import {
   closeSalaryCategoryModal,
   salaryCategoryOpenState,
-} from '@/app/lib/entities/paymentCategory.entity';
+} from '@/app/lib/entities/payment.entity';
 import { useEntity } from 'simpler-state';
 import Input from '@/components/atoms/form/Input';
 import { IoAdd } from 'react-icons/io5';

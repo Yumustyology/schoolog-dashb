@@ -15,7 +15,7 @@ import { CloseIcon, EditIcon } from '@/components/atoms/icons/Icons';
 import {
   openDeleteFeeCategoryModal,
   openFeeCategoryModal,
-} from '@/app/lib/entities/paymentCategory.entity';
+} from '@/app/lib/entities/payment.entity';
 
 const feeCategory = [
   {

@@ -198,7 +198,7 @@ export const shoolSidebarItems: SidebarItemsType = [
       },
       {
         title: 'Invoice',
-        url: '/school/finance/invoice',
+        url: '/school/finance/invoices',
       },
     ],
   },

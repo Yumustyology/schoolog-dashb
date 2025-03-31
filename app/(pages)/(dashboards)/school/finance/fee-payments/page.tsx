@@ -20,7 +20,7 @@ import Button from '@/components/atoms/form/Button';
 import CardPosIcon from '@/components/atoms/icons/dashboard/CardPosIcon';
 import ExportIcon from '@/components/atoms/icons/dashboard/ExportIcon';
 import { DuePaymentTable } from '@/components/molecules/dashboard/finance/DuePaymentTable';
-import { openPayForStudentModal } from '@/app/lib/entities/paymentCategory.entity';
+import { openPayForStudentModal } from '@/app/lib/entities/payment.entity';
 import PayForStudentModal from '@/components/molecules/dashboard/finance/PayForStudentModal';
 
 function Page() {
@@ -65,7 +65,11 @@ function Page() {
             <ExportIcon />
             <span>Export list</span>
           </Button>
-          <Button onClick={openPayForStudentModal} round className="gap-2 px-6 h-[44px] rounded-full">
+          <Button
+            onClick={openPayForStudentModal}
+            round
+            className="gap-2 px-6 h-[44px] rounded-full"
+          >
             <CardPosIcon />
             <span>Pay for student</span>
           </Button>

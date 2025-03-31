@@ -28,7 +28,7 @@ import {
   openActivateFeeCategoryModal,
   openFeeCategoryModal,
   openSalaryCategoryModal,
-} from '@/app/lib/entities/paymentCategory.entity';
+} from '@/app/lib/entities/payment.entity';
 import SalaryCategoryModal from '@/components/molecules/dashboard/finance/SalaryCategoryModal';
 
 const Page = () => {
