@@ -66,7 +66,7 @@ const EditTemplatePage = () => {
       <BreadcrumbBox crumbs={breadcrumbs} className="mb-8" />
       <ContactFormTemplateEdit />
       <SocialSettingsTemplateEdit />
-      <BrandAndImageTemplateEdit imageFields={imageFields} />;
+      <BrandAndImageTemplateEdit imageFields={imageFields} />
       <PartnerLogosTemplateEdit />
       <FAQTemplateEdit />
       <TestimonialTemplateEdit />
