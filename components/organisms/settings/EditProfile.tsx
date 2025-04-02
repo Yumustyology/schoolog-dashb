@@ -59,6 +59,7 @@ const EditProfile = () => {
               label="Phone number"
               labelClassName="label mt-6"
               // className="input h-14 rounded-lg"
+              onPhoneChange={console.log}
             />
             <Input
               inputClassName={cn(Inter_500.className, 'text-base text-gray1')}

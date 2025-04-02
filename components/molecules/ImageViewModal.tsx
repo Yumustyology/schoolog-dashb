@@ -1,11 +1,5 @@
-import { Carousel } from '@material-tailwind/react';
 import Button from '../atoms/form/Button';
 import React, {
-  Dispatch,
-  forwardRef,
-  SetStateAction,
-  useEffect,
-  useImperativeHandle,
   useRef,
 } from 'react';
 import {
@@ -20,10 +14,9 @@ import { largeUploadedAssignment, uploadedAssignment } from '@/app/assets';
 import Cancel from '../atoms/icons/ModalIcons/Cancel';
 import { cn } from '@/app/lib/utils';
 import { poppins_500 } from '@/app/lib/config/font.config';
+import { CarouselImage } from '../organisms/dashboard/CarouselImage';
+import { carouselImageRefType } from '@/app/types';
 
-type carouselImageRefType = {
-  setActiveIndexTab: (arg: number) => void;
-};
 
 export function ImageViewModal() {
   const [open, setOpen] = React.useState(false);
@@ -83,6 +76,11 @@ export function ImageViewModal() {
             setActiveFooterImg={(arg) => {
               setActiveIndex(arg);
             }}
+            images={[
+              largeUploadedAssignment,
+              largeUploadedAssignment,
+              largeUploadedAssignment,
+            ]}
             ref={carouselImageRef}
           />
         </DialogBody>
@@ -106,59 +104,3 @@ export function ImageViewModal() {
   );
 }
 
-export const CarouselImage = forwardRef<
-  carouselImageRefType,
-  { setActiveFooterImg: Dispatch<SetStateAction<number>> }
->((props: { setActiveFooterImg: any }, ref) => {
-  let setActiveIndexTab: (arg: number) => void;
-  let activeTab: number = 0;
-
-  useImperativeHandle(ref, () => ({
-    setActiveIndexTab,
-  }));
-
-  useEffect(() => props.setActiveFooterImg(activeTab), [activeTab]);
-  return (
-    <Carousel
-      className="rounded-xl"
-      navigation={({ setActiveIndex, activeIndex, length }) => {
-        setActiveIndexTab = setActiveIndex;
-        props?.setActiveFooterImg(activeIndex);
-        return (
-          <div className="absolute bottom-4 left-2/4 z-50 flex -translate-x-2/4 gap-2">
-            {new Array(length).fill('').map((_, i) => (
-              <span
-                key={i}
-                className={`block h-1 cursor-pointer rounded-2xl transition-all content-[''] ${
-                  activeIndex === i ? 'w-8 bg-white' : 'w-4 bg-white/50'
-                }`}
-                onClick={() => {
-                  setActiveIndex(i);
-                }}
-              />
-            ))}
-          </div>
-        );
-      }}
-    >
-      <Image
-        onClick={() => setActiveIndexTab(2)}
-        src={largeUploadedAssignment}
-        alt="Assignment"
-        className="object-cover"
-      />
-      <Image
-        src={largeUploadedAssignment}
-        alt="Assignment"
-        className="object-cover"
-      />
-      <Image
-        src={largeUploadedAssignment}
-        alt="Assignment"
-        className="object-cover"
-      />
-    </Carousel>
-  );
-});
-
-CarouselImage.displayName = 'CarouselImage';

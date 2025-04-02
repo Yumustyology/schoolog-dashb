@@ -215,6 +215,12 @@ export const shoolSidebarItems: SidebarItemsType = [
     activeIcon: <Activities color="#FFFFFF" />,
   },
   {
+    title: 'Template',
+    url: '/school/templates',
+    icon: <SuggestionBoxIcon />,
+    activeIcon: <SuggestionBoxIcon color="#FFFFFF" />,
+  },
+  {
     title: 'Announcement',
     url: '/school/announcements',
     icon: <Annoucement />,

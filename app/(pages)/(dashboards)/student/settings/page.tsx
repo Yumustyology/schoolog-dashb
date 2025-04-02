@@ -2,9 +2,9 @@
 import SettingCardBg from '@/components/atoms/images/SettingCardBg';
 import { Inter_400, Inter_600 } from '@/app/lib/config/font.config';
 import Image from 'next/image';
-import React, { useState } from 'react';
-import { TabsHeader, TabsBody } from '@material-tailwind/react';
-import Tabs, { Tab, TabPanel } from '@material-tailwind/react/components/Tabs';
+import React from 'react';
+import { TabsHeader } from '@material-tailwind/react';
+import Tabs, { Tab } from '@material-tailwind/react/components/Tabs';
 import { cn } from '@/app/lib/utils';
 import useActiveTab from '@/app/lib/hooks/useActiveTab';
 import EditProfile from '@/components/organisms/settings/EditProfile';
@@ -13,7 +13,7 @@ import NotificationSettings from '@/components/organisms/settings/NotificationSe
 import PreferenceSettings from '@/components/organisms/settings/PreferenceSettings';
 import { teacherImg2 } from '@/app/assets';
 
-const page = () => {
+const Page = () => {
   const data = [
     {
       label: 'My Profile',
@@ -105,4 +105,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

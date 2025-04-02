@@ -18,12 +18,19 @@ export function DatePicker({
   className,
   calenderContainerClassName,
   placeholder,
+  onChange,
 }: {
   className?: string;
   placeholder?: string | React.ReactNode;
   calenderContainerClassName?: string | React.ReactNode;
+  onChange?: (date: Date | undefined) => void;
 }) {
   const [date, setDate] = React.useState<Date>();
+
+  const handleDateChange = (selectedDate: Date | undefined) => {
+    setDate(selectedDate);
+    if (onChange) onChange(selectedDate); 
+  };
 
   return (
     <Popover>
@@ -49,7 +56,7 @@ export function DatePicker({
         <Calendar
           mode="single"
           selected={date}
-          onSelect={setDate}
+          onSelect={handleDateChange}
           initialFocus
         />
       </PopoverContent>

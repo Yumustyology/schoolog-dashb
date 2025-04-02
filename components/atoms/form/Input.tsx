@@ -21,7 +21,7 @@ type inputProps = {
   id?: string;
   value?: string | number;
   required?: boolean;
-  handleOnChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+  handleChange?: (e: ChangeEvent<HTMLInputElement>) => void;
   handleBlur?: (e: React.FocusEvent<any>) => void;
   placeholder?: string;
   errMsg?: string | null;
@@ -34,6 +34,8 @@ type inputProps = {
   register?: any;
   disabled?: boolean;
   labelClassName?: string;
+  rightText?: string;
+  rows?: number;
   // leftIcon?: ReactNode;
   // rightIcon?: ReactNode;
 } & DetailedHTMLProps<HTMLAttributes<HTMLDivElement>, HTMLDivElement> &
@@ -49,13 +51,13 @@ const Input: FC<inputProps> = ({
   inputClassName,
   id,
   value,
-  handleOnChange,
+  handleChange,
   required = true,
   name = '',
   placeholder,
   errMsg,
   min,
-  // handleBlur,
+  handleBlur,
   max,
   maxLength,
   minLength,
@@ -63,6 +65,8 @@ const Input: FC<inputProps> = ({
   register,
   labelClassName,
   disabled,
+  rightText,
+  rows,
   // leftIcon,
   // rightIcon,
   ...props
@@ -87,6 +91,26 @@ const Input: FC<inputProps> = ({
           className
         )}
       >
+        {rightText ? <div className='h-full pr-3'>{rightText}</div> : null}
+          {type === 'textarea' ? (
+          <textarea
+            className={cn(
+              'bg-transparent w-full outline-none font-nunito',
+              inputClassName
+            )}
+            {...props}
+            value={value}
+            required={required}
+            name={name}
+            onChange={handleChange}
+            id={id}
+            placeholder={placeholder || ' '}
+            onBlur={handleBlur}
+            rows={rows}
+            {...register}
+            disabled={disabled}
+          />
+        ) : (
         <input
           className={cn(
             'bg-transparent text-gray1 w-full outline-none',
@@ -96,7 +120,7 @@ const Input: FC<inputProps> = ({
           value={value}
           required={required}
           name={name}
-          onChange={handleOnChange}
+          onChange={handleChange}
           type={passwordShown ? 'text' : type}
           id={id}
           placeholder={placeholder || ' '}
@@ -108,6 +132,7 @@ const Input: FC<inputProps> = ({
           autoComplete={autoComplete}
           {...register}
         />
+      )}
 
         {type === 'password' && (
           <div

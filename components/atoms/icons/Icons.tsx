@@ -178,7 +178,13 @@ export function ArchiveIcon() {
     </svg>
   );
 }
-export function DeleteIcon({ color = '#D92D20' }: { color?: string }) {
+export function DeleteIcon({
+  color = '#D92D20',
+  className,
+}: {
+  color?: string;
+  className?: string;
+}) {
   return (
     <svg
       width="24"
@@ -186,6 +192,7 @@ export function DeleteIcon({ color = '#D92D20' }: { color?: string }) {
       viewBox="0 0 18 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
     >
       <path
         fill-rule="evenodd"

@@ -10,7 +10,7 @@ import {
   MenuItem,
   Avatar,
 } from '@material-tailwind/react';
-import { cn, truncateText } from '@/app/lib/utils';
+import { cn } from '@/app/lib/utils';
 import {
   Inter_500,
   Inter_600,
@@ -26,6 +26,7 @@ import NotificationItem, { NotificationItemProps } from './NotificationItem';
 import Link from 'next/link';
 import LogoutModal from '../LogoutModal';
 import NotificationBigIcon from '../../atoms/icons/ModalIcons/NotificationBigIcon';
+import { truncateText } from '@/app/lib/utils/truncate';
 
 const notifications: NotificationItemProps[] = [
   // {

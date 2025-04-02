@@ -81,7 +81,7 @@ const SubtotalDetail = forwardRef<SubtotalDetailHandles, SubtotalDetailProps>(
               <Input
                 placeholder="Title"
                 value={title}
-                handleOnChange={(e) => setTitle(e.target.value)}
+                handleChange={(e) => setTitle(e.target.value)}
                 errMsg={errors.title}
                 className={cn(errors.title && 'border border-red-500')}
               />
@@ -89,7 +89,7 @@ const SubtotalDetail = forwardRef<SubtotalDetailHandles, SubtotalDetailProps>(
                 placeholder="Price"
                 type="number"
                 value={price}
-                handleOnChange={(e) => setPrice(e.target.value)}
+                handleChange={(e) => setPrice(e.target.value)}
                 errMsg={errors.price}
                 className={cn(errors.price && 'border border-red-500')}
               />
