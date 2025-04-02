@@ -9,8 +9,7 @@ import {
 } from '@/components/ui/table';
 import { cn } from '@/app/lib/utils';
 import { Inter_400, Inter_500 } from '@/app/lib/config/font.config';
-import Unmarked from '@/components/atoms/icons/dashboard/Unmarked';
-import CancelIcon from '@/components/atoms/icons/dashboard/CancelIcon';
+
 
 function StudentsList() {
   type StudentsListType = {

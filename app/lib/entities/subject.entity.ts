@@ -34,6 +34,20 @@ export const closeChangeTeacherModal = () => {
 };
 
 
+
+//Add Teacher Modal Control
+export const addTeacherModal = entity(false);
+
+export const openAddTeacherModal = () => {
+  addTeacherModal.set(true);
+};
+
+export const closeAddTeacherModal = () => {
+  addTeacherModal.set(false);
+};
+
+
+
 //Select CurriculumType
 export const selectedCurriculumType = entity<string>("manual");
 export const setSelectedCurriculumType = (value: string) => {

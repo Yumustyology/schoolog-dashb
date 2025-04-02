@@ -21,8 +21,9 @@ import Modal from '../Modal';
 import DropdownSearch from '@/components/atoms/form/DropdownSearch';
 import ImageOptionBox from '@/components/atoms/form/ImageOptionBox';
 import ChangeTeacherModal from '@/components/atoms/dashboard/subjects/subjectsInfoModals/ChangeTeacherModal';
-import { openChangeTeacherModal } from '@/app/lib/entities/subject.entity';
+import { openAddTeacherModal, openChangeTeacherModal } from '@/app/lib/entities/subject.entity';
 import { TeachersListDrawer } from '@/components/atoms/dashboard/subjects/SubjectsDrawer/TeachersListDrawer';
+import AddTeacherModal from '@/components/atoms/dashboard/subjects/subjectsInfoModals/AddTeacherModal';
 
 
 
@@ -64,7 +65,7 @@ function AssignedTeacherCard({
               </div>
               {role === 'school' &&
                 <Button round className={cn('text-primary bg-light text-sm ', poppins_400.className)}
-                onClick={()=>{setIsTeacherListOpen(true)}}>
+                  onClick={() => { setIsTeacherListOpen(true) }}>
                   View all teachers
                 </Button>
               }
@@ -175,7 +176,7 @@ function AssignedTeacherCard({
               <ChangeTeacherIcon />
               <p className="ml-2">Change Teacher</p>
             </Button>
-            <Button round className="h-[45px] border px-8 bg-light">
+            <Button round className="h-[45px] border px-8 bg-light" onClick={openAddTeacherModal}>
               <AddTeacherIcon />
               <p className="ml-2 text-primary">Add another Teacher</p>
             </Button>
@@ -183,8 +184,9 @@ function AssignedTeacherCard({
         )}
       </CardFooter>
 
+      <AddTeacherModal />
       <ChangeTeacherModal />
-      <TeachersListDrawer isTeacherListOpen={isTeachersListOpen} setIsTeacherListOpen={setIsTeacherListOpen}/>
+      <TeachersListDrawer isTeacherListOpen={isTeachersListOpen} setIsTeacherListOpen={setIsTeacherListOpen} />
     </Card>
 
 

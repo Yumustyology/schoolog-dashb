@@ -5,8 +5,6 @@ import { useState } from 'react';
 import { useEntity } from 'simpler-state';
 
 export function CurriculumType() {
-  // const [selectedCurriculum, setSelectedCurriculum] = useState(null);
-  // const [selectedCurriculum, setSelectedCurriculum] = useState<string>(''); 
   const selectedCurriculum = useEntity(selectedCurriculumType);
   console.log(selectedCurriculum)
 
