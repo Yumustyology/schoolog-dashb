@@ -97,7 +97,7 @@ const CustomImageUploaderSmall = ({
                   poppins_400.className
                 )}
               >
-                PNG or JPEG file not more than 100KB (180 x 40px)
+                PNG or JPEG file not more than 100KB
               </p>
             </div>
 
