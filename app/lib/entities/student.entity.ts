@@ -11,11 +11,10 @@ export const closeStudentFilterModal = () => {
 };
 
 //Select Filter Type
-export const selectedFilterType = entity<string>("all");
+export const selectedFilterType = entity<string>('all');
 export const setSelecedFilterType = (value: string) => {
   selectedFilterType.set(value);
 };
-
 
 //Graduate Modal
 export const graduateModal = entity(false);
@@ -28,12 +27,10 @@ export const closeGraduateModal = () => {
   graduateModal.set(false);
 };
 
-
-export const selectedGraduateType = entity<string>("wholeClass");
+export const selectedGraduateType = entity<string>('wholeClass');
 export const setSelectedGraduateType = (value: string) => {
   selectedGraduateType.set(value);
 };
-
 
 //Promte Modal
 export const promoteModal = entity(false);
@@ -46,12 +43,10 @@ export const closePromoteModal = () => {
   promoteModal.set(false);
 };
 
-
-export const selectedPromoteType = entity<string>("wholeClass");
+export const selectedPromoteType = entity<string>('wholeClass');
 export const setSelectedPromoteType = (value: string) => {
   selectedPromoteType.set(value);
 };
-
 
 //Demote Modal
 export const demoteModal = entity(false);
@@ -64,8 +59,78 @@ export const closeDemoteModal = () => {
   demoteModal.set(false);
 };
 
-
-export const selectedDemoteType = entity<string>("wholeClass");
+export const selectedDemoteType = entity<string>('wholeClass');
 export const setSelectedDemoteType = (value: string) => {
   selectedDemoteType.set(value);
+};
+
+//MOVE MODAL ACTIONS
+export const moveModal = entity(false);
+
+export const openMoveModal = () => {
+  moveModal.set(true);
+};
+
+export const closeMoveModal = () => {
+  moveModal.set(false);
+};
+
+export const selectedMoveType = entity<string>('promotion');
+export const setSelectedMoveType = (value: string) => {
+  selectedMoveType.set(value);
+};
+
+//SUSPEND MODAL
+export const isSuspendStudentModalOpen = entity(false);
+
+export const openSuspendStudentModal = () => {
+  isSuspendStudentModalOpen.set(true);
+};
+
+export const closeSuspendStudentModal = () => {
+  isSuspendStudentModalOpen.set(false);
+};
+
+//ADD Student Typr
+export const isAddSudentsMenuOpen = entity(false);
+
+export const openAddStudentsMenu = () => {
+  isAddSudentsMenuOpen.set(true);
+};
+
+export const closeAddStudentsMenu = () => {
+  isAddSudentsMenuOpen.set(false);
+};
+
+//Upload StudentList Modal
+export const isUploadStudentsOpen = entity(false);
+
+export const openUploadStudentModal = () => {
+  isUploadStudentsOpen.set(true);
+};
+
+export const closeUploadStudentModal = () => {
+  isUploadStudentsOpen.set(false);
+};
+
+// ADD STUDENT MANUALLY
+export const totalNumberSteps = 2;
+
+// initialize state
+export const createAddStudentProgressState = entity(0);
+
+// update state we use the initialization of the state.set(value)
+export const createAddStudentNextStep = () => {
+  createAddStudentProgressState.set((prevStep) =>
+    Math.min(prevStep + 1, totalNumberSteps)
+  );
+};
+
+export const createAddStudentPreviousStep = () => {
+  createAddStudentProgressState.set((prevStep) => Math.max(prevStep - 1, 0));
+};
+
+export const createAddStudentSetStep = (arg: number) => {
+  if (arg > 3 || arg < 0) return;
+  createAddStudentProgressState.set(arg);
 };

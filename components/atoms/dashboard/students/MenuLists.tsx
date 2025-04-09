@@ -78,6 +78,7 @@ interface DropdownMenuProps {
     placement?: "top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end";
     maxHeight?: string;
     maxWidth?: string; // New: Controls max width
+    icon?: React.ReactNode; // New: Additional icon to display in the menu item (optional)
 }
 
 const MenuLists: React.FC<DropdownMenuProps> = ({
@@ -86,12 +87,13 @@ const MenuLists: React.FC<DropdownMenuProps> = ({
     placement = "bottom",
     maxHeight = "200px",
     maxWidth = "200px", // Default max width
+    icon = <OptionIcon/>
 }) => {
     return (
         <Menu placement={placement}>
             <MenuHandler>
                 <div>
-                    <OptionIcon />
+                    {icon}
                 </div>
             </MenuHandler>
             <MenuList
@@ -101,7 +103,7 @@ const MenuLists: React.FC<DropdownMenuProps> = ({
                 {items.map((item, index) => (
                     <MenuItem 
                         key={index} 
-                        onClick={item.onClick} 
+                        onClick={()=>{item.onClick}}
                         className={cn(
                             "flex items-center gap-4 p-2",
                             item.danger ? "text-red-500" : "text-black1" 

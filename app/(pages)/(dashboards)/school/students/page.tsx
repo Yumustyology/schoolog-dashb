@@ -11,12 +11,12 @@ import { StatusDropdown } from '@/components/atoms/dashboard/students/StatusDrop
 import { StatusButton } from '@/components/atoms/dashboard/students/StatusButton';
 import StudentsTableList from '@/components/atoms/dashboard/students/StudentsTableLists';
 import { FilterModal } from '@/components/atoms/dashboard/students/FilterModal';
-import { OpenDemoteModal, OpenGraduateModal, OpenPromoteModal, OpenStudentFilterModal } from '@/app/lib/entities/student.entity';
+import { OpenDemoteModal, OpenGraduateModal, OpenPromoteModal, OpenStudentFilterModal, openAddStudentsMenu } from '@/app/lib/entities/student.entity';
 import { GraduateModal } from '@/components/atoms/dashboard/students/modals/GraduateModal';
-import ConfirmModal from '@/components/atoms/dashboard/students/modals/ConfirmModal';
-import { GraduateModalIcon } from '@/components/atoms/icons/Icon2';
 import { PromoteModal } from '@/components/atoms/dashboard/students/modals/PromoteModal';
 import { DemoteModal } from '@/components/atoms/dashboard/students/modals/DemoteModal';
+import { AddStudentMenu } from '@/components/atoms/dashboard/students/modals/AddStudentMenu';
+import { UploadStudentsModal } from '@/components/atoms/dashboard/students/modals/UploadStudentsModal';
 
 const page = () => {
     const breadcrumbs = [{ label: 'Students', isActive: true }];
@@ -30,7 +30,7 @@ const page = () => {
                 <div className='flex gap-4'>
 
                     <Button
-                        to="/school/subjects/create-new-subject"
+                        // to="/school/subjects/create-new-subject"
                         flat
                         round
                         className="h-[44px]  py-3 px-6 flex gap-2 border border-primary"
@@ -42,18 +42,21 @@ const page = () => {
                         </span>
                     </Button>
 
-
-                    <Button
-                        to="/school/subjects/create-new-subject"
-                        round
-                        className="h-[44px]  py-3 px-6 flex gap-2"
-                    >
-                        {' '}
-                        <AdditionIcon />
-                        <span className={cn('text-base ', Inter_500.className)}>
-                            Add Student{' '}
-                        </span>
-                    </Button>
+                    <div className='relative'>
+                        <Button
+                            onClick={openAddStudentsMenu}
+                            round
+                            className="h-[44px]  py-3 px-6 flex gap-2"
+                        >
+                            {' '}
+                            <AdditionIcon />
+                            <span className={cn('text-base ', Inter_500.className)}>
+                                Add Student{' '}
+                            </span>
+                        </Button>
+                        <AddStudentMenu />
+                        <UploadStudentsModal/>
+                    </div>
                 </div>
             </div>
 
@@ -66,7 +69,7 @@ const page = () => {
                             className="w-[231px] h-[38px] rounded-full  bg-[#F7F7F7] border border-gray4"
                         />
 
-                        <ClassDropdown />
+                        <ClassDropdown  />
                         <StatusDropdown />
                         <Button onClick={OpenStudentFilterModal} className={cn('flex items-center bg-[#f8f8f8] border border-gray4 rounded-full',)}>
                             <FilterIcon />
@@ -75,16 +78,16 @@ const page = () => {
                             </span>
 
                         </Button>
-                        <FilterModal/>
+                        <FilterModal />
                         <GraduateModal />
-                        <PromoteModal/>
-                        <DemoteModal/>
-                       
-                        
+                        <PromoteModal />
+                        <DemoteModal />
+
+
                     </div>
 
                     <div className='flex gap-2 justify-end'>
-                        <StatusButton text='Graduate' icon={<GraduateIcon />} OnclickFunc={OpenGraduateModal}/>
+                        <StatusButton text='Graduate' icon={<GraduateIcon />} OnclickFunc={OpenGraduateModal} />
                         <StatusButton text='Promote' icon={<PromoteIcon />} OnclickFunc={OpenPromoteModal} />
                         <StatusButton text='Demote' icon={<DemoteIcon />} OnclickFunc={OpenDemoteModal} />
                     </div>

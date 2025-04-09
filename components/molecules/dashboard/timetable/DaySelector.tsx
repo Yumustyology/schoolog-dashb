@@ -9,7 +9,7 @@ import { Dropdown } from '@/components/atoms/form/Dropdown';
 
 export function DaySelector() {
 
-  const [selectedDay, setSelectedDay] = useState<String>('Monday');
+  const [selectedDay, setSelectedDay] = useState('Monday');
   const days = [
     { value: 'Monday', label: 'Monday' },
     { value: 'Tuesday', label: 'Tuesday' },
@@ -24,6 +24,7 @@ export function DaySelector() {
         Select day
       </Label>
       <Dropdown options={days} selectedOption={selectedDay} onChange={setSelectedDay} placeholder="Select day" />
+      {/* <Dropdown label='Title' options={offences} selectedOption={selectedOffence} onChange={setSelectedOffence} placeholder="Select offence" /> */}
     </>
   );
 }

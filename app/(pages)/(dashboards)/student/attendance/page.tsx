@@ -43,7 +43,9 @@ function page() {
         <div className="flex w-[600px] gap-6">
           <DateRangePicker />
         </div>
-        <AttendanceList />
+        <div className='my-8'>
+          <AttendanceList />
+        </div>
         <footer className="flex justify-between items-center">
           <div className="flex gap-4 items-center">
             <h5> Showing </h5>

@@ -1,17 +1,11 @@
 'use client';
-
 import Button from '@/components/atoms/form/Button';
 import SelectComp from '@/components/atoms/form/Select';
 import DownloadIcon from '@/components/atoms/icons/dashboard/DownloadIcon';
 import PerformanceMetrics from '@/components/molecules/dashboard/analytics/PerformanceMetrics';
 import { ResultLists } from '@/components/molecules/dashboard/results/ResultLists';
 import { OverAllBestSubjectsList } from '@/components/molecules/dashboard/student/OverAllBestSubjects';
-import {
-  Inter_600,
-  poppins_400,
-  poppins_500,
-  poppins_600,
-} from '@/app/lib/config/font.config';
+import { Inter_600, poppins_400, poppins_500,poppins_600, } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import React from 'react';
 
@@ -44,7 +38,7 @@ function page() {
               placeholder="SS1"
               triggerClasses={cn(
                 poppins_400.className,
-                'text-xs cursor-pointer text-gray6 2 text-center gap-1.5 w-max border-gray4 bg-[#F7F7F8] flex justify-between rounded-full h-[38px] items-center px-3 py-1.5'
+                'text-xs cursor-pointer text-gray6 2 text-center gap-1.5 w-max border-gray4 bg-[#F7F7F8] flex justify-between rounded-full h-[38px] items-center px-3 py-1.5 mt-8'
               )}
               value=""
               onValueChange={console.log}
@@ -72,6 +66,34 @@ function page() {
       </div>
 
       <section>
+        <SelectComp
+          placeholder="All Class"
+          className=""
+          triggerClasses={cn(
+            poppins_400.className,
+            'mb-6 text-xs cursor-pointer text-gray6 2 text-center gap-1.5 w-max border-gray4 flex justify-between rounded-full h-[38px] items-center px-3 py-2'
+          )}
+          value=""
+          onValueChange={console.log}
+          options={[
+            {
+              id: 'all',
+              name: 'All Class',
+            },
+            {
+              id: 'jss1',
+              name: 'JSS1',
+            },
+            {
+              id: 'jss2',
+              name: 'JSS2',
+            },
+            {
+              id: 'jss3',
+              name: 'JSS3',
+            },
+          ]}
+        />
         <ResultLists />
       </section>
     </div>
