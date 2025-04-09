@@ -460,7 +460,7 @@ export const NoStudentIcon = () => (
     <circle cx="59" cy="59" r="59" fill="#21B55A" fillOpacity="0.06" />
     <circle cx="59.0001" cy="59.2943" r="35.8997" fill="#E9F8EF" />
     <circle cx="59" cy="59.2937" r="39.9814" fill="#E9F8EF" stroke="white" strokeWidth="2.22634" />
-    <mask id="mask0_3957_521545" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="20" y="20" width="78" height="78">
+    <mask id="mask0_3957_521545" maskUnits="userSpaceOnUse" x="20" y="20" width="78" height="78">
       <circle cx="59.0003" cy="59.292" r="38.6827" fill="white" />
     </mask>
     <g mask="url(#mask0_3957_521545)">
@@ -471,6 +471,19 @@ export const NoStudentIcon = () => (
     </g>
   </svg>
 
+);
+export const NoParentAddedIcon = () => (
+  <svg width="84" height="83" viewBox="0 0 84 83" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="42.0001" cy="41.2904" r="35.8997" fill="#E9F8EF" />
+    <circle cx="42" cy="41.2898" r="39.9814" fill="#E9F8EF" stroke="white" strokeWidth="2.22634" />
+    {/* <mask id="mask0_3960_191154" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="3" y="2" width="78" height="78"> */}
+    <mask id="mask0_3960_191154" maskUnits="userSpaceOnUse" x="3" y="2" width="78" height="78">
+      <circle cx="42.0003" cy="41.292" r="38.6827" fill="white" />
+    </mask>
+    <g mask="url(#mask0_3960_191154)">
+      <path d="M55.7683 29.7224L44.8783 23.4341C43.0999 22.4074 40.8999 22.4074 39.1033 23.4341L28.2316 29.7224C26.4533 30.7491 25.3533 32.6557 25.3533 34.7274V47.2674C25.3533 49.3207 26.4533 51.2274 28.2316 52.2724L39.1216 58.5607C40.8999 59.5874 43.0999 59.5874 44.8966 58.5607L55.7866 52.2724C57.5649 51.2457 58.6649 49.3391 58.6649 47.2674V34.7274C58.6466 32.6557 57.5466 30.7674 55.7683 29.7224ZM41.9999 32.4541C44.3649 32.4541 46.2716 34.3607 46.2716 36.7257C46.2716 39.0907 44.3649 40.9974 41.9999 40.9974C39.6349 40.9974 37.7283 39.0907 37.7283 36.7257C37.7283 34.3791 39.6349 32.4541 41.9999 32.4541ZM46.9133 49.5407H37.0866C35.6016 49.5407 34.7399 47.8907 35.5649 46.6624C36.8116 44.8107 39.2316 43.5641 41.9999 43.5641C44.7683 43.5641 47.1883 44.8107 48.4349 46.6624C49.2599 47.8724 48.3799 49.5407 46.9133 49.5407Z" fill="#21B55A" />
+    </g>
+  </svg>
 );
 
 

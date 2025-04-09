@@ -14,7 +14,7 @@ type EmptyProps = {
 function Empty({ icon, title, description, buttonText, route }: EmptyProps) {
   return (
     <div className='flex flex-col items-center justify-center text-center'>
-      {/* {icon} */}
+      {icon}
       <div className='flex flex-col gap-3 mt-8'>
         <h2 className={cn('text-lg text-black1', poppins_600.className)}> {title}  </h2>
         <p className={cn('text-sm text-gray10 w-3/4 mx-auto', poppins_400.className)}>

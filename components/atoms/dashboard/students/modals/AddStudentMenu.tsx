@@ -5,10 +5,18 @@ import ArrowRightIcon2 from '@/components/atoms/icons/ArrowRightIcon2'
 import { ExportIcon } from '@/components/atoms/icons/Icons'
 import Cancel from '@/components/atoms/icons/ModalIcons/Cancel'
 import StudentsIcon from '@/components/atoms/icons/SideBar/StudentsIcon'
+import { useRouter } from 'next/navigation'
+
 import React from 'react'
 import { useEntity } from 'simpler-state'
 
-const options = [
+
+
+
+export const AddStudentMenu = () => {
+    const isOpen = useEntity(isAddSudentsMenuOpen)
+    const router = useRouter()
+    const options = [
     {
         icon: <ExportIcon color='#828282' />,
         text: 'Upload bulk students',
@@ -17,13 +25,9 @@ const options = [
     {
         icon: <StudentsIcon />,
         text: 'Add students manually',
-        route: '/add-student-manually'
+        click: ()=>{router.push('/school/students/add-new-student')}
     }
 ]
-
-
-export const AddStudentMenu = () => {
-    const isOpen = useEntity(isAddSudentsMenuOpen)
     return (
 
 
@@ -42,7 +46,7 @@ export const AddStudentMenu = () => {
 
                     <div className='flex flex-col gap-5'>
                         {options.map((option) => (
-                            <div key={option.text} className='flex justify-between items-center p-4 border border-gray4 rounded-3xl cursor-pointer' onClick={() => option.click?.()}>
+                            <div key={option.text} className='flex justify-between items-center p-4 border border-gray4 rounded-3xl cursor-pointer' onClick={() =>{ option.click?.(); closeAddStudentsMenu}}>
                                 <div className='flex items-center gap-4'>
                                     <div>{option.icon}</div>
                                     <p className={cn('text-sm text-gray1', poppins_500.className)}>{option.text}</p>

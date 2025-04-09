@@ -12,8 +12,8 @@ const classess = [
   ];
   
   
-  export const ClassDropdown = ({width = 400, className}: {width?: number, className?: string}) => {
+  export const ClassDropdown = ({width = 100, className}: {width?: number, className?: string}) => {
       return (
-          <SelectDropdown options={classess} placeholder="Select Class" width={width} className={className}/>
+          <SelectDropdown options={classess} placeholder="Class" width={width} className={className}/>
   )
 }
