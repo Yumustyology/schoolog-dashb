@@ -31,3 +31,13 @@ export const DemoteModalIcon = () => {
 
     )
 }
+
+export const ClockIcon = () => {
+    return (
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9.99996 1.66406C5.39996 1.66406 1.66663 5.3974 1.66663 9.9974C1.66663 14.5974 5.39996 18.3307 9.99996 18.3307C14.6 18.3307 18.3333 14.5974 18.3333 9.9974" stroke="#21B55A" stroke-width="1.5" stroke-miterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M10.8334 9.16927L17.6667 2.33594" stroke="#21B55A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M18.3333 5.68906V1.66406H14.3083" stroke="#21B55A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+    )
+}

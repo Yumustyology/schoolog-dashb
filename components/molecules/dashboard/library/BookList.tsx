@@ -46,7 +46,7 @@ const availbleBooksList: AvailbeBooks = [
 function BookList() {
   return (
     <div className="grid grid-cols-3 laptop:grid-cols-4 lgDesktop:grid-cols-5 gap-6">
-      {availbleBooksList.map((book) => (
+      {availbleBooksList.map((book: any) => (
         <div
           key={book.title}
           className="min-w-[200px] flex flex-col gap-2 mb-6"
