@@ -8,7 +8,7 @@ type EmptyProps = {
   icon: React.ReactNode,
   title: string,
   description: string,
-  buttonText: string,
+  buttonText?: string,
   route?: string,
 }
 function Empty({ icon, title, description, buttonText, route }: EmptyProps) {
@@ -21,7 +21,10 @@ function Empty({ icon, title, description, buttonText, route }: EmptyProps) {
           {description}
         </p>
       </div>
-      <Button round className='mt-12 px-8 py-3.5'> {buttonText} </Button>
+      {
+        buttonText &&
+        <Button round className='mt-12 px-8 py-3.5'> {buttonText} </Button>
+      }
     </div>
   )
 }

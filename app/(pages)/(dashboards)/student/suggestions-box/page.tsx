@@ -12,6 +12,8 @@ import {
 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import React from 'react';
+import SuggestionBox from '@/components/atoms/dashboard/suggestions/SuggestionBox';
+import SugeestionBox from '@/components/atoms/icons/SideBar/SugeestionBox';
 
 const suggestionBox = [
   {
@@ -75,19 +77,9 @@ function Page() {
       </div>
 
       <div className="grid grid-cols-3 gap-6 mt-4 p-4 bg-white">
-        {suggestionBox.map((suggestionBox, index) => {
+        {suggestionBox.map((suggestion, index) => {
           return (
-            <div
-              key={index}
-              className="flex flex-col gap-3 w-full border bg-[#fcfcfc] border-gray4 p-3.5 rounded-md"
-            >
-              <h4 className={cn('text-black text-sm', poppins_500.className)}>
-                {suggestionBox.title}{' '}
-              </h4>
-              <p className={cn('text-gray1 text-xs', poppins_400.className)}>
-                {suggestionBox.content}{' '}
-              </p>
-            </div>
+            <SuggestionBox key={suggestion.id} suggestion={suggestion}/>
           );
         })}
       </div>
