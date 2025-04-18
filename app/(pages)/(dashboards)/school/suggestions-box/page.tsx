@@ -28,46 +28,46 @@ export type SuggestionType = {
 }
 
 const suggestions: SuggestionType[] = [
-    // {
-    //     id: 1,
-    //     title: 'Suggestion title goes here ',
-    //     content:
-    //         'Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper',
-    //     category: 'Parents',
-    //     date: '2/4/2025'
-    // },
-    // {
-    //     id: 2,
-    //     title: 'Suggestion title goes here ',
-    //     content:
-    //         'Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper',
-    //     category: 'Parents',
-    //     date: '2/4/2025'
-    // },
-    // {
-    //     id: 3,
-    //     title: 'Suggestion title goes here ',
-    //     content:
-    //         'Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper',
-    //     category: 'Students',
-    //     date: '2/4/2025'
-    // },
-    // {
-    //     id: 4,
-    //     title: 'Suggestion title goes here ',
-    //     content:
-    //         'Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper',
-    //     category: 'Parents',
-    //     date: '2/4/2025'
-    // },
-    // {
-    //     id: 4,
-    //     title: 'Suggestion title goes here ',
-    //     content:
-    //         'Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper',
-    //     category: 'Parents',
-    //     date: '2/4/2025'
-    // },
+    {
+        id: 1,
+        title: 'Suggestion title goes here ',
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper',
+        category: 'Parents',
+        date: '2/4/2025'
+    },
+    {
+        id: 2,
+        title: 'Suggestion title goes here ',
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper',
+        category: 'Parents',
+        date: '2/4/2025'
+    },
+    {
+        id: 3,
+        title: 'Suggestion title goes here ',
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper',
+        category: 'Students',
+        date: '2/4/2025'
+    },
+    {
+        id: 4,
+        title: 'Suggestion title goes here ',
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper',
+        category: 'Parents',
+        date: '2/4/2025'
+    },
+    {
+        id: 4,
+        title: 'Suggestion title goes here ',
+        content:
+            'Lorem ipsum dolor sit amet consectetur. Enim elementum risus consectetur non nisi dui quis. Donec nisl porttitor vulputate nam. Lacus vestibulum sagittis eu eros sit. Augue et elementum semper',
+        category: 'Parents',
+        date: '2/4/2025'
+    },
 ];
 
 function Page() {
