@@ -17,6 +17,8 @@ export function DrawerSide({
   cancelClassName,
   titleClassName,
   subTitleClassName,
+  footer,
+  footerClassName,
 }: {
   children: React.ReactNode;
   title: string;
@@ -28,6 +30,8 @@ export function DrawerSide({
   cancelClassName?: string;
   titleClassName?: string;
   subTitleClassName?: string;
+  footer?: React.ReactNode;
+  footerClassName?: string;
 }) {
   const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
 
@@ -49,12 +53,6 @@ export function DrawerSide({
       document.body.appendChild(portalDiv);
     }
     setPortalRoot(portalDiv);
-
-    // return () => {
-    //   if (portalDiv && portalDiv.parentNode) {
-    //     portalDiv.parentNode.removeChild(portalDiv);
-    //   }
-    // };
   }, []);
 
   useEffect(() => {
@@ -74,7 +72,7 @@ export function DrawerSide({
 
   const drawerContent = (
     <Drawer
-      className={cn('', className)}
+      className={cn('flex flex-col', className)}
       placement="right"
       open={open}
       overlayProps={{
@@ -91,7 +89,6 @@ export function DrawerSide({
       >
         <div>
           <p className={cn('text-[16px]', Inter_600.className, titleClassName)}>
-            {' '}
             {title}
           </p>
           <p
@@ -114,7 +111,16 @@ export function DrawerSide({
           <Cancel />
         </div>
       </div>
-      <div className="h-full overflow-y-auto">{children}</div>
+
+      <div className="flex-1 overflow-y-auto">{children}</div>
+
+      {footer && (
+        <div
+          className={cn('bg-white p-4', footerClassName)}
+        >
+          {footer}
+        </div>
+      )}
     </Drawer>
   );
 

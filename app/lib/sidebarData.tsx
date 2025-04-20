@@ -16,6 +16,7 @@ import ParentsIcon from '@/components/atoms/icons/SideBar/ParentsIcon';
 import StudentsIcon from '@/components/atoms/icons/SideBar/StudentsIcon';
 import FinanceIcon from '@/components/atoms/icons/SideBar/FinanceIcon';
 import StaffsIcon from '@/components/atoms/icons/dashboard/StaffsIcon';
+import AdmissionIcon from '@/components/atoms/icons/SideBar/AdmissionIcon';
 
 export type SidebarItemsType = {
   title: string;
@@ -176,8 +177,14 @@ export const shoolSidebarItems: SidebarItemsType = [
   {
     title: 'Library',
     url: '/school/library',
-    icon: <Library />,
+    icon: <Library color="#828282" />,
     activeIcon: <Library color="#FFFFFF" />,
+  },
+  {
+    title: 'Admission',
+    url: '/school/admission',
+    icon: <AdmissionIcon color="#828282"  />,
+    activeIcon: <AdmissionIcon color="#FFFFFF" />,
   },
   {
     title: 'Finance',

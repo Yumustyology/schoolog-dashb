@@ -1,7 +1,6 @@
 'use client';
 
 import BreadcrumbBox from '@/components/atoms/dashboard/subjects/Breadcrumb';
-// import { PaymentTable } from '@/components/molecules/dashboard/payment/PaymentTable';
 import React from 'react';
 import { poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
@@ -11,7 +10,9 @@ import { DatePicker } from '@/components/atoms/form/DatePicker';
 import Button from '@/components/atoms/form/Button';
 import ExportIcon from '@/components/atoms/icons/dashboard/ExportIcon';
 import PayForStudentModal from '@/components/molecules/dashboard/finance/PayForStudentModal';
-import { InvoiceTable } from '@/components/molecules/dashboard/invoice/InvoiceTable';
+import { AdmissionRegList } from '@/components/molecules/admission/AdmissionRegList';
+import Settings from '@/components/atoms/icons/SideBar/Settings';
+import ImportICon from '@/components/atoms/icons/dashboard/ImportICon';
 
 function Page() {
 
@@ -21,39 +22,25 @@ function Page() {
         <BreadcrumbBox
           crumbs={[
             {
-              label: 'Finance',
-              isActive: false,
-              href: '/school/finance',
-            },
-            {
-              label: 'Invoice histories',
+              label: 'Admission',
               isActive: true,
             },
           ]}
         />
         <div className="flex gap-4 mb-8">
           <Button
-            flat
-            outlined
-            round
-            className="bg-transparent gap-2 px-6 h-[44px] rounded-full"
-          >
-            <ExportIcon />
-            <span>Export list</span>
-          </Button>
-          {/* <Button
-            onClick={openPayForStudentModal}
+            // onClick={openPayForStudentModal}
             round
             className="gap-2 px-6 h-[44px] rounded-full"
           >
-            <CardPosIcon />
-            <span>Pay to staff</span>
-          </Button> */}
+            <Settings color="white" />
+            <span>Admission settings</span>
+          </Button>
         </div>
       </div>
       <div className="p-5 bg-white rounded-lg">
         <div className="flex items-center gap-10 justify-between mb-6 w-full">
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between w-full">
             <div className="flex gap-4 items-center">
               <SearchInput
                 className="bg-gray4"
@@ -91,10 +78,23 @@ function Page() {
                 placeholder={'Pick date'}
               />
             </div>
+            <div className="flex gap-3 items-center">
+              <Button className="gap-2 px-6 h-[40px] rounded-full">
+                <ImportICon color="white" /> <span>Admit applicants</span>
+              </Button>
+              <Button
+                flat
+                outlined
+                round
+                className="bg-transparent gap-2 px-6 h-[40px] rounded-full"
+              >
+                <ExportIcon size={20} />
+                <span>Export list</span>
+              </Button>
+            </div>
           </div>
         </div>
-
-        <InvoiceTable />
+        <AdmissionRegList />
       </div>
       <PayForStudentModal />
     </>

@@ -90,7 +90,7 @@ export function PaymentTable({
   const closeDrawer = () => setOpen(false);
 
   return (
-    <Card className="shadow-none h-full w-full overflow-scroll">
+    <Card className="shadow-none h-full w-full overflow-y-visible --overflow-x-auto">
       {/* <table className="w-full min-w-max table-auto text-left"> */}
       <table className="min-w-[800px] w-full table-auto text-left">
         <thead>

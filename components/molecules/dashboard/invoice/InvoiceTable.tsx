@@ -77,8 +77,15 @@ const TABLE_ROWS: TableRow[] = [
 ];
 
 export function InvoiceTable(): JSX.Element {
-
-  const TABLE_HEAD: string[] = ['Invoice title', 'Reference', 'Amount', 'Category', 'Date', 'Status',''];
+  const TABLE_HEAD: string[] = [
+    'Invoice title',
+    'Reference',
+    'Amount',
+    'Category',
+    'Date',
+    'Status',
+    '',
+  ];
 
   const [open, setOpen] = useState(false);
 
@@ -86,7 +93,7 @@ export function InvoiceTable(): JSX.Element {
   const closeDrawer = () => setOpen(false);
 
   return (
-    <Card className="shadow-none h-full w-full overflow-scroll">
+    <Card className="shadow-none h-full w-full overflow-y-visible --overflow-x-auto">
       <table className="min-w-[800px] w-full table-auto text-left">
         <thead>
           <tr>
@@ -317,10 +324,10 @@ export function InvoiceTable(): JSX.Element {
             </div>
             <div className="px-6 mt-auto">
               <Button
-                onClick={()=>{
-                  openMakePaymentModal()
-                  closeDrawer()
-                }}  
+                onClick={() => {
+                  openMakePaymentModal();
+                  closeDrawer();
+                }}
                 round
                 wide
                 className={cn(
