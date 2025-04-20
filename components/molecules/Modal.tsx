@@ -30,8 +30,8 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title }) => {
 
   const modalContent = (
     <div className="fixed inset-0 bg-[rgb(0,0,0,0.25)] flex items-center p-6 justify-center z-50 w-full ">
-      <div className="bg-white rounded-lg tablet:w-[504px] xxs:w-full shadow-lg">
-        <div className="flex justify-between items-center mb-2 px-8 py-2">
+      <div className="bg-white rounded-xl tablet:w-[434px] xxs:w-full shadow-lg">
+        <div className="flex justify-between items-center pl-8 pr-4 py-4">
           <h2 className={cn('text-lg ', Inter_500.className)}> {title}</h2>
           <button
             onClick={onClose}

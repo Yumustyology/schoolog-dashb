@@ -58,7 +58,7 @@ const LogoutModal = ({
           <Button
             round
             className={cn(
-              'text-base bg-red border bg-r2 text-white h-[44px] w-[185px]',
+              'text-base bg-r text-white h-[44px] w-[185px]',
               Inter_500.className
             )}
           >

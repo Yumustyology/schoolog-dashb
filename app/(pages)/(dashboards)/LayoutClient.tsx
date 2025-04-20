@@ -13,7 +13,7 @@ export default function LayoutClient({
   children: React.ReactNode;
   sidebarType: 'school' | 'student' | 'teacher' | 'parent';
 }) {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   useEffect(() => {
     // Read cookie from `document.cookie`

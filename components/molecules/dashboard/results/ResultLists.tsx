@@ -31,7 +31,7 @@ type TableDescription = {
   open: boolean;
 };
 
-const tableDescription: TableDescription[] = [
+export const tableDescription: TableDescription[] = [
   {
     id: 1,
     class: 'SS1',
@@ -67,35 +67,7 @@ export function ResultLists(): JSX.Element {
 
   return (
     <>
-      <Card className="h-full w-full overflow-scroll p-3.5 mt-8 shadow-none">
-        <SelectComp
-          placeholder="All Class"
-          className=""
-          triggerClasses={cn(
-            poppins_400.className,
-            'mb-6 text-xs cursor-pointer text-gray6 2 text-center gap-1.5 w-max border-gray4 flex justify-between rounded-full h-[38px] items-center px-3 py-2'
-          )}
-          value=""
-          onValueChange={console.log}
-          options={[
-            {
-              id: 'all',
-              name: 'All Class',
-            },
-            {
-              id: 'jss1',
-              name: 'JSS1',
-            },
-            {
-              id: 'jss2',
-              name: 'JSS2',
-            },
-            {
-              id: 'jss3',
-              name: 'JSS3',
-            },
-          ]}
-        />
+      <Card className="h-full w-full overflow-scroll p-3.5 shadow-none">
         {tableDescription.map((description) => (
           <div
             key={description.id}

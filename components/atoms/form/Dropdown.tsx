@@ -1,45 +1,64 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { useClickAway } from 'react-use';
+'use client';
 
-interface DropdownProps {
-  isOpen: boolean;
-  setIsOpen: () => void;
-  children: React.ReactNode; // Allow children to be passed for custom content
-}
+import { poppins_400 } from '@/app/lib/config/font.config';
+import { cn } from '@/app/lib/utils';
+import { Label } from '@/components/ui/label';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
-export function Dropdown({ isOpen, setIsOpen, children }: DropdownProps) {
-  const dropdownRef = useRef<HTMLDivElement>(null);
-  const [dropdownPosition, setDropdownPosition] = useState({
-    top: 'auto',
-    bottom: '100%',
-  });
+export type Option = {
+  value: string;
+  label: string;
+};
 
-  useClickAway(dropdownRef, () => setIsOpen());
+type DropdownProps = {
+  options?: Option[];
+  selectedOption: string;
+  onChange?: (value: string) => void;
+  placeholder?: string;
+  className?: string;
+  label?: string;
+};
 
-  useEffect(() => {
-    if (dropdownRef.current) {
-      const rect = dropdownRef.current.getBoundingClientRect();
-      const spaceAbove = rect.top;
-      const spaceBelow = window.innerHeight - rect.bottom;
+export function Dropdown({
+  options = [],
+  selectedOption,
+  onChange,
+  placeholder = 'Select an option...',
+  className = '',
+  label
+}: DropdownProps) {
 
-      if (spaceBelow < rect.height && spaceAbove >= rect.height) {
-        setDropdownPosition({ top: 'auto', bottom: '100%' });
-      } else {
-        setDropdownPosition({ top: '100%', bottom: 'auto' });
-      }
-    }
-  }, [isOpen]);
-
-  if (!isOpen) return null;
+  const handleChange = (value: string) => {
+    if (onChange) onChange(value);
+  };
 
   return (
-    <div
-      ref={dropdownRef}
-      className="absolute flex flex-col gap-3 right-0 -mt-4 min-w-[173px] bg-white rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-20 p-4"
-      style={{ top: dropdownPosition.top, bottom: dropdownPosition.bottom }}
-      role="menu"
-    >
-      {children}
+    <div>
+
+      <Label className={cn('text-base text-gray6 mb-2', poppins_400.className)}> {label}</Label>
+
+      <Select onValueChange={handleChange} value={selectedOption}>
+        <SelectTrigger className={`w-full bg-white bg-opacity-55 text-sm text-gray h-11 ${className}`}>
+          <SelectValue placeholder={placeholder} />
+        </SelectTrigger>
+        <SelectContent className="bg-white text-gray">
+          <SelectGroup>
+            {options.map((option) => (
+              <SelectItem key={option.value} value={option.value}>
+                {option.label}
+              </SelectItem>
+            ))}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
     </div>
+
   );
 }

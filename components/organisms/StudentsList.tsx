@@ -9,8 +9,7 @@ import {
 } from '@/components/ui/table';
 import { cn } from '@/app/lib/utils';
 import { Inter_400, Inter_500 } from '@/app/lib/config/font.config';
-import Unmarked from '@/components/atoms/icons/dashboard/Unmarked';
-import CancelIcon from '@/components/atoms/icons/dashboard/CancelIcon';
+
 
 function StudentsList() {
   type StudentsListType = {
@@ -23,6 +22,22 @@ function StudentsList() {
   }[];
 
   const studentsList: StudentsListType = [
+    {
+      studentImage: '',
+      studentName: 'Muhammad Jamiu',
+      ID: '172928739HD',
+      performance: 90,
+      attendance: 98,
+      rank: 'First',
+    },
+    {
+      studentImage: '',
+      studentName: 'Muhammad Jamiu',
+      ID: '172928739HD',
+      performance: 80,
+      attendance: 98,
+      rank: 'First',
+    },
     {
       studentImage: '',
       studentName: 'Muhammad Jamiu',
