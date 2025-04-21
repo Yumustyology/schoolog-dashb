@@ -13,12 +13,13 @@ import { ResultTable } from './ResultTable';
 import EyeOpen from '@/components/atoms/icons/EyeOpen';
 import FormModal from '../FormModal';
 import Input from '@/components/atoms/form/Input';
-import SelectComp from '@/components/atoms/form/Select';
+// import SelectComp from '@/components/atoms/form/Select';
 import HideArrow from '@/components/atoms/icons/SideBar/HideArrow';
 import Button from '@/components/atoms/form/Button';
 import DownloadIcon from '@/components/atoms/icons/dashboard/DownloadIcon';
 import ScreenIcon from '@/components/atoms/icons/dashboard/ScreenIcon';
 import Dot from '@/components/atoms/dashboard/subjects/Dot';
+import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 
 type TableDescription = {
   id: number;
@@ -64,7 +65,7 @@ export function ResultLists(): JSX.Element {
       [id]: !prevState[id],
     }));
   };
-
+const {theme} = useSlgTheme() 
   return (
     <>
       <Card className="h-full w-full overflow-scroll p-3.5 shadow-none">
@@ -112,7 +113,7 @@ export function ResultLists(): JSX.Element {
                         Inter_600.className
                       )}
                     >
-                      <ScreenIcon /> <span>Full screen</span>
+                      <ScreenIcon color={theme.primary} /> <span>Full screen</span>
                     </Button>
                   ) : null
                 ) : null}

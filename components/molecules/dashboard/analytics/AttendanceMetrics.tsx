@@ -2,7 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 import ArrowUpIcon from '@/components/atoms/icons/ArrowUpIcon';
 import {
-  Inter_400,
+  // Inter_400,
   Inter_800,
   poppins_500,
 } from '@/app/lib/config/font.config';
