@@ -41,3 +41,14 @@ export const ClockIcon = () => {
         </svg>
     )
 }
+export const AnnouncementIcon = () => {
+    return (
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16.6667 6.8724V14.9974C16.6667 17.4974 15.175 18.3307 13.3334 18.3307H6.66671C4.82504 18.3307 3.33337 17.4974 3.33337 14.9974V6.8724C3.33337 4.16406 4.82504 3.53906 6.66671 3.53906C6.66671 4.05573 6.87502 4.52239 7.21668 4.86406C7.55835 5.20573 8.02504 5.41406 8.54171 5.41406H11.4584C12.4917 5.41406 13.3334 4.5724 13.3334 3.53906C15.175 3.53906 16.6667 4.16406 16.6667 6.8724Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M13.3333 3.53906C13.3333 4.5724 12.4916 5.41406 11.4583 5.41406H8.54163C8.02496 5.41406 7.55827 5.20573 7.2166 4.86406C6.87494 4.52239 6.66663 4.05573 6.66663 3.53906C6.66663 2.50573 7.50829 1.66406 8.54163 1.66406H11.4583C11.975 1.66406 12.4416 1.8724 12.7833 2.21407C13.125 2.55573 13.3333 3.0224 13.3333 3.53906Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M6.66663 10.8359H9.99996" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M6.66663 14.1641H13.3333" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+
+    )
+}
