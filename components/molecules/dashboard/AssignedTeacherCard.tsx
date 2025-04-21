@@ -17,13 +17,14 @@ import { cn } from '@/app/lib/utils';
 import Image from 'next/image';
 import React from 'react';
 import { AddTeacherIcon, ChangeTeacherIcon } from '@/components/atoms/icons/Icons';
-import Modal from '../Modal';
-import DropdownSearch from '@/components/atoms/form/DropdownSearch';
-import ImageOptionBox from '@/components/atoms/form/ImageOptionBox';
+// import Modal from '../Modal';
+// import DropdownSearch from '@/components/atoms/form/DropdownSearch';
+// import ImageOptionBox from '@/components/atoms/form/ImageOptionBox';
 import ChangeTeacherModal from '@/components/atoms/dashboard/subjects/subjectsInfoModals/ChangeTeacherModal';
 import { openAddTeacherModal, openChangeTeacherModal } from '@/app/lib/entities/subject.entity';
 import { TeachersListDrawer } from '@/components/atoms/dashboard/subjects/SubjectsDrawer/TeachersListDrawer';
 import AddTeacherModal from '@/components/atoms/dashboard/subjects/subjectsInfoModals/AddTeacherModal';
+import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 
 
 
@@ -33,7 +34,8 @@ function AssignedTeacherCard({
 }: {
   role: 'school' | 'student' | 'parent' | 'school';
 }) {
-  const [assignTeacherModal, setAssignTeacherModal] = React.useState(true);
+  const { theme } = useSlgTheme()
+  // const [assignTeacherModal, setAssignTeacherModal] = React.useState(true);
   const [isTeachersListOpen, setIsTeacherListOpen] = React.useState(false);
   return (
     <Card className="bg-white py-6 px-6 flex flex-col justify-between h-[390px] rounded-md col-span-2 border-none">
@@ -177,7 +179,7 @@ function AssignedTeacherCard({
               <p className="ml-2">Change Teacher</p>
             </Button>
             <Button round className="h-[45px] border px-8 bg-light" onClick={openAddTeacherModal}>
-              <AddTeacherIcon />
+              <AddTeacherIcon color={theme.primary} />
               <p className="ml-2 text-primary">Add another Teacher</p>
             </Button>
           </div>

@@ -12,10 +12,17 @@ module.exports = withMT({
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'gradient-primary':
+          'linear-gradient(to right, var(--color-primary), var(--color-primary-dark))',
+      },
       colors: {
-        primary: '#21B55A',
-        light: '#E9F8EF',
-        primary1: 'rgba(33, 181, 90, 0.12)',
+        success: '#21B55A',
+        lightSuccess: '#E9F8EF',
+        // primary1: 'rgba(33, 181, 90, 0.12)',
+        primary: 'var(--color-primary)',
+        light: 'var(--color-light)',
+        primary1: 'var(--color-primary1)',
         black1: '#101828',
         black2: '#071E3B',
         gray1: '#333333',

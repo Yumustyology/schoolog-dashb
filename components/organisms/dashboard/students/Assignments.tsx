@@ -11,6 +11,7 @@ import {
 import { cn } from '@/app/lib/utils';
 import { Card, CardBody, Tooltip, Typography } from '@material-tailwind/react';
 import React from 'react';
+import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 
 type AssignmentList = {
   mode: 'locked' | 'view' | 'active';
@@ -86,6 +87,7 @@ const assignmentsList: AssignmentList = [
 ];
 
 function Assignments() {
+  const {theme} = useSlgTheme()
   return (
     <>
       {assignmentsList.map((assignment) => {
@@ -99,7 +101,7 @@ function Assignments() {
                 {assignment.view === 'pending' ? (
                   <Unmarked color="#F2994A" />
                 ) : assignment.view === 'completed' ? (
-                  <Marked />
+                  <Marked color={theme.primary} />
                 ) : assignment.view === 'due' ? (
                   <Unmarked color="#EB5757" />
                 ) : (

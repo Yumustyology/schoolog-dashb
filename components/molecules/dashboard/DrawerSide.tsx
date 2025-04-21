@@ -77,7 +77,7 @@ export function DrawerSide({
       open={open}
       overlayProps={{
         className:
-          'fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 z-[999]',
+          'fixed top-0 left-0 w-full h-full bg-black bg-opacity-30 z-[999]',
       }}
       size={494}
     >
@@ -115,11 +115,7 @@ export function DrawerSide({
       <div className="flex-1 overflow-y-auto">{children}</div>
 
       {footer && (
-        <div
-          className={cn('bg-white p-4', footerClassName)}
-        >
-          {footer}
-        </div>
+        <div className={cn('bg-white p-4', footerClassName)}>{footer}</div>
       )}
     </Drawer>
   );

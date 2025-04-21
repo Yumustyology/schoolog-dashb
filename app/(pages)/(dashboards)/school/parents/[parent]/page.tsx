@@ -8,6 +8,6 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function StudentPage({ params }: { params: { parent: string } }) {
-  return <ParentInfoPage parent={params.parent} />;
+export default function ParentPage({ params }: { params: { parent: string } }) {
+  return <ParentInfoPage parent={params?.parent} />;
 }

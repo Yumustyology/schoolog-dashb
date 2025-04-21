@@ -1,6 +1,13 @@
 import { biology1 } from '@/app/assets';
 import Button from '@/components/atoms/form/Button';
-import { ArchiveIcon, ArchiveModalIcon, DeleteIcon, DeleteModalIcon, UnachiveModalIcon, UnarchiveIcon } from '@/components/atoms/icons/Icons';
+import {
+  ArchiveIcon,
+  ArchiveModalIcon,
+  DeleteIcon,
+  DeleteModalIcon,
+  UnachiveModalIcon,
+  UnarchiveIcon,
+} from '@/components/atoms/icons/Icons';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { cn } from '@/app/lib/utils';
@@ -8,15 +15,16 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import SubjectModal from '@/components/atoms/dashboard/subjects/subjectsInfoModals/SubjectModal';
 import { isArchive } from '@/app/lib/entities/subject.entity';
-import { useEntity } from 'simpler-state';
-
+// import { useEntity } from 'simpler-state';
+import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 
 function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {
-  const [deleteModal, setDeleteModal] = useState(false)
-  const [archiveModal, setArchiveModal] = useState(false)
-  const [unarchiveModal, setUnarchiveModal] = useState(false)
-  const archive = useEntity(isArchive);
-  console.log(archive)
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [archiveModal, setArchiveModal] = useState(false);
+  const [unarchiveModal, setUnarchiveModal] = useState(false);
+  // const archive = useEntity(isArchive);
+
+  const { theme } = useSlgTheme();
 
   return (
     <Card className="bg-white py-6 h-[390px] pb-10 px-6 rounded-md col-span-2 border-none">
@@ -197,41 +205,68 @@ function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {
               className={cn(
                 'flex  text-r2 h-[48px] w-[191px] border border-r2'
               )}
-              onClick={() => { setDeleteModal(true) }}
+              onClick={() => {
+                setDeleteModal(true);
+              }}
             >
               <DeleteIcon />
               <span className="text-r2">Delete Subject</span>
             </Button>
 
-            {
-              isArchive
-               ? (
-                <Button
-                  round
-                  className={cn('flex  text-primary h-[48px] w-[191px] bg-light')}
-                  onClick={() => { setUnarchiveModal(true) }}
-                >
-                  <UnarchiveIcon color='#21B55A' />
-                  <span className="text-primary">Post Subject</span>
-                </Button>
-              )
-              : ( 
-                <Button
-                  round
-                  className={cn('flex  text-primary h-[48px] w-[191px] bg-light')}
-                  onClick={() => { setArchiveModal(true)  }}
-                >
-                  <ArchiveIcon color='#21B55A' />
-                  <span className="text-primary">Archive</span>
-                </Button>
-              )
-            }
+            {isArchive ? (
+              <Button
+                round
+                className={cn('flex  text-primary h-[48px] w-[191px] bg-light')}
+                onClick={() => {
+                  setUnarchiveModal(true);
+                }}
+              >
+                <UnarchiveIcon color={theme.primary} />
+                <span className="text-primary">Post Subject</span>
+              </Button>
+            ) : (
+              <Button
+                round
+                className={cn('flex  text-primary h-[48px] w-[191px] bg-light')}
+                onClick={() => {
+                  setArchiveModal(true);
+                }}
+              >
+                <ArchiveIcon color={theme.primary} />
+                <span className="text-primary">Archive</span>
+              </Button>
+            )}
           </div>
         )}
       </CardContent>
-      <SubjectModal type='delete' title="Delete Subject" content='Are you sure you want to delete this subject? this subject can’t be recovered' icon={<DeleteModalIcon />} open={deleteModal} close={() => setDeleteModal(false)} />
-      <SubjectModal type='archive' title="Archive study" content='Are you sure you want to archive this subjest? it won’t be visible to students and teachers again' icon={<ArchiveModalIcon />} open={archiveModal} close={() => setArchiveModal(false)} />
-      <SubjectModal type='unarchive' title="Post Subject" content='Are you sure you want to post this subject? This will make it visible to students and teachers' icon={<UnachiveModalIcon />} open={unarchiveModal} close={() => setUnarchiveModal(false)} />
+      <SubjectModal
+        type="delete"
+        title="Delete Subject"
+        content="Are you sure you want to delete this subject? this subject can’t be recovered"
+        icon={<DeleteModalIcon />}
+        open={deleteModal}
+        close={() => setDeleteModal(false)}
+      />
+      <SubjectModal
+        type="archive"
+        title="Archive study"
+        content="Are you sure you want to archive this subjest? it won’t be visible to students and teachers again"
+        icon={<ArchiveModalIcon color={theme.primary} />}
+        open={archiveModal}
+        close={() => setArchiveModal(false)}
+      />
+      <SubjectModal
+        type="unarchive"
+        title="Post Subject"
+        content="Are you sure you want to post this subject? This will make it visible to students and teachers"
+        icon={
+          <UnachiveModalIcon
+            color={{ light: theme.light, primary: theme.primary }}
+          />
+        }
+        open={unarchiveModal}
+        close={() => setUnarchiveModal(false)}
+      />
     </Card>
   );
 }

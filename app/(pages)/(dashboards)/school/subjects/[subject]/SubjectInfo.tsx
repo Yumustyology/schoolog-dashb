@@ -12,7 +12,7 @@ import {
 } from '@material-tailwind/react';
 import React from 'react';
 import Topics from '@/components/organisms/dashboard/students/Topics';
-import Assignments from '@/components/organisms/dashboard/students/Assignments';
+// import Assignments from '@/components/organisms/dashboard/students/Assignments';
 import SearchInput from '@/components/atoms/form/SearchInput';
 import SubjectInfoCard from '@/components/molecules/dashboard/subjects/SubjectInfoCard';
 import Button from '@/components/atoms/form/Button';
@@ -29,6 +29,7 @@ import { MaterialType } from '@/app/types';
 import MaterialsList from '@/components/molecules/dashboard/materials/MaterialList';
 import StudentsList from '@/components/organisms/StudentsList';
 import { UploadResourcesModal } from '@/components/atoms/dashboard/subjects/subjectsInfoModals/UploadResourcesModal';
+import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 
 export const materials: MaterialType = [
   {
@@ -132,6 +133,7 @@ export const materials: MaterialType = [
 ];
 
 function SubjectInfoPage({ subject }: { subject: string }) {
+  const {theme} = useSlgTheme()
   const [isUploadResourceModalOpen, setIsResourceModalOpen] = React.useState(false)
   const closeResourceModal = () => {
     setIsResourceModalOpen(false);
@@ -187,7 +189,7 @@ function SubjectInfoPage({ subject }: { subject: string }) {
                 href: '/student/subjects',
               },
               {
-                label: 'Biology',
+                label: subject,
                 isActive: true,
               },
             ]}
@@ -207,16 +209,21 @@ function SubjectInfoPage({ subject }: { subject: string }) {
               round
               flat
               className="h-[48px] border border-primary ml-4  py-3 px-8 flex gap-2"
-              onClick={()=>{setIsResourceModalOpen(true)}}
+              onClick={() => {
+                setIsResourceModalOpen(true);
+              }}
             >
               {' '}
-              <UploadIcon />
+              <UploadIcon color={theme.primary} />
               <span className={cn('text-base ', Inter_500.className)}>
                 Upload Resources{' '}
               </span>
             </Button>
           </div>
-          <UploadResourcesModal isOpen={isUploadResourceModalOpen} setIsOpen={closeResourceModal} />
+          <UploadResourcesModal
+            isOpen={isUploadResourceModalOpen}
+            setIsOpen={closeResourceModal}
+          />
         </div>
 
         <div className="flex space-x-3 mt-4">
@@ -246,7 +253,7 @@ function SubjectInfoPage({ subject }: { subject: string }) {
                   <Tab
                     onClick={() => handleTopicAssignmentTabClick(value)}
                     className={cn('text-sm text-center', poppins_500.className)}
-                    activeClassName="rounded-full text-white bg-[#21B55A]"
+                    activeClassName="rounded-full text-white bg-primary"
                     key={value}
                     value={value}
                   >

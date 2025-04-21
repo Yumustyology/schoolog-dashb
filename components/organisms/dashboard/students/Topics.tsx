@@ -4,12 +4,13 @@ import Marked from '@/components/atoms/icons/dashboard/Marked';
 import Unmarked from '@/components/atoms/icons/dashboard/Unmarked';
 import { Inter_500, poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
-import { Card, CardBody, Tooltip, Typography } from '@material-tailwind/react';
+import { Card, CardBody, Typography } from '@material-tailwind/react';
 
 import React from 'react';
 import Button from '@/components/atoms/form/Button';
 import EyeClose from '@/components/atoms/icons/EyeClose';
 import { TopicDetailDrawer } from '@/components/atoms/dashboard/subjects/SubjectsDrawer/TopicDetailsDrawer';
+import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 type TopicsList = {
   isMarked: boolean;
   topic: string;
@@ -198,6 +199,8 @@ const topicsList: TopicsList = [
 
 function Topics() {
   const [showDrawer, setShowDrawer] = React.useState(false);
+    const {theme} = useSlgTheme()
+  
   return (
     <>
       {topicsList.map((topic) => {
@@ -207,7 +210,7 @@ function Topics() {
             className="bg-[#F8F8F8] shadow-none w-full mb-4"
           >
             <CardBody className="w-full flex justify-between items-center gap-3 p-3">
-              <div>{topic.isMarked ? <Marked /> : <Unmarked />}</div>
+              <div>{topic.isMarked ? <Marked color={theme.primary}/> : <Unmarked />}</div>
 
               <Typography
                 className={cn('text-sm text-gray6 flex-1', Inter_500.className)}

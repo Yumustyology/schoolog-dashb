@@ -51,7 +51,6 @@ function ParentsTableLists() {
         //     phoneNumber: +2348065038383,
         //     paymentStatus: "Due"
         // },
-
     ];
 
     const menuItems = [

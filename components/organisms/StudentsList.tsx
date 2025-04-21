@@ -83,7 +83,7 @@ function StudentsList() {
             </TableCell>
             <TableCell> {student.ID}</TableCell>
             <TableCell>
-              <span className="bg-light p-3 w-7 h-7 text-primary rounded-full">
+              <span className={cn("bg-light p-3 w-7 h-7 text-primary rounded-full")}>
                 {student.performance}%
               </span>
             </TableCell>
