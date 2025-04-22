@@ -13,14 +13,14 @@ const DashboardWelcomeCard = ({
   return (
     <div
       className={cn(
-        'w-full bg-gradient-to-r from-[#21B55A] to-[#0E4F27] flex flex-grow h-48 max-h-48 rounded-lg tablet:mr-0 overflow-hidden max-w-screen relative',
+        'w-full bg-gradient-to-r-from-[#21B55A]-to-[#0E4F27] bg-gradient-primary flex flex-grow h-48 max-h-48 rounded-lg tablet:mr-0 overflow-hidden max-w-screen relative',
         className
       )}
     >
       {getRandomBinary() ? <Meteors number={20} /> : <Particles />}
 
-      <div className="w-[180px] h-[180px] tablet:w-[274px] rounded-full tablet:h-[200px]  bg-[#00B59566] absolute -left-[90px] -top-[40px] tablet:-left-[197px] tablet:-top-[100px]"></div>
-      <div className="w-[180px] h-[180px] tablet:w-[274px] rounded-full tablet:h-[200px] bg-[#00B59566] absolute -right-[190px] top-[40px] tablet:top-[100px]"></div>
+      <div className="w-[180px] h-[180px] tablet:w-[274px] rounded-full tablet:h-[200px]  bg-light1 absolute -left-[90px] -top-[40px] tablet:-left-[197px] tablet:-top-[100px]"></div>
+      <div className="w-[180px] h-[180px] tablet:w-[274px] rounded-full tablet:h-[200px] bg-light1 absolute -right-[190px] top-[40px] tablet:top-[100px]"></div>
 
       <div
         className={cn(

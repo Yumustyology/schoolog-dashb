@@ -191,15 +191,15 @@ export function InvoiceTable(): JSX.Element {
                     <Typography
                       variant="small"
                       className={cn(
-                        poppins_500.className,
-                        'font-normal rounded-full w-[92px] text-center px-4.5 py-1.5 ',
+                        'font-normal rounded-full w-[92px] py-1.5 px-8',
                         status === 'Success'
-                          ? 'text-primary bg-primary1'
+                          ? 'text-lightSuccess bg-success'
                           : status === 'Pending'
                             ? 'text-[#F2994A] bg-[#F2994A14]'
                             : status === 'Failed'
                               ? 'text-[#EB5757] bg-[#EB575714]'
-                              : 'text-gray-600 bg-gray-200'
+                              : 'text-gray-600 bg-gray-200',
+                        poppins_400.className
                       )}
                     >
                       {status}

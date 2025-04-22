@@ -41,7 +41,7 @@ function SearchInput({ placeholder, className }: SearchProps) {
         type="search"
         placeholder={placeholder}
         className={cn(
-          'placeholder-poppins placeholder:text-sm placeholder:text-gray3 bg-transparent outline-none text-gray1 text-sm w-full',
+          'placeholder-poppins accent-primary placeholder:text-sm placeholder:text-gray3 bg-transparent outline-none text-gray1 text-sm w-full',
           poppins_400.className
         )}
       />

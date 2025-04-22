@@ -35,7 +35,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           onChange={onChange}
           disabled={disabled}
           activeColor=""
-          activeBorder="border bg-[#1EA552] border-[#1EA552]"
+          activeBorder="border bg-primary border-primary"
           inActiveBorder="border border-[#E0E0E0] bg-[#E0E0E0]"
           inactiveColor="bg-[#EFEFEF]"
         />
@@ -45,6 +45,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 };
 
 const NotificationSettings = () => {
+  
   const [settings, setSettings] = useState({
     inApp: {
       announcement: true,

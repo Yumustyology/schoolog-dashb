@@ -36,7 +36,7 @@ export const TopicDetailDrawer = ({
   details,
   subtopics,
 }: TopicDetailsDrawerProp) => {
-   const {theme} = useSlgTheme()
+  const { theme } = useSlgTheme();
   return (
     <DrawerSide
       open={isTopicDetailsOpen}
@@ -53,6 +53,16 @@ export const TopicDetailDrawer = ({
             <p
               className={cn(
                 'py-2 px-3 bg-light text-primary text-xs rounded-full text-center',
+                'font-normal rounded-full w-[92px] py-1.5 text-center',
+                status === 'Success'
+                  ? 'text-success bg-lightSuccess border border-success'
+                  : status === 'Completed'
+                    ? 'text-success bg-lightSuccess border border-success'
+                    : status === 'Pending'
+                      ? 'text-[#F2994A] bg-[#F2994A14]'
+                      : status === 'Failed'
+                        ? 'text-[#EB5757] bg-[#EB575714]'
+                        : 'text-gray-600 bg-gray-200',
                 poppins_500.className
               )}
             >

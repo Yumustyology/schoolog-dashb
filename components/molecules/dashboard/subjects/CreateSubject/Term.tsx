@@ -5,6 +5,7 @@ import Button from '@/components/atoms/form/Button';
 import { AdditionIcon } from '@/components/atoms/icons/Icons';
 import { cn } from '@/app/lib/utils';
 import { poppins_500 } from '@/app/lib/config/font.config';
+import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 
 interface TermState {
   id: number;
@@ -63,6 +64,7 @@ function Term() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [formData, setFormData] = useState({ topic: '', brief: '' });
   const [editWeek, setEditWeek] = useState<number | null>(null); // Track which week is being edited
+  const {theme} = useSlgTheme()
 
   console.log(state);
 
@@ -164,7 +166,7 @@ function Term() {
             ? 'Update Week'
             : <span className={cn('text-base flex justify-center gap-2 p-1 items-center', poppins_500.className)}>
               
-              <AdditionIcon color='#21b55a' /> 
+              <AdditionIcon color={theme.primary} /> 
               Add new topic
                </span>}
         </Button>

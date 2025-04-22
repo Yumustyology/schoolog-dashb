@@ -19,7 +19,8 @@ module.exports = withMT({
       colors: {
         success: '#21B55A',
         lightSuccess: '#E9F8EF',
-        // primary1: 'rgba(33, 181, 90, 0.12)',
+        deep: 'var(--color-deep)',
+        light1: 'var(--color-light1)',
         primary: 'var(--color-primary)',
         light: 'var(--color-light)',
         primary1: 'var(--color-primary1)',

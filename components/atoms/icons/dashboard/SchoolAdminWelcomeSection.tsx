@@ -18,7 +18,7 @@ const SchoolAdminWelcomeSection = () => {
         <p className="mb-6">
           <h1 className={cn(poppins_600.className, 'text-3xl ')}>
             Hi{' '}
-            <span className="bg-gradient-to-r-- from-[#21B55A]-to-[#0E4F27] bg-gradient-primary bg-clip-text text-transparent">
+            <span className="bg-gradient-primary bg-clip-text text-transparent">
               Mohh_Jumah
             </span>
             👋 How is your day going

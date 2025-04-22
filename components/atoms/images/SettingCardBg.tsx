@@ -30,7 +30,7 @@ const SettingCardBg = () => {
   }, []);
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-r from-[#21B55A] to-[#0E4F27] h-[110px] w-full">
+    <div className="relative overflow-hidden bg-gradient-primary h-[110px] w-full">
       {bubbles.map((bubble: any, index: number) => (
         <div
           key={index}
