@@ -29,6 +29,7 @@ const page = () => {
                 <div>
 
                     <Button
+                        to='/school/announcements/create-annoucement'
                         // onClick={openAddStudentsMenu}
                         round
                         className="h-[44px]  py-3 px-6"
