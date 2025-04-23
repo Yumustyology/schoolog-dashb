@@ -24,7 +24,7 @@ export function DaySelector() {
         Select day
       </Label>
       <Dropdown options={days} selectedOption={selectedDay} onChange={setSelectedDay} placeholder="Select day" />
-      {/* <Dropdown label='Title' options={offences} selectedOption={selectedOffence} onChange={setSelectedOffence} placeholder="Select offence" /> */}
+      
     </>
   );
 }

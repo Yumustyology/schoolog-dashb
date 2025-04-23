@@ -1,5 +1,5 @@
 import { Announcements } from '@/app/types';
-import Announcement from '@/components/atoms/dashboard/annoucement/Announcement';
+import Announcement from '@/components/atoms/dashboard/announcement/Announcement';
 import React from 'react'
 import Empty from '../../empty/Empty';
 import { NoAnnouncementIcon, NoSuggestionIcon } from '@/components/atoms/icons/Icons';
