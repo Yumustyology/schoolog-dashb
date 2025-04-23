@@ -6,8 +6,12 @@ import Button from '../../atoms/form/Button';
 import SelectComp from '../../atoms/form/Select';
 import { CountriesSelect } from '../../atoms/form/CountriesSelect';
 import { PhoneNumberInput } from '../../atoms/form/PhoneNumberInput';
+import { setTheme, themeState } from '@/app/lib/entities/theme.entity';
+import { themes } from '@/app/lib/themes/themeConfig';
 
 const EditProfile = () => {
+  const currentTheme = themeState.use();
+
   return (
     <div>
       <form>
@@ -145,6 +149,21 @@ const EditProfile = () => {
           </div>
         </div>
       </form>
+
+      <div>
+        foo
+        <select
+          value={currentTheme}
+          onChange={(e) => setTheme(e.target.value as keyof typeof themes)}
+          className="border p-2 rounded"
+        >
+          {Object.keys(themes).map((key) => (
+            <option key={key} value={key}>
+              {key}
+            </option>
+          ))}
+        </select>
+      </div>
     </div>
   );
 };
