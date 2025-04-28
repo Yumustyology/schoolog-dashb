@@ -17,9 +17,11 @@ import { PromoteModal } from '@/components/atoms/dashboard/students/modals/Promo
 import { DemoteModal } from '@/components/atoms/dashboard/students/modals/DemoteModal';
 import { AddStudentMenu } from '@/components/atoms/dashboard/students/modals/AddStudentMenu';
 import { UploadStudentsModal } from '@/components/atoms/dashboard/students/modals/UploadStudentsModal';
+import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 
 const page = () => {
     const breadcrumbs = [{ label: 'Students', isActive: true }];
+    const {theme} = useSlgTheme()
     return (
         <main>
             <div className="flex justify-between items-center">
@@ -36,7 +38,7 @@ const page = () => {
                         className="h-[44px]  py-3 px-6 flex gap-2 border border-primary"
                     >
                         {' '}
-                        <ExportIcon />
+                        <ExportIcon color={theme.primary} />
                         <span className={cn('text-base ', Inter_500.className)}>
                             Export lists
                         </span>
