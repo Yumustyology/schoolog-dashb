@@ -1,4 +1,4 @@
-// 'use client';
+'use client';
 
 import {
   ChangeEvent,
@@ -67,7 +67,7 @@ const Input: FC<inputProps> = ({
   register,
   labelClassName,
   disabled,
-  leftIcon,
+  // leftIcon,  
   rightIcon,
   rows = 4,
   ...props
