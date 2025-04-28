@@ -6,7 +6,6 @@ import Button from '@/components/atoms/form/Button';
 import { DatePicker } from '@/components/atoms/form/DatePicker';
 import SearchInput from '@/components/atoms/form/SearchInput';
 import { AnnouncementIcon } from '@/components/atoms/icons/Icon2';
-import { AdditionIcon } from '@/components/atoms/icons/Icons';
 import AnnoucementsList from '@/components/molecules/dashboard/announcement/AnnoucementsList';
 import React from 'react'
 
