@@ -45,7 +45,7 @@ export function AppSidebar({
             behavior: 'smooth',
             block: 'end',
           });
-        }, 100); 
+        }, 100);
       }
 
       return newState;
@@ -187,14 +187,14 @@ export function AppSidebar({
               <SidebarMenuButton
                 className={cn(
                   'py-5 rounded-full text-gray3 flex items-center px-4 text-gray-300 hover:bg-gray-700',
-                  cleanedPath === '/student/settings'
+                  cleanedPath === '/${}settings'
                     ? 'hover:bg-primary bg-primary text-white hover:text-white'
                     : 'hover:bg-gray2 hover:text-gray3 '
                 )}
                 asChild
               >
-                <Link href="/student/settings">
-                  {cleanedPath === '/student/settings' ? (
+                <Link href={`/${type}/settings`}>
+                  {cleanedPath === `/${type}/settings` ? (
                     <div>
                       <Settings color="#FFFFFF" />
                     </div>

@@ -4,15 +4,25 @@ import Marked from '@/components/atoms/icons/dashboard/Marked';
 import Unmarked from '@/components/atoms/icons/dashboard/Unmarked';
 import { Inter_500, poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
-import { Card, CardBody, Tooltip, Typography } from '@material-tailwind/react';
+import { Card, CardBody, Typography } from '@material-tailwind/react';
 
 import React from 'react';
+import Button from '@/components/atoms/form/Button';
+import EyeClose from '@/components/atoms/icons/EyeClose';
+import { TopicDetailDrawer } from '@/components/atoms/dashboard/subjects/SubjectsDrawer/TopicDetailsDrawer';
+import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 type TopicsList = {
   isMarked: boolean;
   topic: string;
   week: number;
   date: string;
   view: React.ReactNode;
+  status?: string;
+  details?: string;
+  subtopics?: {
+    isMarked: boolean;
+    subtopic: string;
+  }[]
 }[];
 
 const topicsList: TopicsList = [
@@ -23,6 +33,26 @@ const topicsList: TopicsList = [
     week: 1,
     date: 'Nov, 12 2024 - 9am',
     view: <View />,
+    status: 'Completed',
+    details: 'The success of any study or survey often hinges on the quality of its participants. This report provides an in-depth analysis of participant engagement, performance, and overall contributions within recent studies conducted on our platform. By highlighting key metrics and participant feedback, this report aims to showcase the value participants bring to our research ecosystem.',
+    subtopics: [
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+    ]
   },
   {
     isMarked: false,
@@ -31,6 +61,26 @@ const topicsList: TopicsList = [
     week: 1,
     date: 'Nov, 12 2024 - 9am',
     view: <View />,
+    status: 'Completed',
+    details: 'The success of any study or survey often hinges on the quality of its participants. This report provides an in-depth analysis of participant engagement, performance, and overall contributions within recent studies conducted on our platform. By highlighting key metrics and participant feedback, this report aims to showcase the value participants bring to our research ecosystem.',
+    subtopics: [
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+    ]
   },
   {
     isMarked: false,
@@ -39,6 +89,26 @@ const topicsList: TopicsList = [
     week: 1,
     date: 'Nov, 12 2024 - 9am',
     view: <View />,
+    status: 'Completed',
+    details: 'The success of any study or survey often hinges on the quality of its participants. This report provides an in-depth analysis of participant engagement, performance, and overall contributions within recent studies conducted on our platform. By highlighting key metrics and participant feedback, this report aims to showcase the value participants bring to our research ecosystem.',
+    subtopics: [
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+    ]
   },
   {
     isMarked: true,
@@ -47,6 +117,26 @@ const topicsList: TopicsList = [
     week: 1,
     date: 'Nov, 12 2024 - 9am',
     view: <View />,
+    status: 'Completed',
+    details: 'The success of any study or survey often hinges on the quality of its participants. This report provides an in-depth analysis of participant engagement, performance, and overall contributions within recent studies conducted on our platform. By highlighting key metrics and participant feedback, this report aims to showcase the value participants bring to our research ecosystem.',
+    subtopics: [
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+    ]
   },
   {
     isMarked: true,
@@ -55,6 +145,26 @@ const topicsList: TopicsList = [
     week: 1,
     date: 'Nov, 12 2024 - 9am',
     view: <View />,
+    status: 'Completed',
+    details: 'The success of any study or survey often hinges on the quality of its participants. This report provides an in-depth analysis of participant engagement, performance, and overall contributions within recent studies conducted on our platform. By highlighting key metrics and participant feedback, this report aims to showcase the value participants bring to our research ecosystem.',
+    subtopics: [
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+    ]
   },
   {
     isMarked: true,
@@ -63,10 +173,34 @@ const topicsList: TopicsList = [
     week: 1,
     date: 'Nov, 12 2024 - 9am',
     view: <View />,
+    status: 'Completed',
+    details: 'The success of any study or survey often hinges on the quality of its participants. This report provides an in-depth analysis of participant engagement, performance, and overall contributions within recent studies conducted on our platform. By highlighting key metrics and participant feedback, this report aims to showcase the value participants bring to our research ecosystem.',
+    subtopics: [
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+      {
+        isMarked: true,
+        subtopic: 'Introduction to personal assessments'
+      },
+    ]
+
   },
 ];
 
 function Topics() {
+  const [showDrawer, setShowDrawer] = React.useState(false);
+    const {theme} = useSlgTheme()
+  
   return (
     <>
       {topicsList.map((topic) => {
@@ -76,7 +210,7 @@ function Topics() {
             className="bg-[#F8F8F8] shadow-none w-full mb-4"
           >
             <CardBody className="w-full flex justify-between items-center gap-3 p-3">
-              <div>{topic.isMarked ? <Marked /> : <Unmarked />}</div>
+              <div>{topic.isMarked ? <Marked color={theme.primary}/> : <Unmarked />}</div>
 
               <Typography
                 className={cn('text-sm text-gray6 flex-1', Inter_500.className)}
@@ -94,8 +228,20 @@ function Topics() {
                 </Typography>
               </Typography>
 
-              <Tooltip>{topic.view}</Tooltip>
+              {/* <Tooltip className="">{topic.view}</Tooltip> */}
+              <Button
+                onClick={() => { setShowDrawer(true) }}
+                className={cn(
+                  'bg-[#EAEAEA] text-gray3 flex gap-3 text-sm rounded-full',
+                  poppins_400.className
+                )}
+              >
+                <EyeClose />
+                <span>View</span>
+              </Button>
+
             </CardBody>
+            <TopicDetailDrawer isTopicDetailsOpen={showDrawer} setIsTopicDetailsOpen={setShowDrawer} week={topic.week} topic={topic.topic} details={topic.details} status={topic.status} subtopics={topic.subtopics} />
           </Card>
         );
       })}

@@ -38,3 +38,7 @@ export type MaterialType = {
   size: string;
   date: string;
 }[];
+
+export type carouselImageRefType = {
+  setActiveIndexTab: (arg: number) => void;
+};

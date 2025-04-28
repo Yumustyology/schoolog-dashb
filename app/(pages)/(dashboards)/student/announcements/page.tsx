@@ -11,9 +11,10 @@ import {
 import { cn } from '@/app/lib/utils';
 import { Typography } from '@material-tailwind/react';
 import React, { useState } from 'react';
-import { Announcements } from '@/types';
+
 import SelectBox from '@/components/atoms/dashboard/subjects/Select';
 import PaginationBox from '@/components/atoms/dashboard/subjects/Pagination';
+import { Announcements } from '@/app/types';
 
 const announcements: Announcements = [
   {

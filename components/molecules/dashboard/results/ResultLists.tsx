@@ -13,12 +13,13 @@ import { ResultTable } from './ResultTable';
 import EyeOpen from '@/components/atoms/icons/EyeOpen';
 import FormModal from '../FormModal';
 import Input from '@/components/atoms/form/Input';
-import SelectComp from '@/components/atoms/form/Select';
+// import SelectComp from '@/components/atoms/form/Select';
 import HideArrow from '@/components/atoms/icons/SideBar/HideArrow';
 import Button from '@/components/atoms/form/Button';
 import DownloadIcon from '@/components/atoms/icons/dashboard/DownloadIcon';
 import ScreenIcon from '@/components/atoms/icons/dashboard/ScreenIcon';
 import Dot from '@/components/atoms/dashboard/subjects/Dot';
+import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 
 type TableDescription = {
   id: number;
@@ -31,7 +32,7 @@ type TableDescription = {
   open: boolean;
 };
 
-const tableDescription: TableDescription[] = [
+export const tableDescription: TableDescription[] = [
   {
     id: 1,
     class: 'SS1',
@@ -64,38 +65,10 @@ export function ResultLists(): JSX.Element {
       [id]: !prevState[id],
     }));
   };
-
+const {theme} = useSlgTheme() 
   return (
     <>
-      <Card className="h-full w-full overflow-scroll p-3.5 mt-8 shadow-none">
-        <SelectComp
-          placeholder="All Class"
-          className=""
-          triggerClasses={cn(
-            poppins_400.className,
-            'mb-6 text-xs cursor-pointer text-gray6 2 text-center gap-1.5 w-max border-gray4 flex justify-between rounded-full h-[38px] items-center px-3 py-2'
-          )}
-          value=""
-          onValueChange={console.log}
-          options={[
-            {
-              id: 'all',
-              name: 'All Class',
-            },
-            {
-              id: 'jss1',
-              name: 'JSS1',
-            },
-            {
-              id: 'jss2',
-              name: 'JSS2',
-            },
-            {
-              id: 'jss3',
-              name: 'JSS3',
-            },
-          ]}
-        />
+      <Card className="h-full w-full overflow-scroll p-3.5 shadow-none">
         {tableDescription.map((description) => (
           <div
             key={description.id}
@@ -140,7 +113,7 @@ export function ResultLists(): JSX.Element {
                         Inter_600.className
                       )}
                     >
-                      <ScreenIcon /> <span>Full screen</span>
+                      <ScreenIcon color={theme.primary} /> <span>Full screen</span>
                     </Button>
                   ) : null
                 ) : null}

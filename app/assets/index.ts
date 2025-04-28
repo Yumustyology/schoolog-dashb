@@ -18,7 +18,7 @@ import activities1 from './images/activities1.png';
 import activities2 from './images/activities2.png';
 import mathTextbook from './images/mathTextbook.png';
 import biologyTextbook from './images/BiologyTextbook.png';
-// import mathTextook from './images/math/mathTextook.png'
+import thumbnailImage from './images/thumbnail.png'
 // import BiologyTextbook from '.images/BiologyTextbook.png'
 
 export {
@@ -42,6 +42,7 @@ export {
   activities2,
   mathTextbook,
   biologyTextbook,
+  thumbnailImage,
   // mathTextook,
   // BiologyTextbook
 };

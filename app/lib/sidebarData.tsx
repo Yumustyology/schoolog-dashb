@@ -16,6 +16,7 @@ import ParentsIcon from '@/components/atoms/icons/SideBar/ParentsIcon';
 import StudentsIcon from '@/components/atoms/icons/SideBar/StudentsIcon';
 import FinanceIcon from '@/components/atoms/icons/SideBar/FinanceIcon';
 import StaffsIcon from '@/components/atoms/icons/dashboard/StaffsIcon';
+import AdmissionIcon from '@/components/atoms/icons/SideBar/AdmissionIcon';
 
 export type SidebarItemsType = {
   title: string;
@@ -140,7 +141,7 @@ export const shoolSidebarItems: SidebarItemsType = [
     icon: <ParentsIcon />,
     activeIcon: <ParentsIcon color="#FFFFFF" />,
   },
-   {
+  {
     title: 'Staffs',
     icon: <StaffsIcon />,
     activeIcon: <StaffsIcon color="#FFFFFF" />,
@@ -176,8 +177,14 @@ export const shoolSidebarItems: SidebarItemsType = [
   {
     title: 'Library',
     url: '/school/library',
-    icon: <Library />,
+    icon: <Library color="#828282" />,
     activeIcon: <Library color="#FFFFFF" />,
+  },
+  {
+    title: 'Admission',
+    url: '/school/admission',
+    icon: <AdmissionIcon color="#828282"  />,
+    activeIcon: <AdmissionIcon color="#FFFFFF" />,
   },
   {
     title: 'Finance',
@@ -190,15 +197,15 @@ export const shoolSidebarItems: SidebarItemsType = [
       },
       {
         title: 'Fee payments',
-        url: '/school/fee-payments',
+        url: '/school/finance/fee-payments',
       },
       {
         title: 'Payrolls',
-        url: '/school/payrolls',
+        url: '/school/finance/payrolls',
       },
       {
         title: 'Invoice',
-        url: '/school/invoice',
+        url: '/school/finance/invoices',
       },
     ],
   },
@@ -213,6 +220,12 @@ export const shoolSidebarItems: SidebarItemsType = [
     url: '/school/activities',
     icon: <Activities />,
     activeIcon: <Activities color="#FFFFFF" />,
+  },
+  {
+    title: 'Template',
+    url: '/school/templates',
+    icon: <SuggestionBoxIcon />,
+    activeIcon: <SuggestionBoxIcon color="#FFFFFF" />,
   },
   {
     title: 'Announcement',

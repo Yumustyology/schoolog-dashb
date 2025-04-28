@@ -102,7 +102,7 @@ export function AssignmentList({ className, ...props }: AssignmentListProps) {
                       notification.status == 'pending'
                         ? 'text-[#F2994A]'
                         : notification.status == 'completed'
-                          ? 'text-[#21B55A]'
+                          ? 'text-success'
                           : 'text-[#EB5757]'
                     )}
                   >

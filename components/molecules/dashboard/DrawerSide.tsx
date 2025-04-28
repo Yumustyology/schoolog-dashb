@@ -13,6 +13,12 @@ export function DrawerSide({
   open,
   close,
   className,
+  headerClassName,
+  cancelClassName,
+  titleClassName,
+  subTitleClassName,
+  footer,
+  footerClassName,
 }: {
   children: React.ReactNode;
   title: string;
@@ -20,6 +26,12 @@ export function DrawerSide({
   open: boolean;
   close?: () => void;
   className?: string;
+  headerClassName?: string;
+  cancelClassName?: string;
+  titleClassName?: string;
+  subTitleClassName?: string;
+  footer?: React.ReactNode;
+  footerClassName?: string;
 }) {
   const [portalRoot, setPortalRoot] = useState<HTMLElement | null>(null);
 
@@ -37,15 +49,10 @@ export function DrawerSide({
     if (!portalDiv && typeof window !== 'undefined') {
       portalDiv = document.createElement('div');
       portalDiv.id = 'drawer-portal';
+      portalDiv.style.zIndex = '500';
       document.body.appendChild(portalDiv);
     }
     setPortalRoot(portalDiv);
-
-    return () => {
-      if (portalDiv && portalDiv.parentNode) {
-        portalDiv.parentNode.removeChild(portalDiv);
-      }
-    };
   }, []);
 
   useEffect(() => {
@@ -65,24 +72,51 @@ export function DrawerSide({
 
   const drawerContent = (
     <Drawer
-      className={cn('', className)}
+      className={cn('flex flex-col', className)}
       placement="right"
       open={open}
+      overlayProps={{
+        className:
+          'fixed top-0 left-0 w-full h-full bg-black bg-opacity-30 z-[999]',
+      }}
       size={494}
     >
-      <div className="bg-primary text-white text-[16px] flex justify-between items-center w-full p-4">
+      <div
+        className={cn(
+          'bg-primary text-white text-[16px] flex justify-between items-center w-full p-4',
+          headerClassName
+        )}
+      >
         <div>
-          <p className={cn('text-[16px]', Inter_600.className)}> {title}</p>
-          <p className={cn('text-[16px]', Inter_400.className)}>{subtitle}</p>
+          <p className={cn('text-[16px]', Inter_600.className, titleClassName)}>
+            {title}
+          </p>
+          <p
+            className={cn(
+              'text-[16px]',
+              Inter_400.className,
+              subTitleClassName
+            )}
+          >
+            {subtitle}
+          </p>
         </div>
         <div
-          className="h-[32px] w-[32px] bg-white cursor-pointer rounded-full flex items-center justify-center"
+          className={cn(
+            'h-[32px] w-[32px] bg-white cursor-pointer rounded-full flex items-center justify-center',
+            cancelClassName
+          )}
           onClick={close}
         >
           <Cancel />
         </div>
       </div>
-      <div className="h-full overflow-y-auto">{children}</div>
+
+      <div className="flex-1 overflow-y-auto">{children}</div>
+
+      {footer && (
+        <div className={cn('bg-white p-4', footerClassName)}>{footer}</div>
+      )}
     </Drawer>
   );
 

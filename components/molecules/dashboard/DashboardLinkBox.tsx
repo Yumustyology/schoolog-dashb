@@ -3,6 +3,7 @@ import { cn } from '@/app/lib/utils';
 import React, { ReactNode } from 'react';
 import ArrowRightIcon from '../../atoms/icons/ArrowRightIcon';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const DashboardLinkBox = ({
   title,
@@ -11,22 +12,43 @@ const DashboardLinkBox = ({
   to,
   icon,
   iconBgColor,
+  className,
+  titleClassName,
+  countClassName,
+  baseTextClassName,
 }: {
   title?: string;
   baseText?: string | ReactNode;
   count: string | ReactNode;
-  to: string;
+  to?: string;
   icon: ReactNode;
   iconBgColor: string;
+  className?: string;
+  titleClassName?: string;
+  countClassName?: string;
+  baseTextClassName?: string;
 }) => {
   return (
-    <div className="bg-white rounded-lg p-4 flex flex-col justify-between">
+    <div
+      className={cn(
+        'bg-white rounded-lg p-4 flex flex-col justify-between relative',
+        className
+      )}
+    >
+      <Image
+        width={124.18072342603794}
+        height={78.61740769415881}
+        alt="watermark"
+        src="/assets/images/watermark.png"
+        className="absolute right-0 bottom-0"
+      />
       <div className="justify-between flex">
         <div className="flex-grow">
           <p
             className={cn(
               'text-gray3 mb-3 text-sm font-normal flex-grow',
-              poppins_400.className
+              poppins_400.className,
+              titleClassName
             )}
           >
             {title}
@@ -34,7 +56,8 @@ const DashboardLinkBox = ({
           <p
             className={cn(
               'text-gray1 mb-3 text-2xl font-semibold',
-              poppins_600.className
+              poppins_600.className,
+              countClassName
             )}
           >
             {count}
@@ -54,7 +77,8 @@ const DashboardLinkBox = ({
           className={cn(
             'text-gray6 text-sm font-normal',
             baseText && 'text-base text-gray1',
-            poppins_400.className
+            poppins_400.className,
+            baseTextClassName
           )}
         >
           {baseText || 'View all'}

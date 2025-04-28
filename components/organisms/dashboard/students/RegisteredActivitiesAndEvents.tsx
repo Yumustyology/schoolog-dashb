@@ -2,7 +2,7 @@ import Dot from '@/components/atoms/dashboard/subjects/Dot';
 import CalendarIcon from '@/components/atoms/icons/dashboard/CalendarIcon';
 import CategoryIcon from '@/components/atoms/icons/dashboard/CategoryIcon';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
-import { registeredActivitiesAndEvents } from '@/constants';
+import { registeredActivitiesAndEvents } from '@/app/constants';
 import { cn } from '@/app/lib/utils';
 import Image from 'next/image';
 import React from 'react';
@@ -11,7 +11,7 @@ function RegisteredActivitiesAndEvents() {
   return (
     <div className="w-full">
       <section className="grid grid-cols-3 gap-6">
-        {registeredActivitiesAndEvents.map((activitiesAndEvent) => {
+        {registeredActivitiesAndEvents.map((activitiesAndEvent:any) => {
           return (
             <div
               key={activitiesAndEvent.title}

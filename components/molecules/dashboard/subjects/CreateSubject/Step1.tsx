@@ -1,10 +1,5 @@
 import Button from '@/components/atoms/form/Button';
 import Input from '@/components/atoms/form/Input';
-// import {
-//   UploadImageIcon,
-//   Upload_Icon,
-// } from '@/components/atoms/icons/Icons';
-// import ProgressPageNumber from '@/components/molecules/auth/PageNumber';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import React from 'react';

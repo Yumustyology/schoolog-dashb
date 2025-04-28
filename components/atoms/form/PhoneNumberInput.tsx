@@ -4,21 +4,26 @@ import React, { useState } from 'react';
 import ReactPhoneInput from 'react-phone-input-2';
 import 'react-phone-input-2/lib/style.css'; // Import the necessary styles for the phone input
 
+interface PhoneNumberInputProps {
+  label?: string;
+  id?: string;
+  labelClassName?: string;
+  className?: string;
+  onPhoneChange: (value: string) => void;
+}
+
 export function PhoneNumberInput({
   label,
   id,
   labelClassName = '',
   className,
-}: {
-  label?: string;
-  id?: string;
-  labelClassName?: string;
-  className?: string;
-}) {
+  onPhoneChange,
+}: PhoneNumberInputProps) {
   const [phoneNumber, setPhoneNumber] = useState<string>('');
 
   const handlePhoneChange = (value: string) => {
     setPhoneNumber(value);
+    onPhoneChange(value); 
   };
 
   return (

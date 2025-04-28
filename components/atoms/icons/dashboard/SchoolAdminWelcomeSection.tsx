@@ -1,56 +1,11 @@
 'use client';
-import {
-  Inter_500,
-  poppins_400,
-  poppins_600,
-} from '@/app/lib/config/font.config';
+import { poppins_400, poppins_600 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
-import React, { useState } from 'react';
-import {
-  ButtonGroup,
-  Button as ButtonMaterialUI,
-} from '@material-tailwind/react';
+import React from 'react';
 import Button from '../../form/Button';
 import AddUserIcon from './AddUserIcon';
 import { DatePicker } from '../../form/DatePicker';
-
-export function FilterButtonGroup({
-  onFilterChange,
-}: {
-  onFilterChange: (filter: string) => void;
-}) {
-  const [activeFilter, setActiveFilter] = useState<string>('30 days');
-
-  const handleButtonClick = (filter: string) => {
-    setActiveFilter(filter);
-    onFilterChange(filter);
-  };
-
-  const active = 'bg-[#D0D5DD] text-gray1 border border-[#D0D5DD]';
-  const inactive =
-    'shadow-none text-sm border border-[#E5E5EA] text-gray6 bg-white py-3';
-
-  return (
-    <div className="flex w-max flex-col gap-4">
-      <ButtonGroup className={cn('shadow-none text-sm')} variant="outlined">
-        {['12 months', '30 days', '7 days', '24 hours'].map((filter, index) => (
-          <ButtonMaterialUI
-            key={filter}
-            className={cn(
-              inactive,
-              Inter_500.className,
-              { [active]: activeFilter === filter },
-              { 'border-l-0': index !== 0 }
-            )}
-            onClick={() => handleButtonClick(filter)}
-          >
-            {filter}
-          </ButtonMaterialUI>
-        ))}
-      </ButtonGroup>
-    </div>
-  );
-}
+import { FilterButtonGroup } from '../../FilterButton';
 
 const SchoolAdminWelcomeSection = () => {
   const handleFilterChange = (filter: string) => {
@@ -63,7 +18,7 @@ const SchoolAdminWelcomeSection = () => {
         <p className="mb-6">
           <h1 className={cn(poppins_600.className, 'text-3xl ')}>
             Hi{' '}
-            <span className="bg-gradient-to-r from-[#21B55A] to-[#0E4F27] bg-clip-text text-transparent">
+            <span className="bg-gradient-primary bg-clip-text text-transparent">
               Mohh_Jumah
             </span>
             👋 How is your day going

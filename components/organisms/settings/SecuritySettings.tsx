@@ -3,8 +3,10 @@ import { cn } from '@/app/lib/utils';
 import React from 'react';
 import Button from '../../atoms/form/Button';
 import LockIcon from '../../atoms/icons/LockIcon';
+import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 
 const SecuritySettings = () => {
+  const {theme} = useSlgTheme()
   return (
     <div>
       <div className="flex items-start justify-between pb-4 border-b border-b-[#E5E5EA] mb-8">
@@ -30,8 +32,8 @@ const SecuritySettings = () => {
               from unauthorized individual
             </p>
           </div>
-          <div className="flex-shrink-0 h-[42px] w-[42px] flex items-center justify-center bg-[#21B55A1F] rounded-full">
-            <LockIcon />
+          <div className="flex-shrink-0 h-[42px] w-[42px] flex items-center justify-center bg-light rounded-full">
+            <LockIcon color={theme.primary} />
           </div>
         </Button>
         <Button className="text-left bg-transparent h-32 cursor-pointer flex gap-12 justify-between items-center border border-[#E5E5EA] p-5 rounded-lg">
@@ -46,8 +48,8 @@ const SecuritySettings = () => {
               account is only accessible from your current session
             </p>
           </div>
-          <div className="flex-shrink-0 h-[42px] w-[42px] flex items-center justify-center bg-[#21B55A1F] rounded-full">
-            <LockIcon />
+          <div className="flex-shrink-0 h-[42px] w-[42px] flex items-center justify-center bg-light rounded-full">
+            <LockIcon color={theme.primary} />
           </div>
         </Button>
       </div>

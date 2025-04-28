@@ -90,7 +90,7 @@ function AttendanceList() {
   ];
 
   return (
-    <Table className="border-none my-8">
+    <Table className="border-none ">
       <TableHeader
         className={cn(
           'bg-[#FBFBFB] border-none text-gray text-sm',

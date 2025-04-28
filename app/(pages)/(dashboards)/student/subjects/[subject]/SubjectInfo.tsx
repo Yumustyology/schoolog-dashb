@@ -89,7 +89,7 @@ function Page({ subject }: { subject: string }) {
                   <Tab
                     onClick={() => handleTopicAssignmentTabClick(value)}
                     className={cn('text-sm text-center', poppins_500.className)}
-                    activeClassName="rounded-full text-white bg-[#21B55A]"
+                    activeClassName="rounded-full text-white bg-primary"
                     key={value}
                     value={value}
                   >

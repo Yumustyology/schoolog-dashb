@@ -12,10 +12,18 @@ module.exports = withMT({
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'gradient-primary':
+          'linear-gradient(to right, var(--color-primary), var(--color-primary-dark))',
+      },
       colors: {
-        primary: '#21B55A',
-        light: '#E9F8EF',
-        primary1: 'rgba(33, 181, 90, 0.12)',
+        success: '#21B55A',
+        lightSuccess: '#E9F8EF',
+        deep: 'var(--color-deep)',
+        light1: 'var(--color-light1)',
+        primary: 'var(--color-primary)',
+        light: 'var(--color-light)',
+        primary1: 'var(--color-primary1)',
         black1: '#101828',
         black2: '#071E3B',
         gray1: '#333333',
@@ -29,6 +37,8 @@ module.exports = withMT({
         gray: '#1D4241',
         gray8: '#1D4241',
         gray9: '#434343',
+        gray10: '#667085',
+        gray11: '#F8F8F8',
         r: '#EB5757',
         r2: '#D92D20',
         background: 'hsl(var(--background))',

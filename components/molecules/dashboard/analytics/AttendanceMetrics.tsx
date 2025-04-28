@@ -2,7 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 import ArrowUpIcon from '@/components/atoms/icons/ArrowUpIcon';
 import {
-  Inter_400,
+  // Inter_400,
   Inter_800,
   poppins_500,
 } from '@/app/lib/config/font.config';
@@ -10,104 +10,28 @@ import { cn } from '@/app/lib/utils';
 import React from 'react';
 import { CardBody } from '@material-tailwind/react';
 import dynamic from 'next/dynamic';
+import { getChartConfig } from '@/app/lib/utils/getChartConfig';
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-const chartConfig = {
-  type: 'line',
-  height: 240,
-  series: [
-    {
-      name: 'Grades',
-      data: [10, 50, 30, 70, 50, 330, 400, 630, 800],
-    },
-  ],
-  options: {
-    chart: {
-      toolbar: {
-        show: false,
-      },
-    },
-    title: {
-      show: '',
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    colors: ['#21B55A'],
-    stroke: {
-      lineCap: 'round',
-      curve: 'smooth',
-    },
-    // colors: ["#FCC200"],
-    // stroke: {
-    //   lineCap: "round",
-    //   curve: "smooth",
-    //   colors: ["#FCC200"]
-    // },
-    markers: {
-      size: 0,
-    },
-    xaxis: {
-      axisTicks: {
-        show: false,
-      },
-      axisBorder: {
-        show: false,
-      },
-      labels: {
-        style: {
-          colors: '#4F4F4F',
-          fontSize: '9px',
-          fontFamily: Inter_400.className,
-          fontWeight: 400,
-        },
-      },
-      categories: [
-        'Apr',
-        'May',
-        'Jun',
-        'Jul',
-        'Aug',
-        'Sep',
-        'Oct',
-        'Nov',
-        'Dec',
-      ],
-    },
-    yaxis: {
-      labels: {
-        style: {
-          colors: '#4F4F4F',
-          fontSize: '9px',
-          fontFamily: Inter_400.className,
-          fontWeight: 400,
-        },
-      },
-    },
-    grid: {
-      show: true,
-      borderColor: '#E5E5EA',
-      strokeDashArray: 5,
-      xaxis: {
-        lines: {
-          show: true,
-        },
-      },
-      padding: {
-        top: 5,
-        right: 0,
-      },
-    },
-    fill: {
-      opacity: 0.8,
-    },
-    tooltip: {
-      theme: 'light',
-    },
-  },
-};
-
 const AttendanceMetrics = () => {
+  const data = [10, 50, 30, 70, 50, 330, 400, 630, 800];
+  const categories = [
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+  const chartConfig = getChartConfig({
+    series: [{ name: 'Grades', data }],
+    categories,
+    height: 240,
+  });
+
   return (
     <div>
       <div className="flex items-end gap-3">

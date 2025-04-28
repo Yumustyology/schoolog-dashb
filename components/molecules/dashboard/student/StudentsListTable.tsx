@@ -177,7 +177,7 @@ export function StudentsListTable(): JSX.Element {
                       className={cn(
                         'font-normal rounded-full w-[92px] py-1.5 px-8',
                         status === 'Pass'
-                          ? 'text-primary bg-primary1'
+                          ? 'text-lightSuccess bg-success'
                           : status === 'Good'
                             ? 'text-[#F2994A] bg-[#F2994A14]'
                             : status === 'Fair'
