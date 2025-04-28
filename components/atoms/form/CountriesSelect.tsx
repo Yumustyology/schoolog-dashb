@@ -61,6 +61,8 @@ export function CountriesSelect({
                   <Image
                     alt={`${name}-flag`}
                     src={flags.svg}
+                    width={20}
+                    height={20}
                     className="h-5 w-5 rounded-full object-cover"
                   />
                   {name}
