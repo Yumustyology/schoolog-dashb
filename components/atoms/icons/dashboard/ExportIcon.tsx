@@ -12,30 +12,30 @@ const ExportIcon = ({ color = '#21B55A',size= 20 }) => {
       <path
         d="M7.4987 14.1641V9.16406L5.83203 10.8307"
         stroke={color}
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M7.5 9.16406L9.16667 10.8307"
         stroke={color}
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M18.3346 8.33073V12.4974C18.3346 16.6641 16.668 18.3307 12.5013 18.3307H7.5013C3.33464 18.3307 1.66797 16.6641 1.66797 12.4974V7.4974C1.66797 3.33073 3.33464 1.66406 7.5013 1.66406H11.668"
         stroke={color}
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M18.3346 8.33073H15.0013C12.5013 8.33073 11.668 7.4974 11.668 4.9974V1.66406L18.3346 8.33073Z"
         stroke={color}
-        stroke-width="1.5"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

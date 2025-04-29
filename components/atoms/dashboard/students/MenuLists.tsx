@@ -103,7 +103,7 @@ const MenuLists: React.FC<DropdownMenuProps> = ({
                 {items.map((item, index) => (
                     <MenuItem 
                         key={index} 
-                        onClick={()=>{item.onClick}}
+                        onClick={()=>{item.onClick()}}
                         className={cn(
                             "flex items-center gap-4 p-2",
                             item.danger ? "text-red-500" : "text-black1" 

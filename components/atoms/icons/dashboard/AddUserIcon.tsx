@@ -14,7 +14,7 @@ const AddUserIcon = () => {
         stroke="white"
         strokeWidth="1.5"
         strokeLinecap="round"
-        stroke-linejoin="round"
+        strokeLinejoin="round"
       />
       <path
         d="M13.75 17.9168V14.5835"

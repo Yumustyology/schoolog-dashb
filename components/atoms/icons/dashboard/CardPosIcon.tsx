@@ -13,7 +13,7 @@ function CardPosIcon({ color = 'white' }: { color?: string }) {
         d="M3.27441 13.2318L13.2327 3.27344"
         stroke={color}
         strokeWidth="1.5"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -21,7 +21,7 @@ function CardPosIcon({ color = 'white' }: { color?: string }) {
         d="M9.25098 15.2344L10.251 14.2344"
         stroke={color}
         strokeWidth="1.5"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -29,7 +29,7 @@ function CardPosIcon({ color = 'white' }: { color?: string }) {
         d="M11.4941 12.9917L13.4858 11"
         stroke={color}
         strokeWidth="1.5"
-        stroke-miterlimit="10"
+        strokeMiterlimit="10"
         strokeLinecap="round"
         strokeLinejoin="round"
       />

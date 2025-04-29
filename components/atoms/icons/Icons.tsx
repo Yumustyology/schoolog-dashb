@@ -671,7 +671,7 @@ export const FilterIcon = () => (
       d="M18.6667 8.33203H14.6667"
       stroke="#828282"
       strokeWidth="1.2"
-      stroke-miterlimit="10"
+      strokeMiterlimit="10"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -679,7 +679,7 @@ export const FilterIcon = () => (
       d="M7.99998 8.33203H5.33331"
       stroke="#828282"
       strokeWidth="1.2"
-      stroke-miterlimit="10"
+      strokeMiterlimit="10"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -687,7 +687,7 @@ export const FilterIcon = () => (
       d="M10.6666 10.6667C11.9553 10.6667 13 9.622 13 8.33333C13 7.04467 11.9553 6 10.6666 6C9.37798 6 8.33331 7.04467 8.33331 8.33333C8.33331 9.622 9.37798 10.6667 10.6666 10.6667Z"
       stroke="#828282"
       strokeWidth="1.2"
-      stroke-miterlimit="10"
+      strokeMiterlimit="10"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -695,7 +695,7 @@ export const FilterIcon = () => (
       d="M18.6667 15.668H16"
       stroke="#828282"
       strokeWidth="1.2"
-      stroke-miterlimit="10"
+      strokeMiterlimit="10"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -703,7 +703,7 @@ export const FilterIcon = () => (
       d="M9.33331 15.668H5.33331"
       stroke="#828282"
       strokeWidth="1.2"
-      stroke-miterlimit="10"
+      strokeMiterlimit="10"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -711,7 +711,7 @@ export const FilterIcon = () => (
       d="M13.3333 17.9987C14.622 17.9987 15.6667 16.954 15.6667 15.6654C15.6667 14.3767 14.622 13.332 13.3333 13.332C12.0447 13.332 11 14.3767 11 15.6654C11 16.954 12.0447 17.9987 13.3333 17.9987Z"
       stroke="#828282"
       strokeWidth="1.2"
-      stroke-miterlimit="10"
+      strokeMiterlimit="10"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -760,7 +760,7 @@ export const PromoteIcon = ({ size = '18' }: { size?: string }) => (
       d="M6.98999 4.87312L8.90999 2.95312L10.83 4.87312"
       stroke="#828282"
       strokeWidth="1.3"
-      stroke-miterlimit="10"
+      strokeMiterlimit="10"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -768,7 +768,7 @@ export const PromoteIcon = ({ size = '18' }: { size?: string }) => (
       d="M8.91003 10.6353V3.00781"
       stroke="#828282"
       strokeWidth="1.3"
-      stroke-miterlimit="10"
+      strokeMiterlimit="10"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -776,7 +776,7 @@ export const PromoteIcon = ({ size = '18' }: { size?: string }) => (
       d="M3 9C3 12.315 5.25 15 9 15C12.75 15 15 12.315 15 9"
       stroke="#828282"
       strokeWidth="1.3"
-      stroke-miterlimit="10"
+      strokeMiterlimit="10"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -794,7 +794,7 @@ export const DemoteIcon = () => (
       d="M6.98999 8.76172L8.90999 10.6817L10.83 8.76172"
       stroke="#828282"
       strokeWidth="1.5"
-      stroke-miterlimit="10"
+      strokeMiterlimit="10"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -802,7 +802,7 @@ export const DemoteIcon = () => (
       d="M8.91003 3V10.6275"
       stroke="#828282"
       strokeWidth="1.5"
-      stroke-miterlimit="10"
+      strokeMiterlimit="10"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -810,7 +810,7 @@ export const DemoteIcon = () => (
       d="M15 9.13672C15 12.4517 12.75 15.1367 9 15.1367C5.25 15.1367 3 12.4517 3 9.13672"
       stroke="#828282"
       strokeWidth="1.5"
-      stroke-miterlimit="10"
+      strokeMiterlimit="10"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
@@ -889,7 +889,7 @@ export const NoBooksIcon = () => (
       r="39.9814"
       fill="#E9F8EF"
       stroke="white"
-      stroke-width="2.22634"
+      strokeWidth="2.22634"
     />
     <mask
       id="mask0_3960_191829"
@@ -1013,7 +1013,7 @@ export const NoSuggestionIcon = () => (
       r="39.9814"
       fill="#E9F8EF"
       stroke="white"
-      stroke-width="2.22634"
+      strokeWidth="2.22634"
     />
     <mask
       id="mask0_3960_193796"
@@ -1080,5 +1080,29 @@ export const NoAnnouncementIcon = () => {
         />
       </g>
     </svg>
-  );
+  )
 };
+
+export const NoTeacherIcon = () => {
+  const { theme } = useSlgTheme()
+  return (
+    <svg width="118" height="118" viewBox="0 0 118 118" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="59" cy="59" r="59" fill={theme.primary} fillOpacity="0.06" />
+      <circle cx="59.0001" cy="59.2904" r="35.8997" fill={theme.light} />
+      <circle cx="59" cy="59.2898" r="39.9814" fill={theme.light} stroke="white" strokeWidth="2.22634" />
+      <mask id="mask0_3960_192549" mask-type="alpha" maskUnits="userSpaceOnUse" x="20" y="20" width="78" height="78">
+        <circle cx="59.0003" cy="59.292" r="38.6827" fill="white" />
+      </mask>
+      <g mask="url(#mask0_3960_192549)">
+        <path d="M69.1384 51.2424C69.0101 51.2241 68.8817 51.2241 68.7534 51.2424C65.9117 51.1507 63.6567 48.8224 63.6567 45.9624C63.6567 43.0474 66.0217 40.6641 68.9551 40.6641C71.8701 40.6641 74.2534 43.0291 74.2534 45.9624C74.2351 48.8224 71.9801 51.1507 69.1384 51.2424Z" fill="#21B55A" />
+        <path d="M75.115 63.9468C73.0617 65.3218 70.1833 65.8352 67.525 65.4868C68.2217 63.9835 68.5883 62.3152 68.6067 60.5552C68.6067 58.7218 68.2033 56.9802 67.4333 55.4585C70.1467 55.0918 73.025 55.6052 75.0967 56.9802C77.9934 58.8868 77.9934 62.0218 75.115 63.9468Z" fill="#21B55A" />
+        <path d="M48.8066 51.2424C48.935 51.2241 49.0633 51.2241 49.1916 51.2424C52.0333 51.1507 54.2883 48.8224 54.2883 45.9624C54.2883 43.0291 51.9233 40.6641 48.99 40.6641C46.075 40.6641 43.71 43.0291 43.71 45.9624C43.71 48.8224 45.965 51.1507 48.8066 51.2424Z" fill="#21B55A" />
+        <path d="M49.0083 60.5555C49.0083 62.3338 49.3933 64.0205 50.09 65.5422C47.505 65.8172 44.81 65.2672 42.83 63.9655C39.9333 62.0405 39.9333 58.9055 42.83 56.9805C44.7916 55.6605 47.56 55.1288 50.1633 55.4222C49.4116 56.9622 49.0083 58.7038 49.0083 60.5555Z" fill="#21B55A" />
+        <path d="M59.22 66.095C59.0734 66.0767 58.9084 66.0767 58.7434 66.095C55.37 65.985 52.675 63.2167 52.675 59.8067C52.6934 56.3233 55.4984 53.5 59 53.5C62.4834 53.5 65.3067 56.3233 65.3067 59.8067C65.2884 63.2167 62.6117 65.985 59.22 66.095Z" fill="#21B55A" />
+        <path d="M53.2616 69.8937C50.4932 71.7454 50.4932 74.7888 53.2616 76.6221C56.4149 78.7304 61.5849 78.7304 64.7382 76.6221C67.5066 74.7704 67.5066 71.7271 64.7382 69.8937C61.6032 67.7854 56.4332 67.7854 53.2616 69.8937Z" fill="#21B55A" />
+      </g>
+    </svg>
+
+  )
+};
+
