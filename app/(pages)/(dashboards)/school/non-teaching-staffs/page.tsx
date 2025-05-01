@@ -12,7 +12,6 @@ import SearchInput from '@/components/atoms/form/SearchInput';
 import { AdditionIcon } from '@/components/atoms/icons/Icons';
 import ExportIcon from '@/components/atoms/icons/dashboard/ExportIcon';
 import NonTeachingStaffTableLists from '@/components/molecules/dashboard/staff/NonTeachingStaffTableList';
-import TeachersTableLists from '@/components/molecules/dashboard/staff/TeachersTableList';
 import React from 'react'
 
 const page = () => {
@@ -25,7 +24,7 @@ const page = () => {
             crumbs={[
               {
                 isActive: true,
-                label: 'Non-teaching staff',
+                label: 'Non Teaching Staffs',
               },
             ]}
           />
