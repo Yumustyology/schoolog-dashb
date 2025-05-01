@@ -1,9 +1,9 @@
 import { biology1 } from '@/app/assets'
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config'
-import { openSuspendTeacherModal, openTerminateTeacherModal } from '@/app/lib/entities/staff.entity'
-import { openMoveModal, openSuspendStudentModal } from '@/app/lib/entities/student.entity'
+import { openStaffPermissionsModal, openSuspendTeacherModal, openTerminateTeacherModal } from '@/app/lib/entities/staff.entity'
 import { cn } from '@/app/lib/utils'
 import { SingleInfo } from '@/components/atoms/DetailsInformation/SingleInfo'
+import { StaffPermissionsModal } from '@/components/atoms/dashboard/staff/Team Modals/StaffPermissionsModal'
 import { SuspendTeacherModal } from '@/components/atoms/dashboard/staff/modal/SuspendTeacherModal'
 import { TerminateTeacherModal } from '@/components/atoms/dashboard/staff/modal/TerminateTeacherModal'
 import MenuLists from '@/components/atoms/dashboard/students/MenuLists'
@@ -50,7 +50,7 @@ export const NonTeachingStaffInfoCard = () => {
 
       <div className='flex gap-3 items-center mt-20'>
 
-        <Button wide round className="h-[45px] bg-light" onClick={openTerminateTeacherModal} >
+        <Button wide round className="h-[45px] bg-light" onClick={openStaffPermissionsModal} >
           <Message color="#21B55A" />
           <p className={cn("ml-2 text-primary text-base", poppins_500.className)}>Message</p>
         </Button>
@@ -60,6 +60,7 @@ export const NonTeachingStaffInfoCard = () => {
       </div>
         <SuspendTeacherModal/>
         <TerminateTeacherModal/>
+        <StaffPermissionsModal/>
 
     </div>
   )

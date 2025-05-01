@@ -33,9 +33,9 @@ const TeacherInfoPage = () => {
                     className="mb-0"
                     crumbs={[
                         {
-                            label: 'Teachers',
+                            label: 'Non-teaching',
                             isActive: false,
-                            href: '/teaching-staff',
+                            href: 'school/non-teaching-staffs',
                         },
                         {
                             label: 'AS111',
@@ -72,18 +72,21 @@ const TeacherInfoPage = () => {
             <div>
                 <div className="flex space-x-3 mt-4">
                     <div className="w-[446px]">
-                        <NonTeachingStaffInfoCard/>
+                        <NonTeachingStaffInfoCard />
                     </div>
                     <div className="flex-1 ">
-                        <NonTeachingStaffOthersInfoCard/>
+                        <NonTeachingStaffOthersInfoCard />
                     </div>
                 </div>
 
 
-                <div className="bg-white p-6 rounded-xl mt-3">
+                <div className="bg-white p-6 rounded-xl w-full mt-3">
 
                     <div className="p-2 flex items-center justify-between  w-full mb-4">
-                        <div className="flex gap-4">
+                        <div>
+                            <h3 className={cn('text-black1 text-lg', poppins_500.className)}>Attendance</h3>
+                        </div>
+                        <div className="flex gap-4 ">
                             <SelectComp
                                 placeholder="All type"
                                 triggerClasses={cn(
@@ -108,7 +111,7 @@ const TeacherInfoPage = () => {
                                 ]}
                             />
 
-                            <div className="flex w-[600px] gap-6">
+                            <div className="flex w-[150px] gap-6">
                                 <DateRangePicker />
                             </div>
                         </div>
