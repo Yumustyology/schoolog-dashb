@@ -4,12 +4,13 @@ import {
   poppins_400,
   poppins_500,
 } from '@/app/lib/config/font.config';
-import { OpenCheckInModal } from '@/app/lib/entities/attendance.entity';
+import { OpenCheckInModal, OpenCheckOutModal, checkOutModal } from '@/app/lib/entities/attendance.entity';
 import useActiveTab from '@/app/lib/hooks/useActiveTab';
 import { cn } from '@/app/lib/utils';
 import { getChartConfig } from '@/app/lib/utils/getChartConfig';
 import { AttendanceStatusDropdown } from '@/components/atoms/dashboard/attendance/AttendanceStatusDropdown';
 import { CheckInModal } from '@/components/atoms/dashboard/attendance/modal/CheckInModal';
+import { CheckOutModal } from '@/components/atoms/dashboard/attendance/modal/CheckOutModal';
 import { ClassDropdown } from '@/components/atoms/dashboard/students/ClassDropdown';
 import { StatusDropdown } from '@/components/atoms/dashboard/students/StatusDropdown';
 import BreadcrumbBox from '@/components/atoms/dashboard/subjects/Breadcrumb';
@@ -80,6 +81,7 @@ const page = () => {
             flat
             round
             className="h-[44px]  py-3 px-6 flex gap-2 border border-primary"
+            onClick={OpenCheckOutModal}
           >
             {' '}
             <CheckOutIcon />
@@ -87,7 +89,6 @@ const page = () => {
               Checkout
             </span>
           </Button>
-          <CheckInModal/>
 
           <Button round className="h-[48px]  py-3 px-8 flex gap-2" onClick={OpenCheckInModal}>
             {' '}
@@ -98,6 +99,8 @@ const page = () => {
             </span>
           </Button>
         </div>
+        <CheckOutModal />
+        <CheckInModal />
       </div>
 
       <div>

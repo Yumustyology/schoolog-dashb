@@ -23,82 +23,102 @@ import { cn } from '@/app/lib/utils';
 import { Typography } from '@material-tailwind/react';
 import Image from 'next/image';
 import React from 'react';
+import MenuLists from '@/components/atoms/dashboard/students/MenuLists';
+import { DeleteIcon, EditIcon, NoEventIcon,  ViewProfileEyeIcon } from '@/components/atoms/icons/Icons';
+import Empty from '@/components/molecules/empty/Empty';
 
-function ActivitiesAndEvents() {
+function ActivitiesAndEvents({ type = 'student' }: { type?: 'student' | 'school' }) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isRequestModalOpen, setIsRequestModalOpen] = React.useState(false);
   const [openDrawer, setOpenDrawer] = React.useState(false);
 
   const onClose = () => setIsModalOpen(false);
+  const menuItems = [
+    { label: "View Profile", onClick: () => console.log("Profile clicked"), icon: <ViewProfileEyeIcon /> },
+    { label: "Edit details", onClick: () => console.log("Settings clicked"), icon: <EditIcon /> },
+    { label: "Delete", onClick: () => console.log("Another clicked"), icon: <DeleteIcon />, danger: true },
+  ]
+
   return (
     <>
       <div className="w-full">
-        <section className="grid desktop:grid-cols-3 xlgDesktop:grid-cols-4 gap-6">
-          {activitiesAndEvents.map((activitiesAndEvent: any) => {
-            return (
-              <div
-                key={activitiesAndEvent.title}
-                className="flex flex-col gap-4 w-full --max-w-[333px] bg-white flex-1"
-              >
-                <div className="h-[161px] relative">
-                  <Image
-                    onClick={() => setOpenDrawer(true)}
-                    className="w-[333px]- w-full h-[161px] object-cover rounded-[8px]"
-                    src={activitiesAndEvent.image}
-                    alt={activitiesAndEvent.title}
-                  />
-                  <p
-                    className={cn(
-                      'border border-[#FFFFFFA6] absolute top-3 right-3  bg-[#00000059] text-white rounded-[32px] py-1 px-2 ',
-                      poppins_500.className
-                    )}
-                  >
-                    {activitiesAndEvent.price}
-                  </p>
-                </div>
-                <div className=" flex flex-col gap-3">
-                  <h2
-                    onClick={() => setOpenDrawer(true)}
-                    className={cn(
-                      'text-base text-gray1',
-                      poppins_500.className
-                    )}
-                  >
-                    {activitiesAndEvent.title}
-                  </h2>
+        {activitiesAndEvents.length === 0 ? (
+          <div className="flex flex-col items-center justify-center text-gray-500 py-12">
+            <Empty icon={<NoEventIcon />} title='No event yet' description='You have not yet create any event. Click the button below to create an event' buttonText='+ Create event' />
+          </div>
+        ) : (
+          <section className="grid desktop:grid-cols-3 xlgDesktop:grid-cols-4 gap-6">
+            {activitiesAndEvents.map((activitiesAndEvent: any) => {
+              return (
+                <div
+                  key={activitiesAndEvent.title}
+                  className="flex flex-col gap-4 w-full --max-w-[333px] bg-white flex-1"
+                >
+                  <div className="h-[161px] relative">
+                    <Image
+                      onClick={() => setOpenDrawer(true)}
+                      className="w-[333px]- w-full h-[161px] object-cover rounded-[8px]"
+                      src={activitiesAndEvent.image}
+                      alt={activitiesAndEvent.title}
+                    />
+                    <p
+                      className={cn(
+                        'border border-[#FFFFFFA6] absolute top-3 right-3  bg-[#00000059] text-white rounded-[32px] py-1 px-2 ',
+                        poppins_500.className
+                      )}
+                    >
+                      {activitiesAndEvent.price}
+                    </p>
+                  </div>
+                  <div className=" flex flex-col gap-3">
+                    <div className='flex justify-between'>
 
-                  <div
-                    className={cn(
-                      'flex items-center gap-2 text-gray3 text-sm',
-                      poppins_500.className
-                    )}
-                  >
-                    <span className="text-gray3">
-                      {activitiesAndEvent.type}{' '}
-                    </span>
-                    <Dot />
-                    <span>{activitiesAndEvent.mode}</span>
-                  </div>
-                  <div
-                    className={cn(
-                      'flex items-center gap-2 text-gray6 text-xs',
-                      poppins_400.className
-                    )}
-                  >
-                    <span className="flex items-center gap-1">
-                      <CalendarIcon />
-                      {activitiesAndEvent.date}{' '}
-                    </span>
-                    <span className="flex items-center gap-1">
-                      <CategoryIcon />
-                      {activitiesAndEvent.category}
-                    </span>
+                      <h2
+                        onClick={() => setOpenDrawer(true)}
+                        className={cn(
+                          'text-base text-gray1',
+                          poppins_500.className
+                        )}
+                      >
+                        {activitiesAndEvent.title}
+                      </h2>
+                      {type === 'school' && <MenuLists label="Options" items={menuItems} placement="bottom-start" maxHeight="150px" />}
+                    </div>
+                    <div
+                      className={cn(
+                        'flex items-center gap-2 text-gray3 text-sm',
+                        poppins_500.className
+                      )}
+                    >
+                      <span className="text-gray3">
+                        {activitiesAndEvent.type}{' '}
+                      </span>
+                      <Dot />
+                      <span>{activitiesAndEvent.mode}</span>
+                    </div>
+                    <div
+                      className={cn(
+                        'flex items-center gap-2 text-gray6 text-xs',
+                        poppins_400.className
+                      )}
+                    >
+                      <span className="flex items-center gap-1">
+                        <CalendarIcon />
+                        {activitiesAndEvent.date}{' '}
+                      </span>
+                      <span className="flex items-center gap-1">
+                        <CategoryIcon />
+                        {activitiesAndEvent.category}
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </section>
+              );
+            })}
+          </section>
+        )}
+
+
 
         <FormModal
           isOpen={isModalOpen}
@@ -270,6 +290,7 @@ function ActivitiesAndEvents() {
           </Button>
         </div>
       </DrawerSide>
+
     </>
   );
 }
