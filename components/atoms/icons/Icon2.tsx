@@ -35,7 +35,7 @@ export const DemoteModalIcon = () => {
 export const ClockIcon = () => {
     return (
         <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M9.99996 1.66406C5.39996 1.66406 1.66663 5.3974 1.66663 9.9974C1.66663 14.5974 5.39996 18.3307 9.99996 18.3307C14.6 18.3307 18.3333 14.5974 18.3333 9.9974" stroke="#21B55A" strokeWidth="1.5" stroke-miterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M9.99996 1.66406C5.39996 1.66406 1.66663 5.3974 1.66663 9.9974C1.66663 14.5974 5.39996 18.3307 9.99996 18.3307C14.6 18.3307 18.3333 14.5974 18.3333 9.9974" stroke="#21B55A" strokeWidth="1.5" strokeMiterlimit="10" strokeLinecap="round" strokeLinejoin="round" />
             <path d="M10.8334 9.16927L17.6667 2.33594" stroke="#21B55A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             <path d="M18.3333 5.68906V1.66406H14.3083" stroke="#21B55A" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
@@ -49,6 +49,29 @@ export const AnnouncementIcon = () => {
             <path d="M6.66663 10.8359H9.99996" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
             <path d="M6.66663 14.1641H13.3333" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
+
+    )
+}
+export const CheckInIcon = ({ color = "white" }: { color?: string }) => {
+    return (
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.76672 9.73438L9.90006 11.8677L12.0334 9.73438" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9.90002 3.33594V11.8109" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M16.6667 10.1484C16.6667 13.8318 14.1667 16.8151 10 16.8151C5.83337 16.8151 3.33337 13.8318 3.33337 10.1484" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+
+
+    )
+}
+export const CheckOutIcon = ({ color = "#21B55A" }: { color?: string }) => {
+    return (
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M7.76672 5.41458L9.90006 3.28125L12.0334 5.41458" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9.90002 11.8188V3.34375" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M3.33337 10C3.33337 13.6833 5.83337 16.6667 10 16.6667C14.1667 16.6667 16.6667 13.6833 16.6667 10" stroke={color} strokeWidth="1.5" strokeMiterlimit="10" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+
+
 
     )
 }
