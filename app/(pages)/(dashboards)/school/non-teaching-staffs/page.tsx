@@ -1,9 +1,11 @@
 'use client'
 import { Inter_500, poppins_400 } from '@/app/lib/config/font.config';
-import { openAddTeacherMenu } from '@/app/lib/entities/staff.entity';
+import { openAddStaffPermissionModal, openAddTeacherMenu, openAddTeamMenu, openEditStaffPermissionModal } from '@/app/lib/entities/staff.entity';
 import { cn } from '@/app/lib/utils';
-import { AddTeacherMenu } from '@/components/atoms/dashboard/staff/AddTeacherMenu';
+import { AddTeamMenu } from '@/components/atoms/dashboard/staff/AddTeamMenu';
 import { StaffStatusDropdown } from '@/components/atoms/dashboard/staff/StaffStatusDropdown';
+import { AddNewStaffRoleModal } from '@/components/atoms/dashboard/staff/Team Modals/AddNewStaffRoleModal';
+import { EditStaffPermissionModal } from '@/components/atoms/dashboard/staff/Team Modals/EditStaffPermissionModal';
 import { UploadTeachersModal } from '@/components/atoms/dashboard/staff/modal/UploadTeachersModal';
 import BreadcrumbBox from '@/components/atoms/dashboard/subjects/Breadcrumb';
 import Button from '@/components/atoms/form/Button';
@@ -33,7 +35,7 @@ const page = () => {
         <div className='relative flex gap-4'>
 
           <Button
-            onClick={openAddTeacherMenu}
+            onClick={openAddStaffPermissionModal}
             round
             className="h-[44px]  py-3 px-6 bg-[#21B55A1F] border-primary"
           >
@@ -44,7 +46,7 @@ const page = () => {
           </Button>
 
           <Button
-            onClick={openAddTeacherMenu}
+            onClick={openEditStaffPermissionModal}
             flat
             round
             className="h-[44px]  py-3 px-6 "
@@ -57,7 +59,7 @@ const page = () => {
           </Button>
 
           <Button
-            onClick={openAddTeacherMenu}
+            onClick={openAddTeamMenu}
             round
             className="h-[44px]  py-3 px-6"
           >
@@ -67,8 +69,11 @@ const page = () => {
               Add new team
             </span>
           </Button>
-          <AddTeacherMenu />
+          <AddTeamMenu/>
           <UploadTeachersModal />
+          <EditStaffPermissionModal/>
+          <AddNewStaffRoleModal/>
+      
         </div>
 
       </div>

@@ -1,15 +1,16 @@
 'use client';
-import { createAddTeacherNextStep, createAddTeacherPreviousStep, createAddTeacherProgressState } from '@/app/lib/entities/staff.entity';
+import { createAddTeamNextStep, createAddTeamPreviousStep, createAddTeamProgressState } from '@/app/lib/entities/staff.entity';
 import Button from '@/components/atoms/form/Button';
-import Step1 from '@/components/molecules/dashboard/staff/add-new-teacher/Step1';
-import Step2 from '@/components/molecules/dashboard/staff/add-new-teacher/Step2';
+import Step1 from '@/components/molecules/dashboard/staff/add-new-team/Step1';
+import Step2 from '@/components/molecules/dashboard/staff/add-new-team/Step2';
+
 import ProgressPageNumber from '@/components/molecules/dashboard/students/add-new-student/PageNumber';
 
 import { useEntity } from 'simpler-state';
 
 export default function TopSteps() {
   const steps = [<Step1 key={1} />, <Step2 key={2} /> ];
-  const currentStep = useEntity(createAddTeacherProgressState);
+  const currentStep = useEntity(createAddTeamProgressState);
   
 
   return (
@@ -24,7 +25,7 @@ export default function TopSteps() {
         {currentStep > 0 && (
           <Button
             round
-            onClick={createAddTeacherPreviousStep}
+            onClick={createAddTeamPreviousStep}
             className="w-[120px] h-[40px]  text-primary bg-white border border-primary"
           >
             Previous
@@ -36,7 +37,7 @@ export default function TopSteps() {
             if (currentStep === steps.length - 1) {
               console.log('Submitting form...');
             } else {
-              createAddTeacherNextStep();
+              createAddTeamNextStep();
             }
           }}
           className={`w-[120px] h-[40px] bg-primary text-white ${

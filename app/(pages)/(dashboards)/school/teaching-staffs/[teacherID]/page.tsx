@@ -79,7 +79,7 @@ const TeacherInfoPage = () => {
 
 
                 <div className="bg-white p-6 rounded-xl mt-3">
-
+                <h3 className={cn('text-black1 text-lg', poppins_500.className)}>Attendance</h3>
                     <div className="p-2 flex items-center justify-between  w-full mb-4">
                         <div className="flex gap-4">
                             <SelectComp
@@ -106,7 +106,7 @@ const TeacherInfoPage = () => {
                                 ]}
                             />
 
-                            <div className="flex w-[600px] gap-6">
+                            <div className="flex w-[150px] gap-6">
                                 <DateRangePicker />
                             </div>
                         </div>
