@@ -108,7 +108,7 @@ const TestimonialTemplateEdit: React.FC = () => {
               Date
             </label>
             <DatePicker
-            calenderContainerClassName="mr-auto"
+              calenderContainerClassName="mr-auto"
               onChange={(val) => {
                 handleInputChange(index, 'date', val?.toString() || '');
               }}

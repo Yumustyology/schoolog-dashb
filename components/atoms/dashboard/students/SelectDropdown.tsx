@@ -21,9 +21,9 @@ export function SelectDropdown({
   options,
   placeholder = 'Select an option',
   className,
-  width = 'min-w-[130px]', 
+  width = 'min-w-[130px]',
 }: SelectDropdownProps) {
-  const isTailwindClass = typeof width === 'string'; 
+  const isTailwindClass = typeof width === 'string';
 
   return (
     <Select>

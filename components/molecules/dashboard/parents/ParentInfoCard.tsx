@@ -1,6 +1,6 @@
 // import { biology1 } from '@/app/assets'
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
-import { openSuspendStudentModal } from '@/app/lib/entities/student.entity'
+import { openSuspendStudentModal } from '@/app/lib/entities/student.entity';
 import { cn } from '@/app/lib/utils';
 import { SingleInfo } from '@/components/atoms/DetailsInformation/SingleInfo';
 // import MenuLists from '@/components/atoms/dashboard/students/MenuLists'

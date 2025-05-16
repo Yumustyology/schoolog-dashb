@@ -14,23 +14,23 @@ const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 const AttendanceAnalytics = () => {
   const data = [10, 50, 30, 70, 50, 330, 400, 630, 800];
-    const categories = [
-      'Apr',
-      'May',
-      'Jun',
-      'Jul',
-      'Aug',
-      'Sep',
-      'Oct',
-      'Nov',
-      'Dec',
-    ];
-    const chartConfig = getChartConfig({
-      series: [{ name: 'Grades', data }],
-      categories,
-      height: 240,
-    });
-  
+  const categories = [
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
+  const chartConfig = getChartConfig({
+    series: [{ name: 'Grades', data }],
+    categories,
+    height: 240,
+  });
+
   return (
     <div>
       <div className="flex items-end gap-3">

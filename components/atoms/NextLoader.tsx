@@ -5,8 +5,7 @@ import NextTopLoader from 'nextjs-toploader';
 import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 
 const NextLoader = ({}) => {
-  
- const {theme} = useSlgTheme()
+  const { theme } = useSlgTheme();
 
   return (
     <NextTopLoader

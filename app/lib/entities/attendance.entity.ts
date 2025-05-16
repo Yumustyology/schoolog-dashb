@@ -16,9 +16,6 @@ export const setSelectedCheckInType = (value: string) => {
   selectedCheckInType.set(value);
 };
 
-
-
-
 //Check out  Modal
 export const checkOutModal = entity(false);
 

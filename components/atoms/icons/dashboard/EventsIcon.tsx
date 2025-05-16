@@ -1,6 +1,6 @@
 import React from 'react';
 
-const EventsIcon = ({color= "#EB5757"}: {color?: string}) => {
+const EventsIcon = ({ color = '#EB5757' }: { color?: string }) => {
   return (
     <svg
       width="20"

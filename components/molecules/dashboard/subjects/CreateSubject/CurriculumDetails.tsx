@@ -59,7 +59,6 @@ export function TermAccordion() {
     setActiveIndex(index === activeIndex ? null : index);
   };
 
-
   return (
     <div className="w-full mt-5">
       {terms.map((item, index) => (
@@ -69,16 +68,19 @@ export function TermAccordion() {
             className={`w-full text-xl py-4 px-6 font-medium transition flex justify-between items-center bg-gray4 text-gray  `}
           >
             <span>{item.label}</span>
-            {activeIndex === index ? <SubtractionIcon color=' #1d4241' /> : <AdditionIcon color=' #1d4241' />}
+            {activeIndex === index ? (
+              <SubtractionIcon color=" #1d4241" />
+            ) : (
+              <AdditionIcon color=" #1d4241" />
+            )}
           </button>
 
           <div
-            className={`overflow-hidden transition-all duration-500  ease-[cubic-bezier(0.4, 0, 0.2, 1)] ${activeIndex === index ? "max-h-screen" : "max-h-0"
-              }`}
+            className={`overflow-hidden transition-all duration-500  ease-[cubic-bezier(0.4, 0, 0.2, 1)] ${
+              activeIndex === index ? 'max-h-screen' : 'max-h-0'
+            }`}
           >
-            <div className="">
-              {item.content}
-            </div>
+            <div className="">{item.content}</div>
           </div>
         </div>
       ))}

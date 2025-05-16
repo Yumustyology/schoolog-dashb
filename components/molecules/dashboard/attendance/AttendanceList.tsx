@@ -16,7 +16,7 @@ import { teacherImg } from '@/app/assets';
 
 function AttendanceList() {
   type AttendanceList = {
-    type?: 'students' | 'teachers'
+    type?: 'students' | 'teachers';
     date: string;
     checkInStatus: 'present' | 'absent' | 'late';
     checkInTime: string;
@@ -143,10 +143,10 @@ function AttendanceList() {
                 <p>{attendance.checkOutTime}</p>
               </div>
             </TableCell>
-            
+
             <TableCell>
               <div className="flex gap-1.5 items-center">
-                <Image src={teacherImg  } alt='img' width={32} height={32} />
+                <Image src={teacherImg} alt="img" width={32} height={32} />
 
                 {attendance.teacherName}
               </div>
@@ -159,4 +159,3 @@ function AttendanceList() {
 }
 
 export default AttendanceList;
-

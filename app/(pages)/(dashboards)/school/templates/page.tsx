@@ -24,10 +24,8 @@ import EyeClose from '@/components/atoms/icons/EyeClose';
 const TemplatesList = () => (
   <>
     <section className="grid grid-cols-1 lgTablet:grid-cols-2 laptop:grid-cols-3 xlgDesktop:grid-cols-4 gap-6">
-      {[1,2,3,4,5,6,7,8,9,0].map((template: number) => {
-        return (
-          <TemplateCard  key={template} />
-        );
+      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((template: number) => {
+        return <TemplateCard key={template} />;
       })}
     </section>
 

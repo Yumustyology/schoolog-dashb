@@ -7,10 +7,8 @@ export const deleteFeeCategoryOpenState = entity(false);
 export const activateFeeCategoryOpenState = entity(false);
 export const makePaymentOpenState = entity(false);
 
-export const openPayForStudentModal = () =>
-  payForStudentOpenState.set(true);
-export const closePayForStudentModal = () =>
-  payForStudentOpenState.set(false);
+export const openPayForStudentModal = () => payForStudentOpenState.set(true);
+export const closePayForStudentModal = () => payForStudentOpenState.set(false);
 
 export const openActivateFeeCategoryModal = () =>
   activateFeeCategoryOpenState.set(true);

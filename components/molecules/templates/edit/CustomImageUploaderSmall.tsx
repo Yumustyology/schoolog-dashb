@@ -1,13 +1,8 @@
 'use client';
-import {
-  poppins_400,
-  poppins_500,
-} from '@/app/lib/config/font.config';
+import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import { truncateFileText } from '@/app/lib/utils/truncate';
-import {
-  renderUIProps,
-} from '@/components/atoms/form/ImageUploader';
+import { renderUIProps } from '@/components/atoms/form/ImageUploader';
 import ExportIcon from '@/components/atoms/icons/dashboard/ExportIcon';
 import EyeClose from '@/components/atoms/icons/EyeClose';
 import { DeleteIcon } from '@/components/atoms/icons/Icons';

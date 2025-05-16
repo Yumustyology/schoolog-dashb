@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const VisaIcon = () => {
   return (
@@ -23,6 +23,6 @@ const VisaIcon = () => {
       />
     </svg>
   );
-}
+};
 
-export default VisaIcon
+export default VisaIcon;

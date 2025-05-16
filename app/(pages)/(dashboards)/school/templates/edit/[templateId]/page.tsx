@@ -16,12 +16,11 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function TemplateEditPage(
+export default function TemplateEditPage() {
   // {
   //   params,
   // }: {
   //   params: { templateId: string };
   // }
-) {
   return <EditTemplatePage />;
 }

@@ -64,7 +64,7 @@ const SocialSettingsTemplateEdit = () => {
               className="input h-14 rounded-lg"
               name={field.name}
               placeholder={`Enter ${field.label} profile URL`}
-              value={socialFormData[field.name as keyof SocialFormData]} 
+              value={socialFormData[field.name as keyof SocialFormData]}
               handleChange={handleSocialFormChange}
             />
           </div>

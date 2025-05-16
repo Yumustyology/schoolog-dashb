@@ -13,7 +13,6 @@ import ExportIcon from '@/components/atoms/icons/dashboard/ExportIcon';
 import PayForStudentModal from '@/components/molecules/dashboard/finance/PayForStudentModal';
 
 function Page() {
-
   return (
     <>
       <div className="flex items-center justify-between w-full">

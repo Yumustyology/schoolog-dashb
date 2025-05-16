@@ -10,7 +10,6 @@ import {
 import { cn } from '@/app/lib/utils';
 import { Inter_400, Inter_500 } from '@/app/lib/config/font.config';
 
-
 function StudentsList() {
   type StudentsListType = {
     studentImage: string;
@@ -83,7 +82,9 @@ function StudentsList() {
             </TableCell>
             <TableCell> {student.ID}</TableCell>
             <TableCell>
-              <span className={cn("bg-light p-3 w-7 h-7 text-primary rounded-full")}>
+              <span
+                className={cn('bg-light p-3 w-7 h-7 text-primary rounded-full')}
+              >
                 {student.performance}%
               </span>
             </TableCell>

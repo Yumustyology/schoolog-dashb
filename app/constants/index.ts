@@ -516,8 +516,6 @@ export const classes = [
   },
 ];
 
-
-
 export const avatars = [
   {
     avater: avatar,

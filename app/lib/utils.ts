@@ -8,4 +8,3 @@ export function cn(...inputs: ClassValue[]) {
 export function getRandomBinary() {
   return Math.round(Math.random());
 }
-

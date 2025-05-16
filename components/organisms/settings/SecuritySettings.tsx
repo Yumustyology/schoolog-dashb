@@ -6,7 +6,7 @@ import LockIcon from '../../atoms/icons/LockIcon';
 import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 
 const SecuritySettings = () => {
-  const {theme} = useSlgTheme()
+  const { theme } = useSlgTheme();
   return (
     <div>
       <div className="flex items-start justify-between pb-4 border-b border-b-[#E5E5EA] mb-8">

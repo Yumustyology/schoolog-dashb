@@ -1,4 +1,4 @@
-import { entity } from "simpler-state";
+import { entity } from 'simpler-state';
 export const totalNumberSteps = 2;
 
 // initialize state
@@ -19,8 +19,6 @@ export const createActivitySetStep = (arg: number) => {
   if (arg > 3 || arg < 0) return;
   createActivityProgessState.set(arg);
 };
-
-
 
 export const selectedActivityPreference = entity<string>('all');
 export const setSelectedActivityPreference = (value: string) => {

@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
+import { ThemeProvider } from '@/components/organisms/ThemeProvider';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -15,7 +18,7 @@ const geistMono = localFont({
 
 export const metadata: Metadata = {
   title: 'Schoolog+',
-  description: 'School management got easier',
+  description: 'School management just got easier',
   icons: {
     icon: '/schoolog-logo.png',
   },
@@ -31,7 +34,10 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
-        {children}
+        <ThemeProvider>
+          {children}
+          <ToastContainer />
+        </ThemeProvider>
       </body>
     </html>
   );

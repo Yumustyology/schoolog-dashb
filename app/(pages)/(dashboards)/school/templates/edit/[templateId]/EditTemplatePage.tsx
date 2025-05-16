@@ -6,19 +6,16 @@ import FAQTemplateEdit from '@/components/molecules/templates/edit/FAQTemplateEd
 import PartnerLogosTemplateEdit from '@/components/molecules/templates/edit/PartnerLogosTemplateEdit';
 import SocialSettingsTemplateEdit from '@/components/molecules/templates/edit/SocialSettingsTemplateEdit';
 import TestimonialTemplateEdit from '@/components/molecules/templates/edit/TestimonialTemplateEdit';
-import React  from 'react';
+import React from 'react';
 import 'react-tagsinput/react-tagsinput.css';
 
-
 const EditTemplatePage = () => {
-
   const imageFields = [
     { label: 'Website Logo', fieldName: 'websiteLogo' },
     { label: 'Hero Section Image', fieldName: 'heroSectionImage' },
     { label: 'About Us Image', fieldName: 'aboutUsImage' },
     { label: 'Retina logo', fieldName: 'retinaLogo' },
   ];
-
 
   const breadcrumbs = [
     { label: 'Templates', isActive: false },
@@ -75,6 +72,3 @@ const EditTemplatePage = () => {
 };
 
 export default EditTemplatePage;
-
-
-

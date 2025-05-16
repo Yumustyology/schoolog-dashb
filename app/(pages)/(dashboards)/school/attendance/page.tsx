@@ -4,7 +4,11 @@ import {
   poppins_400,
   poppins_500,
 } from '@/app/lib/config/font.config';
-import { OpenCheckInModal, OpenCheckOutModal, checkOutModal } from '@/app/lib/entities/attendance.entity';
+import {
+  OpenCheckInModal,
+  OpenCheckOutModal,
+  checkOutModal,
+} from '@/app/lib/entities/attendance.entity';
 import useActiveTab from '@/app/lib/hooks/useActiveTab';
 import { cn } from '@/app/lib/utils';
 import { getChartConfig } from '@/app/lib/utils/getChartConfig';
@@ -90,7 +94,11 @@ const page = () => {
             </span>
           </Button>
 
-          <Button round className="h-[48px]  py-3 px-8 flex gap-2" onClick={OpenCheckInModal}>
+          <Button
+            round
+            className="h-[48px]  py-3 px-8 flex gap-2"
+            onClick={OpenCheckInModal}
+          >
             {' '}
             <CheckInIcon />
             <span className={cn('text-base ', Inter_500.className)}>

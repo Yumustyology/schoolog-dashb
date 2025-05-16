@@ -45,10 +45,10 @@ function reducer(state: TermState[], action: Action): TermState[] {
       return state.map((week) =>
         week.id === action.payload.id
           ? {
-            ...week,
-            topic: action.payload.topic,
-            brief: action.payload.brief,
-          }
+              ...week,
+              topic: action.payload.topic,
+              brief: action.payload.brief,
+            }
           : week
       );
 
@@ -64,7 +64,7 @@ function Term() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const [formData, setFormData] = useState({ topic: '', brief: '' });
   const [editWeek, setEditWeek] = useState<number | null>(null); // Track which week is being edited
-  const {theme} = useSlgTheme()
+  const { theme } = useSlgTheme();
 
   console.log(state);
 
@@ -158,17 +158,22 @@ function Term() {
           inputClassName=""
           value={formData.brief}
           handleChange={handleChange}
-
         />
 
-        <Button wide round type="submit" className='bg-light text-primary mt-5'>
-          {editWeek !== null
-            ? 'Update Week'
-            : <span className={cn('text-base flex justify-center gap-2 p-1 items-center', poppins_500.className)}>
-              
-              <AdditionIcon color={theme.primary} /> 
+        <Button wide round type="submit" className="bg-light text-primary mt-5">
+          {editWeek !== null ? (
+            'Update Week'
+          ) : (
+            <span
+              className={cn(
+                'text-base flex justify-center gap-2 p-1 items-center',
+                poppins_500.className
+              )}
+            >
+              <AdditionIcon color={theme.primary} />
               Add new topic
-               </span>}
+            </span>
+          )}
         </Button>
       </form>
     </div>

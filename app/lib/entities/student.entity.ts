@@ -116,7 +116,6 @@ export const closeUploadStudentModal = () => {
 // ADD STUDENT MANUALLY
 export const totalNumberSteps = 2;
 
-
 // initialize state
 export const createAddStudentProgressState = entity(0);
 

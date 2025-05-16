@@ -1,6 +1,10 @@
 'use client';
 
-import { createAddStudentNextStep, createAddStudentPreviousStep, createAddStudentProgressState } from '@/app/lib/entities/student.entity';
+import {
+  createAddStudentNextStep,
+  createAddStudentPreviousStep,
+  createAddStudentProgressState,
+} from '@/app/lib/entities/student.entity';
 import Button from '@/components/atoms/form/Button';
 import ProgressPageNumber from '@/components/molecules/dashboard/students/add-new-student/PageNumber';
 import Step1 from '@/components/molecules/dashboard/students/add-new-student/Step1';
@@ -8,9 +12,8 @@ import Step2 from '@/components/molecules/dashboard/students/add-new-student/Ste
 import { useEntity } from 'simpler-state';
 
 export default function TopSteps() {
-  const steps = [<Step1 key={1} />, <Step2 key={2} /> ];
+  const steps = [<Step1 key={1} />, <Step2 key={2} />];
   const currentStep = useEntity(createAddStudentProgressState);
-  
 
   return (
     <div className="p-4 min-h-[100dvh] bg-white flex flex-col justify-between rounded-lg">

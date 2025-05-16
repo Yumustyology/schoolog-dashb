@@ -15,7 +15,6 @@ import Settings from '@/components/atoms/icons/SideBar/Settings';
 import ImportICon from '@/components/atoms/icons/dashboard/ImportICon';
 
 function Page() {
-
   return (
     <>
       <div className="flex items-center justify-between w-full">

@@ -7,7 +7,7 @@ import localforage from 'localforage';
 // import showToast from '../utils/toast';
 import { appConfig } from './app.config';
 
-export const baseURL = `${appConfig.axiosBaseUrl}/user/`;
+export const baseURL = `${appConfig.axiosBaseUrl}/`;
 
 const axiosConfig = axios.create({
   baseURL: baseURL,

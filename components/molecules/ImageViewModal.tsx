@@ -1,7 +1,5 @@
 import Button from '../atoms/form/Button';
-import React, {
-  useRef,
-} from 'react';
+import React, { useRef } from 'react';
 import {
   Dialog,
   DialogHeader,
@@ -16,7 +14,6 @@ import { cn } from '@/app/lib/utils';
 import { poppins_500 } from '@/app/lib/config/font.config';
 import { CarouselImage } from '../organisms/dashboard/CarouselImage';
 import { carouselImageRefType } from '@/app/types';
-
 
 export function ImageViewModal() {
   const [open, setOpen] = React.useState(false);
@@ -103,4 +100,3 @@ export function ImageViewModal() {
     </>
   );
 }
-

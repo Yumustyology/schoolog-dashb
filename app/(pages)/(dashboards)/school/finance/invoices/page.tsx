@@ -14,7 +14,6 @@ import PayForStudentModal from '@/components/molecules/dashboard/finance/PayForS
 import { InvoiceTable } from '@/components/molecules/dashboard/invoice/InvoiceTable';
 
 function Page() {
-
   return (
     <>
       <div className="flex items-center justify-between w-full">

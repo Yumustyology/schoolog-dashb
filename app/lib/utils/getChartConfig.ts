@@ -1,4 +1,4 @@
-'use client'
+'use client';
 import { Inter_400 } from '@/app/lib/config/font.config';
 import { themes } from '../themes/themeConfig';
 

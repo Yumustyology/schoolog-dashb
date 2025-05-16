@@ -1,12 +1,15 @@
 'use client';
-import { selectedCurriculumType, setSelectedCurriculumType } from '@/app/lib/entities/subject.entity';
+import {
+  selectedCurriculumType,
+  setSelectedCurriculumType,
+} from '@/app/lib/entities/subject.entity';
 import { Dropdown } from '@/components/atoms/form/Dropdown';
 import { useState } from 'react';
 import { useEntity } from 'simpler-state';
 
 export function CurriculumType() {
   const selectedCurriculum = useEntity(selectedCurriculumType);
-  console.log(selectedCurriculum)
+  console.log(selectedCurriculum);
 
   const curriculums = [
     { value: 'upload', label: 'Upload .cls file' },
@@ -18,6 +21,11 @@ export function CurriculumType() {
   ];
 
   return (
-    <Dropdown options={curriculums} selectedOption={selectedCurriculum} onChange={setSelectedCurriculumType} placeholder="Select Curriculum" />
+    <Dropdown
+      options={curriculums}
+      selectedOption={selectedCurriculum}
+      onChange={setSelectedCurriculumType}
+      placeholder="Select Curriculum"
+    />
   );
 }

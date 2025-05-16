@@ -1,17 +1,24 @@
 import Input from '@/components/atoms/form/Input';
-import { poppins_400, poppins_500, poppins_600 } from '@/app/lib/config/font.config';
+import {
+  poppins_400,
+  poppins_500,
+  poppins_600,
+} from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import React from 'react';
 import { Label } from '@/components/ui/label';
-import DropdownMultiSelect, { OptionType } from '@/components/atoms/form/DropdownMultiSelect';
+import DropdownMultiSelect, {
+  OptionType,
+} from '@/components/atoms/form/DropdownMultiSelect';
 import { RadioOptionType } from '@/components/atoms/form/RadioOptionType';
 import { MultiValue } from 'react-select';
 import { useEntity } from 'simpler-state';
-import { selectedAnnouncementPreference, setSelectedAnnoncementPreference } from '@/app/lib/entities/annoucement.entity';
+import {
+  selectedAnnouncementPreference,
+  setSelectedAnnoncementPreference,
+} from '@/app/lib/entities/annoucement.entity';
 import { AnnouncementMediumDropdown } from '@/components/atoms/dashboard/announcement/AnnoucementMediumDropdown';
 import { AnnouncementStaffCategoryDropdown } from '@/components/atoms/dashboard/announcement/AnnoucementStaffCategory';
-
-
 
 function Step2() {
   const selectedAnnouncement = useEntity(selectedAnnouncementPreference);
@@ -22,44 +29,62 @@ function Step2() {
     { value: 'parents', label: 'Parents' },
   ];
   const classes = [
-    { value: "jss1", label: "JSS1" },
-    { value: "jss2", label: "JSS2" },
-    { value: "jss3", label: "JSS3" },
-    { value: "ss1", label: "SS1" },
-    { value: "ss2", label: "SS2" },
-    { value: "ss3", label: "SS3 " },
+    { value: 'jss1', label: 'JSS1' },
+    { value: 'jss2', label: 'JSS2' },
+    { value: 'jss3', label: 'JSS3' },
+    { value: 'ss1', label: 'SS1' },
+    { value: 'ss2', label: 'SS2' },
+    { value: 'ss3', label: 'SS3 ' },
   ];
-  const [selectedClass, setSelectedClass] = React.useState<MultiValue<OptionType>>([]);
+  const [selectedClass, setSelectedClass] = React.useState<
+    MultiValue<OptionType>
+  >([]);
   return (
     <div>
       <div className="mb-12 mt-6">
-        <p className={cn('text-primary text-xs', poppins_600.className)}>Annoucement preference</p>
-        <h2 className={cn('text-xl --text-center text-gray1 mt-3', poppins_500.className)}>
+        <p className={cn('text-primary text-xs', poppins_600.className)}>
+          Annoucement preference
+        </p>
+        <h2
+          className={cn(
+            'text-xl --text-center text-gray1 mt-3',
+            poppins_500.className
+          )}
+        >
           Select announcement audience and end date
         </h2>
       </div>
       <div>
-        <RadioOptionType options={options} selectedOption={selectedAnnouncement} setSelectedOption={setSelectedAnnoncementPreference} />
+        <RadioOptionType
+          options={options}
+          selectedOption={selectedAnnouncement}
+          setSelectedOption={setSelectedAnnoncementPreference}
+        />
       </div>
 
-      <div className='mt-8'>
-        {selectedAnnouncement === 'students' &&
+      <div className="mt-8">
+        {selectedAnnouncement === 'students' && (
           <div>
-            <Label className={cn('text-base text-gray1 mb-2', poppins_400.className)}>
+            <Label
+              className={cn('text-base text-gray1 mb-2', poppins_400.className)}
+            >
               Select Class
             </Label>
-            <DropdownMultiSelect options={classes} value={selectedClass} onChange={setSelectedClass} placeholder="Select classes..." />
+            <DropdownMultiSelect
+              options={classes}
+              value={selectedClass}
+              onChange={setSelectedClass}
+              placeholder="Select classes..."
+            />
           </div>
-        }
+        )}
 
-        {
-          selectedAnnouncement === 'staff' &&
-
-          <div className='mt-6'>
-          <AnnouncementStaffCategoryDropdown />
-        </div>
-        }
-        <div className=' mt-6'>
+        {selectedAnnouncement === 'staff' && (
+          <div className="mt-6">
+            <AnnouncementStaffCategoryDropdown />
+          </div>
+        )}
+        <div className=" mt-6">
           <AnnouncementMediumDropdown />
         </div>
 
@@ -71,22 +96,15 @@ function Step2() {
           className=" h-11 rounded-lg"
           name="text"
           placeholder="Select date"
-        // value={loginInfo.password}
-        // handleChange={updateLoginInfo}
+          // value={loginInfo.password}
+          // handleChange={updateLoginInfo}
         />
       </div>
-
-
-
-
-
     </div>
   );
 }
 
 export default Step2;
-
-
 
 // 'use client'
 // import { poppins_400 } from '@/app/lib/config/font.config';
@@ -117,8 +135,6 @@ export default Step2;
 //   const [selectedPeriod, setSelectedPeriod] = React.useState<MultiValue<OptionType>>([]);
 //   const isOpen = useEntity(graduateModal)
 
-
-
 //   const selectedGraduate = useEntity(selectedGraduateType);
 
 //   const handleConfirmGraduate = () => {
@@ -134,7 +150,6 @@ export default Step2;
 //         title="Graduate"
 //       >
 //         <div>
-
 
 //           {selectedGraduate === 'wholeClass' ?
 //             (
@@ -156,7 +171,6 @@ export default Step2;
 
 //           }
 
-
 //         </div>
 //         <Button wide round className="h-12 mt-8" onClick={() => { handleConfirmGraduate }}>
 //           Graduate
@@ -166,5 +180,3 @@ export default Step2;
 //     </div>
 //   )
 // }
-
-

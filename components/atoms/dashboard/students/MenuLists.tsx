@@ -54,70 +54,79 @@
 
 // export default MenuLists;
 
-
 import {
-    Menu,
-    MenuHandler,
-    MenuList,
-    MenuItem,
-} from "@material-tailwind/react";
-import { OptionIcon } from "../../icons/Icons";
-import { cn } from "@/app/lib/utils";
-import { Inter_500 } from "@/app/lib/config/font.config";
+  Menu,
+  MenuHandler,
+  MenuList,
+  MenuItem,
+} from '@material-tailwind/react';
+import { OptionIcon } from '../../icons/Icons';
+import { cn } from '@/app/lib/utils';
+import { Inter_500 } from '@/app/lib/config/font.config';
 
 interface MenuItemProps {
-    label: string;
-    onClick: () => void;
-    icon?: React.ReactNode;
-    danger?: boolean; // New: Marks the item as dangerous (red color)
+  label: string;
+  onClick: () => void;
+  icon?: React.ReactNode;
+  danger?: boolean; // New: Marks the item as dangerous (red color)
 }
 
 interface DropdownMenuProps {
-    label: string;
-    items: MenuItemProps[];
-    placement?: "top" | "top-start" | "top-end" | "right" | "right-start" | "right-end" | "bottom" | "bottom-start" | "bottom-end" | "left" | "left-start" | "left-end";
-    maxHeight?: string;
-    maxWidth?: string; // New: Controls max width
-    icon?: React.ReactNode; // New: Additional icon to display in the menu item (optional)
+  label: string;
+  items: MenuItemProps[];
+  placement?:
+    | 'top'
+    | 'top-start'
+    | 'top-end'
+    | 'right'
+    | 'right-start'
+    | 'right-end'
+    | 'bottom'
+    | 'bottom-start'
+    | 'bottom-end'
+    | 'left'
+    | 'left-start'
+    | 'left-end';
+  maxHeight?: string;
+  maxWidth?: string; // New: Controls max width
+  icon?: React.ReactNode; // New: Additional icon to display in the menu item (optional)
 }
 
 const MenuLists: React.FC<DropdownMenuProps> = ({
-    label,
-    items,
-    placement = "bottom",
-    maxHeight = "200px",
-    maxWidth = "200px", // Default max width
-    icon = <OptionIcon/>
+  label,
+  items,
+  placement = 'bottom',
+  maxHeight = '200px',
+  maxWidth = '200px', // Default max width
+  icon = <OptionIcon />,
 }) => {
-    return (
-        <Menu placement={placement}>
-            <MenuHandler>
-                <div>
-                    {icon}
-                </div>
-            </MenuHandler>
-            <MenuList
-                className="z-50 overflow-y-auto p-2"
-                style={{ maxHeight, maxWidth }}
-            >
-                {items.map((item, index) => (
-                    <MenuItem 
-                        key={index} 
-                        onClick={()=>{item.onClick()}}
-                        className={cn(
-                            "flex items-center gap-4 p-2",
-                            item.danger ? "text-red-500" : "text-black1" 
-                        )}
-                    >
-                        {item.icon && <span>{item.icon}</span>}
-                        <p className={cn('text-sm', Inter_500.className)}>
-                            {item.label}
-                        </p>
-                    </MenuItem>
-                ))}
-            </MenuList>
-        </Menu>
-    );
+  return (
+    <Menu placement={placement}>
+      <MenuHandler>
+        <div>{icon}</div>
+      </MenuHandler>
+      <MenuList
+        className="z-50 overflow-y-auto p-2"
+        style={{ maxHeight, maxWidth }}
+      >
+        {items.map((item, index) => (
+          <MenuItem
+            key={index}
+            onClick={() => {
+              item.onClick();
+            }}
+            className={cn(
+              'flex items-center gap-4 p-2',
+              item.danger ? 'text-red-500' : 'text-black1'
+            )}
+          >
+            {item.icon && <span>{item.icon}</span>}
+            <p className={cn('text-sm', Inter_500.className)}>{item.label}</p>
+          </MenuItem>
+        ))}
+      </MenuList>
+    </Menu>
+  );
 };
 
 export default MenuLists;

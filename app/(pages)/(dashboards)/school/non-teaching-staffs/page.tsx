@@ -1,6 +1,11 @@
-'use client'
+'use client';
 import { Inter_500, poppins_400 } from '@/app/lib/config/font.config';
-import { openAddStaffPermissionModal, openAddTeacherMenu, openAddTeamMenu, openEditStaffPermissionModal } from '@/app/lib/entities/staff.entity';
+import {
+  openAddStaffPermissionModal,
+  openAddTeacherMenu,
+  openAddTeamMenu,
+  openEditStaffPermissionModal,
+} from '@/app/lib/entities/staff.entity';
 import { cn } from '@/app/lib/utils';
 import { AddTeamMenu } from '@/components/atoms/dashboard/staff/AddTeamMenu';
 import { StaffStatusDropdown } from '@/components/atoms/dashboard/staff/StaffStatusDropdown';
@@ -14,7 +19,7 @@ import SearchInput from '@/components/atoms/form/SearchInput';
 import { AdditionIcon } from '@/components/atoms/icons/Icons';
 import ExportIcon from '@/components/atoms/icons/dashboard/ExportIcon';
 import NonTeachingStaffTableLists from '@/components/molecules/dashboard/staff/NonTeachingStaffTableList';
-import React from 'react'
+import React from 'react';
 
 const page = () => {
   return (
@@ -32,8 +37,7 @@ const page = () => {
           />
         </div>
 
-        <div className='relative flex gap-4'>
-
+        <div className="relative flex gap-4">
           <Button
             onClick={openAddStaffPermissionModal}
             round
@@ -52,7 +56,6 @@ const page = () => {
             className="h-[44px]  py-3 px-6 "
           >
             {' '}
-
             <span className={cn('text-base ', Inter_500.className)}>
               Edit permission settings
             </span>
@@ -69,27 +72,23 @@ const page = () => {
               Add new team
             </span>
           </Button>
-          <AddTeamMenu/>
+          <AddTeamMenu />
           <UploadTeachersModal />
-          <EditStaffPermissionModal/>
-          <AddNewStaffRoleModal/>
-      
+          <EditStaffPermissionModal />
+          <AddNewStaffRoleModal />
         </div>
-
       </div>
 
-
-      <div className='bg-white p-4 min-h-[100vh]'>
-        <div className='flex gap-6 mb-6 justify-between'>
-          <div className='flex gap-6 '>
-
+      <div className="bg-white p-4 min-h-[100vh]">
+        <div className="flex gap-6 mb-6 justify-between">
+          <div className="flex gap-6 ">
             <SearchInput
               placeholder="Search teachers name"
               className="w-[245px] h-[38px] rounded-full  bg-[#F7F7F7] border border-gray4"
             />
 
             <StaffStatusDropdown />
-            <DatePicker className='w-54' />
+            <DatePicker className="w-54" />
           </div>
 
           <div>
@@ -99,23 +98,20 @@ const page = () => {
               round
               className="bg-[#EBEBEB] gap-2 px-6 border-none text-gray1 rounded-full"
             >
-              <ExportIcon color='#828282' />
-              <span className={cn('text-gray1', poppins_400.className)}>Export list</span>
+              <ExportIcon color="#828282" />
+              <span className={cn('text-gray1', poppins_400.className)}>
+                Export list
+              </span>
             </Button>
           </div>
         </div>
 
-
-        <div className='h-full' >
-          <NonTeachingStaffTableLists/>
-
+        <div className="h-full">
+          <NonTeachingStaffTableLists />
         </div>
-
       </div>
+    </div>
+  );
+};
 
-
-    </div >
-  )
-}
-
-export default page
+export default page;

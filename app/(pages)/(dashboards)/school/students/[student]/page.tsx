@@ -1,4 +1,4 @@
-import StudentInfoPage from "./StudentInfoPage";
+import StudentInfoPage from './StudentInfoPage';
 
 export async function generateStaticParams() {
   const students = ['AS111', 'science', 'history', '1234'];
@@ -8,6 +8,10 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function StudentPage({ params }: { params: { student: string } }) {
+export default function StudentPage({
+  params,
+}: {
+  params: { student: string };
+}) {
   return <StudentInfoPage student={params.student} />;
 }

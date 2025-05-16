@@ -37,7 +37,7 @@
 //     );
 // }
 
-import { avatars } from '@/constants';
+import { avatars } from '@/app/constants';
 import Image from 'next/image';
 import React from 'react';
 

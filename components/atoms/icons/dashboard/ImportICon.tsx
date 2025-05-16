@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 const ImportICon = ({ color = '#828282' }) => {
   return (
@@ -37,4 +37,4 @@ const ImportICon = ({ color = '#828282' }) => {
   );
 };
 
-export default ImportICon
+export default ImportICon;

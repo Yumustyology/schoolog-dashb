@@ -23,7 +23,7 @@ export function PhoneNumberInput({
 
   const handlePhoneChange = (value: string) => {
     setPhoneNumber(value);
-    onPhoneChange(value); 
+    onPhoneChange(value);
   };
 
   return (

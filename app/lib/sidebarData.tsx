@@ -183,7 +183,7 @@ export const shoolSidebarItems: SidebarItemsType = [
   {
     title: 'Admission',
     url: '/school/admission',
-    icon: <AdmissionIcon color="#828282"  />,
+    icon: <AdmissionIcon color="#828282" />,
     activeIcon: <AdmissionIcon color="#FFFFFF" />,
   },
   {

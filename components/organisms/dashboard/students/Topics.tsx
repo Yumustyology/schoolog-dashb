@@ -22,7 +22,7 @@ type TopicsList = {
   subtopics?: {
     isMarked: boolean;
     subtopic: string;
-  }[]
+  }[];
 }[];
 
 const topicsList: TopicsList = [
@@ -34,25 +34,26 @@ const topicsList: TopicsList = [
     date: 'Nov, 12 2024 - 9am',
     view: <View />,
     status: 'Completed',
-    details: 'The success of any study or survey often hinges on the quality of its participants. This report provides an in-depth analysis of participant engagement, performance, and overall contributions within recent studies conducted on our platform. By highlighting key metrics and participant feedback, this report aims to showcase the value participants bring to our research ecosystem.',
+    details:
+      'The success of any study or survey often hinges on the quality of its participants. This report provides an in-depth analysis of participant engagement, performance, and overall contributions within recent studies conducted on our platform. By highlighting key metrics and participant feedback, this report aims to showcase the value participants bring to our research ecosystem.',
     subtopics: [
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
-    ]
+    ],
   },
   {
     isMarked: false,
@@ -62,25 +63,26 @@ const topicsList: TopicsList = [
     date: 'Nov, 12 2024 - 9am',
     view: <View />,
     status: 'Completed',
-    details: 'The success of any study or survey often hinges on the quality of its participants. This report provides an in-depth analysis of participant engagement, performance, and overall contributions within recent studies conducted on our platform. By highlighting key metrics and participant feedback, this report aims to showcase the value participants bring to our research ecosystem.',
+    details:
+      'The success of any study or survey often hinges on the quality of its participants. This report provides an in-depth analysis of participant engagement, performance, and overall contributions within recent studies conducted on our platform. By highlighting key metrics and participant feedback, this report aims to showcase the value participants bring to our research ecosystem.',
     subtopics: [
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
-    ]
+    ],
   },
   {
     isMarked: false,
@@ -90,25 +92,26 @@ const topicsList: TopicsList = [
     date: 'Nov, 12 2024 - 9am',
     view: <View />,
     status: 'Completed',
-    details: 'The success of any study or survey often hinges on the quality of its participants. This report provides an in-depth analysis of participant engagement, performance, and overall contributions within recent studies conducted on our platform. By highlighting key metrics and participant feedback, this report aims to showcase the value participants bring to our research ecosystem.',
+    details:
+      'The success of any study or survey often hinges on the quality of its participants. This report provides an in-depth analysis of participant engagement, performance, and overall contributions within recent studies conducted on our platform. By highlighting key metrics and participant feedback, this report aims to showcase the value participants bring to our research ecosystem.',
     subtopics: [
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
-    ]
+    ],
   },
   {
     isMarked: true,
@@ -118,25 +121,26 @@ const topicsList: TopicsList = [
     date: 'Nov, 12 2024 - 9am',
     view: <View />,
     status: 'Completed',
-    details: 'The success of any study or survey often hinges on the quality of its participants. This report provides an in-depth analysis of participant engagement, performance, and overall contributions within recent studies conducted on our platform. By highlighting key metrics and participant feedback, this report aims to showcase the value participants bring to our research ecosystem.',
+    details:
+      'The success of any study or survey often hinges on the quality of its participants. This report provides an in-depth analysis of participant engagement, performance, and overall contributions within recent studies conducted on our platform. By highlighting key metrics and participant feedback, this report aims to showcase the value participants bring to our research ecosystem.',
     subtopics: [
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
-    ]
+    ],
   },
   {
     isMarked: true,
@@ -146,25 +150,26 @@ const topicsList: TopicsList = [
     date: 'Nov, 12 2024 - 9am',
     view: <View />,
     status: 'Completed',
-    details: 'The success of any study or survey often hinges on the quality of its participants. This report provides an in-depth analysis of participant engagement, performance, and overall contributions within recent studies conducted on our platform. By highlighting key metrics and participant feedback, this report aims to showcase the value participants bring to our research ecosystem.',
+    details:
+      'The success of any study or survey often hinges on the quality of its participants. This report provides an in-depth analysis of participant engagement, performance, and overall contributions within recent studies conducted on our platform. By highlighting key metrics and participant feedback, this report aims to showcase the value participants bring to our research ecosystem.',
     subtopics: [
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
-    ]
+    ],
   },
   {
     isMarked: true,
@@ -174,33 +179,33 @@ const topicsList: TopicsList = [
     date: 'Nov, 12 2024 - 9am',
     view: <View />,
     status: 'Completed',
-    details: 'The success of any study or survey often hinges on the quality of its participants. This report provides an in-depth analysis of participant engagement, performance, and overall contributions within recent studies conducted on our platform. By highlighting key metrics and participant feedback, this report aims to showcase the value participants bring to our research ecosystem.',
+    details:
+      'The success of any study or survey often hinges on the quality of its participants. This report provides an in-depth analysis of participant engagement, performance, and overall contributions within recent studies conducted on our platform. By highlighting key metrics and participant feedback, this report aims to showcase the value participants bring to our research ecosystem.',
     subtopics: [
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
       {
         isMarked: true,
-        subtopic: 'Introduction to personal assessments'
+        subtopic: 'Introduction to personal assessments',
       },
-    ]
-
+    ],
   },
 ];
 
 function Topics() {
   const [showDrawer, setShowDrawer] = React.useState(false);
-    const {theme} = useSlgTheme()
-  
+  const { theme } = useSlgTheme();
+
   return (
     <>
       {topicsList.map((topic) => {
@@ -210,7 +215,13 @@ function Topics() {
             className="bg-[#F8F8F8] shadow-none w-full mb-4"
           >
             <CardBody className="w-full flex justify-between items-center gap-3 p-3">
-              <div>{topic.isMarked ? <Marked color={theme.primary}/> : <Unmarked />}</div>
+              <div>
+                {topic.isMarked ? (
+                  <Marked color={theme.primary} />
+                ) : (
+                  <Unmarked />
+                )}
+              </div>
 
               <Typography
                 className={cn('text-sm text-gray6 flex-1', Inter_500.className)}
@@ -230,7 +241,9 @@ function Topics() {
 
               {/* <Tooltip className="">{topic.view}</Tooltip> */}
               <Button
-                onClick={() => { setShowDrawer(true) }}
+                onClick={() => {
+                  setShowDrawer(true);
+                }}
                 className={cn(
                   'bg-[#EAEAEA] text-gray3 flex gap-3 text-sm rounded-full',
                   poppins_400.className
@@ -239,9 +252,16 @@ function Topics() {
                 <EyeClose />
                 <span>View</span>
               </Button>
-
             </CardBody>
-            <TopicDetailDrawer isTopicDetailsOpen={showDrawer} setIsTopicDetailsOpen={setShowDrawer} week={topic.week} topic={topic.topic} details={topic.details} status={topic.status} subtopics={topic.subtopics} />
+            <TopicDetailDrawer
+              isTopicDetailsOpen={showDrawer}
+              setIsTopicDetailsOpen={setShowDrawer}
+              week={topic.week}
+              topic={topic.topic}
+              details={topic.details}
+              status={topic.status}
+              subtopics={topic.subtopics}
+            />
           </Card>
         );
       })}

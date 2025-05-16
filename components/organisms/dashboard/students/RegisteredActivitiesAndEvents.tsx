@@ -11,7 +11,7 @@ function RegisteredActivitiesAndEvents() {
   return (
     <div className="w-full">
       <section className="grid grid-cols-3 gap-6">
-        {registeredActivitiesAndEvents.map((activitiesAndEvent:any) => {
+        {registeredActivitiesAndEvents.map((activitiesAndEvent: any) => {
           return (
             <div
               key={activitiesAndEvent.title}

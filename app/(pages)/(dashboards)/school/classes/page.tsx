@@ -102,7 +102,7 @@ const Classes = () => {
               <span className={cn('font-semibold text-xl', poppins_600)}>
                 Class category created successfully
               </span>
-              <span className={cn(poppins_400 , "py-4 text-[#667085] text-lg")}>
+              <span className={cn(poppins_400, 'py-4 text-[#667085] text-lg')}>
                 You have successfully created new class category
               </span>
             </div>

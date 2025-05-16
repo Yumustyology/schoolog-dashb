@@ -78,9 +78,7 @@ function Page() {
 
       <div className="grid grid-cols-3 gap-6 mt-4 p-4 bg-white">
         {suggestionBox.map((suggestion, index) => {
-          return (
-            <SuggestionBox key={suggestion.id} suggestion={suggestion}/>
-          );
+          return <SuggestionBox key={suggestion.id} suggestion={suggestion} />;
         })}
       </div>
 

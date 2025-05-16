@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-const AdmissionIcon = ({color='white'}) => {
+const AdmissionIcon = ({ color = 'white' }) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -49,6 +49,6 @@ const AdmissionIcon = ({color='white'}) => {
       />
     </svg>
   );
-}
+};
 
-export default AdmissionIcon
+export default AdmissionIcon;

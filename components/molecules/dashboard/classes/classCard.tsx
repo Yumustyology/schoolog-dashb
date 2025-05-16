@@ -2,7 +2,7 @@
 import React from 'react';
 import Image from 'next/image';
 import { cn } from '@/app/lib/utils';
-import {poppins_400, poppins_500 } from '@/app/lib/config/font.config';
+import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { OptionIcon } from '@/components/atoms/icons/Icons';
 import OptionsSubjectDropdown from '../../../atoms/dashboard/subjects/OptionsSubjectDropdown';
 

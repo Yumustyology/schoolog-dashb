@@ -1,5 +1,9 @@
 'use client';
-import { createAddTeacherNextStep, createAddTeacherPreviousStep, createAddTeacherProgressState } from '@/app/lib/entities/staff.entity';
+import {
+  createAddTeacherNextStep,
+  createAddTeacherPreviousStep,
+  createAddTeacherProgressState,
+} from '@/app/lib/entities/staff.entity';
 import Button from '@/components/atoms/form/Button';
 import Step1 from '@/components/molecules/dashboard/staff/add-new-teacher/Step1';
 import Step2 from '@/components/molecules/dashboard/staff/add-new-teacher/Step2';
@@ -8,9 +12,8 @@ import ProgressPageNumber from '@/components/molecules/dashboard/students/add-ne
 import { useEntity } from 'simpler-state';
 
 export default function TopSteps() {
-  const steps = [<Step1 key={1} />, <Step2 key={2} /> ];
+  const steps = [<Step1 key={1} />, <Step2 key={2} />];
   const currentStep = useEntity(createAddTeacherProgressState);
-  
 
   return (
     <div className="p-4 min-h-[100dvh] bg-white flex flex-col justify-between rounded-lg">

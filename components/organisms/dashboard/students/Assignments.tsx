@@ -87,7 +87,7 @@ const assignmentsList: AssignmentList = [
 ];
 
 function Assignments() {
-  const {theme} = useSlgTheme()
+  const { theme } = useSlgTheme();
   return (
     <>
       {assignmentsList.map((assignment) => {

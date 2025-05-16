@@ -29,9 +29,8 @@ function WeekDetail({ week, handleRemoveWeek, handleEditWeek }: WeekProps) {
         <Button className="bg-transparent p-2">
           <DragIcon />
         </Button>
-        <div className='bg-[#f8f8f8] border border-gray4 rounded-[8px] my-4 p-3 w-full'>
-
-          <div >
+        <div className="bg-[#f8f8f8] border border-gray4 rounded-[8px] my-4 p-3 w-full">
+          <div>
             <h3 className={cn('text-sm mb-1', poppins_500.className)}>
               {week.topic}
               {/* Atomic nature and its fundamentals */}
@@ -40,7 +39,6 @@ function WeekDetail({ week, handleRemoveWeek, handleEditWeek }: WeekProps) {
               Week {week.week}
             </p>
           </div>
-
         </div>
       </div>
 

@@ -9,23 +9,36 @@ import {
 import { cn } from '@/app/lib/utils';
 import Link from 'next/link';
 import React from 'react';
+import Image from 'next/image';
 
 function Login() {
   return (
-    <div className="py-28 mx-auto w-full tablet:px-6 laptop:px-20 px-8 ">
+    <div className="py-16 mx-auto w-full tablet:px-6 laptop:px-20 px-8 ">
       <div className="flex flex-col gap-4 justify-center w-full ">
+        <Image
+          alt="logo"
+          height={250}
+          width={280}
+          className="m-auto"
+          src={'/assets/images/logo.png'}
+        />
         <div
           className={cn(
-            'pt-18 mx-auto text-center mb-6',
+            'pt-18 mx-auto text-center mb-6 -mt-5',
             poppins_400.className
           )}
         >
           <h1 className={cn('text-[26px] mb-2', poppins_600.className)}>
-            Welcome to <span className="text-primary"> EduSpaher </span>
+            Welcome <span className="text-primary"> Back👋</span>
           </h1>
-          <p className={cn('text-gray3 text-sm', Inter_400.className)}>
-            Lorem ipsum dolor sit amet consectetur. <br /> Sapien ipsum lorem
-            volutpat magna tortor.
+          <p
+            className={cn(
+              'text-gray3 text-sm max-w-[470px]',
+              Inter_400.className
+            )}
+          >
+            Sign in to access your classes, assignments, progress and more!,
+            your journey continues here.
           </p>
         </div>
 

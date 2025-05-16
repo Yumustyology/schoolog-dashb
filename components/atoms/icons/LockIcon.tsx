@@ -1,6 +1,6 @@
 import React from 'react';
 
-const LockIcon = ({color="#21B55A"}) => {
+const LockIcon = ({ color = '#21B55A' }) => {
   return (
     <svg
       width="24"

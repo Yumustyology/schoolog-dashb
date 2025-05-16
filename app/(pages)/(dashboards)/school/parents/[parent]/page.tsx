@@ -1,4 +1,4 @@
-import ParentInfoPage from "./ParentInfoPage";
+import ParentInfoPage from './ParentInfoPage';
 
 export async function generateStaticParams() {
   const parents = ['AS111', 'science', 'history', '1234'];

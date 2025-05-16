@@ -1,5 +1,5 @@
 import Input from '@/components/atoms/form/Input';
-import {  poppins_500, poppins_600 } from '@/app/lib/config/font.config';
+import { poppins_500, poppins_600 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import React from 'react';
 import { RelationshipDropdownList } from '@/components/atoms/form/RelationshipDropdownList';
@@ -8,17 +8,22 @@ function Step2() {
   return (
     <div>
       <div className="mb-12 mt-6">
-        <p className={cn('text-primary text-xs', poppins_600.className)}>Guradian Details</p>
-        <h2 className={cn('text-xl text-center text-gray1 mb-1', poppins_500.className)}>
+        <p className={cn('text-primary text-xs', poppins_600.className)}>
+          Guradian Details
+        </p>
+        <h2
+          className={cn(
+            'text-xl text-center text-gray1 mb-1',
+            poppins_500.className
+          )}
+        >
           Input the details of the student <br /> you want to upload
         </h2>
-
       </div>
 
-      <form action="" method="post" className='flex flex-col gap-4'>
-        <div className='flex gap-6 items-center'>
-          <div className='flex-1'>
-
+      <form action="" method="post" className="flex flex-col gap-4">
+        <div className="flex gap-6 items-center">
+          <div className="flex-1">
             <Input
               id="subject"
               label="Full name"
@@ -27,19 +32,16 @@ function Step2() {
               className=" h-11 rounded-lg"
               name="text"
               placeholder="Input your full name"
-            // value={loginInfo.password}
-            // handleChange={updateLoginInfo}
+              // value={loginInfo.password}
+              // handleChange={updateLoginInfo}
             />
           </div>
-          <div className='flex-1'>
+          <div className="flex-1">
             <RelationshipDropdownList />
           </div>
-
-
         </div>
 
-
-        <div className='flex gap-6'>
+        <div className="flex gap-6">
           <Input
             id="email"
             label="Guardian email"
@@ -48,8 +50,8 @@ function Step2() {
             className=" h-11 rounded-lg"
             name="text"
             placeholder="Input email "
-          // value={loginInfo.password}
-          // handleChange={updateLoginInfo}
+            // value={loginInfo.password}
+            // handleChange={updateLoginInfo}
           />
 
           <Input
@@ -60,13 +62,12 @@ function Step2() {
             className=" h-11 rounded-lg"
             name="text"
             placeholder="Input phone number "
-          // value={loginInfo.password}
-          // handleChange={updateLoginInfo}
+            // value={loginInfo.password}
+            // handleChange={updateLoginInfo}
           />
-
         </div>
 
-        <div className='flex gap-6'>
+        <div className="flex gap-6">
           <Input
             id="guardian"
             label="Secondary guardian"
@@ -75,8 +76,8 @@ function Step2() {
             className=" h-11 rounded-lg"
             name="text"
             placeholder="Input name"
-          // value={loginInfo.password}
-          // handleChange={updateLoginInfo}
+            // value={loginInfo.password}
+            // handleChange={updateLoginInfo}
           />
 
           <Input
@@ -87,10 +88,9 @@ function Step2() {
             className=" h-11 rounded-lg"
             name="text"
             placeholder="Input phone number "
-          // value={loginInfo.password}
-          // handleChange={updateLoginInfo}
+            // value={loginInfo.password}
+            // handleChange={updateLoginInfo}
           />
-
         </div>
 
         <Input
@@ -101,15 +101,10 @@ function Step2() {
           className=" h-11 rounded-lg"
           name="text"
           placeholder="Input address"
-        // value={loginInfo.password}
-        // handleChange={updateLoginInfo}
+          // value={loginInfo.password}
+          // handleChange={updateLoginInfo}
         />
-
-
       </form>
-
-
-
     </div>
   );
 }

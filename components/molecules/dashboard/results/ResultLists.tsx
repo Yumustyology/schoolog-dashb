@@ -65,7 +65,7 @@ export function ResultLists(): JSX.Element {
       [id]: !prevState[id],
     }));
   };
-const {theme} = useSlgTheme() 
+  const { theme } = useSlgTheme();
   return (
     <>
       <Card className="h-full w-full overflow-scroll p-3.5 shadow-none">
@@ -113,7 +113,8 @@ const {theme} = useSlgTheme()
                         Inter_600.className
                       )}
                     >
-                      <ScreenIcon color={theme.primary} /> <span>Full screen</span>
+                      <ScreenIcon color={theme.primary} />{' '}
+                      <span>Full screen</span>
                     </Button>
                   ) : null
                 ) : null}

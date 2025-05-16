@@ -67,7 +67,7 @@ const Input: FC<inputProps> = ({
   register,
   labelClassName,
   disabled,
-  // leftIcon,  
+  // leftIcon,
   rightIcon,
   rows = 4,
   ...props
@@ -75,7 +75,7 @@ const Input: FC<inputProps> = ({
   const [passwordShown, setPasswordShown] = useState(false);
 
   return (
-    <div className='w-full'>
+    <div className="w-full">
       {label && (
         <label
           htmlFor={id}
@@ -138,18 +138,18 @@ const Input: FC<inputProps> = ({
 
         {type === 'password' && (
           <div
-            className='flex items-center cursor-pointer mx-4 no-select'
+            className="flex items-center cursor-pointer mx-4 no-select"
             onClick={() => setPasswordShown(!passwordShown)}
           >
             {passwordShown ? (
-              <AiOutlineEye color='#737178' size={20} />
+              <AiOutlineEye color="#737178" size={20} />
             ) : (
-              <AiOutlineEyeInvisible color='#737178' size={20} />
+              <AiOutlineEyeInvisible color="#737178" size={20} />
             )}
           </div>
         )}
         {rightIcon && type !== 'password' && (
-          <div className='absolute right-3 top-1/2 -translate-y-1/2'>
+          <div className="absolute right-3 top-1/2 -translate-y-1/2">
             {rightIcon}
           </div>
         )}

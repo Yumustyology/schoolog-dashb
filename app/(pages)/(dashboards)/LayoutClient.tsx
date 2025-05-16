@@ -34,7 +34,7 @@ export default function LayoutClient({
   return (
     <>
       <ThemeProvider>
-       <NextLoader />
+        <NextLoader />
         <SidebarProvider defaultOpen={isSidebarOpen}>
           <AppSidebar type={sidebarType} />
           <main className="w-screen pl-1">

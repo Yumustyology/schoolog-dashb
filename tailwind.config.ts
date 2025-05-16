@@ -15,6 +15,7 @@ module.exports = withMT({
       backgroundImage: {
         'gradient-primary':
           'linear-gradient(to right, var(--color-primary), var(--color-primary-dark))',
+        pattern: "url('/images/bg.png')",
       },
       colors: {
         success: '#21B55A',

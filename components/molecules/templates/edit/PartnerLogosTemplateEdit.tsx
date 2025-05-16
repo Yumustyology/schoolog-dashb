@@ -26,7 +26,6 @@ function PartnerLogosTemplateEdit() {
 
   return (
     <form className="bg-white p-6 rounded-lg mb-8">
-      
       <div className="flex items-start justify-between pb-4 border-b border-b-[#E5E5EA] mb-8">
         <div>
           <h2 className={cn(Inter_600.className, 'text-black1 mb-2 text-lg')}>
@@ -37,7 +36,7 @@ function PartnerLogosTemplateEdit() {
           </p>
         </div>
 
-        <Button type='button' className="text-white text-sm rounded-full">
+        <Button type="button" className="text-white text-sm rounded-full">
           Save changes
         </Button>
       </div>
@@ -81,4 +80,4 @@ function PartnerLogosTemplateEdit() {
   );
 }
 
-export default PartnerLogosTemplateEdit
+export default PartnerLogosTemplateEdit;

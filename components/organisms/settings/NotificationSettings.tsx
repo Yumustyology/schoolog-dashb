@@ -45,7 +45,6 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
 };
 
 const NotificationSettings = () => {
-  
   const [settings, setSettings] = useState({
     inApp: {
       announcement: true,

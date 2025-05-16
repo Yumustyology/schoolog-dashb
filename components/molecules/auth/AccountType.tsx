@@ -1,19 +1,40 @@
-import Link from 'next/link';
+'use client';
+
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { cn } from '@/app/lib/utils';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
-type AccountType = {
+
+type AccountTypeProps = {
   Type: React.FC;
   name: string;
   description: string;
+  func?: () => void;
+  link?: string;
 };
 
-function AccountType({ Type, name, description }: AccountType) {
+function AccountType({
+  Type,
+  name,
+  description,
+  func,
+  link,
+}: AccountTypeProps) {
+  const router = useRouter();
+
+  const handleClick = () => {
+    if (func) func();
+    router.push(link || '/select-school');
+  };
+
   return (
-    <Link
-      href="/"
+    <div
+      role="button"
+      tabIndex={0}
+      onClick={handleClick}
+      onKeyDown={(e) => e.key === 'Enter' && handleClick()}
       className={cn(
-        'border border-gray5 rounded-xl flex justify-between items-center py-4 px-4 gap-4 lxs:gap-1 hover:border-primary ease-in-out delay-100 '
+        'border border-gray5 rounded-xl flex justify-between items-center py-4 px-4 gap-4 lxs:gap-2 hover:border-primary ease-in-out delay-100 cursor-pointer'
       )}
     >
       <div>
@@ -22,11 +43,10 @@ function AccountType({ Type, name, description }: AccountType) {
 
       <div>
         <h3 className={cn('text-black1 text-base mb-2', poppins_500.className)}>
-          {' '}
-          {name}{' '}
+          {name}
         </h3>
         <p className={cn('text-gray3 text-sm', poppins_400.className)}>
-          {description}{' '}
+          {description}
         </p>
       </div>
 
@@ -48,7 +68,7 @@ function AccountType({ Type, name, description }: AccountType) {
           />
         </svg>
       </div>
-    </Link>
+    </div>
   );
 }
 

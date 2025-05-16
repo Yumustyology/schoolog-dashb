@@ -133,11 +133,12 @@ export const materials: MaterialType = [
 ];
 
 function SubjectInfoPage({ subject }: { subject: string }) {
-  const {theme} = useSlgTheme()
-  const [isUploadResourceModalOpen, setIsResourceModalOpen] = React.useState(false)
+  const { theme } = useSlgTheme();
+  const [isUploadResourceModalOpen, setIsResourceModalOpen] =
+    React.useState(false);
   const closeResourceModal = () => {
     setIsResourceModalOpen(false);
-  }
+  };
   const role = 'school';
   const todayClassesTabs = [
     {

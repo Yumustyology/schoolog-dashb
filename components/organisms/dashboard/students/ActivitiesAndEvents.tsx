@@ -24,27 +24,54 @@ import { Typography } from '@material-tailwind/react';
 import Image from 'next/image';
 import React from 'react';
 import MenuLists from '@/components/atoms/dashboard/students/MenuLists';
-import { DeleteIcon, EditIcon, NoEventIcon,  ViewProfileEyeIcon } from '@/components/atoms/icons/Icons';
+import {
+  DeleteIcon,
+  EditIcon,
+  NoEventIcon,
+  ViewProfileEyeIcon,
+} from '@/components/atoms/icons/Icons';
 import Empty from '@/components/molecules/empty/Empty';
 
-function ActivitiesAndEvents({ type = 'student' }: { type?: 'student' | 'school' }) {
+function ActivitiesAndEvents({
+  type = 'student',
+}: {
+  type?: 'student' | 'school';
+}) {
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isRequestModalOpen, setIsRequestModalOpen] = React.useState(false);
   const [openDrawer, setOpenDrawer] = React.useState(false);
 
   const onClose = () => setIsModalOpen(false);
   const menuItems = [
-    { label: "View Profile", onClick: () => console.log("Profile clicked"), icon: <ViewProfileEyeIcon /> },
-    { label: "Edit details", onClick: () => console.log("Settings clicked"), icon: <EditIcon /> },
-    { label: "Delete", onClick: () => console.log("Another clicked"), icon: <DeleteIcon />, danger: true },
-  ]
+    {
+      label: 'View Profile',
+      onClick: () => console.log('Profile clicked'),
+      icon: <ViewProfileEyeIcon />,
+    },
+    {
+      label: 'Edit details',
+      onClick: () => console.log('Settings clicked'),
+      icon: <EditIcon />,
+    },
+    {
+      label: 'Delete',
+      onClick: () => console.log('Another clicked'),
+      icon: <DeleteIcon />,
+      danger: true,
+    },
+  ];
 
   return (
     <>
       <div className="w-full">
         {activitiesAndEvents.length === 0 ? (
           <div className="flex flex-col items-center justify-center text-gray-500 py-12">
-            <Empty icon={<NoEventIcon />} title='No event yet' description='You have not yet create any event. Click the button below to create an event' buttonText='+ Create event' />
+            <Empty
+              icon={<NoEventIcon />}
+              title="No event yet"
+              description="You have not yet create any event. Click the button below to create an event"
+              buttonText="+ Create event"
+            />
           </div>
         ) : (
           <section className="grid desktop:grid-cols-3 xlgDesktop:grid-cols-4 gap-6">
@@ -71,8 +98,7 @@ function ActivitiesAndEvents({ type = 'student' }: { type?: 'student' | 'school'
                     </p>
                   </div>
                   <div className=" flex flex-col gap-3">
-                    <div className='flex justify-between'>
-
+                    <div className="flex justify-between">
                       <h2
                         onClick={() => setOpenDrawer(true)}
                         className={cn(
@@ -82,7 +108,14 @@ function ActivitiesAndEvents({ type = 'student' }: { type?: 'student' | 'school'
                       >
                         {activitiesAndEvent.title}
                       </h2>
-                      {type === 'school' && <MenuLists label="Options" items={menuItems} placement="bottom-start" maxHeight="150px" />}
+                      {type === 'school' && (
+                        <MenuLists
+                          label="Options"
+                          items={menuItems}
+                          placement="bottom-start"
+                          maxHeight="150px"
+                        />
+                      )}
                     </div>
                     <div
                       className={cn(
@@ -117,8 +150,6 @@ function ActivitiesAndEvents({ type = 'student' }: { type?: 'student' | 'school'
             })}
           </section>
         )}
-
-
 
         <FormModal
           isOpen={isModalOpen}
@@ -290,7 +321,6 @@ function ActivitiesAndEvents({ type = 'student' }: { type?: 'student' | 'school'
           </Button>
         </div>
       </DrawerSide>
-
     </>
   );
 }

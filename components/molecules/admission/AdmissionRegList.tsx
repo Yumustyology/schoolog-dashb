@@ -1,10 +1,7 @@
 'use client';
 
 // import Button from '@/components/atoms/form/Button';
-import {
-  poppins_400,
-  poppins_500,
-} from '@/app/lib/config/font.config';
+import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import { Card, Typography } from '@material-tailwind/react';
 import { useState } from 'react';

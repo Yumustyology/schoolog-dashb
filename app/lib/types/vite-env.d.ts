@@ -1,6 +1,6 @@
 interface ImportMetaEnv {
-  readonly VITE_LOGIN_REDIRECT_URL: string;
-  readonly VITE_AXIOS_BASE_URL: string;
+  // readonly VITE_LOGIN_REDIRECT_URL: string;
+  readonly NEXT_PUBLIC_AXIOS_BASE_URL: string;
 }
 
 interface ImportMeta {

@@ -1,6 +1,12 @@
 import { poppins_600 } from '@/app/lib/config/font.config';
-import { createAddTeacherProgressState, createAddTeacherSetStep } from '@/app/lib/entities/staff.entity';
-import {  createAddStudentSetStep, totalNumberSteps } from '@/app/lib/entities/student.entity';
+import {
+  createAddTeacherProgressState,
+  createAddTeacherSetStep,
+} from '@/app/lib/entities/staff.entity';
+import {
+  createAddStudentSetStep,
+  totalNumberSteps,
+} from '@/app/lib/entities/student.entity';
 import { cn } from '@/app/lib/utils';
 import { useEntity } from 'simpler-state';
 

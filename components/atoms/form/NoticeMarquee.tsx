@@ -2,7 +2,6 @@ import { poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import React, { useState } from 'react';
 
-
 interface NoticeMarqueeProps {
   noticeText: string;
 }
@@ -22,7 +21,9 @@ const NoticeMarquee: React.FC<NoticeMarqueeProps> = ({ noticeText }) => {
         className={cn(
           'whitespace-nowrap',
           poppins_500.className,
-          isHovered ? 'whitespace-normal overflow-visible text-center' : 'animate-marquee'
+          isHovered
+            ? 'whitespace-normal overflow-visible text-center'
+            : 'animate-marquee'
         )}
         style={{ whiteSpace: isHovered ? 'normal' : 'nowrap' }}
       >

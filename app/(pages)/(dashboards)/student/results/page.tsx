@@ -5,7 +5,12 @@ import DownloadIcon from '@/components/atoms/icons/dashboard/DownloadIcon';
 import PerformanceMetrics from '@/components/molecules/dashboard/analytics/PerformanceMetrics';
 import { ResultLists } from '@/components/molecules/dashboard/results/ResultLists';
 import { OverAllBestSubjectsList } from '@/components/molecules/dashboard/student/OverAllBestSubjects';
-import { Inter_600, poppins_400, poppins_500,poppins_600, } from '@/app/lib/config/font.config';
+import {
+  Inter_600,
+  poppins_400,
+  poppins_500,
+  poppins_600,
+} from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import React from 'react';
 

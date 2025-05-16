@@ -51,13 +51,13 @@ const PurchasedTemplate = () => {
                 'text-xl font-normal text-gray6',
                 poppins_500.className
               )}
-            >&nbsp;₦10,000{' '}
+            >
+              &nbsp;₦10,000{' '}
               <span className={cn(poppins_400.className, 'text-xs')}>
                 /monthly
               </span>
             </p>
           </div>
-         
         </div>
         <div>
           <CarouselImage
@@ -77,7 +77,7 @@ const PurchasedTemplate = () => {
             className="!h-[606px] w-full relative --overflow-hidden"
           />
         </div>
-        
+
         <div className="overflow-auto sidebar-scroll border-t mt-6 flex justify-start gap-3">
           {footerImages.map((image, index) => (
             <Image

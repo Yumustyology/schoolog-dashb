@@ -29,16 +29,16 @@ export const postRequest = async <T>(
   payload: any
 ): Promise<AxiosResponse<T> | void> => {
   const config = {
-    ...axiosConfig,
     headers: {
-      ...(payload instanceof FormData && {
-        'Content-Type': 'multipart/form-data',
-      }),
+      ...(payload instanceof FormData
+        ? { 'Content-Type': 'multipart/form-data' }
+        : { 'Content-Type': 'application/json' }),
     },
   };
 
   return handleRequest(axiosConfig.post<T>(endpoint, payload, config));
 };
+
 
 export const putRequest = async <T>(
   endpoint: string,
@@ -56,8 +56,16 @@ export const deleteRequest = async <T>(
 
 export const getRequest = async <T>(
   endpoint: string,
-  payload?: string
+  payload?: string | Record<string, any>
 ): Promise<AxiosResponse<T> | void> => {
-  const url = `${endpoint}${payload ? `/${payload}` : ''}`;
-  return handleRequest(axiosConfig.get<T>(url));
+  let url = endpoint;
+  let config = {};
+
+  if (typeof payload === 'string') {
+    url += `/${payload}`;
+  } else if (typeof payload === 'object' && payload !== null) {
+    config = { params: payload };
+  }
+
+  return handleRequest(axiosConfig.get<T>(url, config));
 };

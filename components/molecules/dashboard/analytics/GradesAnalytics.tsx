@@ -15,7 +15,6 @@ import { getChartConfig } from '@/app/lib/utils/getChartConfig';
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 const GradesAnalytics = () => {
-  
   const data = [50, 40, 300, 320, 500, 350, 200, 230, 500];
   const categories = [
     'Apr',

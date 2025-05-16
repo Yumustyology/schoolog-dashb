@@ -32,20 +32,23 @@ export function Dropdown({
   onChange,
   placeholder = 'Select an option...',
   className = '',
-  label
+  label,
 }: DropdownProps) {
-
   const handleChange = (value: string) => {
     if (onChange) onChange(value);
   };
 
   return (
     <div>
-
-      <Label className={cn('text-base text-gray6 mb-2', poppins_400.className)}> {label}</Label>
+      <Label className={cn('text-base text-gray6 mb-2', poppins_400.className)}>
+        {' '}
+        {label}
+      </Label>
 
       <Select onValueChange={handleChange} value={selectedOption}>
-        <SelectTrigger className={`w-full bg-white bg-opacity-55 text-sm text-gray h-11 ${className}`}>
+        <SelectTrigger
+          className={`w-full bg-white bg-opacity-55 text-sm text-gray h-11 ${className}`}
+        >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent className="bg-white text-gray">
@@ -59,6 +62,5 @@ export function Dropdown({
         </SelectContent>
       </Select>
     </div>
-
   );
 }
