@@ -45,7 +45,7 @@ function page() {
                   href="/signup"
                   className={cn('underline text-bold text-primary')}
                 >
-                  Sign your school up!
+                  Sign Up!
                 </Link>
               </p>
             ) : null}
@@ -97,9 +97,8 @@ function page() {
               href="/signup"
               className={cn('underline text-bold text-primary')}
             >
-              Sign your school up!
+              Sign Up!
             </Link>
-            !{' '}
           </p>
         ) : null}
       </main>
