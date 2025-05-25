@@ -27,6 +27,7 @@ import Link from 'next/link';
 import LogoutModal from '../LogoutModal';
 import NotificationBigIcon from '../../atoms/icons/ModalIcons/NotificationBigIcon';
 import { truncateText } from '@/app/lib/utils/truncate';
+import { profileState } from '@/app/lib/entities/profile.entity';
 
 const notifications: NotificationItemProps[] = [
   // {
@@ -153,7 +154,9 @@ function Header() {
 
 export default Header;
 
-const HeaderInfo = ({ truncateLength = 0 }: { truncateLength?: number }) => (
+const HeaderInfo = ({ truncateLength = 0 }: { truncateLength?: number }) => {
+   const profile = profileState.use();
+  return (
   <>
     <div>
       <Avatar
@@ -169,13 +172,14 @@ const HeaderInfo = ({ truncateLength = 0 }: { truncateLength?: number }) => (
     <div className="flex flex-col gap-1">
       <h3 className={cn('text-gray1 text-sm truncate', poppins_500.className)}>
         {truncateLength
-          ? truncateText('Muhammad Jamiu', truncateLength)
-          : 'Muhammad Jamiu'}
+          ? truncateText(profile.firstName + ' ' + profile.lastName, truncateLength)
+          : profile.firstName + ' ' + profile.lastName}
       </h3>
-      <p className={cn('text-gray text-xs', poppins_500.className)}>Admin</p>
+      <p className={cn('text-gray text-xs', poppins_500.className)}>{profile.audience}</p>
     </div>
   </>
 );
+}
 
 export function ProfileMenu() {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
