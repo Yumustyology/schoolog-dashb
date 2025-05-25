@@ -1,12 +1,44 @@
-import IsVerified from '@/components/molecules/auth/IsVerified';
-import React from 'react';
+'use client';
 
-function page() {
+import React, { useEffect } from 'react';
+import { signupEmail } from '@/app/lib/entities/auth.entity';
+import IsNotVerified from '@/components/molecules/auth/IsNotVerified';
+import { useRouter } from 'next/navigation';
+import { resendLoginOtp, verifyEmail } from '@/app/lib/actions/auth.action';
+
+function Page() {
+  const email = signupEmail.use();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!email) {
+      router.replace('/signup');
+    }
+  }, [email, router]);
+
+  if (!email) {
+    return <p></p>;
+  }
+
+  const handleResend = async () => {
+    await resendLoginOtp(email);
+  };
+
+  const handleVerify = async (otp: string) => {
+    const resp = await verifyEmail({ email, otp, type: 'signup' });
+    if (resp?.data?.status === 'success') {
+      router.push('/signup/set-password');
+    }
+  };
+
   return (
-    <div>
-      <IsVerified />
-    </div>
+    <IsNotVerified
+      email={email}
+      handleResendFunc={handleResend}
+      handleVerifyFunc={handleVerify}
+      title="Verify School Email"
+    />
   );
 }
 
-export default page;
+export default Page;

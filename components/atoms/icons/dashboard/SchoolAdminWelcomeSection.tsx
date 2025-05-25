@@ -6,8 +6,10 @@ import Button from '../../form/Button';
 import AddUserIcon from './AddUserIcon';
 import { DatePicker } from '../../form/DatePicker';
 import { FilterButtonGroup } from '../../FilterButton';
+import { profileState } from '@/app/lib/entities/profile.entity';
 
 const SchoolAdminWelcomeSection = () => {
+  const profile = profileState.use();
   const handleFilterChange = (filter: string) => {
     console.log('Selected filter:', filter);
   };
@@ -19,7 +21,7 @@ const SchoolAdminWelcomeSection = () => {
           <h1 className={cn(poppins_600.className, 'text-3xl ')}>
             Hi{' '}
             <span className="bg-gradient-primary bg-clip-text text-transparent">
-              Mohh_Jumah
+              {profile.firstName}{' '}
             </span>
             👋 How is your day going
           </h1>

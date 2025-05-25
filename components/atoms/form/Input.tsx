@@ -157,7 +157,7 @@ const Input: FC<inputProps> = ({
       {errMsg ? (
         <p
           className={cn(
-            `text-2 w-fit text-left mt-0 font-nunito`,
+            `text-xs w-fit text-left mt-1 font-nunito`,
             errMsgClassName,
             'text-[indianred]'
           )}

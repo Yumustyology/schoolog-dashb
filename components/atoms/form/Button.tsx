@@ -24,6 +24,7 @@ type ButtonProps = {
   span?: boolean;
   loaderColor?: string;
   childrenClassName?: string;
+  type?: 'button' | 'submit' | 'reset';
 } & React.DetailedHTMLProps<
   React.ButtonHTMLAttributes<HTMLButtonElement>,
   HTMLButtonElement

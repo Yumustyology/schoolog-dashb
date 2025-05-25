@@ -45,7 +45,7 @@ function Login() {
         <AuthWrapper>
           <form
             action=""
-            className="max-w-[50rem] mx-auto w-full xxs:px-2 tablet:px-10  laptop:px-28"
+            className="mx-auto w-full xxs:px-2 tablet:px-10 laptop:px-10 desktop:px-28"
           >
             <Input
               id="email"

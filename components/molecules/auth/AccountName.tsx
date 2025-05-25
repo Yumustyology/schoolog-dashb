@@ -6,15 +6,15 @@ import React from 'react';
 import Location from '../../atoms/icons/AuthTypeIcons/Location';
 import AvatarStack from './AvatarStack';
 
-function AccountName() {
+function AccountName({ small = false}:{ small?: boolean }) {
   return (
-    <div className="border border-gray5 w-full rounded-xl mt-7 flex items-center p-4 gap-4">
+    <div className={cn("border border-gray5 w-full rounded-xl mt-1 flex items-center p-4 gap-4", small && "p-3 py-3")}>
       <div>
         <Image
           src={school}
           alt="Description of image"
-          width={100}
-          height={100}
+          width={!small ? 100 : 60}
+          height={!small ? 100 : 60}
         />
       </div>
 
@@ -29,7 +29,7 @@ function AccountName() {
           </span>
         </p>
 
-        <div className="flex gap-3 px-2 ">
+        {!small ? <div className="flex gap-3 px-2 ">
           <AvatarStack />
           <p
             className={cn(
@@ -38,7 +38,7 @@ function AccountName() {
           >
             + 120 others
           </p>
-        </div>
+          </div> : null}
       </div>
     </div>
   );

@@ -251,3 +251,35 @@ html {
 .animate-marquee {
   animation: marquee 8s linear infinite;
 }
+
+.form-group {
+  @apply border border-[#E0E0E0]  rounded-lg w-full outline-none flex items-center m-0;
+}
+
+.form-input-group {
+  @apply border border-[#E0E0E0] rounded-lg w-full outline-none flex items-center h-14 m-0;
+}
+.stdropdown-container{
+  border: none !important
+}
+.stsearch-box input{
+  border-left: none !important;
+  border-right: none !important;
+  border-radius: 0 !important;
+  border-top-color: #E0E0E0;
+  border-bottom-color: #E0E0E0;
+  /* border: 0px solid; */
+  width: 100%;
+}
+
+.stsearch-box{
+  padding: 0;
+  background: transparent;
+}
+.stdropdown-container{
+  width: 100%;
+}
+
+.stdropdown-input{
+  width: 100%;
+}

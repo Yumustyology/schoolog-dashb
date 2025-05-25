@@ -6,7 +6,7 @@ import { Inter_400, Inter_800 } from '@/app/lib/config/font.config';
 import Button from '../../atoms/form/Button';
 import AuthWrapper from '../../atoms/form/auth/AuthWrapper';
 
-function IsVerified() {
+function IsVerified({to}:{to?: string}) {
   return (
     <AuthWrapper>
       <main className=" w-full flex items-center justify-center min-h-screen py-28 px-14 mx-auto">
@@ -26,11 +26,11 @@ function IsVerified() {
               Successful
             </h1>
             <p className={cn('text-[#667085] text-xl', Inter_400.className)}>
-              Your account has been <br /> successfully verified!
+              Your account has been successfully verified!
             </p>
           </div>
 
-          <Button round wide className="mt-10 rounded-full h-14 text-sm">
+          <Button to={to} round wide className="mt-10 rounded-full h-14 text-sm">
             {' '}
             Continue
           </Button>

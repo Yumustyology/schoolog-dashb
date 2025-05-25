@@ -1,7 +1,7 @@
 'use client';
 
 import { debounce } from 'lodash';
-import React, { useCallback, useEffect, useRef } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useFormik } from 'formik';
 import Input from '@/components/atoms/form/Input';
@@ -20,15 +20,25 @@ import {
   createNewSchool,
   generateSlugFromBackend,
 } from '@/app/lib/actions/register-school.action';
+import { CountrySelect, StateSelect } from 'react-country-state-city';
+import { State, Country } from 'react-country-state-city/dist/esm/types';
+import 'react-country-state-city/dist/react-country-state-city.css';
+import { useRouter } from 'next/navigation';
+import { signupEmail } from '@/app/lib/entities/auth.entity';
 
 function Register() {
+  const navigate = useRouter()
   const isAutoGeneratingSlug = useRef(false);
+  const [loading, setLoading] = useState(false);
+  const [country, setCountry] = useState<Country | null>(null);
+  const [currentState, setCurrentState] = useState<State | null>(null);
 
   const formik = useFormik({
     initialValues: {
       schoolName: '',
       email: '',
       country: '',
+      state: '',
       slug: '',
       firstname: '',
       lastname: '',
@@ -64,21 +74,45 @@ function Register() {
           const key = err.path[0] as keyof RegisterFormValues;
           errors[key] = err.message;
         });
-        return errors;
+        formik.setErrors(errors);
+        return;
       }
-
+      setLoading(true);
       try {
         const resp = await createNewSchool({
           name: values.schoolName,
           slug: values.slug,
           email: values.email,
           country: values.country,
+          state: values.state,
           adminFirstName: values.firstname,
           adminLastName: values.lastname,
+          retryPassword: values.confirmPassword,
+          password: values.password,
         });
-        console.log('Form submitted:', resp);
+        
+        if (
+          resp &&
+          resp.data?.statusCode === 201 &&
+          resp.data?.message == 'Verification email sent successfully'
+        ) {
+          signupEmail.set(values.email);
+          navigate.push('/signup/otp')
+        } else if (resp) {
+          formik.setFieldError(
+            'email',
+            resp.data?.message || 'An error occurred'
+          );
+        } else {
+          formik.setFieldError(
+            'email',
+            'Something went wrong. Please try again.'
+          );
+        }
       } catch (err) {
         console.log(err);
+      } finally {
+        setLoading(false);
       }
     },
   });
@@ -153,7 +187,7 @@ function Register() {
         <AuthWrapper>
           <form
             onSubmit={formik.handleSubmit}
-            className="mx-auto w-full xxs:px-2 tablet:px-10 laptop:px-28"
+            className="mx-auto w-full xxs:px-2 tablet:px-10 laptop:px-10 desktop:px-28"
           >
             <div className="grid grid-cols-1 laptop:grid-cols-2 gap-4">
               <Input
@@ -182,8 +216,8 @@ function Register() {
               />
             </div>
 
-            <div className="grid grid-cols-1 laptop:grid-cols-2 gap-4">
-              <Input
+            <div className="grid mt-4 grid-cols-1 laptop:grid-cols-2 gap-4">
+              {/* <Input
                 id="country"
                 label="Country"
                 type="text"
@@ -194,7 +228,7 @@ function Register() {
                 value={formik.values.country}
                 handleChange={formik.handleChange}
                 errMsg={formik.errors.country}
-              />
+              /> */}
               <Input
                 id="slug"
                 label="Slug"
@@ -202,14 +236,55 @@ function Register() {
                 name="slug"
                 placeholder="e.g EHS"
                 className="input mb-6 h-14 rounded-lg"
-                labelClassName="label mt-4"
+                labelClassName="label"
                 value={formik.values.slug}
                 handleChange={formik.handleChange}
                 errMsg={formik.errors.slug}
               />
+              <div>
+                <label
+                  htmlFor={'country'}
+                  className={cn(
+                    'label block text-left w-full font-nunito text-base mb-3'
+                  )}
+                >
+                  Country
+                </label>
+                <CountrySelect
+                  id="country"
+                  containerClassName="form-group h-14"
+                  inputClassName="form-input-group"
+                  onChange={(selected: Country) => {
+                    setCountry(selected);
+                    formik.setFieldValue('country', selected.name);
+                  }}
+                  placeHolder="Select Country"
+                />
+              </div>
             </div>
 
             <div className="grid grid-cols-1 laptop:grid-cols-2 gap-4">
+              <div>
+                <label
+                  htmlFor={'country'}
+                  className={cn(
+                    'label block text-left w-full font-nunito text-base mb-3'
+                  )}
+                >
+                  State
+                </label>
+                <StateSelect
+                  countryid={country?.id as number}
+                  containerClassName="form-group h-14"
+                  inputClassName="form-input-group"
+                  onChange={(selected: State) => {
+                    setCurrentState(selected);
+                    formik.setFieldValue('state', selected.name);
+                  }}
+                  defaultValue={currentState?.id?.toString()}
+                  placeHolder="Select State"
+                />
+              </div>
               <Input
                 id="firstname"
                 label="First Name"
@@ -222,6 +297,9 @@ function Register() {
                 handleChange={formik.handleChange}
                 errMsg={formik.errors.firstname}
               />
+            </div>
+
+            <div className="grid grid-cols-1 laptop:grid-cols-2 gap-4">
               <Input
                 id="lastname"
                 label="Full Name"
@@ -234,9 +312,6 @@ function Register() {
                 handleChange={formik.handleChange}
                 errMsg={formik.errors.lastname}
               />
-            </div>
-
-            <div className="grid grid-cols-1 laptop:grid-cols-2 gap-4">
               <Input
                 id="password"
                 label="Password"
@@ -249,6 +324,9 @@ function Register() {
                 handleChange={formik.handleChange}
                 errMsg={formik.errors.password}
               />
+            </div>
+
+            <div className="grid grid-cols-1 laptop:grid-cols-2 gap-4">
               <Input
                 id="confirmPassword"
                 label="Confirm Password"
@@ -267,6 +345,7 @@ function Register() {
               type="submit"
               round
               wide
+              loading={loading}
               className="mt-12 rounded-full h-12 text-base"
             >
               Sign up

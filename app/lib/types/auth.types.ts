@@ -7,3 +7,10 @@ export type RegisterFormValues = {
   password: string;
   confirmPassword: string;
 };
+
+
+export type SetPassowrdFormValues = {
+  email: string;
+  password: string;
+  confirmPassword: string;
+};
