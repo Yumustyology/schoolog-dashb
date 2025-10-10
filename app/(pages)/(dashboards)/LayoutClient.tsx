@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { SidebarProvider } from '@/components/ui/sidebar';
+import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/components/molecules/dashboard/AsideBar';
 import Header from '@/components/molecules/dashboard/Header';
 import { ThemeProvider } from '@/components/organisms/ThemeProvider';
@@ -37,12 +37,14 @@ export default function LayoutClient({
         <NextLoader />
         <SidebarProvider defaultOpen={isSidebarOpen}>
           <AppSidebar type={sidebarType} />
-          <main className="w-screen pl-1">
+          <SidebarInset>
+          <main className="w-full pl-1">
             <div className="w-full bg-white py-3">
               <Header />
             </div>
             <div className="p-8 h-full bg-[#F8F8F8]">{children}</div>
           </main>
+          </SidebarInset>
         </SidebarProvider>
       </ThemeProvider>
     </>
