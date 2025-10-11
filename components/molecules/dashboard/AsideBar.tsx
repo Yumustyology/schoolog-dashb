@@ -19,9 +19,9 @@ import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
 import Settings from '../../atoms/icons/SideBar/Settings';
-import { shoolSidebarItems, studentSidebarItems } from '@/app/lib/sidebarData';
 import { ChevronUp } from 'lucide-react';
 import { useRef, useState } from 'react';
+import { studentSidebarItems, shoolSidebarItems } from '@/app/lib/sidebarData';
 
 export function AppSidebar({
   type,

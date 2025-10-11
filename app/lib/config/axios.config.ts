@@ -6,6 +6,7 @@ import axios, {
 import localforage from 'localforage';
 // import showToast from '../utils/toast';
 import { appConfig } from './app.config';
+import { getTenantFromHost } from '../tenant';
 
 export const baseURL = `${appConfig.axiosBaseUrl}/`;
 
@@ -44,6 +45,20 @@ axiosConfig.interceptors.request.use(
     const token = await localforage.getItem('accessToken');
     if (token && config.headers) {
       config.headers['Authorization'] = `Bearer ${token}`;
+    }
+    // Attach tenant header for multi-tenant requests (client-side)
+    try {
+      if (config.headers) {
+        const existing = config.headers['X-Tenant'] || config.headers['x-tenant'];
+        if (!existing && typeof window !== 'undefined') {
+          const hostname = window.location.hostname || '';
+          const tenant = getTenantFromHost(hostname);
+          if (tenant) config.headers['X-Tenant'] = tenant;
+        }
+      }
+    } catch (e) {
+      // ignore tenant detection errors
+      console.log("err ",e)
     }
     return config;
   },

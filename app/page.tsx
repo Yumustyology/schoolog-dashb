@@ -7,30 +7,41 @@ import Teacher from '@/components/atoms/icons/AuthTypeIcons/Teacher';
 import AccountType from '@/components/molecules/auth/AccountType';
 import { poppins_400, poppins_600 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
-
 import React from 'react';
 import Image from 'next/image';
 import { ParticlesComp } from '@/components/molecules/Particles';
 import NextLoader from '@/components/atoms/NextLoader';
 import { setAuthState } from './lib/entities/auth.entity';
+import { useSchoolContext } from './lib/hooks/useSchoolContext';
+import { useRouter } from 'next/navigation';
 import { AudienceTypes } from './lib/types/audience-types';
 
-function page() {
+function Page() {
+  const { tenant } = useSchoolContext();
+  const router = useRouter();
+
+  const handleSelect = (audienceType: AudienceTypes) => {
+    setAuthState('audience_type', audienceType);
+    if (tenant?.isDefault) {
+      router.push('/select-school');
+    } else {
+      router.push('/login');
+    }
+  };
+
   return (
     <>
       <NextLoader />
-      {/* <main className="grid grid-cols-5 w-full h-screen ">
-    <div className="w-full h-full lgTablet:col-span-2 bg-green-900 tablet:col-span-1 xxs:hidden tablet:block "></div>
-    <div className="bg-white w-full h-full flex justify-center items-center lgTablet:col-span-3 tablet:col-span-4 xxs:col-span-5"> */}
       <AuthWrapper>
         <div className="bg-pattern w-full flex items-center justify-center min-h-screen py-10 tablet:px-14 laptop:px-24 desktop:px-36 mx-auto px-8">
           <div>
             <Image
               alt="logo"
-              height={250}
               width={280}
+              height={250}
               className="m-auto"
-              src={'/assets/images/logo.png'}
+              src="/assets/images/logo.png"
+              priority
             />
             <div className="mb-12 text-center">
               <h1
@@ -41,6 +52,7 @@ function page() {
               >
                 Select Your <span className="text-primary"> Account Type </span>
               </h1>
+              <p className="text-sm text-gray6 mt-2">Tenant: {tenant?.id}</p>
               <p
                 className={cn(
                   'text-gray6 text-base mt-4',
@@ -54,29 +66,25 @@ function page() {
 
             <div className="flex flex-col gap-6">
               <AccountType
-                func={() =>
-                  setAuthState('audience_type', AudienceTypes.STUDENT)
-                }
+                func={() => handleSelect(AudienceTypes.STUDENT)}
                 name="Student"
                 description="Jump into your classes, track your progress, and stay connected with your school journey."
                 Type={Student}
               />
               <AccountType
-                func={() => setAuthState('audience_type', AudienceTypes.STAFF)}
+                func={() => handleSelect(AudienceTypes.STAFF)}
                 name="Teacher"
                 description="Manage your lessons, engage students, and keep learning interactive and inspiring."
                 Type={Teacher}
               />
               <AccountType
-                func={() =>
-                  setAuthState('audience_type', AudienceTypes.GUARDIAN)
-                }
+                func={() => handleSelect(AudienceTypes.GUARDIAN)}
                 name="Parent"
                 description="Stay in the loop, monitor your child's progress, attendance, and school updates easily."
                 Type={Parent}
               />
               <AccountType
-                func={() => setAuthState('audience_type', AudienceTypes.ADMIN)}
+                func={() => handleSelect(AudienceTypes.ADMIN)}
                 name="School administrator"
                 description="Oversee operations, manage, and streamline school management."
                 Type={Admin}
@@ -86,10 +94,8 @@ function page() {
         </div>
         <ParticlesComp />
       </AuthWrapper>
-      {/* </div>
-    </main> */}
     </>
   );
 }
 
-export default page;
+export default Page;

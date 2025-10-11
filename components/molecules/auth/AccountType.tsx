@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { useRouter } from 'next/navigation';
 import { cn } from '@/app/lib/utils';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 
@@ -9,22 +8,12 @@ type AccountTypeProps = {
   Type: React.FC;
   name: string;
   description: string;
-  func?: () => void;
-  link?: string;
+  func: () => void;
 };
 
-function AccountType({
-  Type,
-  name,
-  description,
-  func,
-  link,
-}: AccountTypeProps) {
-  const router = useRouter();
-
+function AccountType({ Type, name, description, func }: AccountTypeProps) {
   const handleClick = () => {
-    if (func) func();
-    router.push(link || '/select-school');
+    func();
   };
 
   return (
