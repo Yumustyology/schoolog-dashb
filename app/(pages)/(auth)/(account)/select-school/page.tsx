@@ -1,9 +1,8 @@
 'use client';
 
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import AuthWrapper from '@/components/atoms/form/auth/AuthWrapper';
 import SchoolCard from '@/components/atoms/SchoolCard';
-import useSWRInfinite from 'swr/infinite';
 import { poppins_400, poppins_600 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import ProgressPageNumber from '@/components/molecules/auth/PageNumber';
@@ -11,93 +10,57 @@ import { authState } from '@/app/lib/entities/auth.entity';
 import Link from 'next/link';
 import { AudienceTypes } from '@/app/lib/types/audience-types';
 import fetchPublicSchools from '@/app/lib/actions/school-info.action';
-import type { SchoolPublic } from '@/app/lib/types/school-info.types';
 import { openSchoolSubdomain } from '@/app/lib/utils/openSchoolSubdomain';
+import type { SchoolPublic } from '@/app/lib/types/school-info.types';
+import ScrollPaginator from '@/components/molecules/ScrollPaginator';
 
 function Page() {
   const { audience_type } = authState.use();
   const [search, setSearch] = useState('');
-  const containerRef = useRef<HTMLDivElement | null>(null);
-  const limit = 10;
-
-  const getKey = (pageIndex: number, previousPageData: unknown) => {
-    if (
-      previousPageData &&
-      previousPageData.data &&
-      previousPageData.data.items.length === 0
-    )
-      return null;
-    return ['/school/public', search || '', pageIndex + 1];
-  };
-
-  const fetcher = async (_url: string, q: string, page: number) => {
-    const res = await fetchPublicSchools({
-      search: q || undefined,
-      page,
-      limit,
-    });
-    return res;
-  };
-
-  const {
-    data: pages,
-    error,
-    size,
-    setSize,
-  } = useSWRInfinite(getKey, fetcher, { revalidateOnFocus: false });
-
-  const items = (pages || []).flatMap((p) => p?.data?.items || []);
-  const total = pages && pages[0] ? pages[0].data?.total || 0 : 0;
-
-  const isLoadingInitialData = !pages && !error;
-  const isLoadingMore =
-    isLoadingInitialData ||
-    (size > 0 && pages && typeof pages[size - 1] === 'undefined');
-  const isReachingEnd =
-    !!(
-      pages &&
-      pages[pages.length - 1] &&
-      pages[pages.length - 1].data &&
-      pages[pages.length - 1].data.items.length === 0
-    ) || items.length >= total;
+  const [debouncedSearch, setDebouncedSearch] = useState(search);
 
   useEffect(() => {
-    // reset to first page when search term changes
-    setSize(1);
-    if (containerRef.current) containerRef.current.scrollTop = 0;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const t = setTimeout(() => setDebouncedSearch(search), 300);
+    return () => clearTimeout(t);
   }, [search]);
 
-  useEffect(() => {
-    const el = containerRef.current;
-    if (!el) return;
+  const fetchPage = useCallback(
+    async (page: number) => {
+      const q = debouncedSearch?.trim();
+      const res = await fetchPublicSchools({
+        ...(q ? { search: q } : {}),
+        page,
+        limit: 10,
+      });
 
-    const onScroll = () => {
-      const bottom = el.scrollHeight - el.scrollTop - el.clientHeight;
-      if (bottom < 150 && !isReachingEnd && !isLoadingMore) {
-        setSize((s) => s + 1);
+      if (res?.data) {
+        return {
+          items: res.data.items || [],
+          total: res.data.total || 0,
+          page: res.data.page || page,
+          limit: res.data.limit || 10,
+        };
       }
-    };
-
-    el.addEventListener('scroll', onScroll);
-    return () => el.removeEventListener('scroll', onScroll);
-  }, [isReachingEnd, isLoadingMore, setSize]);
+      return { items: [], total: 0, page, limit: 10 };
+    },
+    [search]
+  );
 
   return (
     <AuthWrapper>
-      <main className="w-full min-h-screen py-28 px-36">
+      <main className="w-full min-h-screen py-28 px-36-- px-28">
         <ProgressPageNumber />
 
-        <div className="  flex flex-col items-center justify-center  mx-auto">
-          <div className="mb-12">
+        <div className="flex flex-col items-center justify-center mx-auto"> 
+          <div className="mb-12 text-center">
             <h1
               className={cn(
                 'text-black1 mb-2 text-3xl leading-10',
                 poppins_600.className
               )}
             >
-              Input your <span className="text-primary"> school name</span> or{' '}
-              <span className="text-primary"> school ID</span> to proceed
+              Input your <span className="text-primary">school name</span> or{' '}
+              <span className="text-primary">school ID</span> to proceed
             </h1>
             <p
               className={cn(
@@ -109,7 +72,7 @@ function Page() {
               your personalized dashboard.
             </p>
 
-            {audience_type == AudienceTypes.ADMIN ? (
+            {audience_type === AudienceTypes.ADMIN && (
               <p className={cn('text-base mt-6 -mb-3', poppins_400.className)}>
                 Don&apos;t have a registered school?{' '}
                 <Link
@@ -119,9 +82,10 @@ function Page() {
                   Sign Up!
                 </Link>
               </p>
-            ) : null}
+            )}
           </div>
 
+          {/* Search Bar */}
           <div className="flex justify-start gap-6 bg-[#F7F7F7] border border-[#D9DCE0] rounded-[100px] p-3 w-full">
             <svg
               width="24"
@@ -149,44 +113,28 @@ function Page() {
             <input
               type="search"
               placeholder="Search school"
-              className=" outline-none w-full text-gray1 bg-transparent"
+              className="outline-none w-full text-gray1 bg-transparent"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
             />
           </div>
 
-          <div className="flex flex-col gap-4 w-full">
-            {error && <div className="text-red-500">Error loading schools</div>}
-
-            <div
-              ref={containerRef}
-              style={{ maxHeight: '60vh', overflow: 'auto' }}
-            >
-              <div className="space-y-3">
-                {items.length > 0 ? (
-                  items.map((s: SchoolPublic) => (
-                    <SchoolCard
-                      key={s.slug}
-                      school={s}
-                      onClick={() => openSchoolSubdomain(s)}
-                    />
-                  ))
-                ) : (
-                  <div className="p-4">
-                    {isLoadingInitialData ? 'Loading...' : 'No schools found.'}
-                  </div>
-                )}
-              </div>
-              {isLoadingMore && <div className="py-4">Loading more...</div>}
-              {isReachingEnd && (
-                <div className="py-4 text-center text-gray-500">
-                  No more results
-                </div>
+          <div className="w-full mt-6">
+            <ScrollPaginator<SchoolPublic>
+              key={debouncedSearch}
+              swrKey={`public-schools-search=${debouncedSearch}`}
+              fetchPage={fetchPage}
+              renderItem={(school: SchoolPublic) => (
+                <SchoolCard
+                  school={school}
+                  onClick={() => openSchoolSubdomain(school)}
+                />
               )}
-            </div>
+            />
           </div>
         </div>
-        {audience_type == AudienceTypes.ADMIN ? (
+
+        {audience_type === AudienceTypes.ADMIN && (
           <p className={cn('text-base mt-8', poppins_400.className)}>
             Don&apos;t have a registered school?{' '}
             <Link
@@ -196,7 +144,7 @@ function Page() {
               Sign Up!
             </Link>
           </p>
-        ) : null}
+        )}
       </main>
     </AuthWrapper>
   );

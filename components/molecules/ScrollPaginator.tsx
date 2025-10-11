@@ -1,48 +1,74 @@
-"use client";
+'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import type { ReactNode } from 'react';
+import useSWR from 'swr';
 
 type Props<T> = {
-  fetchPage: (page: number) => Promise<{ items: T[]; total: number; page: number; limit: number } | undefined>;
-  renderItem: (item: T) => ReactNode;
-  initialPage?: number;
-  pageSize?: number;
+  /**
+   * The base key prefix for SWR caching.
+   * Example: "schools?search=abc"
+   */
+  swrKey: string;
+  /**
+   * Function to fetch a page.
+   */
+  fetchPage: (
+    page: number,
+    limit: number
+  ) => Promise<{
+    items: T[];
+    total: number;
+    page: number;
+    limit: number;
+  }>;
+  /**
+   * Render each item.
+   */
+  renderItem: (item: T) => React.ReactNode;
+  /**
+   * Optional page size (default: 10)
+   */
+  limit?: number;
 };
 
-export default function ScrollPaginator<T>({ fetchPage, renderItem, initialPage = 1 }: Props<T>) {
-  const [items, setItems] = useState<T[]>([]);
-  const [page, setPage] = useState(initialPage);
-  const [hasMore, setHasMore] = useState(true);
-  const [loading, setLoading] = useState(false);
+export default function ScrollPaginator<T>({
+  swrKey,
+  fetchPage,
+  renderItem,
+  limit = 10,
+}: Props<T>) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const [page, setPage] = useState(1);
+  const [items, setItems] = useState<T[]>([]);
+  const [total, setTotal] = useState(0);
 
+  const fullKey = `${swrKey}&page=${page}&limit=${limit}`;
+
+  const { data, error, isValidating } = useSWR(
+    fullKey,
+    async () => {
+      return await fetchPage(page, limit);
+    },
+    { revalidateOnFocus: false, dedupingInterval: 0 }
+  );
+
+  const isLoading = !data && !error && isValidating;
+
+  // accumulate pages: when page === 1 replace, otherwise append
   useEffect(() => {
-    // initial load
-    loadPage(page);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  const loadPage = async (p: number) => {
-    if (loading || !hasMore) return;
-    setLoading(true);
-    try {
-      const res = await fetchPage(p);
-      if (res && res.items) {
-        setItems((prev) => [...prev, ...res.items]);
-        const fetchedTotal = res.items.length;
-        // if less than page size or zero, we reached end
-        if (fetchedTotal === 0 || items.length + fetchedTotal >= (res.total || 0)) {
-          setHasMore(false);
-        }
-      } else {
-        setHasMore(false);
-      }
-    } finally {
-      setLoading(false);
+    if (!data) return;
+    if (page === 1) {
+      setItems(data.items);
+    } else {
+      setItems((prev) => [...prev, ...data.items]);
     }
-  };
+    setTotal(data.total || 0);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
+  const hasMore = items.length < total;
+
+  // infinite scroll logic
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -50,27 +76,29 @@ export default function ScrollPaginator<T>({ fetchPage, renderItem, initialPage 
     const onScroll = () => {
       if (!el) return;
       const bottom = el.scrollHeight - el.scrollTop - el.clientHeight;
-      if (bottom < 100 && hasMore && !loading) {
-        const next = page + 1;
-        setPage(next);
-        loadPage(next);
+      if (bottom < 120 && !isLoading && hasMore) {
+        setPage((p) => p + 1);
       }
     };
 
     el.addEventListener('scroll', onScroll);
     return () => el.removeEventListener('scroll', onScroll);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, hasMore, loading]);
+  }, [isLoading, hasMore]);
 
   return (
     <div ref={containerRef} style={{ maxHeight: '60vh', overflow: 'auto' }}>
       <div className="space-y-3">
         {items.map((it, idx) => (
-          <div key={idx}>{renderItem(it)}</div>
+          <div key={(it as any)?._id || idx}>{renderItem(it)}</div>
         ))}
       </div>
-      {loading && <div className="py-4">Loading more...</div>}
-      {!hasMore && <div className="py-4 text-center text-gray-500">No more results</div>}
+
+      {(isLoading || isValidating) && (
+        <div className="py-4 text-center text-gray-500">Loading...</div>
+      )}
+      {!hasMore && (
+        <div className="py-4 text-center text-gray-500 hidden">No more results</div>
+      )}
     </div>
   );
 }

@@ -22,7 +22,9 @@ export function middleware(req: NextRequest) {
   // redirect /school/:slug -> subdomain
   const url = req.nextUrl.clone();
   const pathname = url.pathname;
-  const segments = pathname.split('/').filter(Boolean);
+  // normalize pathname: remove trailing slashes except for root '/'
+  const normalizedPathname = pathname === '/' ? '/' : pathname.replace(/\/+$|\/+$/g, '/').replace(/\/$/, '');
+  const segments = normalizedPathname.split('/').filter(Boolean);
   // Allow static assets to bypass middleware (so images, css, etc. load correctly)
   const staticExtRegex = /\.(png|jpg|jpeg|svg|gif|webp|css|js|map|ico)$/i;
   if (
@@ -45,7 +47,7 @@ export function middleware(req: NextRequest) {
   // global host restrictions
   if (isGlobalHost(hostname)) {
     // allowed paths on global host (supports exact paths or prefix with '/*')
-    const allowedPaths = ['/', '/signup', '/select-school'];
+  const allowedPaths = ['/', '/signup', '/select-school', '/account-login'];
 
     const matchesPattern = (pattern: string, path: string) => {
       if (pattern === path) return true;
@@ -57,12 +59,12 @@ export function middleware(req: NextRequest) {
       return false;
     };
 
-    const isAllowed = allowedPaths.some((p) => matchesPattern(p, pathname));
+  const isAllowed = allowedPaths.some((p) => matchesPattern(p, normalizedPathname));
 
     // Explicitly block any dashboard-related routes on the global host
     // This includes /school, /teacher, /student, /dashboard and /dashboards
     const dashboardPaths = ['school', 'teacher', 'student', 'dashboard', 'dashboards'];
-    const firstSegment = segments[0] || '';
+  const firstSegment = segments[0] || '';
     if (dashboardPaths.includes(firstSegment.toLowerCase())) {
       return NextResponse.redirect(new URL('/', req.url));
     }
