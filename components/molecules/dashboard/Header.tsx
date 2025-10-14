@@ -198,7 +198,7 @@ export function ProfileMenu() {
           <MenuItem className="rounded-none flex items-center gap-2 --mb-1.5">
             <HeaderInfo truncateLength={0} />
           </MenuItem>
-          <hr className="border border-[#F2F2F2] w-full" />
+          <hr className="border border-gray4 w-full" />
           <div className="px-2 border-none outline-none">
             <Link href="/student/settings">
               <MenuItem className="mt-1.5 flex items-center gap-2 px-1.5">

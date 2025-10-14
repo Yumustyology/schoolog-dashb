@@ -1,180 +1,242 @@
 'use client';
-import React, { useState } from 'react';
+
+import React from 'react';
+import Image from 'next/image';
+import useSWR from 'swr';
+import { debounce } from 'lodash';
+import classGradeActions from '@/app/lib/actions/class-grade.actions';
+import NoClassCreated from '@/components/atoms/NoClassCreated';
 import ClassCard from '@/components/molecules/dashboard/classes/classCard';
-import { classes } from '@/app/constants';
-import Modal from '@/components/molecules/Modal';
-import { SelectSubject } from '@/components/atoms/dashboard/materials/SelectSubject';
 import Button from '@/components/atoms/form/Button';
-import CircleMark from '@/components/atoms/icons/CircleMark';
-import {
-  poppins_500,
-  poppins_700,
-  Inter_500,
-  poppins_600,
-  poppins_400,
-} from '@/app/lib/config/font.config';
-import { cn } from '@/app/lib/utils';
 import SearchInput from '@/components/atoms/form/SearchInput';
-import Input from '@/components/atoms/form/Input';
-import { Label } from '@/components/ui/label';
+import BreadcrumbBox from '@/components/atoms/dashboard/subjects/Breadcrumb';
+import ArrangeClassModal from '@/components/molecules/dashboard/classes/ArrangeClassModal';
+import PaginationControl from '@/components/atoms/pagination/PaginationControl';
+import { cn } from '@/app/lib/utils';
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
+  AdditionIcon,
+  ArrangeIcon,
+  ClassCategoryIcon,
+  NoClassIcon,
+} from '@/components/atoms/icons/Icons';
+import { Inter_500, poppins_400 } from '@/app/lib/config/font.config';
+import { ResponseType } from '@/app/lib/types/response';
+import { ClassGrade, ClassGradeResponse } from '@/app/lib/types/class.types';
 
-const Classes = () => {
-  const [modalOpen, setModalOpen] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
-  // const [categoryname, setCategoryname] = useState('');
-  const handleSubmit = () => {
-    setSubmitted(true);
-  };
-  return (
-    <>
-      <div className="flex justify-between items-center mb-10 px-6">
-        <h1 className={cn('text-xl font-semibold text-[#21B55A]', poppins_700)}>
-          Class
-        </h1>
-        <div className={cn('flex gap-4', Inter_500)}>
-          <Button
-            onClick={() => setModalOpen(true)}
-            className="text-primary border focus:outline-none border-[#21B55A] bg-white rounded-full h-14 w-60"
-          >
-            Create class category
-          </Button>
-          <Button className="bg-primary text-white rounded-full h-14 w-60 focus:outline-none">
-            + Create new class
-          </Button>
-        </div>
-      </div>
+export default function ClassesPage() {
+  const [page, setPage] = React.useState<number>(1);
+  const [pageSize, setPageSize] = React.useState<number>(10);
+  const [search, setSearch] = React.useState<string>('');
+  const [debouncedSearch, setDebouncedSearch] = React.useState<string>('');
+  const [isArrangeModalOpen, setIsArrangeModalOpen] = React.useState(false);
+  const [hasEverLoadedData, setHasEverLoadedData] = React.useState(false);
 
-      <div className="bg-white rounded-xl p-8">
-        <div className="flex justify-between items-center mb-10 px-3">
-          <div className="flex max-w-[42vw] gap-4">
-            <SearchInput
-              className="border-gray4 bg-white w-60 h-10 text-nowrap"
-              placeholder="Search class, Student or Teacher"
-            />
-            <SelectSubject className="w-[200px]" />
-          </div>
-          <div className="bg-gray4 flex items-center text-gray3 gap-2.5 p-4 rounded-full">
-            <Button className="bg-primary text-white rounded-full focus:outline-none">
-              All Class
-            </Button>
-            <Button className="bg-white text-gray3 rounded-full focus:outline-none">
-              Class category
-            </Button>
-            <Button className="bg-white text-gray3 rounded-full focus:outline-none">
-              Archived
-            </Button>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 bg-white">
-          {classes.map((classData: any, i: number) => (
-            <ClassCard key={i} classData={classData} role={'school'} />
-          ))}
-        </div>
-      </div>
-
-      {/* Create Class Category Modal */}
-      <Modal
-        isOpen={modalOpen}
-        onClose={() => {
-          setModalOpen(false);
-          setSubmitted(false);
-        }}
-        title={submitted ? 'Create category' : 'Create class category'}
-      >
-        {submitted ? (
-          <>
-            <div className="flex justify-center items-center">
-              <div className="bg-green-100 rounded-full h-32 w-32 relative z-10">
-                <div className="flex justify-center items-center bg-green-300 rounded-full h-20 w-20 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-                  <CircleMark />
-                </div>
-              </div>
-            </div>
-            <div className=" flex flex-col justify-center items-center pb-5  text-nowrap pt-2">
-              <span className={cn('font-semibold text-xl', poppins_600)}>
-                Class category created successfully
-              </span>
-              <span className={cn(poppins_400, 'py-4 text-[#667085] text-lg')}>
-                You have successfully created new class category
-              </span>
-            </div>
-            <Button
-              onClick={() => {
-                setModalOpen(false);
-                setSubmitted(false);
-              }}
-              round
-              wide
-              className="rounded-full h-12 text-base"
-            >
-              Okay
-            </Button>
-          </>
-        ) : (
-          <div className="p-3">
-            <div
-              className={cn(
-                'text-base flex justify-center pb-5  text-nowrap',
-                poppins_500
-              )}
-            >
-              <span>Input the details of the category you want to create</span>
-            </div>
-
-            <div className="gap-4 space-y-10">
-              <div>
-                <Label htmlFor="categoryname" className="text-base">
-                  Class category name
-                </Label>
-                <Input
-                  id="categoryname"
-                  type="text"
-                  // onChange={(e) => {
-                  //   setCategoryname(e.target.value)
-                  // }}
-                  placeholder="Input class category"
-                  className="w-full h-10 border border-gray1 rounded-lg"
-                />
-              </div>
-              <div>
-                <Label htmlFor="involved" className="text-base">
-                  Class involved
-                </Label>
-                <Select>
-                  <SelectTrigger className="w-full h-11 border border-gray1 text-gray1 rounded-lg">
-                    <SelectValue placeholder="Select class" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="class1">Class 1</SelectItem>
-                    <SelectItem value="class2">Class 2</SelectItem>
-                    <SelectItem value="class3">Class 3</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <Button
-                onClick={handleSubmit}
-                round
-                wide
-                className="mt-8 rounded-full h-12 text-base"
-                // className="bg-primary text-white rounded-full h-14 w-full mt-4 focus:outline-none "
-              >
-                Create class category
-              </Button>
-            </div>
-          </div>
-        )}
-      </Modal>
-    </>
+  const debouncedSetSearch = React.useMemo(
+    () =>
+      debounce((value: string) => {
+        setDebouncedSearch(value);
+        setPage(1); // Reset to first page on search
+      }, 500),
+    []
   );
-};
 
-export default Classes;
+  React.useEffect(() => {
+    return () => {
+      debouncedSetSearch.cancel();
+    };
+  }, [debouncedSetSearch]);
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setSearch(value);
+    debouncedSetSearch(value);
+  };
+
+  const swrKey = `/class-grades/school?page=${page}&limit=${pageSize}&search=${encodeURIComponent(
+    debouncedSearch || ''
+  )}`;
+
+  const { data, isValidating, mutate } = useSWR(swrKey, () =>
+    classGradeActions.fetchClassGradesPaginated({
+      page,
+      limit: pageSize,
+      search: debouncedSearch,
+    })
+  );
+
+  const resp = data as ResponseType<ClassGradeResponse> | undefined;
+  const classItems: ClassGrade[] = (resp?.data?.data as ClassGrade[]) || [];
+  const meta = (resp?.meta || {}) as NonNullable<ResponseType<ClassGradeResponse>['meta']>;
+
+  const computedTotalPages = ((meta.totalPages ??
+    Math.ceil((meta.count ?? 0) / pageSize)) ||
+    1) as number;
+
+  // Track if we've ever loaded data successfully
+  React.useEffect(() => {
+    if (data && classItems.length > 0) {
+      setHasEverLoadedData(true);
+    }
+  }, [data, classItems.length]);
+
+  const isSearching = debouncedSearch.trim().length > 0;
+  const showNoResults = classItems.length === 0 && !isValidating && isSearching;
+  const showNoClassCreated = classItems.length === 0 && !isValidating && !isSearching && !hasEverLoadedData;
+
+  return (
+    <main className="w-full">
+      <div className="flex justify-between items-center">
+        <div>
+          <BreadcrumbBox
+            crumbs={[{ label: 'Classes', isActive: true }]}
+            className="mb-0"
+          />
+        </div>
+        <div className={cn('flex item-center gap-4', Inter_500)}>
+          {classItems.length > 1 && (
+            <Button
+              outlined
+              onClick={() => setIsArrangeModalOpen(true)}
+              className="bg-green-50 text-primary h-[44px] py-3 px-6 flex gap-2 items-center rounded-full"
+            >
+              <ArrangeIcon color="#21B55A" />
+              <span className={cn('text-base ', Inter_500.className)}>
+                Arrange class
+              </span>
+            </Button>
+          )}
+
+          {hasEverLoadedData && (
+            <Button
+              // onClick={() => setModalOpen(true)}
+              outlined
+              flat
+              className="text-primary h-[44px] py-3 px-6 flex gap-2 border border-primary bg-transparent rounded-full"
+            >
+              <ClassCategoryIcon />
+              <span className={cn('pl-2', Inter_500.className)}>
+                Create class category
+              </span>
+            </Button>
+          )}
+
+          <Button
+            to="/school/classes/create-new-class"
+            round
+            title={'Create class'}
+            className={cn('h-[44px] py-3 px-6 flex gap-2')}
+          >
+            {' '}
+            <AdditionIcon color={'white'} />
+            <span className={cn('text-base ', Inter_500.className)}>
+              Add new Class{' '}
+            </span>
+          </Button>
+        </div>
+      </div>
+
+      <div className="bg-white min-h-[60dvh] p-6 rounded-xl mt-8">
+        <div className="flex justify-between items-center mb-6 px-3">
+          {(classItems.length > 0 || hasEverLoadedData) && (
+            <div className="flex max-w-[42vw] gap-4">
+              <SearchInput
+                className="border-gray4 bg-white w-64 h-10 text-nowrap"
+                placeholder="Search class or Teacher"
+                value={search}
+                onChange={handleSearchChange}
+              />
+            </div>
+          )}
+        </div>
+
+        {isValidating && classItems.length === 0 ? (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+            {Array.from({ length: pageSize }).map((_, i) => (
+              <div
+                key={i}
+                className="w-full p-4 rounded-xl border border-gray-100 bg-white animate-pulse"
+              >
+                <div className="h-6 bg-gray-200 rounded w-3/4 mb-3" />
+                <div className="h-4 bg-gray-200 rounded w-1/2" />
+              </div>
+            ))}
+          </div>
+        ) : showNoResults ? (
+          <div className="flex flex-col items-center justify-center py-12">
+            <div className="mb-6">
+              <NoClassIcon />
+            </div>
+            <p className={cn('text-[#071E3B] text-lg font-semibold mb-2', Inter_500.className)}>
+              No classes found for &quot;{debouncedSearch}&quot;
+            </p>
+            <p className={cn('text-[#667085] text-sm', poppins_400.className)}>
+              Try adjusting your search terms
+            </p>
+          </div>
+        ) : showNoClassCreated ? (
+          <NoClassCreated />
+        ) : classItems.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-12">
+            <div className="mb-6">
+              <NoClassIcon />
+            </div>
+            <p className={cn('text-[#071E3B] text-lg font-semibold', Inter_500.className)}>
+              No classes available
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+              {classItems.map((c: ClassGrade) => (
+                <ClassCard
+                  key={c._id}
+                  classData={{
+                    id: c._id,
+                    className: c.name,
+                    level: c.level || '-',
+                    teacher: c.classTeacher 
+                      ? `${c.classTeacher.firstName} ${c.classTeacher.lastName}`.trim()
+                      : 'No assigned teacher',
+                    teacherImg: undefined,
+                    number_of_student: c.studentCount,
+                    number_of_male: c.studentMale,
+                    number_of_female: c.studentFemale,
+                  } as any}
+                  role="school"
+                  onArrange={() => setIsArrangeModalOpen(true)}
+                  totalClasses={classItems.length}
+                />
+              ))}
+            </div>
+
+            <div className="mt-6">
+              <PaginationControl
+                totalPages={computedTotalPages}
+                currentPage={meta.page ?? page}
+                setCurrentPage={(p) => setPage(p)}
+                pageSize={pageSize}
+                onPageSizeChange={(s) => {
+                  setPageSize(s);
+                  setPage(1);
+                }}
+                hasNextPage={!!meta.hasNextPage}
+                hasPrevPage={!!meta.hasPrevPage}
+                recordLength={meta.count ?? classItems.length}
+              />
+            </div>
+          </>
+        )}
+      </div>
+
+      <ArrangeClassModal
+        isOpen={isArrangeModalOpen}
+        onClose={() => setIsArrangeModalOpen(false)}
+        onReorder={() => {
+          // Refetch the current SWR data to reflect the new order
+          mutate();
+          setPage(1);
+        }}
+      />
+    </main>
+  );
+}

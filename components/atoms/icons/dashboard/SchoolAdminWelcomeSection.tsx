@@ -7,9 +7,13 @@ import AddUserIcon from './AddUserIcon';
 import { DatePicker } from '../../form/DatePicker';
 import { FilterButtonGroup } from '../../FilterButton';
 import { profileState } from '@/app/lib/entities/profile.entity';
+import { schoolState } from '@/app/lib/entities/school.entity';
 
 const SchoolAdminWelcomeSection = () => {
   const profile = profileState.use();
+  const school = schoolState.use();
+  console.log(school)
+ 
   const handleFilterChange = (filter: string) => {
     console.log('Selected filter:', filter);
   };
@@ -25,14 +29,8 @@ const SchoolAdminWelcomeSection = () => {
             </span>
             👋 How is your day going
           </h1>
-          <p
-            className={cn(
-              'mt-2 text-base text-[#475467]',
-              poppins_400.className
-            )}
-          >
-            Here is the summarry of what is presently happening at AL-Hassan
-            College
+          <p className={cn('mt-2 text-base text-[#475467]', poppins_400.className)}>
+            Here is the summarry of what is presently happening at {school?.name || 'your school'}
           </p>
         </p>
         <FilterButtonGroup onFilterChange={handleFilterChange} />

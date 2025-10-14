@@ -40,6 +40,7 @@ module.exports = withMT({
         gray9: '#434343',
         gray10: '#667085',
         gray11: '#F8F8F8',
+        disabled: '#9CA3AF',
         r: '#EB5757',
         r2: '#D92D20',
         background: 'hsl(var(--background))',

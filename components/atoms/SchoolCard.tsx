@@ -5,6 +5,7 @@ import Image from "next/image";
 import type { SchoolPublic } from "@/app/lib/types/school-info.types";
 import { poppins_400, poppins_500 } from "@/app/lib/config/font.config";
 import { cn } from "@/app/lib/utils";
+import { Skeleton } from "@/components/ui/skeleton";
 import Location from "@/components/atoms/icons/AuthTypeIcons/Location";
 
 type Props = {
@@ -126,6 +127,30 @@ export default function SchoolCard({ school, onClick, small = false }: Props) {
             </span>
           ) : null}
         </p>
+      </div>
+    </div>
+  );
+}
+
+// Skeleton variant for use while loading
+export function SchoolCardSkeleton({ small = false }: { small?: boolean }) {
+  const sizeClass = !small ? 'w-[100px] h-[100px]' : 'w-[60px] h-[60px]';
+  return (
+    <div
+      className={cn(
+        'border border-gray5 w-full rounded-xl mt-3 flex items-center p-4 gap-4',
+        'max-w-3xl',
+        small && 'p-3 py-3'
+      )}
+    >
+      <Skeleton className={`flex-shrink-0 rounded ${sizeClass}`} />
+
+      <div className="flex flex-col gap-3 w-full">
+        <Skeleton className="h-4 rounded w-3/5" />
+        <div className="flex items-center justify-between">
+          <Skeleton className="h-3 rounded w-2/3" />
+          <Skeleton className="h-5 rounded w-12" />
+        </div>
       </div>
     </div>
   );

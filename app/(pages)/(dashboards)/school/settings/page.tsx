@@ -11,17 +11,18 @@ import EditProfile from '@/components/organisms/settings/EditProfile';
 import SecuritySettings from '@/components/organisms/settings/SecuritySettings';
 import NotificationSettings from '@/components/organisms/settings/NotificationSettings';
 import PreferenceSettings from '@/components/organisms/settings/PreferenceSettings';
+import DomainManagement from '@/components/organisms/settings/DomainManagement';
 import { teacherImg2 } from '@/app/assets';
 
 const Page = () => {
   const data = [
     {
-      label: 'My Profile',
+      label: 'Profile',
       value: 'my-profile',
       content: <EditProfile />,
     },
     {
-      label: 'Security settings',
+      label: 'Security',
       value: 'security-settings',
       content: <SecuritySettings />,
     },
@@ -34,6 +35,11 @@ const Page = () => {
       label: 'Preference',
       value: 'preference',
       content: <PreferenceSettings />,
+    },
+    {
+      label: 'Domains',
+      value: 'domains',
+      content: <DomainManagement />,
     },
   ];
 

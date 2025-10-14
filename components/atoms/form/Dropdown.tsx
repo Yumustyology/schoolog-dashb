@@ -47,14 +47,14 @@ export function Dropdown({
 
       <Select onValueChange={handleChange} value={selectedOption}>
         <SelectTrigger
-          className={`w-full bg-white bg-opacity-55 text-sm text-gray h-11 ${className}`}
+          className={cn(`w-full !shadow-none bg-white bg-opacity-55 text-sm text-gray h-11`, poppins_400.className, className)}
         >
           <SelectValue placeholder={placeholder} />
         </SelectTrigger>
         <SelectContent className="bg-white text-gray">
           <SelectGroup>
             {options.map((option) => (
-              <SelectItem key={option.value} value={option.value}>
+              <SelectItem className={cn(poppins_400.className)} key={option.value} value={option.value}>
                 {option.label}
               </SelectItem>
             ))}

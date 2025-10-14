@@ -12,6 +12,7 @@ import {
 import { ClassValue } from 'clsx';
 import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
 import { cn } from '@/app/lib/utils';
+import { poppins_400 } from '@/app/lib/config/font.config';
 
 type inputProps = {
   type?: HTMLInputTypeAttribute | 'textarea';
@@ -81,6 +82,7 @@ const Input: FC<inputProps> = ({
           htmlFor={id}
           className={cn(
             'block text-left w-full font-nunito text-base mb-3',
+            poppins_400.className,
             labelClassName
           )}
         >
@@ -90,6 +92,7 @@ const Input: FC<inputProps> = ({
       <div
         className={cn(
           'border border-[#E0E0E0] rounded-lg w-full p-4 outline-none flex items-center',
+          type !== 'textarea' && 'h-[46px]',
           className
         )}
       >
@@ -97,6 +100,7 @@ const Input: FC<inputProps> = ({
           <textarea
             className={cn(
               'bg-transparent w-full outline-none font-nunito',
+              poppins_400.className,
               inputClassName
             )}
             {...props}
@@ -115,6 +119,7 @@ const Input: FC<inputProps> = ({
           <input
             className={cn(
               'bg-transparent w-full outline-none font-nunito',
+              poppins_400.className,
               inputClassName
             )}
             {...props}

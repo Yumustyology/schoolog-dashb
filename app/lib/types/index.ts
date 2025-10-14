@@ -42,3 +42,16 @@ export type MaterialType = {
 export type carouselImageRefType = {
   setActiveIndexTab: (arg: number) => void;
 };
+
+export type SubjectType = {
+  id: string | number;
+  subject: string;
+  textbookImg: string | any;
+  currentTopic?: string;
+  teacherImg?: string | any;
+  teacher?: string;
+  number_of_topics_covered?: number;
+  number_of_topics?: number;
+  students?: { image?: string | any; name?: string }[];
+};
+

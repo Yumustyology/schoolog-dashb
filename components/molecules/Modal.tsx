@@ -10,9 +10,13 @@ interface ModalProps {
   onClose?: () => void;
   children: React.ReactNode;
   title: string;
+  className?: string; // classes for the inner content container
+  overlayClassName?: string; // classes for the overlay/backdrop
+  footer?: React.ReactNode;
+  minHeight?: string; // minimum height for the modal
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title, className, overlayClassName, footer, minHeight }) => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === 'Escape' && isOpen && onClose) {
@@ -29,8 +33,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title }) => {
   if (!isOpen) return null;
 
   const modalContent = (
-    <div className="fixed inset-0 bg-[rgb(0,0,0,0.25)] flex items-center p-6 justify-center z-50 w-full ">
-      <div className="bg-white rounded-xl tablet:w-[434px] xxs:w-full shadow-lg">
+    <div className={cn('fixed inset-0 bg-[rgb(0,0,0,0.25)] flex items-center p-6 justify-center z-50 w-full', overlayClassName)}>
+      <div 
+        className={cn('bg-white rounded-xl tablet:w-[434px] xxs:w-full shadow-lg flex flex-col max-h-[90vh]', className)}
+        style={minHeight ? { minHeight } : undefined}
+      >
         <div className="flex justify-between items-center pl-8 pr-4 py-4">
           <h2 className={cn('text-lg ', Inter_500.className)}> {title}</h2>
           <button
@@ -41,7 +48,14 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title }) => {
           </button>
         </div>
         <div className="border-b border-gray4"></div>
-        <div className="p-6 max-h-[80vh] overflow-auto">{children}</div>
+
+        {/* Body: scrollable */}
+        <div className="p-6 overflow-auto flex-1">{children}</div>
+
+        {/* Footer: optional, sticks to bottom */}
+        {footer && (
+          <div className="border-t border-gray4 p-4">{footer}</div>
+        )}
       </div>
     </div>
   );

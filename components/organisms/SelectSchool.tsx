@@ -13,8 +13,10 @@ import fetchPublicSchools from '@/app/lib/actions/school-info.action';
 import { openSchoolSubdomain } from '@/app/lib/utils/openSchoolSubdomain';
 import type { SchoolPublic } from '@/app/lib/types/school-info.types';
 import ScrollPaginator from '@/components/molecules/ScrollPaginator';
+import { SchoolCardSkeleton } from '@/components/atoms/SchoolCard';
+import Image from 'next/image';
 
-function Page() {
+export default function SelectSchool() {
   const { audience_type } = authState.use();
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState(search);
@@ -43,15 +45,21 @@ function Page() {
       }
       return { items: [], total: 0, page, limit: 10 };
     },
-    [search]
+    [debouncedSearch]
   );
 
   return (
     <AuthWrapper>
-      <main className="w-full min-h-screen py-28 px-36-- px-28">
-        <ProgressPageNumber />
-
-        <div className="flex flex-col items-center justify-center mx-auto"> 
+      <main className="w-full min-h-screen py-10 px-28">
+        <Image
+          alt="logo"
+          width={280}
+          height={250}
+          className="m-auto"
+          src="/assets/images/logo.png"
+          priority
+        />
+        <div className="flex flex-col items-center justify-center mx-auto">
           <div className="mb-12 text-center">
             <h1
               className={cn(
@@ -74,14 +82,14 @@ function Page() {
 
             {audience_type === AudienceTypes.ADMIN && (
               <p className={cn('text-base mt-6 -mb-3', poppins_400.className)}>
-                Don&apos;t have a registered school?{' '}
-                <Link
-                  href="/signup"
-                  className={cn('underline text-bold text-primary')}
-                >
-                  Sign Up!
-                </Link>
-              </p>
+                  Don&apos;t have a registered school?{' '}
+                  <Link
+                    href="/signup"
+                    className={cn('underline text-bold text-primary')}
+                  >
+                    Sign Up!
+                  </Link>
+                </p>
             )}
           </div>
 
@@ -130,6 +138,13 @@ function Page() {
                   onClick={() => openSchoolSubdomain(school)}
                 />
               )}
+              loader={
+                <>
+                  <SchoolCardSkeleton />
+                  <SchoolCardSkeleton />
+                  <SchoolCardSkeleton />
+                </>
+              }
             />
           </div>
         </div>
@@ -149,5 +164,3 @@ function Page() {
     </AuthWrapper>
   );
 }
-
-export default Page;

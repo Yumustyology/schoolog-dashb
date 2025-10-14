@@ -1,15 +1,19 @@
 import { cn } from '@/app/lib/utils';
 
-function Skeleton({
-  className,
-  ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+function Skeleton({ className, style, ...props }: React.HTMLAttributes<HTMLDivElement>) {
+  const cls = className ?? '';
+
+  // If caller already supplied an explicit height/min-height (Tailwind h- or min-h- classes)
+  // don't add a default. Otherwise add a small min-height to reserve vertical space
+  // and avoid content jumping while the real image/logo loads.
+  const hasHeight = /\b(h-|h\[|min-h-|min-h\[)/.test(cls);
+  const defaultMinH = 'min-h-[24px]';
+
   return (
     <div
-      className={cn(
-        'animate-pulse rounded-md bg-neutral-100 dark:bg-neutral-800',
-        className
-      )}
+      data-slot="skeleton"
+      className={cn('bg-accent animate-pulse rounded-md', hasHeight ? cls : `${cls} ${defaultMinH}`)}
+      style={style}
       {...props}
     />
   );

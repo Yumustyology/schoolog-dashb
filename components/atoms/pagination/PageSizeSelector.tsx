@@ -1,4 +1,4 @@
-import SelectComp from '@/components/atoms/forms/Select';
+import SelectComp from "../form/Select";
 
 const PageSizeSelector = ({
   pageSize,

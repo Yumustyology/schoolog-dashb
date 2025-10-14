@@ -36,12 +36,20 @@ export function middleware(req: NextRequest) {
   ) {
     return NextResponse.next();
   }
+  // Only redirect /school/:slug -> subdomain when the request comes from the global host
+  // (e.g., someone on plain localhost clicked a link). If the request is already on a subdomain
+  // we should not rewrite the hostname because that can swap subdomains unexpectedly.
   if (segments[0] === 'school' && segments[1]) {
     const slug = segments[1];
-    const target = new URL(url.toString());
-    target.hostname = `${slug}.localhost`;
-    // keep same port
-    return NextResponse.redirect(target);
+    const currentHost = (req.headers.get('host') || '').split(':')[0];
+    // If current host is global localhost, redirect to the subdomain
+    if (currentHost === 'localhost' || currentHost === '127.0.0.1' || currentHost === 'localhost:3000') {
+      const target = new URL(url.toString());
+      target.hostname = `${slug}.localhost`;
+      return NextResponse.redirect(target);
+    }
+    // If we're already on a subdomain, don't change host — let the request proceed
+    return NextResponse.next();
   }
 
   // global host restrictions

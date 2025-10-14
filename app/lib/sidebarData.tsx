@@ -118,16 +118,16 @@ export const shoolSidebarItems: SidebarItemsType = [
     activeIcon: <Dashboard color="#FFFFFF" />,
   },
   {
-    title: 'Subjects',
-    url: '/school/subjects',
-    icon: <Subjects />,
-    activeIcon: <Subjects color="#FFFFFF" />,
-  },
-  {
     title: 'Classes',
     url: '/school/classes',
     icon: <ClassesIcon />,
     activeIcon: <ClassesIcon color="#FFFFFF" />,
+  },
+  {
+    title: 'Subjects',
+    url: '/school/subjects',
+    icon: <Subjects />,
+    activeIcon: <Subjects color="#FFFFFF" />,
   },
   {
     title: 'Students',

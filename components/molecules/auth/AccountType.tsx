@@ -23,7 +23,7 @@ function AccountType({ Type, name, description, func }: AccountTypeProps) {
       onClick={handleClick}
       onKeyDown={(e) => e.key === 'Enter' && handleClick()}
       className={cn(
-        'border border-gray5 rounded-xl flex justify-between items-center py-4 px-4 gap-4 lxs:gap-2 hover:border-primary ease-in-out delay-100 cursor-pointer'
+        'min-h-[106px] border border-gray5 rounded-xl flex justify-between items-center py-4 px-4 gap-4 lxs:gap-2 hover:border-primary ease-in-out delay-100 cursor-pointer'
       )}
     >
       <div>

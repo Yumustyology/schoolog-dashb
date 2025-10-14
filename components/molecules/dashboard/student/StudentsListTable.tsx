@@ -124,7 +124,7 @@ export function StudentsListTable(): JSX.Element {
                 : 'p-4 border-b border-gray4 text-sm';
 
               return (
-                <tr key={studentId}>
+                <tr key={`${studentId}-${index}`}>
                   <td className={classes}>
                     <Typography
                       variant="small"

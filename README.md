@@ -145,3 +145,16 @@ npm run dev
 - Tenant: http://school1.localhost:3000
 
 If anything fails, check `scripts/setup-dev.js` output for backup path and errors.
+
+## Dev credential (local development only)
+
+> These credentials are for local development and testing only. Do NOT use them in production.
+
+```json
+{
+  "email": "yumustyology@gmail.com",
+  "audience_type": "Admin",
+  "school_slug_id": "AOM-431844",
+  "password": "#Yung2020"
+}
+```

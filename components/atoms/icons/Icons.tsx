@@ -2,14 +2,27 @@
 import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 import React from 'react';
 
-export function AdditionIcon({ color = 'white' }: { color?: string }) {
+type IconProps = React.SVGProps<SVGSVGElement> & {
+  size?: number | string;
+  color?: string;
+};
+
+function resolveDims(props: { size?: number | string; width?: number | string; height?: number | string }, defaultW: string, defaultH: string) {
+  const w = props.width ?? props.size ?? defaultW;
+  const h = props.height ?? props.size ?? defaultH;
+  return { w, h };
+}
+
+export function AdditionIcon({ color = 'white', size, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, '20', '20');
   return (
     <svg
-      width="20"
-      height="20"
+      width={w}
+      height={h}
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...rest}
     >
       <path
         d="M5 10H15"
@@ -28,14 +41,87 @@ export function AdditionIcon({ color = 'white' }: { color?: string }) {
     </svg>
   );
 }
-export function SubtractionIcon({ color }: { color?: string }) {
+
+export const ClassCategoryIcon = ({ size, width, height, ...rest }: IconProps) => {
+  const { w, h } = resolveDims({ size, width, height }, '20', '20');
   return (
     <svg
-      width="12"
-      height="2"
+      width={w}
+      height={h}
+      viewBox="0 0 20 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...rest}
+    >
+    <path
+      d="M15.525 5.95747C15.5583 6.46581 15.5166 7.04081 15.4166 7.68247L14.8083 11.5908C14.2916 14.8491 12.7833 15.9491 9.52495 15.4408L5.61662 14.8241C4.49162 14.6491 3.62495 14.3491 2.99162 13.8991C1.78329 13.0575 1.43329 11.6741 1.76662 9.54081L2.38329 5.63247C2.89995 2.37414 4.40829 1.27414 7.66662 1.78247L11.575 2.39914C14.1916 2.80747 15.4166 3.87414 15.525 5.95747Z"
+      stroke="#21B55A"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M17.0834 11.2237L15.8334 14.982C14.7917 18.1154 13.125 18.9487 9.9917 17.907L6.23337 16.657C4.3417 16.032 3.2917 15.1654 2.9917 13.8987C3.62503 14.3487 4.4917 14.6487 5.6167 14.8237L9.52503 15.4404C12.7834 15.9487 14.2917 14.8487 14.8084 11.5904L15.4167 7.68203C15.5167 7.04036 15.5584 6.46536 15.525 5.95703C17.5167 7.01536 17.95 8.61536 17.0834 11.2237Z"
+      stroke="#21B55A"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M6.86663 7.48203C7.66744 7.48203 8.31663 6.83284 8.31663 6.03203C8.31663 5.23122 7.66744 4.58203 6.86663 4.58203C6.06581 4.58203 5.41663 5.23122 5.41663 6.03203C5.41663 6.83284 6.06581 7.48203 6.86663 7.48203Z"
+      stroke="#21B55A"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+  );
+};
+
+export const ArrangeIcon = ({ color = '#21B55A', size, width, height, ...rest }: IconProps) => {
+  const { w, h } = resolveDims({ size, width, height }, '16', '10');
+  return (
+    <svg
+      width={w}
+      height={h}
+      viewBox="0 0 16 10"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...rest}
+    >
+    <circle cx="2" cy="2" r="2" fill={color} />
+    <circle cx="8" cy="2" r="2" fill={color} />
+    <circle cx="14" cy="2" r="2" fill={color} />
+    <circle cx="2" cy="8" r="2" fill={color} />
+    <circle cx="8" cy="8" r="2" fill={color} />
+    <circle cx="14" cy="8" r="2" fill={color} />
+  </svg>
+  );
+};
+
+// alias for older import names if needed
+export const arrangeIcon = ArrangeIcon;
+
+export function PanIcon({ color = '#828282', size = 16, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, String(size), String(size));
+  return (
+    <svg width={w} height={h} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...rest}>
+      <path d="M7 11L12 6L17 11" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M7 17L12 12L17 17" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export function SubtractionIcon({ color, size, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, '12', '2');
+  return (
+    <svg
+      width={w}
+      height={h}
       viewBox="0 0 12 2"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...rest}
     >
       <path
         d="M1 1H11"
@@ -48,15 +134,17 @@ export function SubtractionIcon({ color }: { color?: string }) {
   );
 }
 
-export function OptionIcon() {
+export function OptionIcon({ size, width, height, className, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, '25', '24');
   return (
     <svg
-      width="25"
-      height="24"
+      width={w}
+      height={h}
       viewBox="0 0 25 24"
-      className="cursor-pointer"
+      className={className}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...rest}
     >
       <path
         d="M5.33337 10C4.23337 10 3.33337 10.9 3.33337 12C3.33337 13.1 4.23337 14 5.33337 14C6.43337 14 7.33337 13.1 7.33337 12C7.33337 10.9 6.43337 10 5.33337 10Z"
@@ -77,14 +165,16 @@ export function OptionIcon() {
   );
 }
 
-export function VIsibilityIcon() {
+export function VIsibilityIcon({ size, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, '24', '24');
   return (
     <svg
-      width="24"
-      height="24"
+      width={w}
+      height={h}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...rest}
     >
       <path
         d="M15.58 11.9999C15.58 13.9799 13.98 15.5799 12 15.5799C10.02 15.5799 8.41998 13.9799 8.41998 11.9999C8.41998 10.0199 10.02 8.41992 12 8.41992C13.98 8.41992 15.58 10.0199 15.58 11.9999Z"
@@ -103,20 +193,16 @@ export function VIsibilityIcon() {
     </svg>
   );
 }
-export function EditIcon({
-  color = '#828282',
-  size = 24,
-}: {
-  color?: string;
-  size?: number;
-}) {
+export function EditIcon({ color = '#828282', size = 24, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, String(size), String(size));
   return (
     <svg
-      width={size}
-      height={size}
+      width={w}
+      height={h}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...rest}
     >
       <path
         d="M11 2H9C4 2 2 4 2 9V15C2 20 4 22 9 22H15C20 22 22 20 22 15V13"
@@ -144,20 +230,16 @@ export function EditIcon({
     </svg>
   );
 }
-export function ExportIcon({
-  color = '#21B55A',
-  size = '20',
-}: {
-  color?: string;
-  size?: string;
-}) {
+export function ExportIcon({ color = '#21B55A', size = '20', width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, String(size), String(size));
   return (
     <svg
-      width={size}
-      height={size}
+      width={w}
+      height={h}
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...rest}
     >
       <path
         d="M7.4987 14.1641V9.16406L5.83203 10.8307"
@@ -191,14 +273,16 @@ export function ExportIcon({
   );
 }
 
-export function ArchiveIcon({ color = '#828282' }: { color?: string }) {
+export function ArchiveIcon({ color = '#828282', size, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, '24', '24');
   return (
     <svg
-      width="24"
-      height="24"
+      width={w}
+      height={h}
       viewBox="0 0 24 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...rest}
     >
       <path
         d="M14.53 9.46992L9.46998 14.5299C8.81998 13.8799 8.41998 12.9899 8.41998 11.9999C8.41998 10.0199 10.02 8.41992 12 8.41992C12.99 8.41992 13.88 8.81992 14.53 9.46992Z"
@@ -246,18 +330,16 @@ export function ArchiveIcon({ color = '#828282' }: { color?: string }) {
   );
 }
 
-export function UnarchiveIcon({
-  color = '#828282',
-  width = '21',
-  height = '20',
-}) {
+export function UnarchiveIcon({ color = '#828282', size, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, '21', '20');
   return (
     <svg
-      width={width}
-      height={height}
+      width={w}
+      height={h}
       viewBox="0 0 21 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...rest}
     >
       <path
         d="M13.4833 10.0009C13.4833 11.6509 12.1499 12.9842 10.4999 12.9842C8.84993 12.9842 7.5166 11.6509 7.5166 10.0009C7.5166 8.35091 8.84993 7.01758 10.4999 7.01758C12.1499 7.01758 13.4833 8.35091 13.4833 10.0009Z"
@@ -277,21 +359,17 @@ export function UnarchiveIcon({
   );
 }
 
-export function DeleteIcon({
-  color = '#D92D20',
-  className,
-}: {
-  color?: string;
-  className?: string;
-}) {
+export function DeleteIcon({ color = '#D92D20', className, size, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, '24', '20');
   return (
     <svg
-      width="24"
-      height="20"
+      width={w}
+      height={h}
       viewBox="0 0 18 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       className={className}
+      {...rest}
     >
       <path
         fill-rule="evenodd"
@@ -303,14 +381,16 @@ export function DeleteIcon({
   );
 }
 
-export function UploadIcon({ color = '#21B55A' }) {
+export function UploadIcon({ color = '#21B55A', size, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, '20', '20');
   return (
     <svg
-      width="20"
-      height="20"
+      width={w}
+      height={h}
       viewBox="0 0 20 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...rest}
     >
       <path
         d="M18.0583 11.917L17.725 16.0837C17.6 17.3587 17.5 18.3337 15.2416 18.3337H4.7583C2.49997 18.3337 2.39997 17.3587 2.27497 16.0837L1.94163 11.917C1.87497 11.2253 2.09163 10.5837 2.4833 10.092C2.49163 10.0837 2.49163 10.0837 2.49997 10.0753C2.9583 9.51699 3.64997 9.16699 4.42497 9.16699H15.575C16.35 9.16699 17.0333 9.51699 17.4833 10.0587C17.4916 10.067 17.5 10.0753 17.5 10.0837C17.9083 10.5753 18.1333 11.217 18.0583 11.917Z"
@@ -338,14 +418,16 @@ export function UploadIcon({ color = '#21B55A' }) {
   );
 }
 
-export function Upload_Icon2({ color = '#21B55A' }: { color?: string }) {
+export function Upload_Icon2({ color = '#21B55A', size, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, '24', '25');
   return (
     <svg
-      width="24"
-      height="25"
+      width={w}
+      height={h}
       viewBox="0 0 24 25"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...rest}
     >
       <path
         d="M9 17.5V11.5L7 13.5"
@@ -379,14 +461,16 @@ export function Upload_Icon2({ color = '#21B55A' }: { color?: string }) {
   );
 }
 
-export function CloseIcon({ color = '#EB5757' }: { color?: string }) {
+export function CloseIcon({ color = '#EB5757', size, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, '15', '14');
   return (
     <svg
-      width="15"
-      height="14"
+      width={w}
+      height={h}
       viewBox="0 0 15 14"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      {...rest}
     >
       <path
         d="M3.98633 10.5088L11.0127 3.48246"
@@ -404,18 +488,21 @@ export function CloseIcon({ color = '#EB5757' }: { color?: string }) {
   );
 }
 
-export const DragIcon = () => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width="18"
-    height="18"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="#828282"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
+export const DragIcon = ({ size, width, height, ...rest }: IconProps) => {
+  const { w, h } = resolveDims({ size, width, height }, '18', '18');
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={w}
+      height={h}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#828282"
+      strokeWidth={2}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      {...rest}
+    >
     <circle cx="5" cy="8" r="1" />
     <circle cx="5" cy="16" r="1" />
     <circle cx="12" cy="8" r="1" />
@@ -423,16 +510,20 @@ export const DragIcon = () => (
     <circle cx="19" cy="8" r="1" />
     <circle cx="19" cy="16" r="1" />
   </svg>
-);
+  );
+};
 
-export const AddTeacherIcon = ({ color = '#21B55A' }) => (
-  <svg
-    width="21"
-    height="20"
-    viewBox="0 0 21 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+export const AddTeacherIcon = ({ color = '#21B55A', size, width, height, ...rest }: IconProps) => {
+  const { w, h } = resolveDims({ size, width, height }, '21', '20');
+  return (
+    <svg
+      width={w}
+      height={h}
+      viewBox="0 0 21 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...rest}
+    >
     <path
       d="M15.9167 16.25H12.5834"
       stroke={color}
@@ -462,16 +553,20 @@ export const AddTeacherIcon = ({ color = '#21B55A' }) => (
       strokeLinejoin="round"
     />
   </svg>
-);
+  );
+};
 
-export const ChangeTeacherIcon = () => (
-  <svg
-    width="21"
-    height="20"
-    viewBox="0 0 21 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-  >
+export const ChangeTeacherIcon = ({ size, width, height, ...rest }: IconProps) => {
+  const { w, h } = resolveDims({ size, width, height }, '21', '20');
+  return (
+    <svg
+      width={w}
+      height={h}
+      viewBox="0 0 21 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...rest}
+    >
     <path
       d="M10.5 9.99935C12.8012 9.99935 14.6666 8.13387 14.6666 5.83268C14.6666 3.5315 12.8012 1.66602 10.5 1.66602C8.19879 1.66602 6.33331 3.5315 6.33331 5.83268C6.33331 8.13387 8.19879 9.99935 10.5 9.99935Z"
       stroke="white"
@@ -503,7 +598,8 @@ export const ChangeTeacherIcon = () => (
       strokeLinejoin="round"
     />
   </svg>
-);
+  );
+};
 
 export const DeleteModalIcon = () => (
   <svg
@@ -513,7 +609,7 @@ export const DeleteModalIcon = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <rect width="48" height="48" rx="24" fill="#EB5757" fill-opacity="0.06" />
+  <rect width="48" height="48" rx="24" fill="#EB5757" fillOpacity="0.06" />
     <path
       d="M33 17.9805C29.67 17.6505 26.32 17.4805 22.98 17.4805C21 17.4805 19.02 17.5805 17.04 17.7805L15 17.9805"
       stroke="#EB5757"
@@ -559,7 +655,7 @@ export const ArchiveModalIcon = ({ color = '#EB5757' }) => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <rect width="48" height="48" rx="24" fill={color} fill-opacity="0.06" />
+  <rect width="48" height="48" rx="24" fill={color} fillOpacity="0.06" />
     <path
       d="M26.5299 21.4699L21.4699 26.5299C20.8199 25.8799 20.4199 24.9899 20.4199 23.9999C20.4199 22.0199 22.0199 20.4199 23.9999 20.4199C24.9899 20.4199 25.8799 20.8199 26.5299 21.4699Z"
       stroke={color}
@@ -640,7 +736,7 @@ export const CancelDrawerIcon = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <rect width="32" height="32" rx="16" fill="#EB5757" fill-opacity="0.08" />
+  <rect width="32" height="32" rx="16" fill="#EB5757" fillOpacity="0.08" />
     <path
       d="M11.7578 20.2383L20.2431 11.753"
       stroke="#EB5757"
@@ -913,6 +1009,21 @@ export const NoBooksIcon = () => (
     </g>
   </svg>
 );
+
+export const NoSubjectIcon = () => (
+  <svg width="118" height="118" viewBox="0 0 118 118" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="59" cy="59" r="59" fill="#21B55A" fillOpacity="0.06"/>
+    <circle cx="59.0001" cy="59.2933" r="35.8997" fill="#E9F8EF"/>
+    <circle cx="59" cy="59.2937" r="39.9814" fill="#E9F8EF" stroke="white" strokeWidth="2.22634"/>
+    <mask id="mask0_3957_519692" maskUnits="userSpaceOnUse" x="20" y="20" width="78" height="78">
+      <circle cx="59.0003" cy="59.293" r="38.6827" fill="white"/>
+    </mask>
+    <g mask="url(#mask0_3957_519692)">
+      <path d="M74.5834 66.3333V70.9167C74.5834 74.455 71.7051 77.3333 68.1667 77.3333H49.8334C46.2951 77.3333 43.4167 74.455 43.4167 70.9167V69.725C43.4167 66.8467 45.7634 64.5 48.6417 64.5H72.7501C73.7584 64.5 74.5834 65.325 74.5834 66.3333Z" fill="#21B55A"/>
+      <path d="M65.4167 40.667H52.5834C45.2501 40.667 43.4167 42.5003 43.4167 49.8337V63.7303C44.8101 62.502 46.6434 61.7503 48.6417 61.7503H72.7501C73.7584 61.7503 74.5834 60.9253 74.5834 59.917V49.8337C74.5834 42.5003 72.7501 40.667 65.4167 40.667ZM60.8334 56.7087H51.6667C50.9151 56.7087 50.2917 56.0853 50.2917 55.3337C50.2917 54.582 50.9151 53.9587 51.6667 53.9587H60.8334C61.5851 53.9587 62.2084 54.582 62.2084 55.3337C62.2084 56.0853 61.5851 56.7087 60.8334 56.7087ZM66.3334 50.292H51.6667C50.9151 50.292 50.2917 49.6687 50.2917 48.917C50.2917 48.1653 50.9151 47.542 51.6667 47.542H66.3334C67.0851 47.542 67.7084 48.1653 67.7084 48.917C67.7084 49.6687 67.0851 50.292 66.3334 50.292Z" fill="#21B55A"/>
+    </g>
+  </svg>
+);
 export const NoStudentIcon = () => (
   <svg
     width="118"
@@ -961,6 +1072,52 @@ export const NoStudentIcon = () => (
     </g>
   </svg>
 );
+
+export const NoClassIcon = () => (
+  <svg
+    width="118"
+    height="118"
+    viewBox="0 0 118 118"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle cx="59" cy="59" r="59" fill="#21B55A" fillOpacity="0.06" />
+    <circle cx="59.0001" cy="59.2943" r="35.8997" fill="#E9F8EF" />
+    <circle
+      cx="59"
+      cy="59.2937"
+      r="39.9814"
+      fill="#E9F8EF"
+      stroke="white"
+      strokeWidth="2.22634"
+    />
+    <mask
+      id="mask0_3957_520765"
+      maskUnits="userSpaceOnUse"
+      x="20"
+      y="20"
+      width="78"
+      height="78"
+    >
+      <circle cx="59.0003" cy="59.292" r="38.6827" fill="white" />
+    </mask>
+    <g mask="url(#mask0_3957_520765)">
+      <path
+        d="M56.4334 44.6096C56.4334 44.958 56.1401 45.2513 55.7917 45.2513H53.7201C49.7601 45.2513 46.5334 48.478 46.5334 52.438V69.3596C46.5334 69.708 46.2401 70.0013 45.8917 70.0013H44.6084C42.4267 70.0013 40.6667 68.2413 40.6667 66.0596V44.6096C40.6667 42.428 42.4267 40.668 44.6084 40.668H52.4917C54.6734 40.668 56.4334 42.428 56.4334 44.6096Z"
+        fill="#21B55A"
+      />
+      <path
+        d="M77.3333 44.6096V66.0596C77.3333 68.2413 75.5733 70.0013 73.3917 70.0013H72.2367C71.8883 70.0013 71.595 69.708 71.595 69.3596V52.438C71.595 48.478 68.3683 45.2513 64.4083 45.2513H62.2083C61.86 45.2513 61.5667 44.958 61.5667 44.6096C61.5667 42.428 63.3267 40.668 65.5083 40.668H73.3917C75.5733 40.668 77.3333 42.428 77.3333 44.6096Z"
+        fill="#21B55A"
+      />
+      <path
+        d="M64.4084 48H53.7201C51.2634 48 49.2834 49.98 49.2834 52.4367V72.8967C49.2834 75.3533 51.2634 77.3333 53.7201 77.3333H56.7084C57.2218 77.3333 57.6251 76.93 57.6251 76.4167V71.8333C57.6251 71.0817 58.2484 70.4583 59.0001 70.4583C59.7518 70.4583 60.3751 71.0817 60.3751 71.8333V76.4167C60.3751 76.93 60.7784 77.3333 61.2918 77.3333H64.4268C66.8651 77.3333 68.8451 75.3533 68.8451 72.915V52.4367C68.8451 49.98 66.8651 48 64.4084 48ZM62.6668 64.0417H55.3334C54.5818 64.0417 53.9584 63.4183 53.9584 62.6667C53.9584 61.915 54.5818 61.2917 55.3334 61.2917H62.6668C63.4184 61.2917 64.0418 61.915 64.0418 62.6667C64.0418 63.4183 63.4184 64.0417 62.6668 64.0417ZM62.6668 58.5417H55.3334C54.5818 58.5417 53.9584 57.9183 53.9584 57.1667C53.9584 56.415 54.5818 55.7917 55.3334 55.7917H62.6668C63.4184 55.7917 64.0418 56.415 64.0418 57.1667C64.0418 57.9183 63.4184 58.5417 62.6668 58.5417Z"
+        fill="#21B55A"
+      />
+    </g>
+  </svg>
+);
+
 export const NoParentAddedIcon = () => (
   <svg
     width="84"
@@ -1005,7 +1162,7 @@ export const NoSuggestionIcon = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <circle cx="59" cy="59" r="59" fill="#21B55A" fill-opacity="0.06" />
+    <circle cx="59" cy="59" r="59" fill="#21B55A" fillOpacity="0.06" />
     <circle cx="59.0001" cy="59.2904" r="35.8997" fill="#E9F8EF" />
     <circle
       cx="59"
@@ -1085,7 +1242,7 @@ export const NoAnnouncementIcon = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle cx="59" cy="59" r="59" fill={theme.primary} fill-opacity="0.06" />
+      <circle cx="59" cy="59" r="59" fill={theme.primary} fillOpacity="0.06" />
       <circle cx="59.0001" cy="59.2904" r="35.8997" fill={theme.light} />
       <circle
         cx="59"
@@ -1093,11 +1250,11 @@ export const NoAnnouncementIcon = () => {
         r="39.9814"
         fill={theme.light}
         stroke="white"
-        stroke-width="2.22634"
+        strokeWidth="2.22634"
       />
       <mask
         id="mask0_3960_193210"
-        mask-type="alpha"
+        style={{ maskType: 'alpha' }}
         maskUnits="userSpaceOnUse"
         x="20"
         y="20"
@@ -1138,7 +1295,7 @@ export const NoTeacherIcon = () => {
       />
       <mask
         id="mask0_3960_192549"
-        mask-type="alpha"
+        style={{ maskType: 'alpha' }}
         maskUnits="userSpaceOnUse"
         x="20"
         y="20"
@@ -1186,7 +1343,7 @@ export const NoAttendanceIcon = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle cx="59" cy="59" r="59" fill={theme.primary} fill-opacity="0.06" />
+      <circle cx="59" cy="59" r="59" fill={theme.primary} fillOpacity="0.06" />
       <circle cx="59.0001" cy="59.2904" r="35.8997" fill={theme.light} />
       <circle
         cx="59"
@@ -1198,7 +1355,7 @@ export const NoAttendanceIcon = () => {
       />
       <mask
         id="mask0_3960_190497"
-        mask-type="alpha"
+        style={{ maskType: 'alpha' }}
         maskUnits="userSpaceOnUse"
         x="20"
         y="20"
@@ -1230,7 +1387,7 @@ export const NoEventIcon = () => {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle cx="59" cy="59" r="59" fill={theme.primary} fill-opacity="0.06" />
+      <circle cx="59" cy="59" r="59" fill={theme.primary} fillOpacity="0.06" />
       <circle cx="59.0001" cy="59.2904" r="35.8997" fill={theme.light} />
       <circle
         cx="59"
@@ -1238,11 +1395,11 @@ export const NoEventIcon = () => {
         r="39.9814"
         fill={theme.light}
         stroke="white"
-        stroke-width="2.22634"
+        strokeWidth="2.22634"
       />
       <mask
         id="mask0_3960_194921"
-        mask-type="mask-type:alpha"
+        style={{ maskType: 'alpha' }}
         maskUnits="userSpaceOnUse"
         x="20"
         y="20"

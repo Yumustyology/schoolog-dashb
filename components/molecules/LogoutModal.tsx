@@ -1,10 +1,15 @@
-'use client';
+"use client";
 import React from 'react';
 import Cancel from '../atoms/icons/ModalIcons/Cancel';
 import Button from '../atoms/form/Button';
 import { cn } from '@/app/lib/utils'; // Import the 'cn' utility function if it's defined elsewhere
 import { Inter_400, Inter_500 } from '@/app/lib/config/font.config';
 import LogoutModalICon from '../atoms/icons/dashboard/LogoutModalICon';
+import { useRouter } from 'next/navigation';
+import localforage from 'localforage';
+import { resetAuthState } from '@/app/lib/entities/auth.entity';
+import { resetProfileState } from '@/app/lib/entities/profile.entity';
+import { resetSchoolState } from '@/app/lib/entities/school.entity';
 
 const LogoutModal = ({
   open,
@@ -13,6 +18,35 @@ const LogoutModal = ({
   open: boolean;
   close?: () => void;
 }) => {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await Promise.all([
+        localforage.removeItem('accessToken'),
+        localforage.removeItem('refreshToken'),
+        localforage.removeItem('signupEmail'),
+      ]);
+
+      // reset persisted entities
+      resetAuthState();
+      resetProfileState();
+      resetSchoolState();
+
+  if (close) close();
+
+  router.replace('/');
+    } catch (err) {
+      // eslint-disable-next-line no-console
+      console.debug('logout failed', err);
+      // fallback redirect
+        try {
+          router.replace('/');
+        } catch {
+          window.location.href = '/';
+        }
+    }
+  };
   if (!open) return null; // Hide the modal when `isOpen` is false
 
   return (
@@ -61,6 +95,7 @@ const LogoutModal = ({
               'text-base bg-r text-white h-[44px] w-[185px]',
               Inter_500.className
             )}
+            onClick={handleLogout}
           >
             Logout
           </Button>

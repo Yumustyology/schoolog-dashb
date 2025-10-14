@@ -1,7 +1,60 @@
-import { CurriculumType } from '@/components/molecules/dashboard/subjects/CreateSubject/CurriculumType';
 import { entity } from 'simpler-state';
 
-export const TOTAL_STEPS = 3;
+// Create Subject entity state (holds the form data across steps)
+export type CreateSubjectEntity = {
+  name: string;
+  coverImage: File | string | null; // File while editing or URL after upload
+  curriculumSource: 'manual' | 'waec' | 'neco' | 'subeb' | 'ube' | 'upload' | null;
+  // minimal curriculum shape (can be expanded or replaced by curriculum.entity types)
+  curriculum?: {
+    termId: string;
+    topics: { id: string; title: string; description?: string }[];
+  }[];
+  assignedTeacherId?: string | null;
+  classGrade?: string | null;
+  timetable?: {
+    day: string;
+    class_id?: string | null;
+    teacher_id?: string | null;
+    periods: number[];
+  }[];
+};
+
+export const defaultCreateSubjectEntity: CreateSubjectEntity = {
+  name: '',
+  coverImage: null,
+  curriculumSource: 'manual',
+  curriculum: [],
+  assignedTeacherId: null,
+  classGrade: null,
+  timetable: [
+    { day: 'Monday', periods: [] },
+    { day: 'Tuesday', periods: [] },
+    { day: 'Wednesday', periods: [] },
+    { day: 'Thursday', periods: [] },
+    { day: 'Friday', periods: [] },
+    { day: 'Saturday', periods: [] },
+    { day: 'Sunday', periods: [] },
+  ],
+};
+
+export const createSubjectEntity = entity<CreateSubjectEntity>(
+  defaultCreateSubjectEntity
+);
+
+export const setCreateSubjectField = <K extends keyof CreateSubjectEntity>(
+  key: K,
+  value: CreateSubjectEntity[K]
+) => {
+  createSubjectEntity.set((prev) => ({ ...prev, [key]: value }));
+};
+
+export const resetCreateSubjectEntity = () => {
+  createSubjectEntity.set(defaultCreateSubjectEntity);
+};
+
+
+export const TOTAL_STEPS = 2;
 
 // initialize state
 export const createSubjectProgressState = entity(0);
@@ -18,7 +71,7 @@ export const createSubjectPreviousStep = () => {
 };
 
 export const createSubjectSetStep = (arg: number) => {
-  if (arg > 3 || arg < 0) return;
+  if (arg > 2 || arg < 0) return;
   createSubjectProgressState.set(arg);
 };
 

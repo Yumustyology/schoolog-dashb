@@ -29,7 +29,7 @@ export function SelectSubject({ className }: { className?: string }) {
           <SelectItem value="english">English</SelectItem>
           <SelectItem value="chemistry">Chemistry</SelectItem>
           <SelectItem value="mathematics">Mathematics</SelectItem>
-          <SelectItem value="Yoruba">Yoruba</SelectItem>
+          <SelectItem value="yoruba">Yoruba</SelectItem>
         </SelectGroup>
       </SelectContent>
     </Select>

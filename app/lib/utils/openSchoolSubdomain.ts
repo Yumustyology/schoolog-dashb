@@ -1,8 +1,8 @@
-type SchoolIdentifiable = { slug?: string | null; name?: string | null };
+type SchoolIdentifiable = { slug?: string | null; name?: string | null; tenant_domain?: string | null };
 
 export const buildSchoolSubdomainUrl = (school: SchoolIdentifiable, opts?: { usePath?: string }) => {
   const identifier = (school.slug && school.slug.trim()) || (school.name && school.name.toLowerCase().replace(/\s+/g, '-')) || '';
-  const safeId = identifier.toLowerCase().replace(/[^a-z0-9-]/g, '');
+  const safeId = school?.tenant_domain || identifier.toLowerCase().replace(/[^a-z0-9-]/g, '');
 
   const protocol = typeof window !== 'undefined' ? window.location.protocol : 'http:';
   const port = typeof window !== 'undefined' && window.location.port ? `:${window.location.port}` : '';

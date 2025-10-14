@@ -4,6 +4,12 @@ import './globals.css';
 import { ThemeProvider } from '@/components/organisms/ThemeProvider';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import TenantHeadManager from '@/components/organisms/TenantHeadManager';
+import { getTenantFromHost } from './lib/tenant';
+import { headers } from 'next/headers';
+
+// force dynamic metadata so headers() can be awaited safely at request time
+export const dynamic = 'force-dynamic';
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -16,13 +22,80 @@ const geistMono = localFont({
   weight: '100 900',
 });
 
-export const metadata: Metadata = {
-  title: 'Schoolog+',
-  description: 'School management just got easier',
-  icons: {
-    icon: '/schoolog-logo.png',
-  },
-};
+// server-side metadata builder: resolves tenant from host and fetches school info
+export async function generateMetadata(): Promise<Metadata> {
+  let host = '';
+  let proto = 'http';
+  try {
+    const h = await headers();
+    host = h.get('host') || '';
+    proto = h.get('x-forwarded-proto') || h.get('x-forwarded-protocol') || proto;
+  } catch {
+    host = '';
+    proto = 'http';
+  }
+  const origin = host ? `${proto}://${host}` : '';
+  const url = origin ? new URL(origin) : undefined;
+  const tenant = getTenantFromHost(host);
+
+  // compute tenant header value the same way client code does
+  let tenantKey = tenant.hostname;
+  if (tenant.isCustomDomain) tenantKey = tenant.hostname;
+  else if (tenant.isSubdomain) tenantKey = tenant.id;
+
+  const backend = (process.env.NEXT_PUBLIC_BACKEND_URL || process.env.BACKEND_URL || 'http://localhost:5080').replace(/\/$/, '');
+  const endpoint = `${backend}/school/tenant`;
+
+  // do a few retries for transient network errors (ECONNRESET etc.)
+  const maxAttempts = 3;
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      const res = await fetch(endpoint, { headers: { 'X-Tenant': tenantKey }, cache: 'no-store' });
+      if (!res.ok) {
+        const body = await res.text().catch(() => '');
+        console.warn('[generateMetadata] tenant endpoint returned non-ok', res.status, body);
+        break;
+      }
+
+      const data = await res.json().catch(() => null);
+      const school = data?.school ?? data?.data ?? data ?? null;
+      if (school && school.name) {
+        const icon = school.school_image ?? '/schoolog-logo.png';
+        const iconUrl = typeof icon === 'string' && icon.startsWith('http') ? icon : (url ? `${url.origin}${icon}` : icon);
+        return {
+          title: String(school.name),
+          description: 'School management just got easier',
+          icons: { icon: iconUrl },
+        };
+      }
+
+      if (tenant.isSubdomain) {
+        return {
+          title: origin,
+          description: 'School management just got easier',
+          icons: { icon: school?.school_image },
+        };
+      }
+
+      break;
+    } catch (err) {
+      // transient network error — retry with backoff
+  console.warn('[generateMetadata] fetch attempt', attempt, 'failed:', String(err));
+      if (attempt === maxAttempts) {
+        break;
+      }
+      // exponential backoff: 100ms * 2^(attempt-1)
+      const backoff = 100 * Math.pow(2, attempt - 1);
+      await new Promise((r) => setTimeout(r, backoff));
+    }
+  }
+
+  return {
+    title: 'Schoolog+',
+    description: 'School management just got easier',
+    icons: { icon: '/schoolog-logo.png' },
+  };
+}
 
 export default function RootLayout({
   children,
@@ -35,6 +108,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
         <ThemeProvider>
+          <TenantHeadManager />
           {children}
           <ToastContainer />
         </ThemeProvider>

@@ -12,7 +12,7 @@ export function CurriculumType() {
   console.log(selectedCurriculum);
 
   const curriculums = [
-    { value: 'upload', label: 'Upload .cls file' },
+    { value: 'upload', label: 'Upload .xlsx and .csv file format' },
     { value: 'manual', label: 'Manual Input' },
     { value: 'waec', label: 'Waec Standard Curriculum' },
     { value: 'neco', label: 'Neco Standard Curriculum' },

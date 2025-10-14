@@ -178,7 +178,7 @@ const PaymentCategory = ({
         title="School fees categories"
         subtitle="Click on any category to view details, edit or delete"
         headerClassName="bg-transparent text-black border border-b-gray5"
-        cancelClassName="bg-[#F2F2F2]"
+        cancelClassName="bg-gray4"
         subTitleClassName="text-gray3"
         className=""
       >

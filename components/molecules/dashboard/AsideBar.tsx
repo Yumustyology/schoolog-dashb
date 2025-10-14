@@ -15,6 +15,9 @@ import {
 import { cn } from '@/app/lib/utils';
 import { Inter_500 } from '@/app/lib/config/font.config';
 import Logout from '../../atoms/icons/SideBar/Logout';
+import { schoolState } from '@/app/lib/entities/school.entity';
+import { Skeleton } from '@/components/ui/skeleton';
+import React from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -35,6 +38,70 @@ export function AppSidebar({
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
   const submenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
 
+  // get persisted school entity synchronously to avoid flash
+  const currentSchool = schoolState.use();
+
+  console.log("current school ",currentSchool)
+  const [showLogo, setShowLogo] = useState<boolean>(() => {
+    try {
+      return typeof window !== 'undefined' && document.readyState === 'complete';
+    } catch {
+      return false;
+    }
+  });
+
+  const resolveImage = React.useCallback((s?: typeof currentSchool) => {
+    try {
+      // prefer tenant cache in localStorage for fastest startup
+      if (typeof window !== 'undefined') {
+        const raw = window.localStorage.getItem('schoolog:tenant_school');
+        if (raw) {
+          try {
+            const parsed = JSON.parse(raw) as Record<string, unknown> | null;
+            const img = (parsed?.['school_image']) as string | undefined | null;
+            if (img) return typeof img === 'string' && img.startsWith('http') ? img : `${window.location.origin}${img}`;
+          } catch {
+            // ignore
+          }
+        }
+      }
+
+      const fallbackKeys = ['school_image'];
+      for (const k of fallbackKeys) {
+        const v = (s as Record<string, unknown> | undefined)?.[k];
+        if (typeof v === 'string' && v.length > 0) {
+          return v.startsWith('http') ? v : `${typeof window !== 'undefined' ? window.location.origin : ''}${v}`;
+        }
+      }
+    } catch {
+      // ignore
+    }
+    return null;
+  }, []);
+
+  const [logoUrl, setLogoUrl] = useState<string | null>(() => resolveImage(currentSchool));
+
+  // update logo when persisted entity changes
+  React.useEffect(() => {
+    const url = resolveImage(currentSchool as unknown as typeof currentSchool);
+    setLogoUrl(url);
+  }, [currentSchool, resolveImage]);
+
+  // ensure we show the logo only after full load to avoid flash
+  React.useEffect(() => {
+    if (showLogo) return;
+    const onLoad = () => setShowLogo(true);
+    if (typeof window !== 'undefined') {
+      if (document.readyState === 'complete') {
+        setShowLogo(true);
+        return;
+      }
+      window.addEventListener('load', onLoad);
+      return () => window.removeEventListener('load', onLoad);
+    }
+    return undefined;
+  }, [showLogo]);
+
   const toggleMenu = (title: string, arg?: boolean) => {
     setOpenMenus((prev) => {
       const newState = { ...prev, [title]: arg ?? !prev[title] };
@@ -54,28 +121,36 @@ export function AppSidebar({
 
   return (
     <Sidebar collapsible="icon" className="h-screen w-64 border-none bg-white">
-      <SidebarHeader className="py-5 px-6 bg-white">
+      <SidebarHeader className={cn("py-5 px-6 bg-white")}>
         {state === 'expanded' ? (
-          <Image
-            alt="full-logo"
-            src={'/schoolog-full-logo.svg'}
-            width={200}
-            height={37}
-          />
+          // expanded: show full logo or shimmer while loading
+          showLogo ? (
+            logoUrl ? (
+              <Image alt="school-logo" className="object-contain mx-auto" src={logoUrl} width={150} height={37} />
+            ) : (
+              <Image alt="full-logo" src={'/schoolog-full-logo.svg'} width={200} height={37} />
+            )
+          ) : (
+            <Skeleton className="w-[200px] h-[37px]" />
+          )
         ) : (
-          <Image
-            alt="icon-logo"
-            src={'/schoolog-logo.svg'}
-            height={80}
-            width={80}
-          />
+          // collapsed: show icon (school image if available) or default icon
+          showLogo ? (
+            logoUrl ? (
+              <Image alt="school-icon" src={logoUrl} height={80} width={80} className="object-contain" />
+            ) : (
+              <Image alt="icon-logo" src={'/schoolog-logo.svg'} height={80} width={80} />
+            )
+          ) : (
+            <Skeleton className="w-[80px] h-[90px] rounded-full" />
+          )
         )}
       </SidebarHeader>
 
       <SidebarContent className="flex flex-col h-full bg-white">
         <div
           className={cn(
-            'flex-grow mt-12 overflow-y-scroll lg:overflow-y-auto lg:scrollbar-hidden sidebar-scroll',
+            'flex-grow mt-5 overflow-y-scroll lg:overflow-y-auto lg:scrollbar-hidden sidebar-scroll',
             state == 'expanded' ? 'px-5' : 'px-3'
           )}
         >

@@ -12,13 +12,22 @@ import { useClickAway } from 'react-use';
 function OptionsSubjectDropdown({
   isOpen,
   setIsOpen,
+  onDelete,
 }: {
   isOpen: boolean;
   setIsOpen: (arg: boolean) => void;
+  onDelete?: () => void;
 }) {
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useClickAway(dropdownRef, () => setIsOpen(false));
+
+  const handleDeleteClick = () => {
+    if (onDelete) {
+      onDelete();
+    }
+    setIsOpen(false);
+  };
 
   if (!isOpen) {
     return null;
@@ -69,6 +78,7 @@ function OptionsSubjectDropdown({
           Inter_500.className
         )}
         role="menuitem"
+        onClick={handleDeleteClick}
       >
         <DeleteIcon />
         <span className="text-r2">Delete</span>

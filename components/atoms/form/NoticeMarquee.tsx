@@ -4,10 +4,18 @@ import React, { useState } from 'react';
 
 interface NoticeMarqueeProps {
   noticeText: string;
+  isAnimate?: boolean;
+  className?: string;
 }
 
-const NoticeMarquee: React.FC<NoticeMarqueeProps> = ({ noticeText }) => {
+const NoticeMarquee: React.FC<NoticeMarqueeProps> = ({
+  noticeText,
+  isAnimate = true,
+  className,
+}) => {
   const [isHovered, setIsHovered] = useState(false);
+
+  const isStatic = !isAnimate || isHovered;
 
   return (
     <div
@@ -19,13 +27,11 @@ const NoticeMarquee: React.FC<NoticeMarqueeProps> = ({ noticeText }) => {
     >
       <div
         className={cn(
-          'whitespace-nowrap',
           poppins_500.className,
-          isHovered
-            ? 'whitespace-normal overflow-visible text-center'
-            : 'animate-marquee'
+          isStatic ? 'whitespace-normal overflow-visible text-start' : 'whitespace-nowrap animate-marquee',
+          className
         )}
-        style={{ whiteSpace: isHovered ? 'normal' : 'nowrap' }}
+        style={{ whiteSpace: isStatic ? 'normal' : 'nowrap' }}
       >
         {noticeText}
       </div>
