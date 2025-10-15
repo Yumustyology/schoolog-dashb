@@ -6,10 +6,26 @@ import { createSubjectEntity } from '@/app/lib/entities/subject.entity';
 import { useEntity } from 'simpler-state';
 import ImageUploader from '@/components/atoms/form/ImageUploader';
 import FormSectionHeader from './FormSectionHeader';
-import { SelectClassGrade } from '@/components/atoms/dashboard/materials/SelectClassGrade';
+import DropdownMultiSelect, { OptionType } from '@/components/atoms/form/DropdownMultiSelect';
+import classGradeActions from '@/app/lib/actions/class-grade.actions';
+import { ClassGrade } from '@/app/lib/types/class.types';
+import { useEffect, useState } from 'react';
 
 function Step1() {
   const createSubject = useEntity(createSubjectEntity);
+  const [classGradeOptions, setClassGradeOptions] = useState<OptionType[]>([]);
+
+  useEffect(() => {
+    async function fetchClassGrades() {
+      const resp = await classGradeActions.fetchClassGradesAll();
+      if (resp && resp.data && Array.isArray(resp.data.data)) {
+        setClassGradeOptions(
+          (resp.data.data as ClassGrade[]).map((cg) => ({ value: cg._id, label: cg.name }))
+        );
+      }
+    }
+    fetchClassGrades();
+  }, []);
 
   const handleImageSelected = (file: File | null) => {
     createSubjectEntity.set((prev) => ({ ...prev, coverImage: file }));
@@ -19,8 +35,8 @@ function Step1() {
     createSubjectEntity.set((prev) => ({ ...prev, name: v }));
   };
 
-  const updateClassGrade = (v: string) => {
-    createSubjectEntity.set((prev) => ({ ...prev, classGrade: v }));
+  const updateClassGrades = (vals: readonly OptionType[]) => {
+    createSubjectEntity.set((prev) => ({ ...prev, classGrades: vals.map((v) => v.value) }));
   };
 
   return (
@@ -42,21 +58,19 @@ function Step1() {
       />
 
       <div className="mt-5">
-      <label
-        className={cn(
-          'block text-left w-full font-nunito text-base mb-3',
-          poppins_400.className
-        )}
-      >
-        Select class/level
-      </label>
-        <SelectClassGrade
+        <label
           className={cn(
-            'h-14 shadow-none rounded-lg text-gray1-- text-base',
+            'block text-left w-full font-nunito text-base mb-3',
             poppins_400.className
           )}
-          value={createSubject.classGrade ?? ''}
-          onValueChange={updateClassGrade}
+        >
+          Select class/level(s)
+        </label>
+        <DropdownMultiSelect
+          options={classGradeOptions}
+          value={classGradeOptions.filter(opt => (createSubject.classGrades || []).includes(opt.value))}
+          onChange={updateClassGrades}
+          placeholder="Select class grades"
         />
       </div>
 

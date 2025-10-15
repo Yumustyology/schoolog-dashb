@@ -10,9 +10,13 @@ import { getWaecCurriculum, getNecoCurriculum, getSubebCurriculum, getUbeCurricu
 import { createSubjectEntity } from '@/app/lib/entities/subject.entity';
 import { useEffect } from 'react';
 import FormSectionHeader from './FormSectionHeader';
+import TermSessionDropdown from '@/components/molecules/dashboard/term-sessions/TermSessionDropdown';
+import { type TermSession } from '@/app/lib/actions/term-session.actions';
 
 function Step2() {
   const selectedCurriculum = useEntity(selectedCurriculumType);
+  const createSubject = useEntity(createSubjectEntity);
+
   useEffect(() => {
     if (selectedCurriculum === 'waec') {
       const c = getWaecCurriculum();
@@ -35,12 +39,30 @@ function Step2() {
       createSubjectEntity.set((prev) => ({ ...prev, curriculum: mapped, curriculumSource: 'ube' }));
     }
   }, [selectedCurriculum]);
+
+  const handleTermSelect = (term: TermSession | null) => {
+    createSubjectEntity.set((prev) => ({
+      ...prev,
+      selectedTerm: term
+    }));
+  };
+
   return (
     <div>
       <FormSectionHeader
         title={"Create Curriculum"}
         description={"Enter details of each topics in the curriculum"}
       />
+      
+      {/* Term Selection - Show for manual and upload curriculum creation */}
+      {(selectedCurriculum === 'manual' || selectedCurriculum === 'upload') && (
+        <TermSessionDropdown
+          selectedTerm={createSubject.selectedTerm}
+          onTermSelect={handleTermSelect}
+          className="mb-6"
+        />
+      )}
+
       <div>
         <CurriculumType />
       </div>
@@ -50,8 +72,20 @@ function Step2() {
       {selectedCurriculum === 'upload' && (
         <UploadCurriculum
           onParsed={(mapped) => {
-            // parent handles updating the shared entity state so UploadCurriculum remains reusable
-            createSubjectEntity.set((prev) => ({ ...prev, curriculum: mapped, curriculumSource: 'upload' }));
+            // Convert upload format to curriculum format
+            const convertedCurriculum = mapped.map((item, index) => ({
+              termId: `uploaded-term-${index + 1}`,
+              topics: item.topics.map((topic, topicIndex) => ({
+                id: `topic-${index + 1}-${topicIndex + 1}`,
+                title: topic,
+                description: ''
+              }))
+            }));
+            createSubjectEntity.set((prev) => ({ 
+              ...prev, 
+              curriculum: convertedCurriculum, 
+              curriculumSource: 'upload' 
+            }));
           }}
         />
       )}

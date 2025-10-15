@@ -4,8 +4,9 @@ import {
   setSelectedCurriculumType,
 } from '@/app/lib/entities/subject.entity';
 import { Dropdown } from '@/components/atoms/form/Dropdown';
-import { useState } from 'react';
 import { useEntity } from 'simpler-state';
+import { cn } from '@/app/lib/utils';
+import { poppins_400 } from '@/app/lib/config/font.config';
 
 export function CurriculumType() {
   const selectedCurriculum = useEntity(selectedCurriculumType);
@@ -14,18 +15,25 @@ export function CurriculumType() {
   const curriculums = [
     { value: 'upload', label: 'Upload .xlsx and .csv file format' },
     { value: 'manual', label: 'Manual Input' },
-    { value: 'waec', label: 'Waec Standard Curriculum' },
-    { value: 'neco', label: 'Neco Standard Curriculum' },
-    { value: 'ube', label: ' UBE Curriculum' },
-    { value: 'subeb', label: 'SUBEB Curriculum' },
   ];
 
   return (
-    <Dropdown
-      options={curriculums}
-      selectedOption={selectedCurriculum}
-      onChange={setSelectedCurriculumType}
-      placeholder="Select Curriculum"
-    />
+    <div>
+      <label
+        className={cn(
+          'block text-left w-full font-nunito text-base mb-3',
+          poppins_400.className
+        )}
+      >
+        Curriculum Input Type
+      </label>
+      <Dropdown
+        options={curriculums}
+        selectedOption={selectedCurriculum}
+        onChange={setSelectedCurriculumType}
+        placeholder="Select Curriculum"
+        label=""
+      />
+    </div>
   );
 }

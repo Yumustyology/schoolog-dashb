@@ -15,6 +15,8 @@ import Step2 from '@/components/molecules/dashboard/subjects/CreateSubject/Step2
 import subjectsActions from '@/app/lib/actions/subjects.action';
 import { useEntity } from 'simpler-state';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import showToast from '@/app/lib/utils/toast';
 // Search and Select moved into the Classes page; not shown on create subject
 
 export default function TopSteps() {
@@ -22,6 +24,7 @@ export default function TopSteps() {
   const currentStep = useEntity(createSubjectProgressState);
   const createSubject = useEntity(createSubjectEntity) as CreateSubjectEntity;
   const [submitting, setSubmitting] = useState(false);
+  const router = useRouter();
 
   const handleFinalSubmit = async () => {
     setSubmitting(true);
@@ -42,12 +45,26 @@ export default function TopSteps() {
         coverImagePayload = createSubject.coverImage;
       }
 
+      // Transform curriculum to match API requirements
+      const transformedCurriculum = createSubject.curriculum?.map(curr => ({
+        termSession: curr.termId, // API expects termSession instead of termId
+        class_id: createSubject.classGrade, // API requires class_id
+        topics: curr.topics.map(topic => ({
+          topic: topic.title, // API expects 'topic' instead of 'title'
+          description: topic.description || ''
+        }))
+      })) || [];
+
+      // Prepare payload for API - excluding timetable for now
       const payload = {
         name: createSubject.name,
         coverImage: coverImagePayload,
         curriculumSource: createSubject.curriculumSource,
-        curriculum: createSubject.curriculum,
+        curriculum: transformedCurriculum,
         classGrade: createSubject.classGrade,
+        timetable: createSubject.timetable,
+        // Note: Timetable is intentionally excluded from the payload
+        // TODO: Include timetable when backend is ready to handle it
       };
 
       const response = await subjectsActions.createSubject(payload);
@@ -61,7 +78,10 @@ export default function TopSteps() {
 
       // success
       resetCreateSubjectEntity();
-      createSubjectNextStep();
+      // Show toast with API message
+      showToast(response.data.message || 'Subject created', 'subject-create-success', { type: 'success', theme: 'light' });
+      // Redirect to subjects page
+      router.push('/school/subjects');
     } catch (e) {
       console.error(e);
     } finally {

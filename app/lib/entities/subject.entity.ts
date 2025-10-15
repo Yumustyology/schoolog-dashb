@@ -1,17 +1,20 @@
 import { entity } from 'simpler-state';
+import { type TermSession } from '@/app/lib/actions/term-session.actions';
 
 // Create Subject entity state (holds the form data across steps)
 export type CreateSubjectEntity = {
   name: string;
   coverImage: File | string | null; // File while editing or URL after upload
   curriculumSource: 'manual' | 'waec' | 'neco' | 'subeb' | 'ube' | 'upload' | null;
+  // Store selected term session for curriculum creation
+  selectedTerm: TermSession | null;
   // minimal curriculum shape (can be expanded or replaced by curriculum.entity types)
   curriculum?: {
     termId: string;
     topics: { id: string; title: string; description?: string }[];
   }[];
   assignedTeacherId?: string | null;
-  classGrade?: string | null;
+  classGrades?: string[];
   timetable?: {
     day: string;
     class_id?: string | null;
@@ -24,9 +27,10 @@ export const defaultCreateSubjectEntity: CreateSubjectEntity = {
   name: '',
   coverImage: null,
   curriculumSource: 'manual',
+  selectedTerm: null,
   curriculum: [],
   assignedTeacherId: null,
-  classGrade: null,
+  classGrades: [],
   timetable: [
     { day: 'Monday', periods: [] },
     { day: 'Tuesday', periods: [] },

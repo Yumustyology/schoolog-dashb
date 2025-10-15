@@ -12,20 +12,34 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { poppins_400 } from '@/app/lib/config/font.config';
+import { poppins_400, Inter_500, Inter_400 } from '@/app/lib/config/font.config';
 
 export function DatePicker({
   className,
   calenderContainerClassName,
   placeholder,
   onChange,
+  label,
+  required,
+  value,
+  disabled,
+  error,
 }: {
   className?: string;
   placeholder?: string | React.ReactNode;
   calenderContainerClassName?: string | React.ReactNode;
   onChange?: (date: Date | undefined) => void;
+  label?: string;
+  required?: boolean;
+  value?: Date;
+  disabled?: boolean;
+  error?: string;
 }) {
-  const [date, setDate] = React.useState<Date>();
+  const [date, setDate] = React.useState<Date | undefined>(value);
+
+  React.useEffect(() => {
+    setDate(value);
+  }, [value]);
 
   const handleDateChange = (selectedDate: Date | undefined) => {
     setDate(selectedDate);
@@ -33,33 +47,49 @@ export function DatePicker({
   };
 
   return (
-    <Popover>
-      <PopoverTrigger asChild className="w-[180px] rounded-full">
-        <Button
-          variant={'outline'}
-          className={cn(
-            'w-[280px] justify-start text-left font-normal',
-            !date && 'text-muted-foreground',
-            className,
-            poppins_400.className
-          )}
-        >
-          <CalendarIcon />
-          {date ? (
-            format(date, 'PPP')
-          ) : (
-            <span>{placeholder || 'Pick a date'}</span>
-          )}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className={cn('w-auto p-0', calenderContainerClassName)}>
-        <Calendar
-          mode="single"
-          selected={date}
-          onSelect={handleDateChange}
-          initialFocus
-        />
-      </PopoverContent>
-    </Popover>
+    <div className="w-full">
+      {label && (
+        <label className={cn('block text-sm font-medium text-gray-700 mb-2', Inter_500.className)}>
+          {label} {required && <span className="text-red-500">*</span>}
+        </label>
+      )}
+      <Popover>
+        <PopoverTrigger asChild className="w-full">
+          <Button
+            variant={'outline'}
+            className={cn(
+              'w-full justify-start text-left font-normal bg-white border border-gray-300 hover:border-primary focus:border-primary',
+              !date && 'text-gray-500',
+              error && 'border-red-500',
+              className,
+              Inter_400.className
+            )}
+            disabled={disabled}
+          >
+            <CalendarIcon className="mr-2 h-4 w-4" />
+            {date ? (
+              format(date, 'PPP')
+            ) : (
+              <span>{placeholder || 'Pick a date'}</span>
+            )}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className={cn('w-auto  p-0', calenderContainerClassName)}>
+          <Calendar
+            mode="single"
+            className=''
+            selected={date}
+            onSelect={handleDateChange}
+            disabled={disabled}
+            initialFocus
+          />
+        </PopoverContent>
+      </Popover>
+      {error && (
+        <p className={cn('text-xs text-red-500 mt-1', Inter_400.className)}>
+          {error}
+        </p>
+      )}
+    </div>
   );
 }

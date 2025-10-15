@@ -84,6 +84,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
               confirmClassName,
               Inter_500.className
             )}
+            loading={isLoading}
             onClick={onConfirm}
           >
             {isLoading ? 'Loading...' : confirmText}

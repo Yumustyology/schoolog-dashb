@@ -17,6 +17,7 @@ import StudentsIcon from '@/components/atoms/icons/SideBar/StudentsIcon';
 import FinanceIcon from '@/components/atoms/icons/SideBar/FinanceIcon';
 import StaffsIcon from '@/components/atoms/icons/dashboard/StaffsIcon';
 import AdmissionIcon from '@/components/atoms/icons/SideBar/AdmissionIcon';
+import TermSessionIcon from '@/components/atoms/icons/SideBar/TermSessionIcon';
 
 export type SidebarItemsType = {
   title: string;
@@ -155,6 +156,12 @@ export const shoolSidebarItems: SidebarItemsType = [
         url: '/school/non-teaching-staffs',
       },
     ],
+  },
+  {
+    title: 'Term Sessions',
+    url: '/school/term-sessions',
+    icon: <TermSessionIcon />,
+    activeIcon: <TermSessionIcon color="#FFFFFF" />,
   },
   {
     title: 'Timetable',
