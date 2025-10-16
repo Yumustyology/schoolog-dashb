@@ -1,3 +1,4 @@
+import { poppins_400 } from '@/app/lib/config/font.config';
 import React from 'react';
 import Select, { MultiValue } from 'react-select';
 
@@ -12,6 +13,8 @@ interface DropdownProps {
   onChange: (newValue: MultiValue<OptionType>) => void;
   placeholder?: string;
   isSearchable?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
 }
 
 const DropdownMultiSelect: React.FC<DropdownProps> = ({
@@ -20,6 +23,9 @@ const DropdownMultiSelect: React.FC<DropdownProps> = ({
   onChange,
   placeholder = 'Search...',
   isSearchable = true,
+  className,
+  style,
+  ...rest
 }) => {
   return (
     <Select
@@ -29,20 +35,23 @@ const DropdownMultiSelect: React.FC<DropdownProps> = ({
       placeholder={placeholder}
       isSearchable={isSearchable}
       isMulti={true} // Enforce multi-select
+      className={className}
       styles={{
         control: (base, state) => ({
           ...base,
           padding: '2px',
           borderRadius: '8px',
-          height: '44px',
-          fontSize: '12px',
+          height: style?.height || '46px',
+          minHeight: style?.minHeight || '44px',
+          fontSize: style?.fontSize || '16px',
+          fontFamily: poppins_400.style.fontFamily || style.fontFamily || base.fontFamily,
           borderColor: state.isFocused ? '#1d4241' : 'rgb(229, 229, 229);',
           boxShadow: state.isFocused ? '#1d4241' : 'none',
+          ...style,
           '&:hover': {
             borderColor: '#1d4241',
           },
         }),
-
         menu: (base) => ({
           ...base,
           marginTop: '6px',
@@ -50,6 +59,8 @@ const DropdownMultiSelect: React.FC<DropdownProps> = ({
           borderRadius: '8px',
           borderColor: '#e5e7eb',
           boxShadow: '0px 4px 6px rgba(0, 0, 0, 0.1)',
+          fontSize: style?.fontSize || '12px',
+          fontFamily: style?.fontFamily || base.fontFamily,
         }),
         option: (base, { isFocused, isSelected }) => ({
           ...base,
@@ -57,7 +68,8 @@ const DropdownMultiSelect: React.FC<DropdownProps> = ({
           cursor: 'pointer',
           borderColor: '#1d4241',
           borderRadius: '4px',
-          fontSize: '12px',
+          fontSize: style?.fontSize || '12px',
+          fontFamily: style?.fontFamily || base.fontFamily,
           backgroundColor: isSelected
             ? '#21B55A'
             : isFocused
@@ -73,20 +85,27 @@ const DropdownMultiSelect: React.FC<DropdownProps> = ({
           backgroundColor: '#f2f2f2',
           borderRadius: '4px',
           padding: '4px',
+          fontSize: style?.fontSize || '12px',
+          fontFamily: style?.fontFamily || base.fontFamily,
         }),
         multiValueLabel: (base) => ({
           ...base,
           color: '#1d4241',
+          fontSize: style?.fontSize || '12px',
+          fontFamily: style?.fontFamily || base.fontFamily,
         }),
         multiValueRemove: (base) => ({
           ...base,
           color: '#D92D20',
           cursor: 'pointer',
+          fontSize: style?.fontSize || '12px',
+          fontFamily: style?.fontFamily || base.fontFamily,
           '&:hover': {
             backgroundColor: 'transparent',
           },
         }),
       }}
+      {...rest}
     />
   );
 };

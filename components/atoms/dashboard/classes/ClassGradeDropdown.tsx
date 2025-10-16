@@ -10,7 +10,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import DropdownMultiSelect, { OptionType } from '@/components/atoms/form/DropdownMultiSelect';
-import { Inter_400 } from '@/app/lib/config/font.config';
+import { Inter_400, poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import classGradeActions from '@/app/lib/actions/class-grade.actions';
 import { ClassGrade } from '@/app/lib/types/class.types';
@@ -45,21 +45,45 @@ export function ClassGradeDropdown({
 
   // Font usage
   const fontClass = Inter_400.className;
+  const poppinsFont = poppins_400.className;
 
   if (multiselect) {
     // Multi-select mode
+    let multiOptions: OptionType[] = Array.isArray(options) ? options : [];
+    let multiValue = multiOptions.filter(opt => Array.isArray(value) && value.includes(opt.value));
+    let multiPlaceholder = placeholder;
+    const isMultiLoading = isLoading;
+
+    // Only show loading if SWR is loading
+    if (isMultiLoading) {
+      multiOptions = [{ value: 'loading', label: 'Loading...' }];
+      multiValue = [];
+      multiPlaceholder = 'Loading...';
+    } else if (!isMultiLoading && multiOptions.length === 0) {
+      multiOptions = [{ value: 'no-classes', label: 'No classes available' }];
+      multiValue = [];
+      multiPlaceholder = 'No classes available';
+    }
+
     return (
-      <DropdownMultiSelect
-        options={options}
-        value={options.filter(opt => Array.isArray(value) && value.includes(opt.value))}
-        onChange={(vals) => onValueChange && onValueChange(vals.map((v) => v.value))}
-        placeholder={placeholder}
-        isSearchable={true}
-      />
+      <div className={cn('min-w-[130px]', poppinsFont, className)} style={{ fontSize: '14px', minHeight: '56px' }}>
+        <DropdownMultiSelect
+          options={multiOptions}
+          value={multiValue}
+          onChange={(vals) => {
+            // Prevent selection of loading/no-classes
+            const filtered = vals.filter(v => v.value !== 'loading' && v.value !== 'no-classes');
+            if (onValueChange) onValueChange(filtered.map((v) => v.value));
+          }}
+          placeholder={multiPlaceholder}
+          isSearchable={true}
+          className={cn(poppinsFont)}
+          style={{ fontSize: '14px', minHeight: '560px', fontFamily: poppins_400.style.fontFamily }}
+        />
+      </div>
     );
   }
 
-  // Single-select mode
   return (
     <Select value={typeof value === 'string' ? value : ''} onValueChange={(v) => onValueChange && onValueChange(v)}>
       <SelectTrigger

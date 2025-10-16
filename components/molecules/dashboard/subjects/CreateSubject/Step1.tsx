@@ -50,7 +50,7 @@ function Step1() {
         label="Subject name"
         type="text"
         labelClassName="label"
-        className="input h-14 rounded-lg"
+        className="input h-[46px] rounded-lg"
         name="text"
         placeholder="Subject name"
         value={createSubject.name}
