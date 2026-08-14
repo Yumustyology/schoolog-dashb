@@ -19,7 +19,6 @@ import {
 import { useEntity } from 'simpler-state';
 import { notFound, useRouter } from 'next/navigation';
 import { AudienceTypes } from '@/app/lib/types/audience-types';
-import useRedirectIfAuthenticated from '@/app/lib/hooks/useRedirectIfAuthenticated';
 
 export default function AccountTypeSelect({
   tenantId,
@@ -44,21 +43,22 @@ export default function AccountTypeSelect({
   }, [school]);
 
   const handleSelect = (audienceType: AudienceTypes) => {
-    setAuthState('audience_type', audienceType);
+    setAuthState('audienceType', audienceType);
+    const schoolData = (school && (school as any).data) || currentSchool;
+    const schoolSlugId = schoolData?.slug || schoolData?.schoolSlugId || '';
+    if (schoolSlugId) {
+      setAuthState('schoolSlugId', schoolSlugId);
+    }
     router.push('/login');
   };
-
-  const checking = useRedirectIfAuthenticated();
-  console.log("checking ",checking)
-  if (checking) return null;
 
   return (
     <AuthWrapper>
       <div className="bg-pattern w-full flex items-center justify-center min-h-screen py-10 tablet:px-14 laptop:px-24 desktop:px-36 mx-auto px-8">
         <div>
           {!(
-            (school && (school as any).data?.school_image) ||
-            currentSchool?.school_image
+            (school && (school as any).data?.schoolImage) ||
+            currentSchool?.schoolImage
           ) ? (
             <Image
               alt="logo"
@@ -78,10 +78,10 @@ export default function AccountTypeSelect({
                     : currentSchool;
                 return (
                   <>
-                    {eff?.school_image ? (
+                    {eff?.schoolImage ? (
                       <div className="mb-6">
                         <Image
-                          src={eff.school_image}
+                          src={eff.schoolImage}
                           alt={`${eff.name} logo`}
                           //width={160}
                           //height={80}

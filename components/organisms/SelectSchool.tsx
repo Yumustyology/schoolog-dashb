@@ -5,7 +5,7 @@ import AuthWrapper from '@/components/atoms/form/auth/AuthWrapper';
 import SchoolCard from '@/components/atoms/SchoolCard';
 import { poppins_400, poppins_600 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
-import ProgressPageNumber from '@/components/molecules/auth/PageNumber';
+// import ProgressPageNumber from '@/components/molecules/auth/PageNumber';
 import { authState } from '@/app/lib/entities/auth.entity';
 import Link from 'next/link';
 import { AudienceTypes } from '@/app/lib/types/audience-types';
@@ -13,11 +13,12 @@ import fetchPublicSchools from '@/app/lib/actions/school-info.action';
 import { openSchoolSubdomain } from '@/app/lib/utils/openSchoolSubdomain';
 import type { SchoolPublic } from '@/app/lib/types/school-info.types';
 import ScrollPaginator from '@/components/molecules/ScrollPaginator';
+import { SearchOutlineIcon } from '@/components/atoms/icons/Icons';
 import { SchoolCardSkeleton } from '@/components/atoms/SchoolCard';
 import Image from 'next/image';
 
 export default function SelectSchool() {
-  const { audience_type } = authState.use();
+  const { audienceType } = authState.use();
   const [search, setSearch] = useState('');
   const [debouncedSearch, setDebouncedSearch] = useState(search);
 
@@ -35,12 +36,13 @@ export default function SelectSchool() {
         limit: 10,
       });
 
-      if (res?.data) {
+      if (res && res.data) {
+        const meta = res.meta;
         return {
-          items: res.data.items || [],
-          total: res.data.total || 0,
-          page: res.data.page || page,
-          limit: res.data.limit || 10,
+          items: res.data || [],
+          total: meta?.count || 0,
+          page: Number(meta?.page) || page,
+          limit: Number(meta?.limit) || 10,
         };
       }
       return { items: [], total: 0, page, limit: 10 };
@@ -80,7 +82,7 @@ export default function SelectSchool() {
               your personalized dashboard.
             </p>
 
-            {audience_type === AudienceTypes.ADMIN && (
+            {audienceType === AudienceTypes.ADMIN && (
               <p className={cn('text-base mt-6 -mb-3', poppins_400.className)}>
                   Don&apos;t have a registered school?{' '}
                   <Link
@@ -95,28 +97,7 @@ export default function SelectSchool() {
 
           {/* Search Bar */}
           <div className="flex justify-start gap-6 bg-[#F7F7F7] border border-[#D9DCE0] rounded-[100px] p-3 w-full">
-            <svg
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
-                stroke="#828282"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <path
-                d="M22 22L20 20"
-                stroke="#828282"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <SearchOutlineIcon size={24} />
 
             <input
               type="search"
@@ -149,7 +130,7 @@ export default function SelectSchool() {
           </div>
         </div>
 
-        {audience_type === AudienceTypes.ADMIN && (
+        {audienceType === AudienceTypes.ADMIN && (
           <p className={cn('text-base mt-8', poppins_400.className)}>
             Don&apos;t have a registered school?{' '}
             <Link

@@ -9,107 +9,87 @@ import {
   poppins_600,
 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useEffect } from 'react';
+import useActiveTab from '@/app/lib/hooks/useActiveTab';
+import { Tab, Tabs, TabsHeader } from '@material-tailwind/react';
 import useSWR from 'swr';
-import classGradeActions from '@/app/lib/actions/class-grade.actions';
 import subjectsActions from '@/app/lib/actions/subjects.action';
 import SearchInput from '@/components/atoms/form/SearchInput';
 import { ClassGradeDropdown } from '@/components/atoms/dashboard/classes/ClassGradeDropdown';
-import SubjectCard from '@/components/molecules/dashboard/subjects/SubjectCard';
 import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
-import SubjectCardSkeleton from '@/components/atoms/skeleton/SubjectCardSkeleton';
-import { debounce } from 'lodash';
-import PaginationControl from '@/components/atoms/pagination/PaginationControl';
-import NoSubjectCreated from '@/components/atoms/dashboard/subjects/NoSubjectCreated';
+import { useClassGradeFilter } from '@/app/lib/hooks/useClassGradeFilter';
+import { usePaginatedSearch } from '@/app/lib/hooks/usePaginatedSearch';
+import SubjectsTableList from '@/components/atoms/dashboard/subjects/SubjectsTableList';
 
 const breadcrumbs = [{ label: 'Subjects', isActive: true }];
 
 function Page() {
-  type SubjectFromApi = {
-    _id: string;
-    name: string;
-    coverImage?: string | null;
-    description?: string | null;
-    classGrades?: string[];
-  };
-
   const { theme } = useSlgTheme();
+  const {
+    classGrades,
+    selectedClassGrade,
+    setSelectedClassGrade,
+  } = useClassGradeFilter();
 
-  const { data: classGradeResp } = useSWR('/class-grades/school-all', () =>
-    classGradeActions.fetchClassGradesAll()
-  );
+  const {
+    search,
+    debouncedSearch,
+    handleSearchChange,
+    page,
+    setPage,
+    pageSize,
+    setPageSize,
+    hasEverLoadedData,
+    setHasEverLoadedData,
+  } = usePaginatedSearch();
 
-  const classGrades = classGradeResp?.data?.data || [];
+  const tabs = [
+    { label: 'Active', value: 'active' },
+    { label: 'Archived', value: 'archived' },
+  ];
 
-  // Search and class-grade filter state
-  const [search, setSearch] = useState<string>('');
-  const [debouncedSearch, setDebouncedSearch] = useState<string>('');
-  const [hasEverLoadedData, setHasEverLoadedData] = useState(false);
-  const [selectedClassGrade, setSelectedClassGrade] = useState<
-    string | undefined
-  >(undefined);
+  const { activeTab, handleTabClick } = useActiveTab('subjects', tabs);
 
-  // Pagination state
-  const [page, setPage] = useState<number>(1);
-  const [pageSize, setPageSize] = useState<number>(10);
+  const archivedCountKey = [
+    'subjects/school',
+    'archived-count',
+    debouncedSearch || '',
+    selectedClassGrade || '',
+  ] as const;
 
-  // Debounced search
-  const debouncedSetSearch = useMemo(
-    () =>
-      debounce((value: string) => {
-        setDebouncedSearch(value);
-      }, 500),
-    []
-  );
-
-  useEffect(() => {
-    return () => {
-      debouncedSetSearch.cancel();
-    };
-  }, [debouncedSetSearch]);
-
-  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearch(value);
-    debouncedSetSearch(value);
-  };
-
-  // Build a SWR key that depends on filters so cache updates when filters change
-  const subjectsKey = `/subjects/school?search=${encodeURIComponent(debouncedSearch || '')}&classGrade=${encodeURIComponent(selectedClassGrade || '')}&page=${page}&limit=${pageSize}`;
-
-  const { data: subjectsResp, isValidating } = useSWR(subjectsKey, () => {
-    const q: Record<string, string | number | boolean> = {
-      page,
-      limit: pageSize,
-    };
-    if (debouncedSearch) q.search = debouncedSearch;
-    if (selectedClassGrade) q.classGrade = selectedClassGrade;
-    return subjectsActions.getSchoolSubjects(q);
-  });
-
-  const subjects = subjectsResp?.data?.data || [];
-  const meta = subjectsResp?.data?.meta || { count: 0 };
-
-  // Calculate total pages
-  const computedTotalPages = Math.ceil((meta.count || 0) / pageSize);
-
-  // Track if we've ever loaded data successfully
-  useEffect(() => {
-    if (subjectsResp && subjects.length > 0) {
-      setHasEverLoadedData(true);
+  const { data: archivedResp } = useSWR(
+    activeTab === 'active' ? archivedCountKey : null,
+    (key) => {
+      const [, , keySearch, keyClassGrade] = key as readonly [string, string, string, string];
+      const q: Record<string, string | number | boolean> = {
+        archived: true,
+        page: 1,
+        limit: 1,
+      };
+      if (keySearch) q.search = keySearch;
+      if (keyClassGrade) q.classGrade = keyClassGrade;
+      return subjectsActions.getSchoolSubjects(q);
     }
-  }, [subjectsResp, subjects.length]);
+  );
 
-  const isSearching = debouncedSearch.trim().length > 0 || !!selectedClassGrade;
-  const showNoResults = subjects.length === 0 && !isValidating && isSearching;
-  const showNoSubjectCreated = subjects.length === 0 && !isValidating && !isSearching && !hasEverLoadedData;
+  const archivedCount =
+    (archivedResp?.meta as { count: number })?.count || 0;
+
+  useEffect(() => {
+    if (
+      activeTab === 'archived' &&
+      archivedCount === 0 &&
+      typeof archivedResp !== 'undefined'
+    ) {
+      handleTabClick('active');
+      setPage(1);
+    }
+  }, [activeTab, archivedCount, archivedResp, handleTabClick, setPage]);
 
   return (
     <main className="w-full">
       <div className="flex justify-between items-center">
-        <div className="">
-          <BreadcrumbBox crumbs={breadcrumbs} className="mb-0" />
-        </div>
+        <BreadcrumbBox crumbs={breadcrumbs} className="mb-0" />
         <Button
           to="/school/subjects/create-new-subject"
           round
@@ -120,21 +100,51 @@ function Page() {
               : 'Create subject'
           }
           className={cn(
-            'h-[44px]  py-3 px-6 flex gap-2',
+            'h-[44px] py-3 px-6 flex gap-2',
             classGrades.length === 0 && 'bg-disabled'
           )}
         >
-          {' '}
           <AdditionIcon />
-          <span className={cn('text-base ', Inter_500.className)}>
-            Add new Subject{' '}
+          <span className={cn('text-base', Inter_500.className)}>
+            Add new Subject
           </span>
         </Button>
       </div>
 
       <div className="bg-white min-h-[60dvh] p-6 rounded-xl mt-8">
-        {(subjects.length > 0 || hasEverLoadedData) && (
-          <div className="w-full flex items-center mb-6">
+        {classGrades.length > 0 && (
+          <div className="w-full flex flex-row-reverse items-center mb-6 justify-between">
+            <div className="flex items-center gap-4">
+              {archivedCount > 0 && (
+                <Tabs value={activeTab} className="">
+                  <TabsHeader
+                    className="transition-all text-sm px-2 py-2 min-w-[340px] bg-[#F1F1F1] h-[53px] rounded-full"
+                    indicatorProps={{
+                      className: 'bg-transparent rounded-full shadow-none',
+                    }}
+                  >
+                    {tabs.map(({ label, value }) => (
+                      <Tab
+                          key={value}
+                          value={value}
+                          onClick={() => {
+                            handleTabClick(value);
+                            setPage(1);
+                          }}
+                        className={cn(
+                          'text-sm text-center',
+                          Inter_500.className
+                        )}
+                        activeClassName="rounded-full text-white bg-primary"
+                      >
+                        {label}
+                      </Tab>
+                    ))}
+                  </TabsHeader>
+                </Tabs>
+              )}
+            </div>
+
             <div className="flex max-w-[42vw] gap-4">
               <SearchInput
                 className="border-gray4 bg-white w-60 h-10 text-nowrap"
@@ -145,7 +155,11 @@ function Page() {
               <ClassGradeDropdown
                 className="w-[200px] shadow-none"
                 value={selectedClassGrade}
-                onValueChange={(v: string) => setSelectedClassGrade(v)}
+                onValueChange={(v: string | string[]) => {
+                  const id = Array.isArray(v) ? v[0] : v;
+                  setSelectedClassGrade(id);
+                  setPage(1);
+                }}
               />
             </div>
           </div>
@@ -179,75 +193,25 @@ function Page() {
                 to="/school/classes/create-new-class"
               >
                 <AdditionIcon color={theme.primary} />
-                <span className={cn('text-base ', Inter_500.className)}>
+                <span className={cn('text-base', Inter_500.className)}>
                   Create class
                 </span>
               </Button>
             </div>
           </div>
-        ) : isValidating && subjects.length === 0 ? (
-          <section className="mt-[6vh] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {Array.from({ length: 8 }).map((_, i) => (
-              <SubjectCardSkeleton key={`skeleton-${i}`} />
-            ))}
-          </section>
-        ) : showNoResults ? (
-          <div className="flex flex-col items-center justify-center py-12">
-            <div className="mb-6">
-              <NoSubjectIcon />
-            </div>
-            <p className={cn('text-[#071E3B] text-lg font-semibold mb-2', Inter_500.className)}>
-              No subjects found for &quot;{debouncedSearch}&quot;
-            </p>
-            <p className={cn('text-[#667085] text-sm', poppins_400.className)}>
-              Try adjusting your search terms or filters
-            </p>
-          </div>
-        ) : showNoSubjectCreated ? (
-          <NoSubjectCreated />
-        ) : subjects.length === 0 ? (
-          <NoSubjectCreated title="No subjects found!" />
         ) : (
-          <>
-            <section className="mt-[6vh] grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {subjects.map((s) => {
-                const sub = s as SubjectFromApi;
-                return (
-                  <SubjectCard
-                    key={String(sub._id)}
-                    subject={{
-                      id: sub._id,
-                      subject: sub.name,
-                      textbookImg: sub.coverImage || '',
-                      currentTopic: sub.description || '',
-                      teacherImg: '',
-                      teacher: '',
-                      number_of_topics_covered: 0,
-                      number_of_topics: 0,
-                      students: [],
-                    }}
-                    role={'school'}
-                  />
-                );
-              })}
-            </section>
-
-            <div className="mt-6">
-              <PaginationControl
-                totalPages={computedTotalPages}
-                currentPage={page}
-                setCurrentPage={(p) => setPage(p)}
-                pageSize={pageSize}
-                onPageSizeChange={(s) => {
-                  setPageSize(s);
-                  setPage(1);
-                }}
-                hasNextPage={page < computedTotalPages}
-                hasPrevPage={page > 1}
-                recordLength={meta.count || subjects.length}
-              />
-            </div>
-          </>
+          <SubjectsTableList
+            search={search}
+            debouncedSearch={debouncedSearch}
+            handleSearchChange={handleSearchChange}
+            page={page}
+            setPage={setPage}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+            hasEverLoadedData={hasEverLoadedData}
+            setHasEverLoadedData={setHasEverLoadedData}
+            activeTab={activeTab as 'active' | 'archived'}
+          />
         )}
       </div>
     </main>

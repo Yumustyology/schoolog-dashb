@@ -1,192 +1,288 @@
 'use client';
-import React, { useState } from 'react';
+
+import React, { useEffect, useRef, useState } from 'react';
+import useSWR from 'swr';
 import { cn } from '@/app/lib/utils';
-import { Inter_500, poppins_400 } from '@/app/lib/config/font.config';
-import { DeleteModalIcon, EditIcon } from '@/components/atoms/icons/Icons';
+import { poppins_400 } from '@/app/lib/config/font.config';
+import Input from '@/components/atoms/form/Input';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
-import ConfirmModal from '@/components/molecules/ConfirmModal';
-import termSessionActions, { type TermSession, toggleTermSessionActive } from '@/app/lib/actions/term-session.actions';
-import { removeTermSession, updateTermSessionInList } from '@/app/lib/entities/term-session.entity';
-import { toast } from 'sonner';
-import { mutate } from 'swr';
-import { formatDateRange } from '@/app/lib/utils/dateUtils';
+import { AdditionIcon, DeleteIcon } from '@/components/atoms/icons/Icons';
+import SelectComp from '@/components/atoms/form/Select';
 import { Loader2 } from 'lucide-react';
 
+import {
+  AcademicHoliday,
+  AcademicTerm,
+} from '@/app/lib/types/academicYear.types';
+import { fetchHolidaysBetween } from '@/app/lib/actions/holiday.actions';
+import { deleteTermSession } from '@/app/lib/actions/term-session.actions';
+
 interface TermCardProps {
-  term: TermSession;
-  onEdit?: (term: TermSession) => void;
+  term: AcademicTerm;
+  terms: AcademicTerm[];
+  countryCode: string;
+
+  updateTerm: (
+    id: string,
+    field: keyof AcademicTerm,
+    value: string | boolean
+  ) => void;
+  removeTerm: (id: string) => void;
+
+  addHoliday: (termId: string) => void;
+  removeHoliday: (termId: string, holidayId: string | number) => void;
+  updateHoliday: (
+    termId: string,
+    holidayId: string | number,
+    field: keyof AcademicHoliday,
+    value: string
+  ) => void;
+
+  setTerms: React.Dispatch<React.SetStateAction<AcademicTerm[]>>;
+  errors?: any;
 }
 
-const TermCard: React.FC<TermCardProps> = ({ term, onEdit }) => {
-  const [showDeleteModal, setShowDeleteModal] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
-  const [isToggling, setIsToggling] = useState(false);
-  const [optimisticActive, setOptimisticActive] = useState(term.is_currently_active || false);
+/**
+ * Unique key for holiday reconciliation
+ */
+const holidayKey = (h: { name: string; date: string }) =>
+  `${h.name.toLowerCase()}-${h.date}`;
 
-  // Update optimistic state when term prop changes
-  React.useEffect(() => {
-    setOptimisticActive(term.is_currently_active || false);
-  }, [term.is_currently_active]);
+const TermCard: React.FC<TermCardProps> = ({
+  term,
+  terms,
+  countryCode,
+  updateTerm,
+  removeTerm,
+  addHoliday,
+  removeHoliday,
+  updateHoliday,
+  setTerms,
+  errors,
+}) => {
+  const termId = String(term._id || term.id);
+  const hasReconciledRef = useRef(false);
 
-  const handleDelete = async () => {
-    setIsDeleting(true);
-    try {
-      const response = await termSessionActions.deleteTermSession(term._id);
-
-      if (response?.data?.status === 'success') {
-        toast.success(response.data.message || 'Term session deleted successfully');
-        removeTermSession(term._id);
-        setShowDeleteModal(false);
-        mutate('/term-sessions');
-      } else {
-        toast.error(response?.data?.message || 'Failed to delete term session');
-      }
-    } catch (error) {
-      console.error('Error deleting term session:', error);
-      toast.error('An error occurred while deleting the term session');
-    } finally {
-      setIsDeleting(false);
+  /**
+   * ─────────────────────────────
+   * Fetch public holidays by date range
+   * ─────────────────────────────
+   */
+  const { data: fetchedHolidays, isLoading } = useSWR(
+    term.startDate && term.endDate
+      ? ['holidays', countryCode, term.startDate, term.endDate]
+      : null,
+    () => fetchHolidaysBetween(countryCode, term.startDate, term.endDate),
+    {
+      revalidateOnFocus: false,
+      revalidateOnReconnect: false,
     }
-  };
+  );
 
-  const handleToggleActive = async () => {
-    setIsToggling(true);
-    
-    // Optimistic update - toggle the local state immediately
-    const newActiveState = !optimisticActive;
-    setOptimisticActive(newActiveState);
+  /**
+   * ─────────────────────────────
+   * Reconcile public holidays ONCE when fetched
+   * ─────────────────────────────
+   */
+  useEffect(() => {
+    if (!Array.isArray(fetchedHolidays) || fetchedHolidays.length === 0) return;
+    if (hasReconciledRef.current) return;
 
-    try {
-      const response = await toggleTermSessionActive(term._id);
+    hasReconciledRef.current = true;
 
-      if (response?.data?.status === 'success') {
-        toast.success(response.data.message || `Term session ${optimisticActive ? 'deactivated' : 'activated'} successfully`);
-        // Update the global state with server response
-        if (response.data.data) {
-          updateTermSessionInList(term._id, response.data.data);
+    setTerms((prev) => {
+      return prev.map((t) => {
+        if (String(t._id || t.id) !== termId) return t;
+
+        const existingHolidays = t.holidays || [];
+        const schoolHolidays = existingHolidays.filter((h) => h.type === 'school');
+
+        const existingPublicMap = new Map(
+          existingHolidays
+            .filter((h) => h.type === 'public')
+            .map((h) => [holidayKey(h), h])
+        );
+
+        const reconciledPublic = fetchedHolidays.map((h) => {
+          const key = holidayKey({ name: h.name, date: h.date.iso });
+          return (
+            existingPublicMap.get(key) || {
+              id: crypto.randomUUID(),
+              name: h.name,
+              date: h.date.iso,
+              type: 'public' as const,
+            }
+          );
+        });
+
+        const merged = [...schoolHolidays, ...reconciledPublic];
+
+        // Only update if actually different
+        if (
+          merged.length === existingHolidays.length &&
+          merged.every(
+            (h, i) =>
+              h.name === existingHolidays[i]?.name &&
+              h.date === existingHolidays[i]?.date &&
+              h.type === existingHolidays[i]?.type
+          )
+        ) {
+          return t;
         }
-        mutate('/term-sessions');
-      } else {
-        // Revert optimistic update on failure
-        setOptimisticActive(optimisticActive);
-        toast.error(response?.data?.message || 'Failed to update term session status');
-      }
-    } catch (error) {
-      console.error('Error toggling term session status:', error);
-      // Revert optimistic update on error
-      setOptimisticActive(optimisticActive);
-      toast.error('An error occurred while updating the term session status');
-    } finally {
-      setIsToggling(false);
-    }
-  };
 
-  const dateRange = term.start_date && term.end_date 
-    ? formatDateRange(term.start_date, term.end_date) 
-    : null;
+        return { ...t, holidays: merged };
+      });
+    });
+  }, [fetchedHolidays, termId, setTerms]);
+
+  // Reset reconciliation flag when dates change
+  useEffect(() => {
+    hasReconciledRef.current = false;
+  }, [term.startDate, term.endDate]);
+
+  /**
+   * ─────────────────────────────
+   * Delete term
+   * ─────────────────────────────
+   */
+  const handleDelete = async () => {
+    if (term._id) await deleteTermSession(term._id);
+    removeTerm(termId);
+  };
 
   return (
-    <>
-      <TooltipProvider>
-        <div className="w-full flex flex-col gap-3 justify-between bg-white min-h-[125px] border border-gray-100 rounded-xl p-4 shadow-sm">
-          {/* Top row: Checkbox + Title */}
-          <div className="flex items-start justify-between">
-            <div className="flex items-center gap-3">
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <div className="relative">
-                    {isToggling && (
-                      <div className="absolute inset-0 flex items-center justify-center bg-white/80 rounded-sm">
-                        <Loader2 className="h-3 w-3 animate-spin text-primary" />
-                      </div>
-                    )}
-                    <Checkbox
-                      checked={optimisticActive}
-                      onCheckedChange={(checked) => {
-                        if (checked === true || checked === false) {
-                          handleToggleActive();
-                        }
-                      }}
-                      disabled={isToggling}
-                      className={cn(
-                        'h-5 w-5 rounded-sm border-2 transition-colors',
-                        'data-[state=checked]:bg-primary data-[state=checked]:border-primary data-[state=checked]:text-white',
-                        'border-neutral-300 hover:border-primary/70',
-                        'focus-visible:ring-2 focus-visible:ring-primary/20 focus-visible:ring-offset-2',
-                        'disabled:opacity-50 disabled:cursor-not-allowed'
-                      )}
-                      // title={term.is_currently_active ? 'Currently Active - Click to deactivate' : 'Currently Inactive - Click to activate'}
-                    />
-                  </div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p className={cn('text-sm', poppins_400.className)}>
-                    {optimisticActive ? 'Currently Active - Click to deactivate' : 'Currently Inactive - Click to activate'}
-                  </p>
-                </TooltipContent>
-              </Tooltip>
-              <h3 className={cn('text-base text-[#071E3B] font-medium', Inter_500.className)}>
-                {term.name}
-              </h3>
-            </div>
-          </div>
+    <div className="rounded-lg border border-gray-200 p-4 bg-white space-y-4">
+      {/* Header */}
+      <div className="flex gap-3 items-center">
+        <Input
+          placeholder="Term name"
+          value={term.name}
+          handleChange={(e) => updateTerm(termId, 'name', e.target.value)}
+          errMsg={errors?.name}
+        />
 
-          {/* Bottom row: Duration + Edit/Delete actions */}
-          <div className="flex items-center justify-between">
-            <div className={cn('text-sm text-gray-500', poppins_400.className)}>
-              {dateRange && (
-                <span>Duration: {dateRange}</span>
-              )}
-            </div>
-            
-            <div className="flex flex-row gap-2 items-center">
-              {onEdit && (
-                <button
-                  onClick={() => onEdit(term)}
-                  className={cn(
-                    'flex items-center justify-center w-8 h-8 rounded-full transition-colors flex-shrink-0',
-                    'bg-neutral-100 text-primary hover:bg-primary hover:text-primary-foreground',
-                    'focus:outline-none focus:ring-2 focus:ring-primary/20 focus:ring-offset-2'
-                  )}
-                  aria-label="Edit term session"
-                  // title="Edit term session"
-                >
-                  <EditIcon size={16} className="flex-shrink-0" />
-                </button>
-              )}
-              <button
-                onClick={() => setShowDeleteModal(true)}
-                className={cn(
-                  'flex items-center justify-center p-2 rounded-full transition-colors flex-shrink-0',
-                  'text-destructive hover:bg-destructive/10',
-                  'focus:outline-none focus:ring-2 focus:ring-destructive/20 focus:ring-offset-2'
-                )}
-                aria-label="Delete term session"
-                // title="Delete term session"
-              >
-                <div className="flex-shrink-0">
-                  <DeleteModalIcon />
-                </div>
-              </button>
-            </div>
-          </div>
+        {terms.length > 1 && (
+          <button
+            type="button"
+            onClick={handleDelete}
+            className="mt-6 text-red-500"
+          >
+            <DeleteIcon size={14} />
+          </button>
+        )}
+
+        {isLoading && <Loader2 className="animate-spin w-4 h-4 mt-6" />}
+      </div>
+
+      {/* Date Range */}
+      <div className="flex gap-4 items-center">
+        <Input
+          type="date"
+          label="Start Date"
+          value={term.startDate}
+          handleChange={(e) => updateTerm(termId, 'startDate', e.target.value)}
+          errMsg={errors?.startDate}
+        />
+        <span className="mt-6 text-gray-400">→</span>
+        <Input
+          type="date"
+          label="End Date"
+          value={term.endDate}
+          handleChange={(e) => updateTerm(termId, 'endDate', e.target.value)}
+          errMsg={errors?.endDate}
+        />
+      </div>
+
+      {/* Active Toggle */}
+      <div className="flex items-center justify-between">
+        <span className={cn('text-sm', poppins_400.className)}>
+          Set as Currently Active Term
+        </span>
+        <Checkbox
+          checked={term.isCurrentlyActive || false}
+          onCheckedChange={(checked) => {
+            updateTerm(termId, 'isCurrentlyActive', checked === true);
+          }}
+        />
+      </div>
+
+      {/* Holidays */}
+      <div className="pt-4 border-t">
+        <div className="flex justify-between items-center mb-2">
+          <span className="text-sm font-semibold">
+            Holidays ({term.holidays?.length || 0})
+            {isLoading && (
+              <span className="ml-2 text-xs text-primary">
+                loading public holidays…
+              </span>
+            )}
+          </span>
+
+          <button
+            type="button"
+            onClick={() => addHoliday(termId)}
+            className="text-xs flex items-center gap-1 text-primary"
+          >
+            <AdditionIcon size={12} /> Add Holiday
+          </button>
         </div>
-      </TooltipProvider>
 
-      <ConfirmModal
-        open={showDeleteModal}
-        close={() => setShowDeleteModal(false)}
-        title="Delete Term Session"
-        body={`Are you sure you want to delete "${term.name}"? This action cannot be undone.`}
-        icon={<DeleteModalIcon />}
-        onConfirm={handleDelete}
-        confirmText="Delete"
-        cancelText="Cancel"
-        confirmClassName="bg-r text-white"
-        isLoading={isDeleting}
-      />
-    </>
+        {term.holidays?.length ? (
+          <div className="space-y-2">
+            {term.holidays.map((holiday) => (
+              <div
+                key={holiday.id}
+                className="flex gap-3 items-center bg-gray-50 p-2 rounded"
+              >
+                <Input
+                  value={holiday.name}
+                  handleChange={(e) =>
+                    updateHoliday(termId, holiday.id!, 'name', e.target.value)
+                  }
+                />
+                <Input
+                  type="date"
+                  value={holiday.date}
+                  handleChange={(e) =>
+                    updateHoliday(termId, holiday.id!, 'date', e.target.value)
+                  }
+                />
+                <SelectComp
+                  value={holiday.type}
+                  options={[
+                    { name: 'School', id: 'school' },
+                    { name: 'Public', id: 'public' },
+                  ]}
+                  onValueChange={(val) => {
+                    updateHoliday(
+                      termId,
+                      holiday.id!,
+                      'type',
+                      val as 'school' | 'public'
+                    );
+                  }}
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    removeHoliday(termId, holiday.id!);
+                  }}
+                  className="text-red-500 hover:text-red-700"
+                >
+                  <DeleteIcon size={18} />
+                </button>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-sm text-gray-500">
+            {term.startDate && term.endDate
+              ? 'No holidays yet.'
+              : 'Set dates to load public holidays.'}
+          </p>
+        )}
+      </div>
+    </div>
   );
 };
 

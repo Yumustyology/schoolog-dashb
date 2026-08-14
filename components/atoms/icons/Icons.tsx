@@ -1,4 +1,44 @@
-'use client';
+"use client";
+// CalendarIcon: simple calendar SVG
+export function CalendarIcon({ color = '#21B55A', size = 24, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, String(size), String(size));
+  return (
+    <svg
+      width={w}
+      height={h}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...rest}
+    >
+      <rect x="3" y="5" width="18" height="16" rx="2" stroke={color} strokeWidth="1.5"/>
+      <path d="M16 3V7" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M8 3V7" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M3 11H21" stroke={color} strokeWidth="1.5"/>
+    </svg>
+  );
+}
+
+// Trash2Icon: simple trash bin SVG
+export function Trash2Icon({ color = '#D92D20', size = 24, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, String(size), String(size));
+  return (
+    <svg
+      width={w}
+      height={h}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...rest}
+    >
+      <rect x="5" y="9" width="14" height="10" rx="2" stroke={color} strokeWidth="1.5"/>
+      <path d="M9 13V17" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M15 13V17" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M3 6H21" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
+      <path d="M10 6V4H14V6" stroke={color} strokeWidth="1.5" strokeLinecap="round"/>
+    </svg>
+  );
+}
 import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 import React from 'react';
 
@@ -108,6 +148,42 @@ export function PanIcon({ color = '#828282', size = 16, width, height, ...rest }
     <svg width={w} height={h} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...rest}>
       <path d="M7 11L12 6L17 11" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
       <path d="M7 17L12 12L17 17" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+export function LinkIcon({ color = '#828282', size = 16, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, String(size), String(size));
+  return (
+    <svg
+      width={w}
+      height={h}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...rest}
+    >
+      <path
+        d="M10 13C9.2 13.8 8.1 14.3 7 14.3C4.9 14.3 3.2 12.6 3.2 10.5C3.2 8.4 4.9 6.7 7 6.7C8.1 6.7 9.2 7.2 10 8"
+        stroke={color}
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M14 11C14.8 10.2 15.9 9.7 17 9.7C19.1 9.7 20.8 11.4 20.8 13.5C20.8 15.6 19.1 17.3 17 17.3C15.9 17.3 14.8 16.8 14 16"
+        stroke={color}
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M8.5 12H15.5"
+        stroke={color}
+        strokeWidth="1.2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
     </svg>
   );
 }
@@ -372,8 +448,8 @@ export function DeleteIcon({ color = '#D92D20', className, size, width, height, 
       {...rest}
     >
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M12.9391 1.39039C12.6523 0.546275 11.9075 0 11.0639 0H6.93592L6.779 0.00633149C5.9492 0.0734931 5.24111 0.668966 5.02304 1.50533L4.77543 2.76813L4.74642 2.87929C4.62785 3.23928 4.29636 3.48913 3.91772 3.48913H0.73139L0.632145 3.49598C0.275153 3.54564 0 3.85945 0 4.23916C0 4.65338 0.327455 4.98918 0.73139 4.98918L3.91772 4.98918H14.0821L17.2686 4.98918L17.3679 4.98234C17.7248 4.93267 18 4.61887 18 4.23916C18 3.82493 17.6725 3.48913 17.2686 3.48913H14.0821L13.9701 3.48177C13.6025 3.4332 13.2987 3.14872 13.2243 2.76783L12.9874 1.55209L12.9391 1.39039ZM11.9143 3.48913C11.881 3.40445 11.8522 3.31721 11.8282 3.22768L11.79 3.06208L11.5636 1.8928C11.5107 1.68991 11.3473 1.54138 11.1502 1.50742L11.0639 1.50006H6.93592C6.73071 1.50006 6.54829 1.62322 6.47252 1.77803L6.44682 1.84604L6.20979 3.06238C6.18087 3.21048 6.13899 3.35311 6.08551 3.48913H11.9143ZM15.9784 6.72017C16.3475 6.75069 16.6304 7.05716 16.65 7.42605L16.6405 7.63174L16.326 11.483L15.9961 15.2414C15.9263 15.9917 15.8638 16.6245 15.8099 17.1227C15.6225 18.8588 14.4955 19.9323 12.7966 19.9641C10.1494 20.013 7.60477 20.0125 5.13373 19.9591C3.48398 19.9244 2.37366 18.8393 2.18955 17.1297L2.0623 15.8702L1.83994 13.427L1.61216 10.7461L1.35172 7.52788C1.31935 7.11498 1.61951 6.75335 2.02215 6.72016C2.39123 6.68973 2.7183 6.94584 2.79519 7.30677L2.82511 7.60173L3.06966 10.6187L3.33669 13.7459C3.45646 15.0996 3.56034 16.1952 3.64346 16.9648C3.74838 17.939 4.26138 18.4404 5.16411 18.4593C7.61585 18.5124 10.1415 18.5129 12.7701 18.4643C13.7277 18.4464 14.2489 17.9499 14.356 16.9574L14.4827 15.7046C14.5198 15.3185 14.5594 14.8923 14.6014 14.4293L14.8686 11.3538L15.1906 7.4075C15.2204 7.02902 15.5192 6.7389 15.879 6.71882L15.9784 6.72017Z"
         fill={color}
       />
@@ -484,6 +560,169 @@ export function CloseIcon({ color = '#EB5757', size, width, height, ...rest }: I
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+    </svg>
+  );
+}
+
+// SearchOutlineIcon: magnifying-glass icon used across search inputs
+export function SearchOutlineIcon({ color = '#828282', size = 20, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, '20', '20');
+  return (
+    <svg
+      width={w}
+      height={h}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...rest}
+    >
+      <path
+        d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
+        stroke={color}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M22 22L20 20"
+        stroke={color}
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+// UncheckedRadioIcon: plain circle used as the "unchecked" state for
+// Headless UI RadioGroup options (paired with a CheckCircleIcon shown via
+// group-data-[checked]: className toggling)
+export function UncheckedRadioIcon({ ...rest }: IconProps) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...rest}
+    >
+      <circle cx="12" cy="12" r="6" stroke="currentColor" strokeWidth="1" />
+    </svg>
+  );
+}
+
+// OrangeCheckBadgeIcon: 48x48 orange circle-checkmark used on
+// confirm/yes-no modals to signal a positive action
+export function OrangeCheckBadgeIcon({ size, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, '48', '48');
+  return (
+    <svg width={w} height={h} viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" {...rest}>
+      <rect width="48" height="48" rx="24" fill="#F2994A" fillOpacity="0.08" />
+      <path
+        d="M28.708 22.208C28.801 22.115 28.8747 22.0046 28.925 21.8832C28.9754 21.7617 29.0013 21.6315 29.0013 21.5C29.0013 21.3685 28.9754 21.2383 28.925 21.1168C28.8747 20.9954 28.801 20.885 28.708 20.792C28.615 20.699 28.5046 20.6253 28.3832 20.575C28.2617 20.5246 28.1315 20.4987 28 20.4987C27.8685 20.4987 27.7383 20.5246 27.6168 20.575C27.4954 20.6253 27.385 20.699 27.292 20.792L23 25.086L20.708 22.792C20.615 22.699 20.5046 22.6253 20.3832 22.575C20.2617 22.5246 20.1315 22.4987 20 22.4987C19.8685 22.4987 19.7383 22.5246 19.6168 22.575C19.4954 22.6253 19.385 22.699 19.292 22.792C19.199 22.885 19.1253 22.9954 19.075 23.1168C19.0246 23.2383 18.9987 23.3685 18.9987 23.5C18.9987 23.6315 19.0246 23.7617 19.075 23.8832C19.1253 24.0046 19.199 24.115 19.292 24.208L22.292 27.208C22.3849 27.3011 22.4952 27.375 22.6167 27.4254C22.7382 27.4758 22.8685 27.5018 23 27.5018C23.1315 27.5018 23.2618 27.4758 23.3833 27.4254C23.5048 27.375 23.6151 27.3011 23.708 27.208L28.708 22.208ZM24 14C21.3478 14 18.8043 15.0536 16.9289 16.9289C15.0536 18.8043 14 21.3478 14 24C14 26.6522 15.0536 29.1957 16.9289 31.0711C18.8043 32.9464 21.3478 34 24 34C26.6522 34 29.1957 32.9464 31.0711 31.0711C32.9464 29.1957 34 26.6522 34 24C34 21.3478 32.9464 18.8043 31.0711 16.9289C29.1957 15.0536 26.6522 14 24 14ZM16 24C16 21.8783 16.8429 19.8434 18.3431 18.3431C19.8434 16.8429 21.8783 16 24 16C26.1217 16 28.1566 16.8429 29.6569 18.3431C31.1571 19.8434 32 21.8783 32 24C32 26.1217 31.1571 28.1566 29.6569 29.6569C28.1566 31.1571 26.1217 32 24 32C21.8783 32 19.8434 31.1571 18.3431 29.6569C16.8429 28.1566 16 26.1217 16 24Z"
+        fill="#F2994A"
+      />
+    </svg>
+  );
+}
+
+// RadioOptionUncheckedIcon / RadioOptionCheckedIcon: 18x18 pill-style radio
+// dots used in Yes/No style option buttons
+export function RadioOptionUncheckedIcon({ size, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, '18', '18');
+  return (
+    <svg width={w} height={h} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" {...rest}>
+      <rect x="0.5" y="0.5" width="17" height="17" rx="8.5" stroke="#828282" />
+    </svg>
+  );
+}
+
+export function RadioOptionCheckedIcon({ size, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, '18', '18');
+  return (
+    <svg width={w} height={h} viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg" {...rest}>
+      <rect x="0.5" y="0.5" width="17" height="17" rx="8.5" stroke="white" />
+      <circle cx="9" cy="9" r="5" fill="white" />
+    </svg>
+  );
+}
+
+// LockOutlineIcon: padlock used on password-related success/confirmation states
+export function LockOutlineIcon({ ...rest }: IconProps) {
+  return (
+    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" {...rest}>
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+      />
+    </svg>
+  );
+}
+
+// GenericPersonIcon: silhouette used as an avatar fallback when no image is available
+export function GenericPersonIcon({ size = 24, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, String(size), String(size));
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width={w} height={h} fill="none" stroke="currentColor" strokeWidth="1.5" {...rest}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 12c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3 21c0-3.866 3.582-7 9-7s9 3.134 9 7" />
+    </svg>
+  );
+}
+
+// ChevronRightIcon: small forward-chevron used on selectable list/card rows
+export function ChevronRightIcon({ color = '#828282', size, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, '20', '20');
+  return (
+    <svg width={w} height={h} viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" {...rest}>
+      <path
+        d="M7.4248 16.5999L12.8581 11.1666C13.4998 10.5249 13.4998 9.4749 12.8581 8.83324L7.4248 3.3999"
+        stroke={color}
+        strokeWidth="1.5"
+        strokeMiterlimit="10"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+// SolidCheckIcon: filled checkmark used inside "selected" badges
+export function SolidCheckIcon({ ...rest }: IconProps) {
+  return (
+    <svg fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" {...rest}>
+      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+    </svg>
+  );
+}
+
+// BackArrowIcon: large 64x64 "go back" arrow used on folder-navigation tiles
+export function BackArrowIcon({ color = '#21B55A', size, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, '64', '64');
+  return (
+    <svg width={w} height={h} viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" {...rest}>
+      <path d="M24 40L16 32L24 24" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M48 32H16" stroke={color} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+// RemoveChipIcon: 24x24 X used on small "remove"/dismiss chip buttons
+// (e.g. removing an assigned teacher from a class before saving)
+export function RemoveChipIcon({ color = '#E05454', size = 16, width, height, ...rest }: IconProps) {
+  const { w, h } = resolveDims({ size, width, height }, '16', '16');
+  return (
+    <svg
+      width={w}
+      height={h}
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      {...rest}
+    >
+      <path d="M18 6L6 18" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+      <path d="M6 6L18 18" stroke={color} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -1120,8 +1359,8 @@ export const NoClassIcon = () => (
 
 export const NoParentAddedIcon = () => (
   <svg
-    width="84"
-    height="83"
+    width="118"
+    height="117"
     viewBox="0 0 84 83"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
@@ -1421,6 +1660,35 @@ export const NoEventIcon = () => {
     </svg>
   );
 };
+
+// DocumentFileIcon: generic uploaded-file/document thumbnail used in
+// "uploaded file row" UIs (resource attachments, student bulk-upload rows)
+export const DocumentFileIcon = () => (
+  <svg
+    width="32"
+    height="37"
+    viewBox="0 0 32 37"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlnsXlink="http://www.w3.org/1999/xlink"
+  >
+    <rect x="0.5" y="0.5" width="31" height="36" rx="3.5" fill="#163930" fillOpacity="0.04" />
+    <rect x="0.5" y="0.5" width="31" height="36" rx="3.5" stroke="#E8EBEA" />
+    <rect x="3" y="5" width="27" height="27" fill="url(#pattern0_1210_150082)" />
+    <defs>
+      <pattern id="pattern0_1210_150082" patternContentUnits="objectBoundingBox" width="1" height="1">
+        <use xlinkHref="#image0_1210_150082" transform="scale(0.00195312)" />
+      </pattern>
+      <image
+        id="image0_1210_150082"
+        width="512"
+        height="512"
+        preserveAspectRatio="none"
+        xlinkHref="data:image/png;base64,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"
+      />
+    </defs>
+  </svg>
+);
 
 export const TermSessionSideBarIcon = () => (
   <svg width="118" height="118" viewBox="0 0 118 118" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -153,8 +153,8 @@ If anything fails, check `scripts/setup-dev.js` output for backup path and error
 ```json
 {
   "email": "yumustyology@gmail.com",
-  "audience_type": "Admin",
-  "school_slug_id": "AOM-431844",
+  "audienceType": "Admin",
+  "schoolSlugId": "AOM-431844",
   "password": "#Yung2020"
 }
 ```

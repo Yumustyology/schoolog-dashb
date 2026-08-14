@@ -29,7 +29,7 @@ const SocialSettingsTemplateEdit = () => {
   ];
 
   // Handle form input change dynamically
-  const handleSocialFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleSocialFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setSocialFormData((prev) => ({
       ...prev,

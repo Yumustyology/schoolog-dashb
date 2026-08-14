@@ -11,7 +11,7 @@ import Button from '@/components/atoms/form/Button';
 import { EditIcon, ExportIcon } from '@/components/atoms/icons/Icons';
 // import AttendanceMetrics from '@/components/molecules/dashboard/analytics/AttendanceMetrics';
 // import GradesAnalytics from '@/components/molecules/dashboard/analytics/GradesAnalytics';
-// import AttendanceList from '@/components/molecules/dashboard/attendance/AttendanceList';
+// import TeachersAttendanceList from '@/components/molecules/dashboard/attendance/TeachersAttendanceList';
 import { ParentInfoCard } from '@/components/molecules/dashboard/parents/ParentInfoCard';
 import { WardsInfoCard } from '@/components/molecules/dashboard/parents/WardsInfoCard';
 import { PaymentTable } from '@/components/molecules/dashboard/payment/PaymentTable';

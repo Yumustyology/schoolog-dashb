@@ -14,7 +14,7 @@ import {
   teacherImg,
   teacherImg2,
 } from '@/app/assets';
-import { ActivitiesAndEvent } from '@/type';
+import { ActivitiesAndEvent } from '@/app/lib/types';
 
 export const subjectsList = [
   {

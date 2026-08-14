@@ -1,15 +1,31 @@
 'use client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Dropdown } from '@/components/atoms/form/Dropdown';
 
-export function RelationshipDropdownList() {
-  const [selectedRelationshipType, setSelectedRelationType] = useState('');
+type Props = {
+  value?: string | null;
+  onChange?: (v: string | null) => void;
+};
+
+export function RelationshipDropdownList({ value, onChange }: Props) {
+  const [selectedRelationshipType, setSelectedRelationType] = useState<string>(
+    value || ''
+  );
   const relationshipTypes = [
-    { value: 'father', label: 'Father' },
-    { value: 'mother', label: 'Mother' },
-    { value: 'sister', label: 'Sister' },
-    { value: 'brother', label: 'Brother' },
+    { value: 'Father', label: 'Father' },
+    { value: 'Mother', label: 'Mother' },
+    { value: 'Guardian', label: 'Guardian' },
+    { value: 'Other', label: 'Other' },
   ];
+
+  useEffect(() => {
+    setSelectedRelationType(value || '');
+  }, [value]);
+
+  const handleChange = (v: string) => {
+    setSelectedRelationType(v);
+    onChange?.(v || null);
+  };
 
   return (
     <>
@@ -17,7 +33,7 @@ export function RelationshipDropdownList() {
         label="Relationship"
         options={relationshipTypes}
         selectedOption={selectedRelationshipType}
-        onChange={setSelectedRelationType}
+        onChange={handleChange}
         placeholder="Select relationship"
       />
     </>

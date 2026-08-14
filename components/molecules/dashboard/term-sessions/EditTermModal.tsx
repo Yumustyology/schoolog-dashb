@@ -5,7 +5,8 @@ import { Inter_400, Inter_500 } from '@/app/lib/config/font.config';
 import Button from '@/components/atoms/form/Button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { toast } from 'sonner';
-import termSessionActions, { type TermSession } from '@/app/lib/actions/term-session.actions';
+import { updateTermSession } from '@/app/lib/actions/term-session.actions';
+import type { TermSessionType } from '@/app/lib/types/academicYear.types';
 import { updateTermSessionInList } from '@/app/lib/entities/term-session.entity';
 import Input from '@/components/atoms/form/Input';
 import { mutate } from 'swr';
@@ -15,7 +16,7 @@ import { DatePicker } from '@/components/atoms/form/DatePicker';
 interface EditTermModalProps {
   open: boolean;
   close: () => void;
-  term: TermSession | null;
+  term: TermSessionType | null;
   onSuccess?: () => void;
 }
 
@@ -29,9 +30,9 @@ const EditTermModal: React.FC<EditTermModalProps> = ({ open, close, term, onSucc
   useEffect(() => {
     if (term) {
       setTermName(term.name);
-      setStartDate(term.start_date ? new Date(term.start_date) : undefined);
-      setEndDate(term.end_date ? new Date(term.end_date) : undefined);
-      setIsActive(term.is_currently_active || false);
+      setStartDate(term.startDate ? new Date(term.startDate) : undefined);
+      setEndDate(term.endDate ? new Date(term.endDate) : undefined);
+      setIsActive(term.isCurrentlyActive || false);
     }
   }, [term]);
 
@@ -56,25 +57,25 @@ const EditTermModal: React.FC<EditTermModalProps> = ({ open, close, term, onSucc
       return;
     }
 
-    if (!term) return;
+    if (!term?._id) return;
 
     setIsSubmitting(true);
     try {
-      const response = await termSessionActions.updateTermSession(term._id, {
+      const response = await updateTermSession(term._id, {
         name: termName.trim(),
-        start_date: startDate.toISOString(),
-        end_date: endDate.toISOString(),
-        is_currently_active: isActive,
+        startDate: startDate.toISOString(),
+        endDate: endDate.toISOString(),
+        isCurrentlyActive: isActive,
       });
 
-      if (response?.data?.status === 'success') {
-        toast.success(response.data.message || 'Term session updated successfully');
-        updateTermSessionInList(term._id, response.data.data);
+      if (response?.status === 'success') {
+        toast.success(response.message || 'Term session updated successfully');
+        if (response.data) updateTermSessionInList(term._id, response.data);
         mutate('/term-sessions');
         close();
         if (onSuccess) onSuccess();
       } else {
-        toast.error(response?.data?.message || 'Failed to update term session');
+        toast.error(response?.message || 'Failed to update term session');
       }
     } catch (error: unknown) {
       console.error('Error updating term session:', error);

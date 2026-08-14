@@ -1,10 +1,5 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-import {
-  getRequestWithHeaders,
-  postRequest,
-  deleteRequest,
-} from '../service/apiRequests';
+import { getRequest, postRequest, deleteRequest } from '../service/apiRequests';
+import type { ResponseType } from '@/app/lib/types/api-response.types';
 
 export type Domain = {
   _id: string;
@@ -19,36 +14,28 @@ export type Domain = {
   lastError?: string | null;
 };
 
-export async function listDomains() {
-  const res = await getRequestWithHeaders<any>('/domains/school');
-  // support several response shapes: { data: { items: [] } } or { data: { items } } or { data: items }
-  const items = res?.data?.data?.items ?? res?.data?.items ?? res?.data ?? [];
-  return items as Domain[];
+export async function listDomains(): Promise<ResponseType<Domain[]>> {
+  return getRequest<Domain[]>('/domains/school');
 }
 
-export async function createDomain(payload: { hostname: string; dnsTarget?: string }) {
-  const res = await postRequest<any>('/domains', payload);
-  return (res?.data?.data ?? res?.data) as Domain;
+export async function createDomain(payload: { hostname: string; dnsTarget?: string }): Promise<ResponseType<Domain>> {
+  return postRequest<Domain>('/domains', payload);
 }
 
-export async function verifyDomain(id: string) {
-  const res = await getRequestWithHeaders<any>(`/domains/${id}/verify`);
-  return (res?.data?.data ?? res?.data) as Domain;
+export async function verifyDomain(id: string): Promise<ResponseType<Domain>> {
+  return getRequest<Domain>(`/domains/${id}/verify`);
 }
 
-export async function getDomain(id: string) {
-  const res = await getRequestWithHeaders<any>(`/domains/${id}`);
-  return (res?.data?.data ?? res?.data) as Domain;
+export async function getDomain(id: string): Promise<ResponseType<Domain>> {
+  return getRequest<Domain>(`/domains/${id}`);
 }
 
-export async function removeDomain(id: string) {
-  const res = await deleteRequest('/domains', id);
-  return res?.data;
+export async function removeDomain(id: string): Promise<ResponseType<null>> {
+  return deleteRequest<null>('/domains', id);
 }
 
-export async function setTenantDomain(payload: { tenant_domain: string }) {
-  const res = await postRequest('/domains/tenant', payload);
-  return res?.data;
+export async function setTenantDomain(payload: { tenantDomain: string }): Promise<ResponseType<null>> {
+  return postRequest<null>('/domains/tenant', payload);
 }
 
 const domainsAction = {

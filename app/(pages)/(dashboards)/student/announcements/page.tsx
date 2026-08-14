@@ -14,7 +14,7 @@ import React, { useState } from 'react';
 
 import SelectBox from '@/components/atoms/dashboard/subjects/Select';
 import PaginationBox from '@/components/atoms/dashboard/subjects/Pagination';
-import { Announcements } from '@/app/types';
+import { Announcements } from '@/app/lib/types';
 
 const announcements: Announcements = [
   {

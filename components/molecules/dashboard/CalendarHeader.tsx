@@ -1,12 +1,20 @@
 'use client';
 
-import { ToolbarProps as RBBToolbarProps } from 'react-big-calendar';
+import { ToolbarProps as RBBToolbarProps, View, Event as RBCEvent } from 'react-big-calendar';
 import React from 'react';
 import { cn } from '@/app/lib/utils';
 import { poppins_400, poppins_600 } from '@/app/lib/config/font.config';
 import Button from '../../atoms/form/Button';
 
-export const CalendarHeader = (toolbarProps: RBBToolbarProps) => {
+// Generic over the calendar's event/resource types so this toolbar can be
+// used with any `<Calendar events={...} />` (e.g. `ActivityEvent[]`), not
+// just react-big-calendar's default `Event` shape.
+export const CalendarHeader = <
+  TEvent extends object = RBCEvent,
+  TResource extends object = object,
+>(
+  toolbarProps: RBBToolbarProps<TEvent, TResource>
+) => {
   const { label, onNavigate, onView, views, view } = toolbarProps;
 
   return (
@@ -51,8 +59,12 @@ export const CalendarHeader = (toolbarProps: RBBToolbarProps) => {
 
       {/* View Selectors */}
       <div className="flex gap-2">
-        {/* TODO:check later */}
-        {views.map((availableView: string) => (
+        {/* `views` can either be an array of view names, or an object
+            mapping view name -> enabled (boolean/custom component). */}
+        {(Array.isArray(views)
+          ? views
+          : (Object.keys(views) as View[]).filter((key) => views[key])
+        ).map((availableView: View) => (
           <button
             key={availableView}
             onClick={() => onView(availableView)}

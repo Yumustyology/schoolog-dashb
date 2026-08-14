@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import useSWR from 'swr';
 import { debounce } from 'lodash';
 import classGradeActions from '@/app/lib/actions/class-grade.actions';
@@ -187,26 +186,35 @@ export default function ClassesPage() {
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-              {classItems.map((c: ClassGrade) => (
-                <ClassCard
-                  key={c._id}
-                  classData={{
-                    id: c._id,
-                    className: c.name,
-                    level: c.level || '-',
-                    teacher: c.classTeacher 
-                      ? `${c.classTeacher.firstName} ${c.classTeacher.lastName}`.trim()
-                      : 'No assigned teacher',
-                    teacherImg: undefined,
-                    number_of_student: c.studentCount,
-                    number_of_male: c.studentMale,
-                    number_of_female: c.studentFemale,
-                  } as any}
-                  role="school"
-                  onArrange={() => setIsArrangeModalOpen(true)}
-                  totalClasses={classItems.length}
-                />
-              ))}
+              {classItems.map((c: ClassGrade) => {
+                const classData: ClassGrade = {
+                  _id: c._id,
+                  name: c.name,
+                  level: c.level || '-',
+                  classTeacher: c.classTeacher
+                    ? {
+                        _id: c.classTeacher._id,
+                        email: c.classTeacher.email,
+                        firstName: c.classTeacher.firstName,
+                        lastName: c.classTeacher.lastName,
+                        image: c.classTeacher.image ?? undefined,
+                      }
+                    : null,
+                  studentCount: c.studentCount,
+                  studentMaleCount: c.studentMaleCount,
+                  studentFemaleCount: c.studentFemaleCount,
+                };
+
+                return (
+                  <ClassCard
+                    key={c._id}
+                    classData={classData}
+                    role="school"
+                    onArrange={() => setIsArrangeModalOpen(true)}
+                    totalClasses={classItems.length}
+                  />
+                );
+              })}
             </div>
 
             <div className="mt-6">

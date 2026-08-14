@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
 import CurriculumEditor from './CurriculumEditor';
-import ImageUploader, { renderUIProps } from '@/components/atoms/form/ImageUploader';
+import FileUploader, { renderUIProps } from '@/components/atoms/form/FileUploader';
 import { createSubjectEntity } from '@/app/lib/entities/subject.entity';
 import ExportIcon from '@/components/atoms/icons/dashboard/ExportIcon';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import { parseCurriculumFile } from '@/app/lib/utils/curriculumParser';
+import type { TermSessionType } from '@/app/lib/types/academicYear.types';
+import type { CurriculumEntry } from '@/app/lib/types/curriculum.types';
 
-export default function UploadCurriculum({ onParsed }: { onParsed?: (parsed: { term: string; topics: string[] }[]) => void }) {
+export default function UploadCurriculum({
+  onParsed,
+  classId,
+  selectedTerm,
+}: {
+  onParsed?: (parsed: { term: string; topics: string[] }[]) => void;
+  classId: string;
+  selectedTerm: TermSessionType | null;
+}) {
   const [file, setFile] = useState<File | null>(null);
   const [parsing, setParsing] = useState(false);
   const [parseError, setParseError] = useState<string | null>(null);
@@ -19,7 +29,7 @@ export default function UploadCurriculum({ onParsed }: { onParsed?: (parsed: { t
     // If consumer provided onParsed, the parent will handle state updates; otherwise fallback to createSubjectEntity
     if (!f) {
       // still clear curriculumSource when nothing selected
-      createSubjectEntity.set((prev) => ({ ...prev, curriculumSource: undefined }));
+      createSubjectEntity.set((prev) => ({ ...prev, curriculumSource: null }));
       return;
     }
 
@@ -31,7 +41,16 @@ export default function UploadCurriculum({ onParsed }: { onParsed?: (parsed: { t
         if (onParsed) {
           onParsed(mapped);
         } else {
-          createSubjectEntity.set((prev) => ({ ...prev, curriculum: mapped, curriculumSource: 'upload' }));
+          const termId = selectedTerm?._id || selectedTerm?.id || '';
+          const curriculumEntries: CurriculumEntry[] = parsed.map((p, index) => ({
+            termId: termId || `uploaded-term-${index + 1}`,
+            classId,
+            topics: p.topics.map((topic, topicIndex) => ({
+              id: `topic-${index + 1}-${topicIndex + 1}`,
+              title: topic,
+            })),
+          }));
+          createSubjectEntity.set((prev) => ({ ...prev, curriculum: curriculumEntries, curriculumSource: 'upload' }));
         }
       })
       .catch((err) => {
@@ -45,10 +64,10 @@ export default function UploadCurriculum({ onParsed }: { onParsed?: (parsed: { t
     <div>
 
         <div className="mx-auto mt-5">
-          <ImageUploader
-            onImageSelected={handleFile}
+          <FileUploader
+            onFileSelected={handleFile}
             bordered
-            renderUI={({ isDragOver, file, fileName, fileSize, removeImage, getInputProps }: renderUIProps) => (
+            renderUI={({ isDragOver, file, fileName, fileSize, removeFile, getInputProps }: renderUIProps) => (
               <div className={cn('flex  flex-col items-center justify-center w-full p-6')}> 
                 <input {...(getInputProps() as React.InputHTMLAttributes<HTMLInputElement>)} />
                 <div className="flex items-center gap-4">
@@ -73,7 +92,7 @@ export default function UploadCurriculum({ onParsed }: { onParsed?: (parsed: { t
                 </div>
                 {file ? (
                   <div className="mt-3">
-                    <button type="button" onClick={removeImage} className="text-red-500">Remove</button>
+                    <button type="button" onClick={removeFile} className="text-red-500">Remove</button>
                     {parseError ? <div className="text-xs text-red-500 mt-2">{parseError}</div> : null}
                   </div>
                 ) : null}
@@ -94,7 +113,7 @@ export default function UploadCurriculum({ onParsed }: { onParsed?: (parsed: { t
         </div>
 
       {/* After upload, curriculum editor will be available. For now show the editor for preview */}
-      <CurriculumEditor />
+      <CurriculumEditor classId={classId} selectedTerm={selectedTerm} />
     </div>
   );
 }

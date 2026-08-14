@@ -13,12 +13,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { DatePicker } from '@/components/atoms/form/DatePicker';
 import { IoAdd } from 'react-icons/io5';
 import SubtotalDetail, { SubtotalDetailHandles } from './SubtotalDetail'; // ⬅️ import the component here
-
-interface Subtotal {
-  id: number;
-  title: string;
-  price: string;
-}
+import type { Subtotal } from '@/app/lib/types/finance.types';
 
 const FeeCategoryModal: React.FC = () => {
   const feeCategoryOpen = useEntity(feeCategoryOpenState);

@@ -83,13 +83,13 @@ export default function SchoolCard({ school, onClick, small = false }: Props) {
         small && "p-3 py-3"
       )}
     >
-      {school.school_image && school.school_image !== "" ? (
+      {school.schoolImage && school.schoolImage !== "" ? (
         <div
           className="flex-shrink-0 flex items-center"
           style={{ width: size, height: size }}
         >
           <Image
-            src={school.school_image}
+            src={school.schoolImage}
             alt={school.name}
             width={size}
             height={size}

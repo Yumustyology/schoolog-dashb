@@ -36,7 +36,7 @@ export function AppSidebar({
   const cleanedPath = pathname.replace(/\/$/, '');
 
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
-  const submenuRefs = useRef<Record<string, HTMLDivElement | null>>({});
+  const submenuRefs = useRef<Record<string, HTMLUListElement | null>>({});
 
   // get persisted school entity synchronously to avoid flash
   const currentSchool = schoolState.use();
@@ -54,11 +54,11 @@ export function AppSidebar({
     try {
       // prefer tenant cache in localStorage for fastest startup
       if (typeof window !== 'undefined') {
-        const raw = window.localStorage.getItem('schoolog:tenant_school');
+        const raw = window.localStorage.getItem('schoolog:tenantSchool');
         if (raw) {
           try {
             const parsed = JSON.parse(raw) as Record<string, unknown> | null;
-            const img = (parsed?.['school_image']) as string | undefined | null;
+            const img = (parsed?.['schoolImage']) as string | undefined | null;
             if (img) return typeof img === 'string' && img.startsWith('http') ? img : `${window.location.origin}${img}`;
           } catch {
             // ignore
@@ -66,7 +66,7 @@ export function AppSidebar({
         }
       }
 
-      const fallbackKeys = ['school_image'];
+      const fallbackKeys = ['schoolImage'];
       for (const k of fallbackKeys) {
         const v = (s as Record<string, unknown> | undefined)?.[k];
         if (typeof v === 'string' && v.length > 0) {
@@ -221,7 +221,9 @@ export function AppSidebar({
 
                     {item.subItems && openMenus[item.title] && (
                       <SidebarMenuSub
-                        ref={(el) => (submenuRefs.current[item.title] = el)}
+                        ref={(el) => {
+                          submenuRefs.current[item.title] = el;
+                        }}
                         className="ml-6 mt-2 "
                       >
                         {item.subItems.map((subItem) => {

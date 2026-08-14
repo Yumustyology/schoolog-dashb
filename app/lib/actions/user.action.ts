@@ -1,12 +1,10 @@
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 import { getRequest, postRequest } from '../service/apiRequests';
+import type { ResponseType } from '@/app/lib/types/api-response.types';
 
-export const fetchProfileDetails = async (id?: string): Promise<any> => {
-  const response = await getRequest('profile', id);
-  return response;
+export const fetchProfileDetails = async (id?: string): Promise<ResponseType<unknown>> => {
+  return getRequest<unknown>('profile', id);
 };
 
-export const updateProfileAvatar = async (payload: unknown): Promise<any> => {
-  const response = await postRequest('change-avatar', payload);
-  return response;
+export const updateProfileAvatar = async (payload: unknown): Promise<ResponseType<unknown>> => {
+  return postRequest<unknown>('change-avatar', payload);
 };

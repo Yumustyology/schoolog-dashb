@@ -1,4 +1,4 @@
-import { SuggestionType } from '@/app/(pages)/(dashboards)/school/suggestions-box/page';
+import { SuggestionType } from '@/app/lib/types/suggestion.types';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import React from 'react';

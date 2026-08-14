@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/select';
 import { cn } from '@/app/lib/utils';
 import useSWR from 'swr';
-import termSessionActions from '@/app/lib/actions/term-session.actions';
+import { getAllTermSessions } from '@/app/lib/actions/term-session.actions';
 
 interface TermSessionDropdownProps {
   value?: string;
@@ -27,10 +27,10 @@ export const TermSessionDropdown: React.FC<TermSessionDropdownProps> = ({
   disabled = false,
 }) => {
   const { data: termSessionsResp, isLoading } = useSWR('/term-sessions', () =>
-    termSessionActions.getAllTermSessions()
+    getAllTermSessions()
   );
 
-  const terms = termSessionsResp?.data?.data || [];
+  const terms = termSessionsResp?.data || [];
 
   return (
     <Select value={value} onValueChange={onValueChange} disabled={disabled || isLoading}>
@@ -44,7 +44,7 @@ export const TermSessionDropdown: React.FC<TermSessionDropdownProps> = ({
           </div>
         ) : (
           terms.map((term) => (
-            <SelectItem key={term._id} value={term._id}>
+            <SelectItem key={term._id || term.id} value={term._id || term.id || ''}>
               {term.name}
             </SelectItem>
           ))

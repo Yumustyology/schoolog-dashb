@@ -44,7 +44,7 @@ const DropdownMultiSelect: React.FC<DropdownProps> = ({
           height: style?.height || '46px',
           minHeight: style?.minHeight || '44px',
           fontSize: style?.fontSize || '16px',
-          fontFamily: poppins_400.style.fontFamily || style.fontFamily || base.fontFamily,
+          fontFamily: poppins_400.style.fontFamily || style?.fontFamily || base.fontFamily,
           borderColor: state.isFocused ? '#1d4241' : 'rgb(229, 229, 229);',
           boxShadow: state.isFocused ? '#1d4241' : 'none',
           ...style,

@@ -21,14 +21,7 @@ import {
   NoParentAddedIcon,
   NoSuggestionIcon,
 } from '@/components/atoms/icons/Icons';
-
-export type SuggestionType = {
-  id: number;
-  title: string;
-  content: string;
-  category?: 'Parents' | 'Teachers' | 'Students';
-  date?: string;
-};
+import type { SuggestionType } from '@/app/lib/types/suggestion.types';
 
 const suggestions: SuggestionType[] = [
   {

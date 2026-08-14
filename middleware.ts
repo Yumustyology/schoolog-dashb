@@ -1,18 +1,21 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getTenantFromHost } from './app/lib/tenant';
+import { appConfig } from './app/lib/config/app.config';
 
 /**
  * Middleware rules:
- * - global domain: localhost (no subdomain) => only allow '/', '/signup', '/school/*'
- * - subdomain domain: <school>.localhost => allow everything and set tenant cookie
- * - redirect '/school/:slug' -> 'https://:slug.localhost:3000' (preserve pathname)
+ * - global/default host (e.g. localhost, or NEXT_PUBLIC_APP_DOMAIN in prod, no subdomain)
+ *   => only allow '/', '/signup', '/school/*'
+ * - subdomain of the app domain (<school>.localhost, <school>.<appDomain>)
+ *   => allow everything and set tenant cookie
+ * - custom tenant domain (e.g. myschool.com) => allow everything, same as a subdomain
+ * - redirect '/school/:slug' -> '<slug>.<appDomain>' (preserve pathname/port)
+ *
+ * Host detection is delegated entirely to getTenantFromHost (same logic used
+ * server- and client-side for tenant resolution) so this stays correct in
+ * every environment instead of only matching literal 'localhost' strings.
  */
-
-function isGlobalHost(hostname: string) {
-  // treat plain 'localhost' or 'localhost:3000' as global
-  return hostname === 'localhost' || hostname === 'localhost:3000' || hostname === '';
-}
 
 export function middleware(req: NextRequest) {
   const host = req.headers.get('host') || '';
@@ -41,19 +44,19 @@ export function middleware(req: NextRequest) {
   // we should not rewrite the hostname because that can swap subdomains unexpectedly.
   if (segments[0] === 'school' && segments[1]) {
     const slug = segments[1];
-    const currentHost = (req.headers.get('host') || '').split(':')[0];
-    // If current host is global localhost, redirect to the subdomain
-    if (currentHost === 'localhost' || currentHost === '127.0.0.1' || currentHost === 'localhost:3000') {
+    // Only redirect to the tenant subdomain when the request is on the app's
+    // default/global host. If we're already on a subdomain or custom domain,
+    // don't rewrite the host — let the request proceed as-is.
+    if (tenant.isDefault) {
       const target = new URL(url.toString());
-      target.hostname = `${slug}.localhost`;
+      target.hostname = `${slug}.${appConfig.appDomain}`;
       return NextResponse.redirect(target);
     }
-    // If we're already on a subdomain, don't change host — let the request proceed
     return NextResponse.next();
   }
 
-  // global host restrictions
-  if (isGlobalHost(hostname)) {
+  // global/default host restrictions (the app's marketing root domain — no tenant)
+  if (tenant.isDefault) {
     // allowed paths on global host (supports exact paths or prefix with '/*')
   const allowedPaths = ['/', '/signup', '/select-school', '/account-login'];
 

@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/app/lib/utils';
 import { poppins_400 } from '@/app/lib/config/font.config';
 import { Inter_600, Inter_400 } from '@/app/lib/config/font.config';
-import ImageUploader from '@/components/atoms/form/ImageUploader';
+import FileUploader from '@/components/atoms/form/FileUploader';
 import CustomImageUploaderSmall from './CustomImageUploaderSmall';
 
 type ImageField = {
@@ -58,9 +58,9 @@ export function BrandAndImageTemplateEdit({
             >
               {label}
             </label>
-            <ImageUploader
+            <FileUploader
               className="flex items-center !bg-[#F8F8F8] lg:h-[70px] overflow-hidden"
-              onImageSelected={(file) => handleImageChange(fieldName, file!)}
+              onFileSelected={(file) => handleImageChange(fieldName, file!)}
               renderUI={(props) => (
                 <CustomImageUploaderSmall
                   className="flex flex-row items-center gap-4"

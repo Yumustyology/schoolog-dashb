@@ -28,3 +28,83 @@ export async function parseCurriculumFile(file: File | Blob): Promise<ParsedCurr
   const result: ParsedCurriculum = Array.from(aggregated.entries()).map(([term, topics]) => ({ term, topics }));
   return result;
 }
+
+
+export function extractClassId(classIdField: any, fallbackClassId: string | null): string {
+  if (typeof classIdField === 'string') return classIdField;
+  if (classIdField?._id) return classIdField._id;
+  return fallbackClassId || '';
+}
+
+export function normalizeTopic(topic: any, itemId: string, index: number) {
+  return {
+    id: topic._id || topic.id || `${itemId}-${index}`,
+    title: topic.topic || topic.title || topic.name || '',
+    description: topic.description || '',
+    week: typeof topic.week === 'number' ? topic.week : undefined,
+  };
+}
+
+export function normalizeCurriculumData(
+  rawData: any[],
+  classGradeId: string | null
+): any[] {
+  if (!Array.isArray(rawData)) return [];
+
+  return rawData.map((item: any) => ({
+    termId: item.termSession?._id || '',
+    termSession: item.termSession || null,
+    classId: extractClassId(item.classId, classGradeId),
+    topics: (item.topics || []).map((t: any, idx: number) =>
+      normalizeTopic(t, item._id || 'term', idx)
+    ),
+  }));
+}
+
+function isValidTopic(topic: any): boolean {
+  if (!topic) return false;
+  if (String(topic.id).startsWith('draft-')) return false;
+  if (!topic.title && !topic.topic) return false;
+  return true;
+}
+
+function transformTopic(topic: any) {
+  const transformed: Record<string, any> = {
+    topic: topic.title || topic.topic || '',
+    description: topic.description || '',
+  };
+  
+  if (typeof topic.week === 'number') {
+    transformed.week = topic.week;
+  }
+  
+  return transformed;
+}
+
+export function transformCurriculumForSave(
+  curriculum: any[],
+  classGradeId: string
+): any[] {
+  const classTopicsMap = new Map<
+    string,
+    { termSession: string; classId: string; topics: any[] }
+  >();
+
+  curriculum
+    .filter((entry) => entry.classId === classGradeId)
+    .forEach((entry) => {
+      const validTopics = (entry.topics || [])
+        .filter(isValidTopic)
+        .map(transformTopic);
+
+      if (validTopics.length > 0) {
+        classTopicsMap.set(entry.termId, {
+          termSession: entry.termId,
+          classId: entry.classId,
+          topics: validTopics,
+        });
+      }
+    });
+
+  return Array.from(classTopicsMap.values());
+}

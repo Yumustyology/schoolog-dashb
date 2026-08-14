@@ -1,7 +1,7 @@
 import { mathTextbook } from '@/app/assets';
 import { poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
-import { AvailbeBooks } from '@/types';
+import { AvailbeBooks } from '@/app/lib/types';
 import Image from 'next/image';
 import React from 'react';
 

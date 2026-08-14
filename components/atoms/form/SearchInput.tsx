@@ -1,14 +1,16 @@
 import { poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import React from 'react';
-type SearchProps = {
+import { SearchOutlineIcon } from '@/components/atoms/icons/Icons';
+
+type SearchProps = React.InputHTMLAttributes<HTMLInputElement> & {
   placeholder: string;
   className?: string;
   value?: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
-function SearchInput({ placeholder, className, value, onChange }: SearchProps) {
+function SearchInput({ placeholder, className, value, onChange, ...rest }: SearchProps) {
   return (
     <div
       className={cn(
@@ -16,28 +18,7 @@ function SearchInput({ placeholder, className, value, onChange }: SearchProps) {
         className
       )}
     >
-      <svg
-        width="20"
-        height="20"
-        viewBox="0 0 24 24"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
-          stroke="#828282"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <path
-          d="M22 22L20 20"
-          stroke="#828282"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-      </svg>
+      <SearchOutlineIcon />
 
       <input
         type="search"
@@ -48,6 +29,7 @@ function SearchInput({ placeholder, className, value, onChange }: SearchProps) {
           'placeholder-poppins accent-primary placeholder:text-sm placeholder:text-gray3 bg-transparent outline-none text-gray1 text-sm w-full',
           poppins_400.className
         )}
+        {...rest}
       />
     </div>
   );

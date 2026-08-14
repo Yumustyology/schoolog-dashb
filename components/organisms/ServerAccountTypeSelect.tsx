@@ -21,12 +21,11 @@ export default async function ServerAccountTypeSelect() {
     const xTenant = tenant.isSubdomain && !tenant.isCustomDomain ? tenant.id : host;
     try {
       const res = await fetchSchoolByTenant(xTenant);
-      console.log(res)
-      // keep the whole response available to pass to the client component
-      schoolResponse = res;
-      // server log for debugging
+      // keep the response data available
+      schoolResponse = res?.data;
+      // server log for debugging - only stringify the data part (response has circular refs)
       // eslint-disable-next-line no-console
-      console.debug('[server] SchoolService.findByTenant ->', JSON.stringify(res, null, 2));
+      console.debug('[server] SchoolService.findByTenant ->', JSON.stringify(res?.data, null, 2));
 
       // support a few shapes returned by the API when detecting a 404
       const isStatus404 = (obj: unknown) => {

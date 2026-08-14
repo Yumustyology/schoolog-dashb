@@ -2,7 +2,7 @@
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import { truncateFileText } from '@/app/lib/utils/truncate';
-import { renderUIProps } from '@/components/atoms/form/ImageUploader';
+import { renderUIProps } from '@/components/atoms/form/FileUploader';
 import ExportIcon from '@/components/atoms/icons/dashboard/ExportIcon';
 import EyeClose from '@/components/atoms/icons/EyeClose';
 import { DeleteIcon } from '@/components/atoms/icons/Icons';
@@ -13,15 +13,15 @@ const CustomImageUploaderSmall = ({
   isDragOver,
   selectedFile,
   file,
-  removeImage,
+  removeFile,
   getInputProps,
   fileSize,
   fileName,
   className,
 }: renderUIProps & { selectedFile?: File | null; className?: string }) => {
   useEffect(() => {
-    if (!selectedFile) removeImage();
-  }, [selectedFile, removeImage]);
+    if (!selectedFile) removeFile();
+  }, [selectedFile, removeFile]);
   return (
     <>
       <div
@@ -101,14 +101,14 @@ const CustomImageUploaderSmall = ({
         )}
         <div className="flex-grow justify-end gap-3 flex items-center bg-red-500-- ">
           <button
-            onClick={removeImage}
+            onClick={removeFile}
             type="button"
             className="h-8 w-8 items-center justify-center flex bg-[#ECECEC] rounded-full"
           >
             <EyeClose />
           </button>
           <button
-            onClick={removeImage}
+            onClick={removeFile}
             type="button"
             className="h-8 w-8 items-center justify-center flex bg-[#FFEAEA] rounded-full"
           >

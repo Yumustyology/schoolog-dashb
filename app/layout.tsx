@@ -8,8 +8,8 @@ import TenantHeadManager from '@/components/organisms/TenantHeadManager';
 import { getTenantFromHost } from './lib/tenant';
 import { headers } from 'next/headers';
 
-// force dynamic metadata so headers() can be awaited safely at request time
-export const dynamic = 'force-dynamic';
+// dynamic metadata with short cache to speed up dev refresh
+export const revalidate = 300;
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -50,7 +50,10 @@ export async function generateMetadata(): Promise<Metadata> {
   const maxAttempts = 3;
   for (let attempt = 1; attempt <= maxAttempts; attempt++) {
     try {
-      const res = await fetch(endpoint, { headers: { 'X-Tenant': tenantKey }, cache: 'no-store' });
+      const res = await fetch(endpoint, { 
+        headers: { 'X-Tenant': tenantKey }, 
+        next: { revalidate: 300 } // cache for 5 minutes in dev
+      });
       if (!res.ok) {
         const body = await res.text().catch(() => '');
         console.warn('[generateMetadata] tenant endpoint returned non-ok', res.status, body);
@@ -60,7 +63,7 @@ export async function generateMetadata(): Promise<Metadata> {
       const data = await res.json().catch(() => null);
       const school = data?.school ?? data?.data ?? data ?? null;
       if (school && school.name) {
-        const icon = school.school_image ?? '/schoolog-logo.png';
+        const icon = school.schoolImage ?? '/schoolog-logo.png';
         const iconUrl = typeof icon === 'string' && icon.startsWith('http') ? icon : (url ? `${url.origin}${icon}` : icon);
         return {
           title: String(school.name),
@@ -71,9 +74,9 @@ export async function generateMetadata(): Promise<Metadata> {
 
       if (tenant.isSubdomain) {
         return {
-          title: origin,
+          title: 'Schoolog+',
           description: 'School management just got easier',
-          icons: { icon: school?.school_image },
+          icons: { icon: school?.schoolImage || '/schoolog-logo.png' },
         };
       }
 

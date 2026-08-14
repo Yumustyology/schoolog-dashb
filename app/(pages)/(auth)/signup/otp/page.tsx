@@ -26,7 +26,7 @@ function Page() {
 
   const handleVerify = async (otp: string) => {
     const resp = await verifyEmail({ email, otp, type: 'signup' });
-    if (resp?.data?.status === 'success') {
+    if (resp?.status === 'success') {
       router.push('/signup/set-password');
     }
   };

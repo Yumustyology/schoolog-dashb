@@ -3,10 +3,11 @@
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import { Card, Typography } from '@material-tailwind/react';
-import { TeachersImage } from '@/components/organisms/StudentsList';
-import { OptionIcon } from '@/components/atoms/icons/Icons';
+import TextAvatar from '@/components/atoms/TextAvatar';
+import { OptionIcon, VIsibilityIcon } from '@/components/atoms/icons/Icons';
 import { useState } from 'react';
-import DuePaymentOptionDropdown from './DuePaymentOptionDropdown';
+import MenuLists from '@/components/atoms/dashboard/students/MenuLists';
+import Message from '@/components/atoms/icons/SideBar/Message';
 
 type TableRow = {
   paymentID: string;
@@ -81,13 +82,23 @@ export function DuePaymentTable(): JSX.Element {
 
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const handleToggle = (index: number) => {
-    if (openIndex === index) {
-      setOpenIndex(null);
-    } else {
-      setOpenIndex(index);
-    }
-  };
+  const menuItems = [
+    {
+      label: 'View Profile',
+      onClick: () => console.log('View Profile'),
+      icon: <VIsibilityIcon />,
+    },
+    {
+      label: 'Message parent',
+      onClick: () => console.log('Message parent'),
+      icon: <Message />,
+    },
+    {
+      label: 'Message student',
+      onClick: () => console.log('Message student'),
+      icon: <Message />,
+    },
+  ];
 
   return (
     <Card className="shadow-none h-full w-full overflow-y-visible --overflow-x-auto">
@@ -118,6 +129,8 @@ export function DuePaymentTable(): JSX.Element {
             ) => {
               const isLast = index === TABLE_ROWS.length - 1;
               const classes = isLast ? 'p-4' : 'p-4 border-b border-gray4';
+              const [studentFirstName, ...studentLastNameParts] = (studentName || '').split(' ');
+              const studentLastName = studentLastNameParts.join(' ');
 
               return (
                 <tr key={paymentID}>
@@ -129,7 +142,13 @@ export function DuePaymentTable(): JSX.Element {
                         poppins_400.className
                       )}
                     >
-                      <TeachersImage /> <span>{studentName}</span>
+                      <TextAvatar
+                        firstName={studentFirstName || ''}
+                        lastName={studentLastName || ''}
+                        size={28}
+                        colorClass="bg-primary"
+                      />{' '}
+                      <span>{studentName}</span>
                     </Typography>
                   </td>
                   <td className={classes}>
@@ -198,16 +217,12 @@ export function DuePaymentTable(): JSX.Element {
                     </Typography>
                   </td>
                   <td className={classes}>
-                    <div>
-                      <div onClick={() => handleToggle(index)}>
-                        <OptionIcon />
-                      </div>
-
-                      <DuePaymentOptionDropdown
-                        isOpen={openIndex === index}
-                        setIsOpen={() => handleToggle(index)}
-                      />
-                    </div>
+                    <MenuLists
+                      label="Options"
+                      items={menuItems}
+                      placement="bottom-start"
+                      maxHeight="150px"
+                    />
                   </td>
                 </tr>
               );

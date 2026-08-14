@@ -35,7 +35,7 @@ export const setSchoolPasswordSchema = Joi.object({
 });
 
 
- export const validateWithJoi = (values: any, loginMethod:"email"|"id", audience_type: string) => {
+ export const validateWithJoi = (values: any, loginMethod:"email"|"id", audienceType: string) => {
     const schema = Joi.object({
       identifier:
         loginMethod === 'email'
@@ -44,7 +44,7 @@ export const setSchoolPasswordSchema = Joi.object({
               'string.email': 'Invalid email address',
             })
           : Joi.string().required().messages({
-              'string.empty': `${audience_type} ID is required`,
+              'string.empty': `${audienceType} ID is required`,
             }),
       password: Joi.string().required().messages({
         'string.empty': 'Password is required',

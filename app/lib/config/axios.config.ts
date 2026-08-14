@@ -36,13 +36,8 @@ export const redirectUser = async (response: AxiosResponse) => {
         } catch {
           /* ignore */
         }
-        if (pathname.includes('/dashboard/') || pathname.includes('/lobby')) {
-          window.location.href = `${origin}/`;
-        }
-        if (pathname.includes('/admin/')) {
-          window.location.href = `${origin}/admin/`;
-        }
-      }, 2000);
+        window.location.replace(`${origin}/`);
+      }, 300);
     } else {
       // server-side: nothing to do, just log
       // eslint-disable-next-line no-console
@@ -71,7 +66,8 @@ axiosConfig.interceptors.request.use(
     // Attach tenant header for multi-tenant requests (client-side)
     try {
       if (config.headers) {
-        const existing = config.headers['X-Tenant'] || config.headers['x-tenant'];
+        const existing =
+          config.headers['X-Tenant'] || config.headers['x-tenant'];
         if (!existing && typeof window !== 'undefined') {
           const hostname = window.location.hostname || '';
           const tenant = getTenantFromHost(hostname);
@@ -107,7 +103,7 @@ const refreshAuthToken = async (): Promise<string | null> => {
       token: refreshToken,
     });
 
-    const { accessToken, refreshToken: newRefreshToken } = response.data;
+    const { accessToken, refreshToken: newRefreshToken } = response.data.data;
 
     try {
       await lf.setItem('accessToken', accessToken);
@@ -142,9 +138,20 @@ axiosConfig.interceptors.response.use(
     };
 
     if (error?.response?.status === 401 && !originalRequest._retry) {
-      originalRequest._retry = true;
+      // Check if this is a public API call (e.g., login, email-signin)
+      // If public, don't treat 401 as session expiry — let caller handle it
+      const isPublic =
+        originalRequest.headers?.['X-api-public'] === true ||
+        originalRequest.headers?.['X-api-public'] === 'true';
 
-  const newToken = await refreshAuthTokenWrapper();
+      if (isPublic) {
+        // Public API — don't redirect, let caller handle the error
+        return Promise.reject(error);
+      }
+
+      // Private API — attempt token refresh
+      originalRequest._retry = true;
+      const newToken = await refreshAuthTokenWrapper();
 
       if (newToken) {
         if (originalRequest.headers) {
@@ -152,6 +159,9 @@ axiosConfig.interceptors.response.use(
         }
         return axiosConfig(originalRequest);
       }
+
+      // Refresh failed — redirect to login
+      await redirectUser({ status: 401 } as AxiosResponse);
     }
     return Promise.reject(error);
   }

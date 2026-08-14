@@ -3,7 +3,7 @@ import { DatePicker } from '@/components/atoms/form/DatePicker';
 import PaginationBox from '@/components/atoms/dashboard/subjects/Pagination';
 import SelectBox from '@/components/atoms/dashboard/subjects/Select';
 import AttendanceMetrics from '@/components/molecules/dashboard/analytics/AttendanceMetrics';
-import AttendanceList from '@/components/molecules/dashboard/attendance/AttendanceList';
+import TeachersAttendanceList from '@/components/molecules/dashboard/attendance/TeachersAttendanceList';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import React from 'react';
@@ -44,7 +44,7 @@ function page() {
           <DateRangePicker />
         </div>
         <div className="my-8">
-          <AttendanceList />
+          <TeachersAttendanceList />
         </div>
         <footer className="flex justify-between items-center">
           <div className="flex gap-4 items-center">

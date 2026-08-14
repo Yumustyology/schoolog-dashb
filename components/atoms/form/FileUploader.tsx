@@ -1,5 +1,5 @@
 import { poppins_400 } from '@/app/lib/config/font.config';
-import { cn } from '@/app/lib/utils';
+import { cn, formatFileSize } from '@/app/lib/utils';
 import showToast from '@/app/lib/utils/toast';
 import React, { useState, useCallback, ReactNode } from 'react';
 import Image from 'next/image';
@@ -11,13 +11,13 @@ export type renderUIProps = {
   file: File | null;
   fileSize: string | null;
   fileName: string | null;
-  removeImage: (event?: React.MouseEvent) => void;
+  removeFile: (event?: React.MouseEvent) => void;
   getInputProps: () => object;
   previewUrl?: string | null;
 };
 
-interface ImageUploaderProps {
-  onImageSelected: (file: File | null) => void;
+interface FileUploaderProps {
+  onFileSelected: (file: File | null) => void;
   className?: string;
   renderUI?: (props: renderUIProps) => ReactNode;
   placeholder?: React.ReactNode;
@@ -25,11 +25,13 @@ interface ImageUploaderProps {
   accept?: Record<string, string[]>;
   overwriteAccepted?: boolean;
   bordered?: boolean;
-  initialImage?: string | File | null; // base64 string, URL, or File
+  initialFile?: string | File | null; // base64 string, URL, or File
+  maxSizeInMB?: number;
+  multiple?: boolean;
 }
 
-const ImageUploader: React.FC<ImageUploaderProps> = ({
-  onImageSelected,
+const FileUploader: React.FC<FileUploaderProps> = ({
+  onFileSelected,
   renderUI,
   placeholder,
   className,
@@ -37,39 +39,40 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
   bordered = true,
   overwriteAccepted = false,
   preview = false,
-  initialImage,
+  initialFile,
+  maxSizeInMB = 50,
+  multiple = false,
 }) => {
   const [file, setFile] = useState<File | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
 
-  // Initialize preview from initialImage prop
+  // Initialize preview from initialFile prop
   React.useEffect(() => {
-    if (initialImage) {
-      if (typeof initialImage === 'string') {
+    if (initialFile) {
+      if (typeof initialFile === 'string') {
         // It's a base64 string or URL
-        setPreviewUrl(initialImage);
+        setPreviewUrl(initialFile);
         setFile(null); // No file object for strings
-      } else if (initialImage instanceof File) {
+      } else if (initialFile instanceof File) {
         // It's a File object
-        setFile(initialImage);
-        if (preview && initialImage.type.startsWith('image/')) {
-          const url = URL.createObjectURL(initialImage);
+        setFile(initialFile);
+        if (preview && initialFile.type.startsWith('image/')) {
+          const url = URL.createObjectURL(initialFile);
           setPreviewUrl(url);
         }
       }
     } else {
-      // Clear if initialImage becomes null/undefined
+      // Clear if initialFile becomes null/undefined
       setFile(null);
       setPreviewUrl(null);
     }
-  }, [initialImage, preview]);
+  }, [initialFile, preview]);
 
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
       const selectedFile = acceptedFiles[0];
 
-      const maxSizeInMB = 5;
       if (selectedFile.size > maxSizeInMB * 1024 * 1024) {
         showToast(
           `File is too large. Maximum size is ${maxSizeInMB}MB.`,
@@ -80,19 +83,19 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
           }
         );
         setFile(null);
-        onImageSelected(null);
+        onFileSelected(null);
         return;
       }
 
       setFile(selectedFile);
-      onImageSelected(selectedFile);
+      onFileSelected(selectedFile);
       setIsDragOver(true);
       if (preview && selectedFile && selectedFile.type.startsWith('image/')) {
         const url = URL.createObjectURL(selectedFile);
         setPreviewUrl(url);
       }
     },
-    [onImageSelected, preview]
+    [onFileSelected, preview, maxSizeInMB]
   );
 
   // revoke preview URL when component unmounts or when previewUrl changes
@@ -104,33 +107,21 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
     };
   }, [previewUrl]);
 
-  // Default accepted MIME types
-  const defaultAccept = {
-    'image/jpeg': [],
-    'image/png': [],
-    'image/svg+xml': [],
-    'image/jpg': [],
-    'image/gif': [],
-    'image/webp': [],
-  };
-
-  // Determine the final accept object
-  const finalAccept = overwriteAccepted
-    ? accept || defaultAccept
-    : { ...defaultAccept, ...accept };
+  // Default accepted MIME types (undefined = all files)
+  const defaultAccept = overwriteAccepted ? accept : accept ? { ...accept } : undefined;
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
-    accept: finalAccept,
-    multiple: false,
+    accept: defaultAccept,
+    multiple: multiple,
     onDragEnter: () => setIsDragOver(true),
     onDragLeave: () => setIsDragOver(false),
   });
 
-  const removeImage = (event?: React.MouseEvent) => {
+  const removeFile = (event?: React.MouseEvent) => {
     event?.stopPropagation?.();
     setFile(null);
-    onImageSelected(null);
+    onFileSelected(null);
     setIsDragOver(false);
     if (previewUrl) {
       // Only revoke blob URLs, not data: or http(s):
@@ -141,12 +132,6 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
     }
   };
 
-  const formatFileSize = (size: number): string => {
-    if (size < 1024) return `${size} bytes`;
-    else if (size < 1024 * 1024) return `${(size / 1024).toFixed(2)} KB`;
-    return `${(size / (1024 * 1024)).toFixed(2)} MB`;
-  };
-
   const fileSize = file ? formatFileSize(file.size) : null;
   const fileName = file ? file.name : null;
   // Default UI when renderUI prop is not provided
@@ -155,7 +140,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
     file,
     fileSize,
     fileName,
-    removeImage,
+    removeFile,
     getInputProps,
     previewUrl,
   }: renderUIProps) => {
@@ -184,8 +169,8 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
                   )}
                   <button
                     type="button"
-                    onClick={removeImage}
-                    aria-label="Remove image"
+                    onClick={removeFile}
+                    aria-label="Remove file"
                     className="absolute top-2 -right-2 bg-white rounded-full shadow p-1 text-gray-600 hover:bg-gray-100"
                   >
                     <X className="w-4 h-4" />
@@ -197,8 +182,8 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
                   {fileSize ? <div className="text-xs text-gray-500">{fileSize}</div> : null}
                   <button
                     type="button"
-                    onClick={removeImage}
-                    aria-label="Remove image"
+                    onClick={removeFile}
+                    aria-label="Remove file"
                     className="mt-2 bg-white rounded-full shadow p-1 text-gray-600 hover:bg-gray-100"
                   >
                     <X className="w-4 h-4" />
@@ -211,7 +196,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
               {placeholder ? (
                 typeof placeholder === 'string' ? <p>{placeholder}</p> : placeholder
               ) : (
-                <p>Drag & drop an image here, or click to select one</p>
+                <p>Drag & drop a file here, or click to select one</p>
               )}
             </div>
           )}
@@ -237,7 +222,7 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
         file,
         fileSize,
         fileName,
-        removeImage,
+        removeFile,
         getInputProps,
         previewUrl,
       })}
@@ -245,4 +230,4 @@ const ImageUploader: React.FC<ImageUploaderProps> = ({
   );
 };
 
-export default ImageUploader;
+export default FileUploader;

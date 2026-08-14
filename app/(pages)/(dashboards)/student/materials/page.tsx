@@ -126,7 +126,6 @@ function page() {
             href: '/student/materials',
           },
         ]}
-        materials={materials}
       />
     </>
   );

@@ -47,8 +47,8 @@ export default function TopSteps() {
 
       // Transform curriculum to match API requirements
       const transformedCurriculum = createSubject.curriculum?.map(curr => ({
-        termSession: curr.termId, // API expects termSession instead of termId
-        class_id: createSubject.classGrade, // API requires class_id
+        termSession: curr.termId,
+        classId: curr.classId,
         topics: curr.topics.map(topic => ({
           topic: topic.title, // API expects 'topic' instead of 'title'
           description: topic.description || ''
@@ -56,20 +56,22 @@ export default function TopSteps() {
       })) || [];
 
       // Prepare payload for API - excluding timetable for now
+      delete createSubject.timetable;
+
       const payload = {
         name: createSubject.name,
         coverImage: coverImagePayload,
         curriculumSource: createSubject.curriculumSource,
         curriculum: transformedCurriculum,
-        classGrade: createSubject.classGrade,
-        timetable: createSubject.timetable,
+        classGrades: createSubject.classGrades,
+        // timetable: createSubject.timetable,
         // Note: Timetable is intentionally excluded from the payload
         // TODO: Include timetable when backend is ready to handle it
       };
 
       const response = await subjectsActions.createSubject(payload);
 
-      if (!response || response.data.status !== 'success') {
+      if (!response || response.status !== 'success') {
         console.error('Failed to create subject', response?.data);
         // TODO: surface error to user
         setSubmitting(false);
@@ -77,11 +79,11 @@ export default function TopSteps() {
       }
 
       // success
+      router.push('/school/subjects');
       resetCreateSubjectEntity();
       // Show toast with API message
-      showToast(response.data.message || 'Subject created', 'subject-create-success', { type: 'success', theme: 'light' });
+      showToast(response.message || 'Subject created', 'subject-create-success', { type: 'success', theme: 'light' });
       // Redirect to subjects page
-      router.push('/school/subjects');
     } catch (e) {
       console.error(e);
     } finally {

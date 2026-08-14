@@ -18,7 +18,7 @@ export function SelectClassGrade({
     <ClassGradeDropdown
       className={className}
       value={value}
-      onValueChange={onValueChange}
+      onValueChange={(v) => onValueChange?.(Array.isArray(v) ? v[0] ?? '' : v)}
       placeholder="Select class grade"
     />
   );

@@ -26,7 +26,7 @@ export default function useRedirectIfAuthenticated() {
           const audience =
             (profile && typeof profile === 'object' && 'audience' in profile
               ? (profile as { audience?: string }).audience
-              : authState.get?.()?.audience_type) || undefined;
+              : authState.get?.()?.audienceType) || undefined;
 
           const dest = audience === 'Admin' ? '/school' : '/';
           // use replace so user can't go back to auth pages

@@ -1,19 +1,16 @@
+import type { ApiResponse } from './api-response.types';
+
 export type SchoolPublic = {
   _id?: string;
   name: string;
   slug: string;
   country: string;
-  school_image?: string | null;
+  schoolImage?: string | null;
   address?: string;
   state?: string;
-  postal_code?: string;
+  postalCode?: string;
   fullAddress?: string;
   studentCount?: number;
 };
 
-export type PublicListResponse = {
-  items: SchoolPublic[];
-  total: number;
-  page: number;
-  limit: number;
-};
+export type PublicSchoolsResponse = ApiResponse<SchoolPublic[]>;

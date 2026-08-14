@@ -10,12 +10,7 @@ import { IoClose, IoCheckmark, IoPencil } from 'react-icons/io5';
 import { cn } from '@/app/lib/utils';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { CloseIcon, EditIcon } from '@/components/atoms/icons/Icons';
-
-interface Subtotal {
-  id: number;
-  title: string;
-  price: string;
-}
+import type { Subtotal } from '@/app/lib/types/finance.types';
 
 export interface SubtotalDetailHandles {
   handleSave: () => void;

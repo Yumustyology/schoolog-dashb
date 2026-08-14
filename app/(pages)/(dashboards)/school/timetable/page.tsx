@@ -6,17 +6,7 @@ import { generateTimetableTimeSlots } from '@/app/lib/utils/generateTimetableTim
 import { cn } from '@/app/lib/utils';
 import React, { useState } from 'react';
 import { CiAlignBottom, CiAlignRight } from 'react-icons/ci';
-
-type TimetableSlot = {
-  subject: string;
-  time: string;
-  teacherName: string;
-  teacherAvatar: any;
-};
-
-type Timetable = {
-  [key: string]: TimetableSlot[];
-};
+import type { TimetableSlot, Timetable } from '@/app/lib/types/timetable.types';
 
 const subjectColors: {
   [key: string]: { bgColor: string; borderColor: string };

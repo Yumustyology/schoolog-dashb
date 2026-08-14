@@ -202,13 +202,32 @@ const topicsList: TopicsList = [
   },
 ];
 
-function Topics() {
+function Topics({ items, isLoading }: { items?: TopicsList; isLoading?: boolean }) {
   const [showDrawer, setShowDrawer] = React.useState(false);
   const { theme } = useSlgTheme();
+  const list = items ?? topicsList;
+
+  if (isLoading) {
+    // simple shimmer placeholder while topics load
+    const placeholders = Array.from({ length: 4 }).map((_, i) => (
+      <Card key={`shimmer-${i}`} className="bg-[#F8F8F8] shadow-none w-full mb-4">
+        <CardBody className="w-full flex items-center gap-3 p-3">
+          <div className="w-6 h-6 rounded-full bg-gray-200" />
+          <div className="flex-1">
+            <div className="h-4 bg-gray-200 rounded w-3/4 mb-2 animate-pulse" />
+            <div className="h-3 bg-gray-200 rounded w-1/2 animate-pulse" />
+          </div>
+          <div className="w-20 h-8 bg-gray-200 rounded-full animate-pulse" />
+        </CardBody>
+      </Card>
+    ));
+
+    return <>{placeholders}</>;
+  }
 
   return (
     <>
-      {topicsList.map((topic) => {
+      {list.map((topic) => {
         return (
           <Card
             key={topic.topic}
@@ -227,6 +246,16 @@ function Topics() {
                 className={cn('text-sm text-gray6 flex-1', Inter_500.className)}
               >
                 {topic.topic}
+                {topic.details ? (
+                  <Typography
+                    className={cn(
+                      'text-sm text-gray mt-2',
+                      poppins_400.className
+                    )}
+                  >
+                    {topic.details}
+                  </Typography>
+                ) : null}
                 <Typography
                   className={cn(
                     'text-xs text-gray flex items-center gap-4 mt-[6px]',
@@ -239,7 +268,6 @@ function Topics() {
                 </Typography>
               </Typography>
 
-              {/* <Tooltip className="">{topic.view}</Tooltip> */}
               <Button
                 onClick={() => {
                   setShowDrawer(true);

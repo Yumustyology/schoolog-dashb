@@ -134,3 +134,68 @@ export const createAddStudentSetStep = (arg: number) => {
   if (arg > 3 || arg < 0) return;
   createAddStudentProgressState.set(arg);
 };
+
+// Create Student Entity (form state across steps)
+export type CreateStudentEntity = {
+  firstName: string;
+  lastName: string;
+  email?: string;
+  gender?: string | null;
+  dob?: string | null; // ISO date string
+  classGrade?: string | null; // class id (MongoId)
+  guardianId?: string | null;
+  guardianName?: string | null;
+  guardianRelationship?: string | null;
+  guardianEmail?: string | null;
+  guardianPhone?: string | null;
+  secondaryGuardianName?: string | null;
+  secondaryGuardianPhone?: string | null;
+  guardianAddress?: string | null;
+  image?: File | null;
+};
+
+export const createStudentEntity = entity<CreateStudentEntity>({
+  firstName: '',
+  lastName: '',
+  email: undefined,
+  gender: null,
+  dob: null,
+  classGrade: null,
+  guardianId: null,
+  guardianName: null,
+  guardianRelationship: null,
+  guardianEmail: null,
+  guardianPhone: null,
+  secondaryGuardianName: null,
+  secondaryGuardianPhone: null,
+  guardianAddress: null,
+  image: null,
+});
+
+export const resetCreateStudentEntity = () => {
+  createStudentEntity.set({
+    firstName: '',
+    lastName: '',
+    email: undefined,
+    gender: null,
+    dob: null,
+    classGrade: null,
+    guardianId: null,
+    guardianName: null,
+    guardianRelationship: null,
+    guardianEmail: null,
+    guardianPhone: null,
+    secondaryGuardianName: null,
+    secondaryGuardianPhone: null,
+    guardianAddress: null,
+    image: null,
+  });
+};
+
+// Helper: set a single field on createStudentEntity without replacing other fields
+export const setCreateStudentField = <K extends keyof CreateStudentEntity>(
+  key: K,
+  value: CreateStudentEntity[K]
+) => {
+  createStudentEntity.set((prev) => ({ ...prev, [key]: value } as CreateStudentEntity));
+};

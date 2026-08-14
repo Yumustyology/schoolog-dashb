@@ -9,7 +9,7 @@ import React, {
 } from 'react';
 
 import Image, { StaticImageData } from 'next/image';
-import { carouselImageRefType } from '@/app/types';
+import { carouselImageRefType } from '@/app/lib/types';
 import { cn } from '@/app/lib/utils';
 
 export const CarouselImage = forwardRef<

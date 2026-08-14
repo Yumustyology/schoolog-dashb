@@ -1,7 +1,7 @@
 import { biologyTextbook, mathTextbook } from '@/app/assets';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
-import { Borrowedbooks } from '@/types';
+import { Borrowedbooks } from '@/app/lib/types';
 import Image from 'next/image';
 import React from 'react';
 
@@ -75,7 +75,7 @@ function BorrowBooksList() {
             <Image
               className="w-full"
               src={book.coverImage}
-              alt={book.coverImage}
+              alt={book.title}
             />
 
             {book.dueStatus ? (

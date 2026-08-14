@@ -6,7 +6,7 @@ import { Inter_500, poppins_400 } from '@/app/lib/config/font.config';
 import Button from '@/components/atoms/form/Button';
 import { AdditionIcon, TermSessionIcon } from '@/components/atoms/icons/Icons';
 import useSWR from 'swr';
-import termSessionActions from '@/app/lib/actions/term-session.actions';
+import { getAllTermSessions } from '@/app/lib/actions/term-session.actions';
 import { useEntity } from 'simpler-state';
 import {
   createTermModalEntity,
@@ -19,12 +19,46 @@ import {
 } from '@/app/lib/entities/term-session.entity';
 import CreateTermModal from '@/components/molecules/dashboard/term-sessions/CreateTermModal';
 import EditTermModal from '@/components/molecules/dashboard/term-sessions/EditTermModal';
-import TermCard from '@/components/molecules/dashboard/term-sessions/TermCard';
 import BreadcrumbBox from '@/components/atoms/dashboard/subjects/Breadcrumb';
 import SearchInput from '@/components/atoms/form/SearchInput';
 import TermCardSkeleton from '@/components/atoms/skeleton/TermCardSkeleton';
 import PaginationControl from '@/components/atoms/pagination/PaginationControl';
 import { debounce } from 'lodash';
+import type { AcademicTerm } from '@/app/lib/types/academicYear.types';
+
+/**
+ * Read-only summary card for a term session in the list/grid view.
+ * (Distinct from the term-editing `TermCard` used inside the
+ * Academic Year create/edit forms.)
+ */
+function TermSessionCard({
+  term,
+  onEdit,
+}: {
+  term: AcademicTerm;
+  onEdit: (term: AcademicTerm) => void;
+}) {
+  return (
+    <div
+      onClick={() => onEdit(term)}
+      className="rounded-lg border border-gray-200 p-4 bg-white cursor-pointer hover:border-primary transition-colors space-y-2"
+    >
+      <div className="flex items-center justify-between">
+        <h3 className={cn('text-base font-semibold text-black1', Inter_500.className)}>
+          {term.name}
+        </h3>
+        {term.isCurrentlyActive && (
+          <span className={cn('text-xs font-medium text-primary bg-primary/10 rounded-full px-2 py-1', Inter_500.className)}>
+            Active
+          </span>
+        )}
+      </div>
+      <p className={cn('text-sm text-gray-600', poppins_400.className)}>
+        {term.startDate} &rarr; {term.endDate}
+      </p>
+    </div>
+  );
+}
 
 const breadcrumbs = [
 //   { label: 'Timetable', href: '/school/timetable', isActive: false },
@@ -73,11 +107,11 @@ function TermSessionsPage() {
       limit: pageSize,
     };
     if (debouncedSearch) query.search = debouncedSearch;
-    return termSessionActions.getAllTermSessions(query);
+    return getAllTermSessions(query);
   });
 
-  const terms = useMemo(() => termSessionsResp?.data?.data || [], [termSessionsResp?.data?.data]);
-  const meta = termSessionsResp?.data?.meta || { count: 0 };
+  const terms = useMemo(() => termSessionsResp?.data || [], [termSessionsResp?.data]);
+  const meta = termSessionsResp?.meta || { count: 0 };
 
   // Calculate total pages
   const computedTotalPages = Math.ceil((meta.count || 0) / pageSize);
@@ -166,7 +200,7 @@ function TermSessionsPage() {
             <p className={cn('text-lg font-semibold text-black1 mb-2', Inter_500.className)}>
               No term sessions found
             </p>
-            <p className={cn('text-sm text-gray-600', poppins_400.className)}>
+            <p className={cn('text-sm text-center text-gray-600', poppins_400.className)}>
               You haven&apos;t created any term sessions yet. <br />
               Click the button above to create your first term session.
             </p>
@@ -175,7 +209,7 @@ function TermSessionsPage() {
           <>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {terms.map((term) => (
-                <TermCard
+                <TermSessionCard
                   key={term._id}
                   term={term}
                   onEdit={(term) => openEditTermModal(term)}

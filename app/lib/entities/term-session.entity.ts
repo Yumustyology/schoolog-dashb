@@ -1,18 +1,18 @@
 import { entity } from 'simpler-state';
-import type { TermSession } from '../actions/term-session.actions';
+import type { TermSessionType } from '../types/academicYear.types';
 
 // Term Session List Entity
-export const termSessionsEntity = entity<TermSession[]>([]);
+export const termSessionsEntity = entity<TermSessionType[]>([]);
 
-export const setTermSessions = (terms: TermSession[]) => {
+export const setTermSessions = (terms: TermSessionType[]) => {
   termSessionsEntity.set(terms);
 };
 
-export const addTermSession = (term: TermSession) => {
+export const addTermSession = (term: TermSessionType) => {
   termSessionsEntity.set((prev) => [term, ...prev]);
 };
 
-export const updateTermSessionInList = (id: string, updatedTerm: Partial<TermSession>) => {
+export const updateTermSessionInList = (id: string, updatedTerm: Partial<TermSessionType>) => {
   termSessionsEntity.set((prev) =>
     prev.map((term) => (term._id === id ? { ...term, ...updatedTerm } : term))
   );
@@ -38,12 +38,12 @@ export const closeCreateTermModal = () => {
 };
 
 // Edit Term Modal State
-export const editTermModalEntity = entity<{ open: boolean; term: TermSession | null }>({
+export const editTermModalEntity = entity<{ open: boolean; term: TermSessionType | null }>({
   open: false,
   term: null,
 });
 
-export const openEditTermModal = (term: TermSession) => {
+export const openEditTermModal = (term: TermSessionType) => {
   editTermModalEntity.set({ open: true, term });
 };
 
@@ -52,8 +52,8 @@ export const closeEditTermModal = () => {
 };
 
 // Selected Term (for filtering/context)
-export const selectedTermEntity = entity<TermSession | null>(null);
+export const selectedTermEntity = entity<TermSessionType | null>(null);
 
-export const setSelectedTerm = (term: TermSession | null) => {
+export const setSelectedTerm = (term: TermSessionType | null) => {
   selectedTermEntity.set(term);
 };

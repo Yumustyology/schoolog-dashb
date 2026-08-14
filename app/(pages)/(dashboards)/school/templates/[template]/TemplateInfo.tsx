@@ -4,7 +4,7 @@ import { thumbnailImage } from '@/app/assets';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { openMakePaymentModal } from '@/app/lib/entities/payment.entity';
 import { cn } from '@/app/lib/utils';
-import { carouselImageRefType } from '@/app/types';
+import { carouselImageRefType } from '@/app/lib/types';
 import Button from '@/components/atoms/form/Button';
 import CardPosIcon from '@/components/atoms/icons/dashboard/CardPosIcon';
 import EyeClose from '@/components/atoms/icons/EyeClose';

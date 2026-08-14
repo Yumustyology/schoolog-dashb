@@ -10,6 +10,7 @@ import { ExportIcon } from '@/components/atoms/icons/Icons';
 import Cancel from '@/components/atoms/icons/ModalIcons/Cancel';
 import StudentsIcon from '@/components/atoms/icons/SideBar/StudentsIcon';
 import { useRouter } from 'next/navigation';
+import { useClassGradeFilter } from '@/app/lib/hooks/useClassGradeFilter';
 
 import React from 'react';
 import { useEntity } from 'simpler-state';
@@ -17,6 +18,8 @@ import { useEntity } from 'simpler-state';
 export const AddStudentMenu = () => {
   const isOpen = useEntity(isAddSudentsMenuOpen);
   const router = useRouter();
+  const { selectedClassGrade } = useClassGradeFilter();
+
   const options = [
     {
       icon: <ExportIcon color="#828282" />,
@@ -27,7 +30,11 @@ export const AddStudentMenu = () => {
       icon: <StudentsIcon />,
       text: 'Add students manually',
       click: () => {
-        router.push('/school/students/add-new-student');
+        if (selectedClassGrade === 'all' || !selectedClassGrade) {
+          router.push('/school/students/add-new-student');
+        } else {
+          router.push(`/school/students/${selectedClassGrade}/add-new-student`);
+        }
       },
     },
   ];
@@ -55,7 +62,7 @@ export const AddStudentMenu = () => {
                 className="flex justify-between items-center p-4 border border-gray4 rounded-3xl cursor-pointer"
                 onClick={() => {
                   option.click?.();
-                  closeAddStudentsMenu;
+                  closeAddStudentsMenu();
                 }}
               >
                 <div className="flex items-center gap-4">

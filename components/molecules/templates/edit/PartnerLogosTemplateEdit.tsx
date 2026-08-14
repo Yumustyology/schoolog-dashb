@@ -7,7 +7,7 @@ import {
   Inter_400,
   poppins_400,
 } from '@/app/lib/config/font.config';
-import ImageUploader from '@/components/atoms/form/ImageUploader';
+import FileUploader from '@/components/atoms/form/FileUploader';
 import CustomImageUploaderSmall from './CustomImageUploaderSmall';
 import { IoAdd } from 'react-icons/io5';
 import Button from '@/components/atoms/form/Button';
@@ -52,9 +52,9 @@ function PartnerLogosTemplateEdit() {
             >
               Partner logo {i}
             </label>
-            <ImageUploader
+            <FileUploader
               className="flex items-center !bg-[#F8F8F8] lg:h-[70px] overflow-hidden"
-              onImageSelected={(file) => handleImageChange(file!)}
+              onFileSelected={(file) => handleImageChange(file!)}
               renderUI={(props) => (
                 <CustomImageUploaderSmall
                   className="flex flex-row items-center gap-4"

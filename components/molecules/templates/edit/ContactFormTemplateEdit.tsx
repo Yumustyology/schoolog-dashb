@@ -26,7 +26,7 @@ const ContactFormTemplateEdit: React.FC = () => {
 
   const [tags, setTags] = useState<string[]>(['foo']);
 
-  const handleContactFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleContactFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setContactFormData((prev) => ({
       ...prev,

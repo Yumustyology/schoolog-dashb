@@ -1,3 +1,6 @@
+export type { ApiResponse, ApiListResponse, ApiMeta } from './api-response.types';
+import type { StaticImageData } from 'next/image';
+
 export type ActivitiesAndEvent = {
   image: any;
   title: string;
@@ -12,7 +15,7 @@ export type AvailbeBooks = {
   title: string;
   class: string;
   availableCopies: number;
-  coverImage: any;
+  coverImage: string | StaticImageData;
 }[];
 
 export type Borrowedbooks = {
@@ -22,7 +25,7 @@ export type Borrowedbooks = {
   duePrice: string;
   daysLeft: string;
   availableCopies: number;
-  coverImage: any;
+  coverImage: string | StaticImageData;
 }[];
 
 export type Announcements = {
@@ -31,27 +34,6 @@ export type Announcements = {
   date: string;
 }[];
 
-export type MaterialType = {
-  type: string;
-  icon: React.ReactNode;
-  name: string;
-  size: string;
-  date: string;
-}[];
-
 export type carouselImageRefType = {
   setActiveIndexTab: (arg: number) => void;
 };
-
-export type SubjectType = {
-  id: string | number;
-  subject: string;
-  textbookImg: string | any;
-  currentTopic?: string;
-  teacherImg?: string | any;
-  teacher?: string;
-  number_of_topics_covered?: number;
-  number_of_topics?: number;
-  students?: { image?: string | any; name?: string }[];
-};
-

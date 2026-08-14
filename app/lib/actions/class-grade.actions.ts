@@ -1,36 +1,25 @@
-import { getRequest, getRequestWithHeaders } from '../service/apiRequests';
-import type { AxiosResponse } from 'axios';
-
-export type ClassGradeResponse<T = Record<string, unknown>> = {
-  status: 'success' | 'error';
-  statusCode: number;
-  message: string;
-  data: T[];
-  meta?: { count: number };
-};
+import { getRequest, patchRequest, deleteRequest } from '../service/apiRequests';
+import type { ResponseType } from '@/app/lib/types/api-response.types';
+import type { ClassGradeDetailResponse } from '@/app/lib/types/class.types';
 
 /**
  * Fetch paginated class grades for a school
  * query: { page?: number; limit?: number; search?: string }
  */
 export const fetchClassGradesPaginated = async (
-  query?: Record<string, string | number | boolean>,
-//   headers?: Record<string, string>
-): Promise<AxiosResponse<ClassGradeResponse> | void> => {
-//   if (headers) return getRequestWithHeaders<ClassGradeResponse>('/class-grades/school', query, headers);
-  return getRequest<ClassGradeResponse>('/class-grades/school', query);
+  query?: Record<string, string | number | boolean>
+): Promise<ResponseType<Record<string, unknown>[]>> => {
+  return getRequest<Record<string, unknown>[]>('/class-grades/school', query);
 };
 
 /**
  * Fetch all matching class grades (limit=-1 is used by the backend to return all)
  */
 export const fetchClassGradesAll = async (
-  query?: Record<string, string | number | boolean>,
-//   headers?: Record<string, string>
-): Promise<AxiosResponse<ClassGradeResponse> | void> => {
+  query?: Record<string, string | number | boolean>
+): Promise<ResponseType<Record<string, unknown>[]>> => {
   const q = { ...(query || {}), limit: -1 };
-//   if (headers) return getRequestWithHeaders<ClassGradeResponse>('/class-grades/school', q, headers);
-  return getRequest<ClassGradeResponse>('/class-grades/school', q);
+  return getRequest<Record<string, unknown>[]>('/class-grades/school', q);
 };
 
 /**
@@ -39,15 +28,49 @@ export const fetchClassGradesAll = async (
  */
 export const reorderClassGrades = async (
   ids: string[]
-): Promise<AxiosResponse<{ message: string; data: null; status: string; statusCode: number }> | void> => {
-  const { patchRequest } = await import('../service/apiRequests');
-  return patchRequest('/class-grades/reorder', { ids });
+): Promise<ResponseType<null>> => {
+  return patchRequest<null>('/class-grades/reorder', { ids });
+};
+
+/**
+ * Fetch a single class grade by id
+ */
+export const fetchClassGradeById = async (
+  id: string
+): Promise<ResponseType<ClassGradeDetailResponse>> => {
+  if (!id) return Promise.reject(new Error('ID is required'));
+  return getRequest<ClassGradeDetailResponse>(`/class-grades/${id}`);
+};
+
+/**
+ * Update a class grade by id
+ * payload: Partial<CreateClassGradeDto>
+ */
+export const updateClassGrade = async (
+  id: string,
+  payload: Record<string, any>
+): Promise<ResponseType<unknown>> => {
+  if (!id) return Promise.reject(new Error('ID is required'));
+  return patchRequest<unknown>(`/class-grades/${id}`, payload);
+};
+
+/**
+ * Delete a class grade by id
+ */
+export const deleteClassGrade = async (
+  id: string
+): Promise<ResponseType<null>> => {
+  if (!id) return Promise.reject(new Error('ID is required'));
+  return deleteRequest<null>(`/class-grades`, id);
 };
 
 const classGradeActions = {
   fetchClassGradesPaginated,
   fetchClassGradesAll,
   reorderClassGrades,
+  fetchClassGradeById,
+  updateClassGrade,
+  deleteClassGrade,
 };
 
 export default classGradeActions;

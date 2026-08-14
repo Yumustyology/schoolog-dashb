@@ -7,11 +7,11 @@ export type SchoolEntity = {
   address?: string;
   country?: string;
   city?: string;
-  school_image?: string;
-  slg_id?: string;
+  schoolImage?: string;
+  slgId?: string;
   slug?: string;
-  school_slug_id?: string;
-  postal_code?: string;
+  schoolSlugId?: string;
+  postalCode?: string;
   createdAt?: string;
   updatedAt?: string;
   tenantDomain?: string;

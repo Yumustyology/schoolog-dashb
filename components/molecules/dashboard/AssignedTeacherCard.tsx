@@ -15,6 +15,7 @@ import {
 import { cn } from '@/app/lib/utils';
 
 import Image from 'next/image';
+import AvatarIcon from '@/components/atoms/AvatarIcon';
 import React from 'react';
 import {
   AddTeacherIcon,
@@ -34,19 +35,50 @@ import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 
 function AssignedTeacherCard({
   role,
+  page,
+  className,
+  teacher,
 }: {
   role: 'school' | 'student' | 'parent' | 'school';
+  page?: 'classInfo' | 'subjectInfo';
+  className?: string;
+  teacher?: {
+    _id?: string;
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    phone?: string;
+    image?: string;
+  } | null;
 }) {
   const { theme } = useSlgTheme();
+
   // const [assignTeacherModal, setAssignTeacherModal] = React.useState(true);
   const [isTeachersListOpen, setIsTeacherListOpen] = React.useState(false);
   return (
-    <Card className="bg-white py-6 px-6 flex flex-col justify-between h-[390px] rounded-md col-span-2 border-none">
+    <Card
+      className={cn(
+        'bg-white py-6 px-6 flex flex-col justify-between h-[390px] rounded-md col-span-2 border-none',
+        className
+      )}
+    >
       <div>
-        <CardHeader className="bg-[#f8f8f8] rounded-full py-2 mb-6">
-          <div className="flex gap-5">
-            <Image src={teacherImg2} alt="teacher-image" />
-            <div className="flex justify-between items-center w-full">
+        {page === 'classInfo' ? (
+          <CardHeader className="bg-transparent p-0 mb-6">
+            <div className="flex items-center gap-4">
+              <div className="w-16 h-16 bg-gray-100 rounded-md overflow-hidden">
+                {teacher && teacher.image ? (
+                  <Image
+                    src={teacher.image}
+                    alt="teacher-image"
+                    width={64}
+                    height={64}
+                    className="object-cover w-full h-full"
+                  />
+                ) : (
+                  <AvatarIcon size={64} />
+                )}
+              </div>
               <div>
                 <h3
                   className={cn(
@@ -54,41 +86,71 @@ function AssignedTeacherCard({
                     poppins_500.className
                   )}
                 >
-                  Jimoh Jamiu
+                  {teacher
+                    ? `${teacher.firstName || ''} ${teacher.lastName || ''}`.trim()
+                    : 'No assigned teacher'}
                 </h3>
-                {role === 'student' && (
-                  <p className={cn('text-sm text-gray', poppins_400.className)}>
-                    Biology Teacher
-                  </p>
-                )}
-
-                {role === 'school' && (
-                  <div>
+                <p className={cn('text-sm text-gray', poppins_400.className)}>
+                  Class Teacher
+                </p>
+              </div>
+            </div>
+          </CardHeader>
+        ) : (
+          <CardHeader className="bg-[#f8f8f8] rounded-full py-2 px-2 mb-6">
+            <div className="flex gap-5">
+              <Image src={teacherImg2} alt="teacher-image" />
+              <div className="flex justify-between items-center w-full">
+                <div>
+                  <h3
+                    className={cn(
+                      'text-sm text-gray6 mb-1',
+                      poppins_500.className
+                    )}
+                  >
+                    {teacher
+                      ? `${teacher.firstName || ''} ${teacher.lastName || ''}`.trim()
+                      : 'Jimoh Jamiu'}
+                  </h3>
+                  {role === 'student' && (
                     <p
                       className={cn('text-sm text-gray', poppins_400.className)}
                     >
-                      Assigned teacher
+                      Biology Teacher
                     </p>
-                  </div>
+                  )}
+
+                  {role === 'school' && (
+                    <div>
+                      <p
+                        className={cn(
+                          'text-sm text-gray',
+                          poppins_400.className
+                        )}
+                      >
+                        Assigned teacher
+                      </p>
+                    </div>
+                  )}
+                </div>
+                {role === 'school' && (
+                  <Button
+                    round
+                    className={cn(
+                      'text-primary bg-light text-sm ',
+                      poppins_400.className
+                    )}
+                    onClick={() => {
+                      setIsTeacherListOpen(true);
+                    }}
+                  >
+                    View all teachers
+                  </Button>
                 )}
               </div>
-              {role === 'school' && (
-                <Button
-                  round
-                  className={cn(
-                    'text-primary bg-light text-sm ',
-                    poppins_400.className
-                  )}
-                  onClick={() => {
-                    setIsTeacherListOpen(true);
-                  }}
-                >
-                  View all teachers
-                </Button>
-              )}
             </div>
-          </div>
-        </CardHeader>
+          </CardHeader>
+        )}
 
         {role === 'student' && (
           <CardContent className="flex flex-col gap-6 w-full px-0 ">
@@ -146,7 +208,7 @@ function AssignedTeacherCard({
         )}
       </div>
 
-      {role === 'school' && (
+      {role === 'school' && page === 'subjectInfo' && (
         <CardContent className="flex flex-col gap-6 w-full px-0 ">
           <div className="flex justify-between">
             <div>
@@ -179,8 +241,41 @@ function AssignedTeacherCard({
         </CardContent>
       )}
 
-      <CardFooter className="px-0 py-0 mt-6 w-full">
-        {role === 'student' && (
+      {page === 'classInfo' && (
+        <CardContent className="flex flex-col gap-6 w-full px-0 ">
+          <section className="flex justify-between items-center w-full">
+            <div>
+              <h3 className={cn('text-sm text-black1', poppins_500.className)}>
+                {teacher ? teacher.email : 'No email available'}
+              </h3>
+              <p className={cn('text-sm text-gray', poppins_400.className)}>
+                Email
+              </p>
+            </div>
+
+            <div>
+              <h3 className={cn('text-sm text-black1', poppins_500.className)}>
+                {teacher ? (teacher.phone ?? '-') : 'No phone available'}
+              </h3>
+              <p className={cn('text-sm text-gray', poppins_400.className)}>
+                Phone number
+              </p>
+            </div>
+          </section>
+
+          <section>
+            <p className={cn('text-sm text-gray', poppins_400.className)}>
+              Role
+            </p>
+            <h3 className={cn('text-sm text-gray6', poppins_500.className)}>
+              Class Teacher
+            </h3>
+          </section>
+        </CardContent>
+      )}
+
+      <CardFooter className="px-0 py-0 --mt-6 w-full">
+        {role === 'student' && page !== 'classInfo' && (
           <Button wide round className="h-[45px]">
             <Message color="#FFFFFF" />
             <p className="ml-2">Message Teacher</p>
@@ -191,20 +286,34 @@ function AssignedTeacherCard({
           <div className="flex gap-4 w-full justify-between">
             <Button
               round
-              className="h-[45px] px-8 "
+              wide
+              outlined
+              className="h-[45px] px-8 border border-primary"
               onClick={openChangeTeacherModal}
             >
               <ChangeTeacherIcon />
-              <p className="ml-2">Change Teacher</p>
+              <p className="ml-2">{teacher ? 'Change' : 'Assign'} Teacher</p>
             </Button>
-            <Button
+            {teacher ? (
+              <Button
+                round
+                flat
+                className="h-[45px]  border px-14 bg-transparent border-primary flex-shrink-0 "
+                // onClick={}
+              >
+                <p className="flex-shrink-0 text-primary">
+                  View Teacher Details
+                </p>
+              </Button>
+            ) : null}
+            {/* <Button
               round
               className="h-[45px] border px-8 bg-light"
               onClick={openAddTeacherModal}
             >
               <AddTeacherIcon color={theme.primary} />
               <p className="ml-2 text-primary">Add another Teacher</p>
-            </Button>
+            </Button> */}
           </div>
         )}
       </CardFooter>

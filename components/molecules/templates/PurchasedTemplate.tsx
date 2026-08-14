@@ -3,7 +3,7 @@
 import { thumbnailImage } from '@/app/assets';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
-import { carouselImageRefType } from '@/app/types';
+import { carouselImageRefType } from '@/app/lib/types';
 import MakePaymentModal from '@/components/molecules/Payment/MakePaymentModal';
 import { CarouselImage } from '@/components/organisms/dashboard/CarouselImage';
 import Image from 'next/image';

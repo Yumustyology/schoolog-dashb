@@ -4,7 +4,7 @@ import { cn } from '@/app/lib/utils';
 import React from 'react';
 import { createSubjectEntity } from '@/app/lib/entities/subject.entity';
 import { useEntity } from 'simpler-state';
-import ImageUploader from '@/components/atoms/form/ImageUploader';
+import FileUploader from '@/components/atoms/form/FileUploader';
 import FormSectionHeader from './FormSectionHeader';
 import DropdownMultiSelect, { OptionType } from '@/components/atoms/form/DropdownMultiSelect';
 import classGradeActions from '@/app/lib/actions/class-grade.actions';
@@ -18,9 +18,9 @@ function Step1() {
   useEffect(() => {
     async function fetchClassGrades() {
       const resp = await classGradeActions.fetchClassGradesAll();
-      if (resp && resp.data && Array.isArray(resp.data.data)) {
+      if (resp && resp.data && Array.isArray(resp.data)) {
         setClassGradeOptions(
-          (resp.data.data as ClassGrade[]).map((cg) => ({ value: cg._id, label: cg.name }))
+          (resp.data as ClassGrade[]).map((cg) => ({ value: cg._id, label: cg.name }))
         );
       }
     }
@@ -83,7 +83,7 @@ function Step1() {
         >
           Subject Cover Image
         </label>
-        <ImageUploader
+        <FileUploader
           preview
           placeholder={
             <>
@@ -91,8 +91,8 @@ function Step1() {
               Drag & drop an image here, or click to select one
             </>
           }
-          onImageSelected={handleImageSelected}
-          initialImage={createSubject.coverImage}
+          onFileSelected={handleImageSelected}
+          initialFile={createSubject.coverImage}
           bordered
         />
       </div>

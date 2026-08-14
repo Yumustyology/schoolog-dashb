@@ -26,6 +26,33 @@ import 'react-country-state-city/dist/react-country-state-city.css';
 import { useRouter } from 'next/navigation';
 import { signupEmail } from '@/app/lib/entities/auth.entity';
 
+/**
+ * `react-country-state-city`'s bundled type declarations intersect
+ * `InputHTMLAttributes<HTMLInputElement>` with their own `onChange`/
+ * `defaultValue` props of the same name, which TypeScript merges into
+ * an unsatisfiable intersection (e.g. `ChangeEventHandler<HTMLInputElement>
+ * & ((e: Country) => void)`). The components only ever call `onChange`
+ * with a `Country`/`State` object at runtime, so we re-type them here
+ * to what they actually do rather than casting at every call site.
+ */
+type CountrySelectProps = {
+  id?: string;
+  containerClassName?: string;
+  inputClassName?: string;
+  onChange?: (selected: Country) => void;
+  placeHolder?: string;
+};
+type StateSelectProps = {
+  countryid: number;
+  containerClassName?: string;
+  inputClassName?: string;
+  onChange?: (selected: State) => void;
+  defaultValue?: string;
+  placeHolder?: string;
+};
+const TypedCountrySelect = CountrySelect as unknown as React.FC<CountrySelectProps>;
+const TypedStateSelect = StateSelect as unknown as React.FC<StateSelectProps>;
+
 function Register() {
   const navigate = useRouter()
   const isAutoGeneratingSlug = useRef(false);
@@ -93,15 +120,15 @@ function Register() {
         
         if (
           resp &&
-          resp.data?.statusCode === 201 &&
-          resp.data?.message == 'Verification email sent successfully'
+          resp.statusCode === 201 &&
+          resp.message == 'Verification email sent successfully'
         ) {
           signupEmail.set(values.email);
           navigate.push('/signup/otp')
         } else if (resp) {
           formik.setFieldError(
             'email',
-            resp.data?.message || 'An error occurred'
+            resp.message || 'An error occurred'
           );
         } else {
           formik.setFieldError(
@@ -123,7 +150,7 @@ function Register() {
         try {
           const resp = await generateSlugFromBackend({ schoolName });
           isAutoGeneratingSlug.current = true;
-          formik.setFieldValue('slug', resp.slug);
+          formik.setFieldValue('slug', resp);
         } catch (err) {
           console.error('Failed to generate slug:', err);
         }
@@ -250,7 +277,7 @@ function Register() {
                 >
                   Country
                 </label>
-                <CountrySelect
+                <TypedCountrySelect
                   id="country"
                   containerClassName="form-group h-14"
                   inputClassName="form-input-group"
@@ -273,7 +300,7 @@ function Register() {
                 >
                   State
                 </label>
-                <StateSelect
+                <TypedStateSelect
                   countryid={country?.id as number}
                   containerClassName="form-group h-14"
                   inputClassName="form-input-group"

@@ -2,25 +2,25 @@ import { entity, persistence } from 'simpler-state';
 import { AudienceTypes } from '../types/audience-types';
 
 type AuthStateType = {
-  school_slug_id: string;
-  audience_type: AudienceTypes | '';
-  // user_slug_id: string;
+  schoolSlugId: string;
+  audienceType: AudienceTypes | '';
+  // userSlugId: string;
 };
 
 export const authState = entity<AuthStateType>(
   {
-    school_slug_id: 'AOM-431844',
-    audience_type: '',
-    // user_slug_id: '',
+    schoolSlugId: 'AOM-431844',
+    audienceType: '',
+    // userSlugId: '',
   },
   [persistence('authState')]
 );
 
 export const resetAuthState = () => {
   authState.set({
-    school_slug_id: 'AOM-431844',
-    audience_type: '',
-    // user_slug_id: '',
+    schoolSlugId: 'AOM-431844',
+    audienceType: '',
+    // userSlugId: '',
   });
 }
 export const signupEmail = entity<string| null>(null,[persistence('signupEmail')]);

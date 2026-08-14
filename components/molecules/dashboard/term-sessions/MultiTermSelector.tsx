@@ -2,24 +2,26 @@
 
 import React from 'react';
 import useSWR from 'swr';
-import termSessionActions, { type TermSession } from '@/app/lib/actions/term-session.actions';
+import { getAllTermSessions } from '@/app/lib/actions/term-session.actions';
+import type { TermSessionType } from '@/app/lib/types/academicYear.types';
 import { cn } from '@/app/lib/utils';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { formatDateRange } from '@/app/lib/utils/dateUtils';
+import { SolidCheckIcon } from '@/components/atoms/icons/Icons';
 
 interface MultiTermSelectorProps {
-  selectedTerms: TermSession[];
-  onTermToggle: (term: TermSession) => void;
+  selectedTerms: TermSessionType[];
+  onTermToggle: (term: TermSessionType) => void;
   className?: string;
 }
 
 function MultiTermSelector({ selectedTerms, onTermToggle, className }: MultiTermSelectorProps) {
   const { data: response, error, isLoading } = useSWR(
     'termSessions',
-    () => termSessionActions.getAllTermSessions()
+    () => getAllTermSessions()
   );
 
-  const terms = response?.data?.data;
+  const terms = response?.data;
 
   if (isLoading) {
     return (
@@ -56,9 +58,9 @@ function MultiTermSelector({ selectedTerms, onTermToggle, className }: MultiTerm
         Select Term Sessions for Curriculum
       </label>
       {terms.map((term) => {
-        const isSelected = isTermSelected(term._id);
-        const dateRange = term.start_date && term.end_date 
-          ? formatDateRange(term.start_date, term.end_date) 
+        const isSelected = isTermSelected(term._id || term.id || '');
+        const dateRange = term.startDate && term.endDate 
+          ? formatDateRange(term.startDate, term.endDate) 
           : null;
 
         return (
@@ -87,9 +89,7 @@ function MultiTermSelector({ selectedTerms, onTermToggle, className }: MultiTerm
               {isSelected && (
                 <div className="flex-shrink-0 ml-3">
                   <div className="w-6 h-6 bg-blue-500 rounded-full flex items-center justify-center">
-                    <svg className="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                      <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
-                    </svg>
+                    <SolidCheckIcon className="w-4 h-4 text-white" />
                   </div>
                 </div>
               )}

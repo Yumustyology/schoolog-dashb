@@ -13,7 +13,7 @@ import Cancel from '../atoms/icons/ModalIcons/Cancel';
 import { cn } from '@/app/lib/utils';
 import { poppins_500 } from '@/app/lib/config/font.config';
 import { CarouselImage } from '../organisms/dashboard/CarouselImage';
-import { carouselImageRefType } from '@/app/types';
+import { carouselImageRefType } from '@/app/lib/types';
 
 export function ImageViewModal() {
   const [open, setOpen] = React.useState(false);

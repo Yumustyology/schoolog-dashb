@@ -23,7 +23,7 @@ import {
 // import AttendanceAnalytics from '@/components/molecules/dashboard/analytics/AttendanceAnalytics';
 import AttendanceMetrics from '@/components/molecules/dashboard/analytics/AttendanceMetrics';
 // import GradesAnalytics from '@/components/molecules/dashboard/analytics/GradesAnalytics';
-import AttendanceList from '@/components/molecules/dashboard/attendance/AttendanceList';
+import TeachersAttendanceList from '@/components/molecules/dashboard/attendance/TeachersAttendanceList';
 import { ResultLists } from '@/components/molecules/dashboard/results/ResultLists';
 import { AchievementsComments } from '@/components/molecules/dashboard/students/AchievementsComments';
 import { GuardianInfoCard } from '@/components/molecules/dashboard/students/GuardianInfoCard';
@@ -42,7 +42,7 @@ const StudentInfoPage = ({ student }: { student: string }) => {
     {
       label: 'Attendance',
       value: 'attendance',
-      content: <AttendanceList />,
+      content: <TeachersAttendanceList />,
     },
     {
       label: 'Results',

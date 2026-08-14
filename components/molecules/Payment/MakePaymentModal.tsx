@@ -13,6 +13,7 @@ import VisaIcon from '@/components/atoms/icons/VisaIcon';
 import { IoIosAdd } from 'react-icons/io';
 import { cn } from '@/app/lib/utils';
 import { Inter_500, poppins_400 } from '@/app/lib/config/font.config';
+import { UncheckedRadioIcon } from '@/components/atoms/icons/Icons';
 
 const cards = [
   { id: 1, name: 'Mastercard', last4: '1211', type: 'Mastercard' },
@@ -71,20 +72,7 @@ const MakePaymentModal: React.FC = () => {
                     </div>
                   </div>
                   <div className="flex items-center">
-                    <svg
-                      className={`h-7 w-7 text-gray-400 transition group-data-[checked]:hidden`}
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <circle
-                        cx="12"
-                        cy="12"
-                        r="6"
-                        stroke="currentColor"
-                        strokeWidth="1"
-                      />
-                    </svg>
+                    <UncheckedRadioIcon className="h-7 w-7 text-gray-400 transition group-data-[checked]:hidden" />
 
                     <CheckCircleIcon className="h-6. w-6 fill-green-500 hidden transition group-data-[checked]:block" />
                   </div>
@@ -109,20 +97,7 @@ const MakePaymentModal: React.FC = () => {
                 </div>
 
                 <div className="flex items-center">
-                  <svg
-                    className={`h-7 w-7 text-gray-400 transition group-data-[checked]:hidden`}
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <circle
-                      cx="12"
-                      cy="12"
-                      r="6"
-                      stroke="currentColor"
-                      strokeWidth="1"
-                    />
-                  </svg>
+                  <UncheckedRadioIcon className="h-7 w-7 text-gray-400 transition group-data-[checked]:hidden" />
 
                   <CheckCircleIcon className="h-6. w-6 fill-green-500 hidden transition group-data-[checked]:block" />
                 </div>

@@ -3,8 +3,8 @@ import Modal from '@/components/molecules/Modal';
 import Button from '@/components/atoms/form/Button';
 import NoticeMarquee from '@/components/atoms/form/NoticeMarquee';
 import ClassArrangeEntry, { ClassDataShape } from '@/components/atoms/dashboard/classes/ClassArrangeEntry';
-import classGradeActions, { ClassGradeResponse } from '@/app/lib/actions/class-grade.actions';
-import type { AxiosResponse } from 'axios';
+import classGradeActions from '@/app/lib/actions/class-grade.actions';
+import type { ResponseType } from '@/app/lib/types/api-response.types';
 import {
   DndContext,
   closestCenter,
@@ -25,6 +25,9 @@ type ApiClassGrade = {
   name: string;
   level?: string | null;
   classTeacher?: { name?: string | null; avatar?: string | null } | null;
+  studentCount?: number;
+  studentMaleCount?: number;
+  studentFemaleCount?: number;
 };
 
 const ArrangeClassModal: React.FC<ArrangeClassModalProps & { onReorder?: (orderedIds?: string[]) => void }> = ({ isOpen, onClose, onReorder }) => {
@@ -38,13 +41,16 @@ const ArrangeClassModal: React.FC<ArrangeClassModalProps & { onReorder?: (ordere
     const load = async () => {
       setIsLoading(true);
       try {
-        const resp = (await classGradeActions.fetchClassGradesAll()) as AxiosResponse<ClassGradeResponse> | void;
-        const data = (resp && resp.data && resp.data.data) ? resp.data.data : [];
+        const resp = await classGradeActions.fetchClassGradesAll() as ResponseType<Record<string, unknown>[]>;
+        const data = resp?.data ?? [];
         const mapped: ApiClassGrade[] = (data || []).map((d: Record<string, unknown>) => ({
           _id: String(d['_id'] ?? d['id'] ?? ''),
           name: String(d['name'] ?? d['className'] ?? 'Unnamed'),
           level: (d['level'] as string) ?? null,
           classTeacher: (d['classTeacher'] as Record<string, unknown> | null) ?? null,
+          studentCount: typeof d['studentCount'] === 'number' ? (d['studentCount'] as number) : Number(d['studentCount'] ?? 0),
+          studentMaleCount: typeof d['studentMaleCount'] === 'number' ? (d['studentMaleCount'] as number) : Number(d['studentMaleCount'] ?? 0),
+          studentFemaleCount: typeof d['studentFemaleCount'] === 'number' ? (d['studentFemaleCount'] as number) : Number(d['studentFemaleCount'] ?? 0),
         }));
         if (!mounted) return;
         setItems(mapped);
@@ -162,14 +168,17 @@ const SortableItem = React.memo(function SortableItem({ id, classData }: { id: s
     const teacher = classData.classTeacher as Record<string, unknown> | null;
     const teacherImg = teacher && typeof teacher['avatar'] === 'string' ? String(teacher['avatar']) : '/assets/images/avatar.png';
     const teacherName = teacher && typeof teacher['name'] === 'string' ? String(teacher['name']) : 'Unassigned';
+    const total = typeof classData.studentCount === 'number' ? classData.studentCount : Number(classData.studentCount ?? 0);
+    const male = typeof classData.studentMaleCount === 'number' ? classData.studentMaleCount : Number(classData.studentMaleCount ?? 0);
+    const female = typeof classData.studentFemaleCount === 'number' ? classData.studentFemaleCount : Number(classData.studentFemaleCount ?? 0);
     return {
-      id: typeof classData._id === 'string' && /^\\d+$/.test(classData._id) ? Number(classData._id) : classData._id,
+      id: typeof classData._id === 'string' && /^\d+$/.test(classData._id) ? Number(classData._id) : classData._id,
       className: classData.name,
       teacherImg,
       teacher: teacherName,
-      number_of_male: 0,
-      number_of_female: 0,
-      number_of_student: 0,
+      number_of_male: male,
+      number_of_female: female,
+      number_of_student: total,
     };
   }, [classData]);
 

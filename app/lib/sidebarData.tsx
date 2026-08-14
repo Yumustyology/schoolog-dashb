@@ -18,6 +18,7 @@ import FinanceIcon from '@/components/atoms/icons/SideBar/FinanceIcon';
 import StaffsIcon from '@/components/atoms/icons/dashboard/StaffsIcon';
 import AdmissionIcon from '@/components/atoms/icons/SideBar/AdmissionIcon';
 import TermSessionIcon from '@/components/atoms/icons/SideBar/TermSessionIcon';
+import DepartmentsIcon from '@/components/atoms/icons/SideBar/DepartmentsIcon';
 
 export type SidebarItemsType = {
   title: string;
@@ -131,6 +132,12 @@ export const shoolSidebarItems: SidebarItemsType = [
     activeIcon: <Subjects color="#FFFFFF" />,
   },
   {
+    title: 'Departments',
+    url: '/school/departments',
+    icon: <DepartmentsIcon />,
+    activeIcon: <DepartmentsIcon color="#FFFFFF" />,
+  },
+  {
     title: 'Students',
     url: '/school/students',
     icon: <StudentsIcon />,
@@ -158,10 +165,10 @@ export const shoolSidebarItems: SidebarItemsType = [
     ],
   },
   {
-    title: 'Term Sessions',
-    url: '/school/term-sessions',
-    icon: <TermSessionIcon />,
-    activeIcon: <TermSessionIcon color="#FFFFFF" />,
+    title: 'Academic Year',
+    url: '/school/academic-year',
+    icon: <TermSessionIcon />, 
+    activeIcon: <TermSessionIcon color="#FFFFFF" />, 
   },
   {
     title: 'Timetable',

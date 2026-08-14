@@ -26,7 +26,7 @@ type Props = {
 
 export default function LoginClient({ initialLogo, initialSchool }: Props) {
   const navigate = useRouter();
-  const { audience_type } = authState.use();
+  const { audienceType } = authState.use();
 
   const [loginMethod, setLoginMethod] = React.useState<'id' | 'email'>('id');
   const [isModalOpen, setIsModalOpen] = React.useState(false);
@@ -63,31 +63,45 @@ export default function LoginClient({ initialLogo, initialSchool }: Props) {
       identifier: '',
       password: '',
     },
-    validate: (values) => validateWithJoi(values, loginMethod, audience_type),
+    validate: (values) => {
+      const joiErrors = validateWithJoi(values, loginMethod, audienceType);
+      // Also validate that schoolSlugId is set
+      const schoolSlugId = authState.get()?.schoolSlugId || '';
+      if (!schoolSlugId) {
+        return { ...joiErrors, schoolSlugId: 'Please select a school first' };
+      }
+      return joiErrors;
+    },
     onSubmit: async (values) => {
       setIsLoading(true);
       try {
+        const schoolSlugId = authState.get()?.schoolSlugId || '';
+        if (!schoolSlugId) {
+          throw new Error('School not selected. Please go back and select a school.');
+        }
         const payload = {
-          audience_type: audience_type as AudienceTypes,
+          audienceType: audienceType as AudienceTypes,
           password: values.password,
-          school_slug_id: authState.get()?.school_slug_id || '',
-          ...(loginMethod === 'email' ? { email: values.identifier } : { user_id: values.identifier }),
+          schoolSlugId,
+          ...(loginMethod === 'email' ? { email: values.identifier } : { userId: values.identifier }),
         } satisfies LoginPayload;
         const resp = await login(payload);
-        if (resp && resp.data && resp.data?.message === 'Login successful') {
-          await localforage.setItem('accessToken', resp.data.data.token);
+        if (resp && resp.data && resp.message === 'Login successful') {
+          await localforage.setItem('accessToken', resp.data.token);
+          if (resp.data.refreshToken) {
+            await localforage.setItem('refreshToken', resp.data.refreshToken);
+          }
 
-          delete resp.data.data.token;
           replaceProfileState({
-            slg_id: resp.data.data.user?.slg_id || '',
-            school_id: resp.data.data?.user?.school_id || '',
-            slug_id: resp.data.data?.user?.slug_id || '',
-            audience: resp.data.data?.user?.audience || audience_type || '',
-            slug: resp.data.data?.user?.slug || '',
-            school_slug_id: resp.data.data?.user?.school_slug_id || '',
-            firstName: resp.data.data?.user?.firstName || '',
-            lastName: resp.data.data?.user?.lastName || '',
-            email: resp.data.data?.user?.email || '',
+            slgId: resp.data.user?.slgId || '',
+            schoolId: resp.data?.user?.schoolId || '',
+            slugId: resp.data?.user?.slugId || '',
+            audience: resp.data?.user?.audience || audienceType || '',
+            slug: resp.data?.user?.slug || '',
+            schoolSlugId: resp.data?.user?.schoolSlugId || '',
+            firstName: resp.data?.user?.firstName || '',
+            lastName: resp.data?.user?.lastName || '',
+            email: resp.data?.user?.email || '',
           });
 
           navigate.replace('/school/');
@@ -104,7 +118,7 @@ export default function LoginClient({ initialLogo, initialSchool }: Props) {
     // if the persisted school entity contains an image, use it as logo
     const cs = currentSchool as SchoolEntity | undefined;
     const img =
-      cs?.school_image ?? null;
+      cs?.schoolImage ?? null;
 
     try {
       if (img) {
@@ -136,7 +150,7 @@ export default function LoginClient({ initialLogo, initialSchool }: Props) {
       <div className="flex flex-col gap-4 justify-center w-full ">
         {/* Keep a same-size shimmer skeleton until the page loads to avoid flashes */}
         {showLogo ? (
-          <Image alt="logo" height={250} width={280} className="m-auto contain" src={logoSrc} />
+          <Image alt="logo" height={250} width={280} priority className="m-auto contain" src={logoSrc} />
         ) : (
           <Skeleton className="m-auto w-[280px] h-[150px] rounded-md" />
         )}
@@ -153,12 +167,12 @@ export default function LoginClient({ initialLogo, initialSchool }: Props) {
           <form onSubmit={formik.handleSubmit} className="mx-auto w-full xxs:px-2 tablet:px-10 laptop:px-10 desktop:px-28">
             <Input
               id="email"
-              label={loginMethod === 'id' ? `${audience_type} ID` : 'Email Address'}
+              label={loginMethod === 'id' ? `${audienceType} ID` : 'Email Address'}
               type={loginMethod === 'id' ? 'text' : 'email'}
               labelClassName="label"
               className="input h-14 rounded-lg"
               name="identifier"
-              placeholder={loginMethod === 'id' ? `Input your ${audience_type} ID` : 'Enter your e‑mail address'}
+              placeholder={loginMethod === 'id' ? `Input your ${audienceType} ID` : 'Enter your e‑mail address'}
               value={formik.values.identifier}
               handleChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -193,7 +207,7 @@ export default function LoginClient({ initialLogo, initialSchool }: Props) {
         </AuthWrapper>
 
         <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} title="Review">
-          <VerifiedRedirect audience={audience_type} onClose={() => setIsModalOpen(false)} initialSeconds={4} />
+          <VerifiedRedirect audience={audienceType} onClose={() => setIsModalOpen(false)} initialSeconds={4} />
         </Modal>
       </div>
     </div>

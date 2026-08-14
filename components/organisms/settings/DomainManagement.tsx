@@ -26,7 +26,7 @@ export default function DomainManagement() {
     setLoading(true);
     try {
       const list = await actions.listDomains();
-      setDomains(list);
+      setDomains(list.data || []);
     } catch (error) {
       console.error(error);
       showToast('Failed to load domains', 'domains-load-failed', { type: 'error' });
@@ -39,7 +39,7 @@ export default function DomainManagement() {
     if (!hostname) return;
     try {
       const created = await actions.createDomain({ hostname });
-      setDomains((s) => [created, ...s]);
+      if (created.data) setDomains((s) => [created.data as actions.Domain, ...s]);
       setAddOpen(false);
       setHostname('');
       showToast('Domain added. Follow the DNS instructions and click Verify when ready.', 'domain-add', { type: 'success' });
@@ -51,7 +51,10 @@ export default function DomainManagement() {
   async function handleVerify(id: string) {
     try {
       const updated = await actions.verifyDomain(id);
-      setDomains((s) => s.map((d) => (d._id === id ? updated : d)));
+      if (updated.data) {
+        const updatedDomain = updated.data;
+        setDomains((s) => s.map((d) => (d._id === id ? updatedDomain : d)));
+      }
       showToast('Domain verification triggered', 'domain-verify', { type: 'success' });
     } catch {
       showToast('Verification failed', 'domain-verify-failed', { type: 'error' });

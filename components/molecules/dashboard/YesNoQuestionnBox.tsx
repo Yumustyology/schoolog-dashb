@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Button from '../../atoms/form/Button';
 import { Inter_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
+import { RadioOptionUncheckedIcon, RadioOptionCheckedIcon } from '@/components/atoms/icons/Icons';
 
 function YesNoQuestion({ question }: { question: string }) {
   const [answer, setAnswer] = useState<string | null>(null);
@@ -25,7 +26,7 @@ function YesNoQuestion({ question }: { question: string }) {
             answer === 'No' ? 'bg-primary text-white' : 'bg-[#f4f4f4]'
           )}
         >
-          {answer === 'No' ? <ChoosedOptionBox /> : <OptionBox />}
+          {answer === 'No' ? <RadioOptionCheckedIcon /> : <RadioOptionUncheckedIcon />}
           <p>No</p>
         </Button>
 
@@ -37,7 +38,7 @@ function YesNoQuestion({ question }: { question: string }) {
             answer === 'Yes' ? 'bg-primary text-white' : 'bg-[#f4f4f4]'
           )}
         >
-          {answer === 'Yes' ? <ChoosedOptionBox /> : <OptionBox />}
+          {answer === 'Yes' ? <RadioOptionCheckedIcon /> : <RadioOptionUncheckedIcon />}
           <p>Yes</p>
         </Button>
       </div>
@@ -46,32 +47,3 @@ function YesNoQuestion({ question }: { question: string }) {
 }
 
 export default YesNoQuestion;
-
-function OptionBox() {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 18 18"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect x="0.5" y="0.5" width="17" height="17" rx="8.5" stroke="#828282" />
-    </svg>
-  );
-}
-
-function ChoosedOptionBox() {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 18 18"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect x="0.5" y="0.5" width="17" height="17" rx="8.5" stroke="white" />
-      <circle cx="9" cy="9" r="5" fill="white" />
-    </svg>
-  );
-}

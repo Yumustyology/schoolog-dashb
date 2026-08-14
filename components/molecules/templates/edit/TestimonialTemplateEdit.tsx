@@ -7,7 +7,7 @@ import {
 } from '@/app/lib/config/font.config';
 import Button from '@/components/atoms/form/Button';
 import Input from '@/components/atoms/form/Input';
-import ImageUploader from '@/components/atoms/form/ImageUploader';
+import FileUploader from '@/components/atoms/form/FileUploader';
 import CustomImageUploaderSmall from './CustomImageUploaderSmall';
 import { IoAdd } from 'react-icons/io5';
 import { DatePicker } from '@/components/atoms/form/DatePicker';
@@ -125,9 +125,9 @@ const TestimonialTemplateEdit: React.FC = () => {
             >
               Testimony image
             </label>
-            <ImageUploader
+            <FileUploader
               className="flex items-center --!bg-[#F8F8F8] tablet:h-[100px] laptop:h-[58px] overflow-hidden"
-              onImageSelected={(file) => handleImageChange(index, file!)}
+              onFileSelected={(file) => handleImageChange(index, file!)}
               renderUI={(props) => (
                 <CustomImageUploaderSmall
                   className="flex flex-row items-center gap-4"

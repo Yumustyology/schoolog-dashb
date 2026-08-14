@@ -14,8 +14,8 @@ import CancelIcon from '@/components/atoms/icons/dashboard/CancelIcon';
 import Image from 'next/image';
 import { teacherImg } from '@/app/assets';
 
-function AttendanceList() {
-  type AttendanceList = {
+function TeachersAttendanceList() {
+  type TeachersAttendanceList = {
     type?: 'students' | 'teachers';
     date: string;
     checkInStatus: 'present' | 'absent' | 'late';
@@ -25,7 +25,7 @@ function AttendanceList() {
     teacherName: string;
   }[];
 
-  const attendanceList: AttendanceList = [
+  const attendanceList: TeachersAttendanceList = [
     {
       date: 'Monday 12, August 2024',
       checkInStatus: 'present',
@@ -158,4 +158,4 @@ function AttendanceList() {
   );
 }
 
-export default AttendanceList;
+export default TeachersAttendanceList;

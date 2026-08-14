@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { poppins_400 } from '@/app/lib/config/font.config';
+import { poppins_400, Inter_500 } from '@/app/lib/config/font.config';
 
 interface Option {
   id: string;
@@ -72,10 +72,11 @@ const SelectComp: React.FC<SelectCompProps> = ({
         <SelectTrigger
           className={cn(
             'bg-white rounded-lg w-full shadow-none h-[54px] border-[#E0E0E0]',
+            Inter_500.className,
             triggerClasses
           )}
         >
-          <SelectValue placeholder={placeholder} />
+          <SelectValue className={Inter_500.className} placeholder={placeholder} />
         </SelectTrigger>
 
         <SelectContent
@@ -86,16 +87,16 @@ const SelectComp: React.FC<SelectCompProps> = ({
           style={{ zIndex: 1350 }}
         >
           {isLoading ? (
-            <SelectItem value="loading" disabled>
+            <SelectItem className={Inter_500.className} value="loading" disabled>
               {loadingMessage}
             </SelectItem>
           ) : error ? (
-            <SelectItem value="error" disabled>
+            <SelectItem className={Inter_500.className} value="error" disabled>
               {errorMessage}
             </SelectItem>
           ) : (
             options.map((option) => (
-              <SelectItem key={option.id} value={option.id}>
+              <SelectItem className={Inter_500.className} key={option.id} value={option.id}>
                 {option.name}
               </SelectItem>
             ))

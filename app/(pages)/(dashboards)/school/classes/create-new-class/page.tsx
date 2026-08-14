@@ -12,6 +12,7 @@ import { createClass as createClassApi, CreateClassPayload } from '@/app/lib/ent
 import showToast from '@/app/lib/utils/toast';
 import { useRouter } from 'next/navigation';
 import FormSectionHeader from '@/components/molecules/dashboard/subjects/CreateSubject/FormSectionHeader';
+import { RemoveChipIcon } from '@/components/atoms/icons/Icons';
 // import { SelectClassGrade } from '@/components/atoms/dashboard/materials/SelectClassGrade';
 
 export default function CreateClassPage() {
@@ -94,10 +95,7 @@ export default function CreateClassPage() {
                       </div>
                     </div>
                     <button onClick={() => setSelectedTeachers(selectedTeachers.filter((s) => s.id !== t.id))} className="p-2 rounded-full bg-white border border-[#F8D6D6]">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18 6L6 18" stroke="#E05454" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                        <path d="M6 6L18 18" stroke="#E05454" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                      </svg>
+                      <RemoveChipIcon />
                     </button>
                   </div>
                 ))}

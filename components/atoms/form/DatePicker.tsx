@@ -12,7 +12,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { poppins_400, Inter_500, Inter_400 } from '@/app/lib/config/font.config';
+import { Inter_500, Inter_400 } from '@/app/lib/config/font.config';
 
 export function DatePicker({
   className,
@@ -24,6 +24,7 @@ export function DatePicker({
   value,
   disabled,
   error,
+  labelClassName,
 }: {
   className?: string;
   placeholder?: string | React.ReactNode;
@@ -34,6 +35,7 @@ export function DatePicker({
   value?: Date;
   disabled?: boolean;
   error?: string;
+  labelClassName?: string;
 }) {
   const [date, setDate] = React.useState<Date | undefined>(value);
 
@@ -49,12 +51,12 @@ export function DatePicker({
   return (
     <div className="w-full">
       {label && (
-        <label className={cn('block text-sm font-medium text-gray-700 mb-2', Inter_500.className)}>
+        <label className={cn('block text-sm font-medium text-gray-700 mb-2', Inter_500.className, labelClassName)}>
           {label} {required && <span className="text-red-500">*</span>}
         </label>
       )}
       <Popover>
-        <PopoverTrigger asChild className="w-full">
+        <PopoverTrigger asChild className="w-full h-[47px]">
           <Button
             variant={'outline'}
             className={cn(

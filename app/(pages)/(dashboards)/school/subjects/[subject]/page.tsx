@@ -9,17 +9,18 @@ import SubjectInfoPage from './SubjectInfo';
 //   }));
 // }
 
-export async function generateStaticParams() {
-  const subjects = ['math', 'science', 'history', '1234'];
-  return subjects.map((subject) => ({
-    subject,
-  }));
-}
+// export async function generateStaticParams() {
+//   const subjects = ['math', 'science', 'history', '1234'];
+//   return subjects.map((subject) => ({
+//     subject,
+//   }));
+// }
 
-export default function SubjectPage({
+export default async function SubjectPage({
   params,
 }: {
   params: { subject: string };
 }) {
-  return <SubjectInfoPage subject={params.subject} />;
+  const resolved = await params;
+  return <SubjectInfoPage subject={resolved.subject} />;
 }

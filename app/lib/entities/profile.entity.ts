@@ -3,12 +3,12 @@ import { entity, persistence } from 'simpler-state';
 export type Audience = 'Admin' | 'Student' | 'Teacher' | 'Parent' | string;
 
 export type ProfileState = {
-  slg_id: string; // e.g. "SLG-431844"
-  school_id: string; // e.g. Mongo _id
-  slug_id: string; // e.g. "AOM-ADM-290Y479"
+  slgId: string; // e.g. "SLG-431844"
+  schoolId: string; // e.g. Mongo _id
+  slugId: string; // e.g. "AOM-ADM-290Y479"
   audience: Audience; // defaults to "Admin"
   // token?: string;
-  school_slug_id: string; // e.g. "AOM-ADM-290Y479"
+  schoolSlugId: string; // e.g. "AOM-ADM-290Y479"
   slug: string;
   firstName: string;
   lastName: string;
@@ -17,12 +17,12 @@ export type ProfileState = {
 
 export const profileState = entity<ProfileState>(
   {
-    slg_id: '',
-    school_id: '',
-    slug_id: '',
+    slgId: '',
+    schoolId: '',
+    slugId: '',
     audience: '',
     slug: '',
-    school_slug_id: '', // e.g. "AOM-ADM-290Y479"
+    schoolSlugId: '', // e.g. "AOM-ADM-290Y479"
     firstName: '',
     lastName: '',
   },
@@ -46,12 +46,12 @@ export const replaceProfileState = (next: ProfileState) => {
 
 export const resetProfileState = () => {
   profileState.set({
-    slg_id: '',
-    school_id: '',
-    slug_id: '',
+    slgId: '',
+    schoolId: '',
+    slugId: '',
     audience: '',
     slug: '',
-    school_slug_id: '', // e.g. "AOM-ADM-290Y479",
+    schoolSlugId: '', // e.g. "AOM-ADM-290Y479",
     firstName: '',
     lastName: '',
   });

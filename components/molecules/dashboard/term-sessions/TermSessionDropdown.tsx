@@ -2,7 +2,8 @@
 
 import React from 'react';
 import useSWR from 'swr';
-import termSessionActions, { type TermSession } from '@/app/lib/actions/term-session.actions';
+import { getAllTermSessions } from '@/app/lib/actions/term-session.actions';
+import type { TermSessionType } from '@/app/lib/types/academicYear.types';
 import { cn } from '@/app/lib/utils';
 import { poppins_400 } from '@/app/lib/config/font.config';
 import { formatDateRange } from '@/app/lib/utils/dateUtils';
@@ -15,8 +16,8 @@ import {
 } from '@/components/ui/select';
 
 interface TermSessionDropdownProps {
-  selectedTerm: TermSession | null;
-  onTermSelect: (term: TermSession | null) => void;
+  selectedTerm: TermSessionType | null;
+  onTermSelect: (term: TermSessionType | null) => void;
   className?: string;
   placeholder?: string;
 }
@@ -29,10 +30,12 @@ function TermSessionDropdown({
 }: TermSessionDropdownProps) {
   const { data: response, error, isLoading } = useSWR(
     'termSessions',
-    () => termSessionActions.getAllTermSessions()
+    () => getAllTermSessions({
+      activeAcademicYear: true
+    })
   );
 
-  const terms = response?.data?.data;
+  const terms = response?.data;
 
   if (isLoading) {
     return (
@@ -117,12 +120,12 @@ function TermSessionDropdown({
             <span className="text-gray-500">None selected</span>
           </SelectItem>
           {terms.map((term) => {
-            const dateRange = term.start_date && term.end_date 
-              ? formatDateRange(term.start_date, term.end_date) 
+            const dateRange = term.startDate && term.endDate 
+              ? formatDateRange(term.startDate, term.endDate) 
               : null;
 
             return (
-              <SelectItem className={cn(poppins_400.className)} key={term._id} value={term._id}>
+              <SelectItem className={cn(poppins_400.className)} key={term._id || term.id} value={term._id || term.id || ''}>
                 <div className="flex flex-col text-left w-full">
                   <span className="font-medium">
                     {term.name}{dateRange && ` - ${dateRange}`}

@@ -12,6 +12,7 @@ import { SelectSubject } from '@/components/atoms/dashboard/materials/SelectSubj
 import BorrowBooksList from '@/components/molecules/dashboard/library/BorrowBooksList';
 import AvailableBooks from '@/components/organisms/dashboard/students/AvailableBooks';
 import { cn } from '@/app/lib/utils';
+import { SearchOutlineIcon } from '@/components/atoms/icons/Icons';
 
 function Library() {
   const todayClassesTabs = [
@@ -47,28 +48,7 @@ function Library() {
           <div className="flex justify-between items-center">
             <div className="flex gap-6 ">
               <div className="flex justify-start gap-3 bg-[#F7F7F7] border border-gray4 rounded-[100px] mb-6 p-2 h-[38px] w-[250px]">
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  xmlns="http:/ /www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
-                    stroke="#828282"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M22 22L20 20"
-                    stroke="#828282"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
+                <SearchOutlineIcon size={18} />
 
                 <input
                   type="search"

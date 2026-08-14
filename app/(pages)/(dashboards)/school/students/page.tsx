@@ -13,10 +13,12 @@ import {
 } from '@/components/atoms/icons/Icons';
 import React from 'react';
 import Search from '@/components/atoms/form/SearchInput';
-import { ClassDropdown } from '@/components/atoms/dashboard/students/ClassDropdown';
+import { ClassGradeDropdown } from '@/components/atoms/dashboard/classes/ClassGradeDropdown';
+import { useClassGradeFilter } from '@/app/lib/hooks/useClassGradeFilter';
 import { StatusDropdown } from '@/components/atoms/dashboard/students/StatusDropdown';
 import { StatusButton } from '@/components/atoms/dashboard/students/StatusButton';
 import StudentsTableList from '@/components/atoms/dashboard/students/StudentsTableLists';
+import { usePaginatedSearch } from '@/app/lib/hooks/usePaginatedSearch';
 import { FilterModal } from '@/components/atoms/dashboard/students/FilterModal';
 import {
   OpenDemoteModal,
@@ -32,9 +34,21 @@ import { AddStudentMenu } from '@/components/atoms/dashboard/students/modals/Add
 import { UploadStudentsModal } from '@/components/atoms/dashboard/students/modals/UploadStudentsModal';
 import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 
-const page = () => {
+const Page = () => {
   const breadcrumbs = [{ label: 'Students', isActive: true }];
   const { theme } = useSlgTheme();
+  const { selectedClassGrade, setSelectedClassGrade } = useClassGradeFilter();
+  const {
+    search,
+    debouncedSearch,
+    handleSearchChange,
+    page,
+    setPage,
+    pageSize,
+    setPageSize,
+    hasEverLoadedData,
+    setHasEverLoadedData,
+  } = usePaginatedSearch();
   return (
     <main>
       <div className="flex justify-between items-center">
@@ -79,10 +93,19 @@ const page = () => {
           <div className="flex gap-4 items-center">
             <Search
               placeholder="Search student..."
-              className="w-[231px] h-[38px] rounded-full  bg-[#F7F7F7] border border-gray4"
+              className="min-w-[361px] h-[38px] rounded-full  bg-[#F7F7F7] border border-gray4"
+              value={search}
+              onChange={handleSearchChange}
             />
 
-            <ClassDropdown />
+            <ClassGradeDropdown
+              value={selectedClassGrade ?? ''}
+              full
+              onValueChange={(v) => {
+                const id = typeof v === 'string' ? v : Array.isArray(v) ? v[0] : undefined;
+                if (typeof id === 'string') setSelectedClassGrade(id);
+              }}
+            />
             <StatusDropdown />
             <Button
               onClick={OpenStudentFilterModal}
@@ -123,11 +146,21 @@ const page = () => {
         </div>
 
         <div className="">
-          <StudentsTableList />
+          <StudentsTableList
+            search={search}
+            debouncedSearch={debouncedSearch}
+            handleSearchChange={handleSearchChange}
+            page={page}
+            setPage={setPage}
+            pageSize={pageSize}
+            setPageSize={setPageSize}
+            hasEverLoadedData={hasEverLoadedData}
+            setHasEverLoadedData={setHasEverLoadedData}
+          />
         </div>
       </div>
     </main>
   );
 };
 
-export default page;
+export default Page;

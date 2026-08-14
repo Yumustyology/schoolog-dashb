@@ -11,7 +11,7 @@ import { DatePicker } from '@/components/atoms/form/DatePicker';
 import { DateRangePicker } from '@/components/atoms/form/DateRangePicker';
 import SelectComp from '@/components/atoms/form/Select';
 import { EditIcon, ExportIcon } from '@/components/atoms/icons/Icons';
-import AttendanceList from '@/components/molecules/dashboard/attendance/AttendanceList';
+import TeachersAttendanceList from '@/components/molecules/dashboard/attendance/TeachersAttendanceList';
 import { TeacherInfoCard } from '@/components/molecules/dashboard/staff/TeacherInfoCard';
 import { TeacherOthersInfoCard } from '@/components/molecules/dashboard/staff/TeacherOthersInfoCard';
 import { GuardianInfoCard } from '@/components/molecules/dashboard/students/GuardianInfoCard';
@@ -108,7 +108,7 @@ const TeacherInfoPage = () => {
               </div>
             </div>
           </div>
-          <AttendanceList />
+          <TeachersAttendanceList />
         </div>
       </div>
     </div>

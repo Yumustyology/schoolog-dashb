@@ -1,40 +1,68 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import { cn } from '@/app/lib/utils';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
-import { classes } from '@/app/constants';
-import { OptionIcon, ArrangeIcon } from '@/components/atoms/icons/Icons';
-// ...existing imports
-// (options dropdown for subjects was previously imported here; not needed in class card)
-import OptionsClassDropdown from '@/components/atoms/dashboard/classes/OptionsClassDropdown';
+import { ArrangeIcon, VIsibilityIcon, AddTeacherIcon, EditIcon, DeleteIcon } from '@/components/atoms/icons/Icons';
+import MenuLists from '@/components/atoms/dashboard/students/MenuLists';
 import Dot from '@/components/atoms/Dot';
-
-type Class = (typeof classes)[number];
+import { ClassGrade } from '@/app/lib/types/class.types';
+import { useRouter } from 'next/navigation';
+import ConfirmModal from '@/components/molecules/ConfirmModal';
+import { mutate } from 'swr';
+import showToast from '@/app/lib/utils/toast';
+import classGradeActions from '@/app/lib/actions/class-grade.actions';
 
 interface ClassCardProps {
-  classData: Class;
+  classData: ClassGrade;
   role: 'school' | 'student' | 'teacher';
   onArrange?: () => void;
   totalClasses?: number;
+  className?: string;
 }
 
 const ClassCard: React.FC<ClassCardProps> = ({
   classData,
   role,
   onArrange,
-  totalClasses = 0,
+  totalClasses = 0
 }) => {
-  const [isOpen, setIsOpen] = React.useState(false);
+  const router = useRouter();
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const menuItems = [
+    {
+      label: 'View details',
+      onClick: () => router.push(`/${'school'}/classes/${classData._id}`),
+      icon: <VIsibilityIcon size={20} />,
+    },
+    {
+      label: 'Add student',
+      onClick: () => router.push(`/${'school'}/students/${classData._id}/add-new-student`),
+      icon: <AddTeacherIcon size={24} color="#828282" />,
+    },
+    {
+      label: 'Edit class',
+      onClick: () => router.push(`/${'school'}/classes/${classData._id}/edit/`),
+      icon: <EditIcon size={20} />,
+    },
+    {
+      label: 'Delete',
+      onClick: () => setShowDeleteModal(true),
+      icon: <DeleteIcon />,
+      danger: true,
+    },
+  ];
 
   return (
     <div
-      key={classData.id}
+      key={classData._id}
       className="w-full flex flex-col gap-3 justify-between bg-white min-h-[125px] border border-gray-100 rounded-xl p-4 shadow-sm relative"
     >
       <div className="flex items-start justify-between">
         <h3 className={cn('text-base text-[#071E3B] ', poppins_500.className)}>
-          {classData.className}
+          {classData?.name}
         </h3>
         {totalClasses >= 2 && (
           <button
@@ -53,33 +81,32 @@ const ClassCard: React.FC<ClassCardProps> = ({
 
       <div className={cn('text-sm flex items-center text-gray-500', poppins_400.className)}>
         <span className="text-gray6 text-sm font-medium">
-          {classData.number_of_student}
+          {classData.studentCount}
         </span>
         <span className="ml-1 text-gray3 text-sm"> students</span>
         <Dot />
         <span className="text-gray6 text-sm font-medium">
-          {classData.number_of_male}
+          {classData.studentMaleCount}
         </span>
         <span className="ml-1 text-gray3 text-sm"> Male</span>
         <Dot />
         <span className="text-gray6 text-sm font-medium">
-          {classData.number_of_female}
+          {classData.studentFemaleCount}
         </span>
         <span className="ml-1 text-gray3 text-sm"> Female</span>
       </div>
 
-      {/* teacher row */}
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center gap-1.5">
-          {classData.teacherImg && (
+          {classData?.classTeacher?.image ? (
             <Image
-              src={classData.teacherImg}
-              alt={classData.teacher}
+              src={classData.classTeacher.image}
+              alt={classData.classTeacher.firstName}
               width={24}
               height={24}
               className="rounded-full"
             />
-          )}
+          ) : null}
 
           <div>
             <span
@@ -87,25 +114,52 @@ const ClassCard: React.FC<ClassCardProps> = ({
                 'text-[#333333] text-sm font-medium ',
                 poppins_400.className
               )}
-            >
-              {classData.teacher}
+            > 
+              {classData?.classTeacher
+                ? `${classData.classTeacher.firstName} ${classData.classTeacher.lastName}`
+                : 'No assigned teacher'}
             </span>
           </div>
         </div>
 
         {role === 'school' && (
-          <div className="relative">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              aria-label="More options"
-              className="rounded-full hover:bg-gray-100 text-gray-500 p-2"
-            >
-              <OptionIcon />
-            </button>
-            <OptionsClassDropdown setIsOpen={setIsOpen} isOpen={isOpen} />
-          </div>
+          <MenuLists
+            label="Options"
+            items={menuItems}
+            placement="bottom-start"
+            maxHeight="150px"
+          />
         )}
       </div>
+
+      <ConfirmModal
+        open={showDeleteModal}
+        close={() => setShowDeleteModal(false)}
+        title="Delete class"
+        body="Are you sure you want to delete this class? This action cannot be undone."
+        icon={<DeleteIcon />}
+        isLoading={isDeleting}
+        confirmText="Delete"
+        confirmClassName="bg-r text-white"
+        onConfirm={async () => {
+          setIsDeleting(true);
+          try {
+            await classGradeActions.deleteClassGrade(classData._id);
+            showToast('Class deleted', 'class-deleted', { type: 'success' });
+            setShowDeleteModal(false);
+            try {
+              mutate('/class-grades/school');
+            } catch {
+              // ignore if mutate is not available
+            }
+          } catch (err) {
+            console.error(err);
+            showToast('Failed to delete class', 'class-delete-error', { type: 'error' });
+          } finally {
+            setIsDeleting(false);
+          }
+        }}
+      />
     </div>
   );
 };

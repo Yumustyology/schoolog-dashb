@@ -1,4 +1,4 @@
-import { Announcements } from '@/app/types';
+import { Announcements } from '@/app/lib/types';
 import Announcement from '@/components/atoms/dashboard/announcement/Announcement';
 import React from 'react';
 import Empty from '../../empty/Empty';

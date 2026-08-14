@@ -15,7 +15,7 @@ import Image from 'next/image';
 import React, { useState } from 'react';
 import SubjectModal from '@/components/atoms/dashboard/subjects/subjectsInfoModals/SubjectModal';
 import { isArchive } from '@/app/lib/entities/subject.entity';
-// import { useEntity } from 'simpler-state';
+
 import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 
 function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {

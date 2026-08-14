@@ -28,5 +28,5 @@ export default async function LoginPage() {
     console.debug('login page tenant fetch failed', e);
   }
 
-  return <LoginClient initialLogo={(initialSchool?.school_image as string) ?? defaultLogo} initialSchool={initialSchool} />;
+  return <LoginClient initialLogo={(initialSchool?.schoolImage as string) ?? defaultLogo} initialSchool={initialSchool} />;
 }

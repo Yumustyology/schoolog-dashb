@@ -11,12 +11,7 @@ import { useEntity } from 'simpler-state';
 import Input from '@/components/atoms/form/Input';
 import { IoAdd } from 'react-icons/io5';
 import SubtotalDetail, { SubtotalDetailHandles } from './SubtotalDetail'; // ⬅️ import the component here
-
-interface Subtotal {
-  id: number;
-  title: string;
-  price: string;
-}
+import type { Subtotal } from '@/app/lib/types/finance.types';
 
 const SalaryCategoryModal: React.FC = () => {
   const salaryCategoryOpen = useEntity(salaryCategoryOpenState);

@@ -1,41 +1,15 @@
-import { getRequest, postRequest, deleteRequest } from '../service/apiRequests';
-import type { AxiosResponse } from 'axios';
-
-export type SubjectsResponse<T = Record<string, unknown>> = {
-  status: 'success' | 'error';
-  statusCode: number;
-  message: string;
-  data: T[];
-  meta?: { count: number };
-};
-
-export type CreateSubjectResponse = {
-  status: 'success' | 'error';
-  statusCode: number;
-  message: string;
-  data: Record<string, unknown>;
-};
-
-export type DeleteSubjectResponse = {
-  status: 'success' | 'error';
-  statusCode: number;
-  message: string;
-};
+import { getRequest, postRequest, deleteRequest, patchRequest } from '../service/apiRequests';
+import type { ResponseType } from '@/app/lib/types/api-response.types';
+import type { SubjectLinkPayload } from '@/app/lib/types/department.types';
 
 /**
  * Fetch school subjects with optional query params.
  * query: { search?: string; classGrades?: string[] | string }
- * headers: optional headers (e.g. Authorization, x-tenant)
  */
 export const getSchoolSubjects = async (
-  query?: Record<string, string | number | boolean>,
-//   headers?: Record<string, string>
-): Promise<AxiosResponse<SubjectsResponse> | void> => {
-//   if (headers) {
-//     return getRequestWithHeaders<SubjectsResponse>('/subjects/school', query, headers);
-//   }
-
-  return getRequest<SubjectsResponse>('/subjects/school', query);
+  query?: Record<string, string | number | boolean>
+): Promise<ResponseType<Record<string, unknown>[]>> => {
+  return getRequest<Record<string, unknown>[]>('/subjects/school', query);
 };
 
 /**
@@ -44,8 +18,8 @@ export const getSchoolSubjects = async (
  */
 export const createSubject = async (
   payload: Record<string, unknown>
-): Promise<AxiosResponse<CreateSubjectResponse> | void> => {
-  return postRequest<CreateSubjectResponse>('/subjects', payload);
+): Promise<ResponseType<unknown>> => {
+  return postRequest<unknown>('/subjects', payload);
 };
 
 /**
@@ -54,14 +28,40 @@ export const createSubject = async (
  */
 export const deleteSubject = async (
   id: string
-): Promise<AxiosResponse<DeleteSubjectResponse> | void> => {
-  return deleteRequest<DeleteSubjectResponse>('/subjects', id);
+): Promise<ResponseType<unknown>> => {
+  return deleteRequest<unknown>('/subjects', id);
+};
+
+/** Archive a subject by id */
+export const archiveSubject = async (
+  id: string
+): Promise<ResponseType<unknown>> => {
+  return patchRequest<unknown>(`/subjects/${id}/archive`, {});
+};
+
+/** Unarchive a subject by id */
+export const unarchiveSubject = async (
+  id: string
+): Promise<ResponseType<unknown>> => {
+  return patchRequest<unknown>(`/subjects/${id}/unarchive`, {});
+};
+
+/** Link a subject to a class grade and optional department */
+export const linkSubjectToClass = async (
+  subjectId: string,
+  payload: SubjectLinkPayload
+): Promise<ResponseType<unknown>> => {
+  if (!subjectId || !payload.classGradeId) return Promise.reject(new Error('Required fields missing'));
+  return postRequest<unknown>(`/subjects/${subjectId}/link`, payload);
 };
 
 const subjectsActions = {
   getSchoolSubjects,
   createSubject,
   deleteSubject,
+  archiveSubject,
+  unarchiveSubject,
+  linkSubjectToClass,
 };
 
 export default subjectsActions;

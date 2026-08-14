@@ -35,7 +35,7 @@ import {
 // import AttendanceAnalytics from '@/components/molecules/dashboard/analytics/AttendanceAnalytics';
 import AttendanceMetrics from '@/components/molecules/dashboard/analytics/AttendanceMetrics';
 // import GradesAnalytics from '@/components/molecules/dashboard/analytics/GradesAnalytics';
-import AttendanceList from '@/components/molecules/dashboard/attendance/AttendanceList';
+import TeachersAttendanceList from '@/components/molecules/dashboard/attendance/TeachersAttendanceList';
 import StudentsAttendanceList from '@/components/molecules/dashboard/attendance/StudentsAttendanceLists';
 import { ResultLists } from '@/components/molecules/dashboard/results/ResultLists';
 import { AchievementsComments } from '@/components/molecules/dashboard/students/AchievementsComments';
@@ -50,7 +50,7 @@ import {
 } from '@material-tailwind/react';
 import React from 'react';
 
-const page = () => {
+const Page = () => {
   const data = [
     {
       label: 'Students',
@@ -60,27 +60,29 @@ const page = () => {
     {
       label: 'Teachers',
       value: 'teachers',
-      content: <AttendanceList />,
+      content: <TeachersAttendanceList />,
     },
   ];
 
-  const { activeTab, handleTabClick } = useActiveTab('attendace-result', data);
+  const { activeTab, handleTabClick } = useActiveTab('attendance-result', data);
 
   return (
-    <div>
-      <div className="flex justify-between items-center">
-        <BreadcrumbBox
-          className="mb-0"
-          crumbs={[
-            {
-              label: 'Attendance',
-              isActive: true,
-              href: '/student/attendance',
-            },
-          ]}
-        />
+    <div className="w-full">
+      <div className="flex w-full justify-between items-center">
+        <div className="w-full flex-grow flex-1 flex">
+          <BreadcrumbBox
+            className="mb-0"
+            crumbs={[
+              {
+                label: 'Attendance',
+                isActive: true,
+                href: '/student/attendance',
+              },
+            ]}
+          />
+        </div>
 
-        <div className=" flex gap-4">
+        <div className="flex gap-4 items-end">
           <Button
             flat
             round
@@ -161,4 +163,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

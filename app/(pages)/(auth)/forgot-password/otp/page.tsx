@@ -29,7 +29,7 @@ function Page() {
     forgotPassordOTP.set(otp);
     const resp = await verifyForgotPasswordOtp({ email, otp });
     console.log('Response:', resp);
-    if (resp?.data?.status === 'success') {
+    if (resp?.status === 'success') {
       router.push('/reset-password');
     }
   };
