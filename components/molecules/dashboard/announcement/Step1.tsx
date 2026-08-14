@@ -1,15 +1,19 @@
+'use client';
+
 import Input from '@/components/atoms/form/Input';
-import {
-  poppins_400,
-  poppins_500,
-  poppins_600,
-} from '@/app/lib/config/font.config';
+import { poppins_500, poppins_600 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import React from 'react';
-import { AddedResource } from '@/components/atoms/dashboard/subjects/AddedResource';
 import AnnoucementUploadBox from '@/components/atoms/dashboard/announcement/AnnoucementUploadBox';
+import { useEntity } from 'simpler-state';
+import {
+  announcementFormState,
+  updateAnnouncementForm,
+} from '@/app/lib/entities/annoucement.entity';
 
 function Step1() {
+  const form = useEntity(announcementFormState);
+
   return (
     <div>
       <div className="mb-12 mt-6">
@@ -28,26 +32,28 @@ function Step1() {
 
       <div className="flex flex-col gap-8">
         <Input
-          id="annoucemen "
+          id="announcement-title"
           label="Annoucement title"
           type="text"
           labelClassName="label"
           className="input h-14 rounded-lg"
-          name="text"
-          placeholder="Input resource name"
-          // value={loginInfo.password}
-          // handleChange={updateLoginInfo}
+          name="title"
+          placeholder="Input announcement title"
+          value={form.title}
+          handleChange={(e) => updateAnnouncementForm({ title: e.target.value })}
         />
 
         <Input
-          id="description"
+          id="announcement-description"
           type="textarea"
           label="Description"
           labelClassName="label"
-          name="text"
+          name="message"
           placeholder="Input description"
-          // value={loginInfo.password}
-          // handleChange={updateLoginInfo}
+          value={form.message}
+          handleChange={(e) =>
+            updateAnnouncementForm({ message: e.target.value })
+          }
         />
 
         <div className="flex flex-col gap-3">

@@ -12,7 +12,7 @@ type EmptyProps = {
   route?: string;
 };
 
-function Empty({ icon, title, description, buttonText }: EmptyProps) {
+function Empty({ icon, title, description, buttonText, route }: EmptyProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ function Empty({ icon, title, description, buttonText }: EmptyProps) {
         </p>
       </div>
       {buttonText && (
-        <Button round className="mt-12 px-8 py-3.5">
+        <Button round to={route} className="mt-12 px-8 py-3.5">
           {buttonText}
         </Button>
       )}

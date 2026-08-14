@@ -4,20 +4,23 @@ import { Typography } from '@material-tailwind/react';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import Button from '@/components/atoms/form/Button';
+import type { AnnouncementCardData } from '@/components/atoms/dashboard/announcement/Announcement';
 
 const AnnoucementSideDrawer = ({
   open,
   closeDrawer,
+  announcement,
 }: {
   open: boolean;
   closeDrawer: () => void;
+  announcement?: AnnouncementCardData;
 }) => {
   return (
     <DrawerSide
       open={open}
       close={closeDrawer}
       title="Announcement details"
-      subtitle="21/05/2024"
+      subtitle={announcement?.date}
     >
       <div className="p-6 overflow-y-auto max-h-[calc(100vh-140px)]">
         <div className="mt-6">
@@ -28,22 +31,10 @@ const AnnoucementSideDrawer = ({
                 poppins_500.className
               )}
             >
-              2024 Midterm break starts from June 11 to June 16
+              {announcement?.headline}
             </h2>
             <p className={cn('text-sm text-[#071E3B]', poppins_400.className)}>
-              Lorem ipsum dolor sit amet consectetur. Ultricies felis lacus
-              massa mi massa dignissim. Gravida vel nunc dictum in pretium fusce
-              vulputate. Tristique ultrices etiam diam enim eleifend nec ornare
-              et. Blandit eu sed pellentesque sit leo ornare lacus semper. Eget
-              facilisi amet volutpat sit felis senectus aliquet vitae penatibus.
-              Viverra nulla auctor quam egestas. Risus gravida nunc consectetur
-              donec sit cras justo. Volutpat vestibulum vitae odio sagittis nisl
-              feugiat. Elit id enim scelerisque amet. Enim proin accumsan arcu
-              arcu ultricies volutpat sit. Quis sed eget massa amet feugiat
-              varius odio massa. Nullam mi eget porttitor mattis. Turpis
-              suspendisse sagittis ultricies non at adipiscing. Id ac amet sit
-              nisl vivamus. Leo ultricies ornare pulvinar netus at semper nulla.
-              Egestas id ipsum orci viverra quam risus tempus semper nec. Nunc.
+              {announcement?.content}
             </p>
           </Typography>
         </div>

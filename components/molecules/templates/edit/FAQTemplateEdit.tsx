@@ -1,20 +1,51 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { cn } from '@/app/lib/utils';
 import { Inter_400, Inter_500, Inter_600 } from '@/app/lib/config/font.config';
 import Button from '@/components/atoms/form/Button';
 import Input from '@/components/atoms/form/Input';
 import { IoAdd } from 'react-icons/io5';
+import websiteContentActions from '@/app/lib/actions/website-content.action';
+import showToast from '@/app/lib/utils/toast';
 
 type Question = { title: string; description: string };
+
+const DEFAULT_QUESTIONS: { [key: string]: Question[] } = {
+  General: [{ title: '', description: '' }],
+  Participants: [{ title: '', description: '' }],
+  Recruiters: [{ title: '', description: '' }],
+};
 
 const FAQTemplateEdit = () => {
   const tabs = ['General', 'Participants', 'Recruiters'];
   const [activeTab, setActiveTab] = useState<string>('General');
-  const [questions, setQuestions] = useState<{ [key: string]: Question[] }>({
-    General: [{ title: '', description: '' }],
-    Participants: [{ title: '', description: '' }],
-    Recruiters: [{ title: '', description: '' }],
-  });
+  const [questions, setQuestions] = useState<{ [key: string]: Question[] }>(DEFAULT_QUESTIONS);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    websiteContentActions
+      .getMyWebsiteContent()
+      .then((res) => {
+        const faq = res.data?.faq;
+        if (faq && Object.keys(faq).length > 0) {
+          setQuestions({ ...DEFAULT_QUESTIONS, ...faq });
+        }
+      })
+      .catch(() => {
+        // no saved content yet — keep defaults
+      });
+  }, []);
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      await websiteContentActions.saveFaqSection(questions);
+      showToast('FAQ saved', 'faq-save', { type: 'success' });
+    } catch {
+      showToast('Failed to save FAQ', 'faq-save-failed', { type: 'error' });
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const handleTabChange = (tab: string): void => setActiveTab(tab);
 
@@ -56,8 +87,13 @@ const FAQTemplateEdit = () => {
             Edit and add FAQ to the website
           </p>
         </div>
-        <Button className="text-white text-sm rounded-full">
-          Save changes
+        <Button
+          type="button"
+          onClick={handleSave}
+          disabled={saving}
+          className="text-white text-sm rounded-full"
+        >
+          {saving ? 'Saving…' : 'Save changes'}
         </Button>
       </div>
 

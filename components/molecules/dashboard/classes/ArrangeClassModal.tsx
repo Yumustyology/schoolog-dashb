@@ -176,9 +176,9 @@ const SortableItem = React.memo(function SortableItem({ id, classData }: { id: s
       className: classData.name,
       teacherImg,
       teacher: teacherName,
-      number_of_male: male,
-      number_of_female: female,
-      number_of_student: total,
+      studentMaleCount: male,
+      studentFemaleCount: female,
+      studentCount: total,
     };
   }, [classData]);
 

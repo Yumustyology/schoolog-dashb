@@ -2,31 +2,48 @@
 
 import { thumbnailImage } from '@/app/assets';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
-import { openMakePaymentModal } from '@/app/lib/entities/payment.entity';
-import { cn } from '@/app/lib/utils';
+import { openTemplateCheckoutModal } from '@/app/lib/entities/template-checkout.entity';
+import { cn, formatCurrency } from '@/app/lib/utils';
 import { carouselImageRefType } from '@/app/lib/types';
 import Button from '@/components/atoms/form/Button';
 import CardPosIcon from '@/components/atoms/icons/dashboard/CardPosIcon';
 import EyeClose from '@/components/atoms/icons/EyeClose';
-import MakePaymentModal from '@/components/molecules/Payment/MakePaymentModal';
+import TemplateCheckoutModal from '@/components/molecules/templates/TemplateCheckoutModal';
 import { CarouselImage } from '@/components/organisms/dashboard/CarouselImage';
 import Image from 'next/image';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
+import useSWR from 'swr';
+import templatesActions from '@/app/lib/actions/templates.action';
+import showToast from '@/app/lib/utils/toast';
 
 const TemplateInfo = () => {
   const [activeIndex, setActiveIndex] = React.useState(0);
+  const params = useParams<{ template: string }>();
+  const templateId = params.template;
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const carouselImageRef = useRef<carouselImageRefType | null>(null);
 
-  const footerImages = [
-    thumbnailImage,
-    thumbnailImage,
-    thumbnailImage,
-    thumbnailImage,
-    thumbnailImage,
-    thumbnailImage,
-    thumbnailImage,
-  ];
+  const { data, isLoading, mutate } = useSWR(
+    templateId ? ['template', templateId] : null,
+    () => templatesActions.fetchTemplateById(templateId)
+  );
+  const template = data?.data;
+
+  useEffect(() => {
+    if (searchParams.get('paystack_checkout')) {
+      showToast(
+        "Payment received — we're verifying it now, this can take a few seconds",
+        'paystack-checkout-return',
+        { type: 'success' }
+      );
+      router.replace(`/school/templates/${templateId}`);
+      mutate();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const handleSetActiveIndex = (arg: number) => {
     if (carouselImageRef?.current) {
@@ -34,6 +51,17 @@ const TemplateInfo = () => {
       carouselImageRef?.current?.setActiveIndexTab(arg);
     }
   };
+
+  if (isLoading || !template) {
+    return (
+      <div className="bg-white p-6 rounded-xl mt-3 w-full text-center text-gray6 py-20">
+        {isLoading ? 'Loading template…' : 'Template not found'}
+      </div>
+    );
+  }
+
+  const images =
+    template.previewImages.length > 0 ? template.previewImages : [thumbnailImage];
 
   return (
     <div className="bg-white p-6 rounded-xl mt-3 w-full">
@@ -47,7 +75,7 @@ const TemplateInfo = () => {
                   poppins_500.className
                 )}
               >
-                Eleganza custom website
+                {template.name}
               </h3>
             </div>
             <p
@@ -56,10 +84,12 @@ const TemplateInfo = () => {
                 poppins_500.className
               )}
             >
-              ₦10,000{' '}
-              <span className={cn(poppins_400.className, 'text-xs')}>
-                /monthly
-              </span>
+              {formatCurrency(template.price, template.currency)}{' '}
+              {template.billingInterval !== 'one_time' && (
+                <span className={cn(poppins_400.className, 'text-xs')}>
+                  /{template.billingInterval === 'yearly' ? 'yearly' : 'monthly'}
+                </span>
+              )}
             </p>
           </div>
           <div className="flex gap-4 mb-8">
@@ -73,7 +103,14 @@ const TemplateInfo = () => {
               <span>Preview</span>
             </Button>
             <Button
-              onClick={openMakePaymentModal}
+              onClick={() =>
+                openTemplateCheckoutModal({
+                  templateId: template._id,
+                  name: template.name,
+                  amount: template.price,
+                  currency: template.currency,
+                })
+              }
               round
               className="gap-2 px-6 h-[44px] rounded-full"
             >
@@ -87,21 +124,13 @@ const TemplateInfo = () => {
             setActiveFooterImg={(arg) => {
               setActiveIndex(arg);
             }}
-            images={[
-              thumbnailImage,
-              thumbnailImage,
-              thumbnailImage,
-              thumbnailImage,
-              thumbnailImage,
-              thumbnailImage,
-              thumbnailImage,
-            ]}
+            images={images}
             ref={carouselImageRef}
             className="!h-[606px] w-full relative --overflow-hidden"
           />
         </div>
         <div className="overflow-auto sidebar-scroll border-t mt-6 flex justify-start gap-3">
-          {footerImages.map((image, index) => (
+          {images.map((image, index) => (
             <Image
               key={index}
               src={image}
@@ -132,48 +161,33 @@ const TemplateInfo = () => {
               poppins_500.className
             )}
           >
-            Lorem ipsum dolor sit amet consectetur. Aliquet laoreet eu elit
-            viverra. Dui nunc faucibus sollicitudin elementum in. Elit ac eget
-            aenean tellus non ullamcorper faucibus consequat ac. Amet ultrices
-            in ut cras mattis nunc aliquet. Vulputate vestibulum aliquam id id
-            eget cursus nibh. Placerat mattis id vitae Lorem ipsum dolor sit
-            amet consectetur. Aliquet laoreet eu elit viverra.{' '}
+            {template.description}
           </p>
         </div>
-        <div className="mt-10 mb-6">
-          <h2
-            className={cn(
-              'text-lg text-gray1 font-semibold',
-              poppins_500.className
-            )}
-          >
-            Qualities & Features
-          </h2>
-          <ul
-            className={cn(
-              'list-disc text-sm mt-2 font-normal text-gray6 pl-5 space-y-2',
-              poppins_500.className
-            )}
-          >
-            <li>
-              Identify and prioritize high impact AI-appropriate use cases.
-            </li>
-            <li>Devise robust data strategies and risk mitigation tactics.</li>
-            <li>
-              Learn the foundational design principles for interactive AI user
-              experiences.
-            </li>
-            <li>
-              Assess the technical frameworks for designing and building a
-              Minimal Lovable Product (MLP).
-            </li>
-            <li>
-              Test your hypotheses with no-code solutions to AI prototyping.
-            </li>
-          </ul>
-        </div>
+        {template.features.length > 0 && (
+          <div className="mt-10 mb-6">
+            <h2
+              className={cn(
+                'text-lg text-gray1 font-semibold',
+                poppins_500.className
+              )}
+            >
+              Qualities & Features
+            </h2>
+            <ul
+              className={cn(
+                'list-disc text-sm mt-2 font-normal text-gray6 pl-5 space-y-2',
+                poppins_500.className
+              )}
+            >
+              {template.features.map((feature, index) => (
+                <li key={index}>{feature}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </div>
-      <MakePaymentModal />
+      <TemplateCheckoutModal onPurchased={() => mutate()} />
     </div>
   );
 };

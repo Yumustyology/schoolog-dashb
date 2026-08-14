@@ -1,8 +1,10 @@
 'use client';
 
+import { createColumnHelper } from '@tanstack/react-table';
 import { Inter_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import type { Department } from '@/app/lib/types/department.types';
+import DataTable from '@/components/molecules/DataTable';
 
 interface DepartmentsTableListProps {
   departments: Department[];
@@ -10,79 +12,93 @@ interface DepartmentsTableListProps {
   onEdit: (id: string) => void;
 }
 
+const columnHelper = createColumnHelper<Department>();
+
 const DepartmentsTableList = ({ departments, onDelete, onEdit }: DepartmentsTableListProps) => {
+  const columns = [
+    columnHelper.accessor('name', {
+      header: 'Department name',
+      cell: (info) => (
+        <span className="whitespace-nowrap text-sm font-medium text-gray-900">
+          {info.getValue()}
+        </span>
+      ),
+      meta: { useTypography: false },
+    }),
+    columnHelper.accessor('code', {
+      header: 'Code',
+      cell: (info) => (
+        <span className="whitespace-nowrap text-sm text-gray-600">{info.getValue()}</span>
+      ),
+      meta: { useTypography: false },
+    }),
+    columnHelper.accessor('description', {
+      header: 'Description',
+      cell: (info) => <span className="text-sm text-gray-600">{info.getValue()}</span>,
+      meta: { useTypography: false },
+    }),
+    columnHelper.accessor('status', {
+      header: 'Status',
+      cell: (info) => (
+        <span
+          className={cn(
+            'inline-flex rounded-full px-2 py-0.5 text-xs font-semibold',
+            info.getValue() === 'Active'
+              ? 'bg-emerald-100 text-emerald-700'
+              : 'bg-gray-100 text-gray-700'
+          )}
+        >
+          {info.getValue()}
+        </span>
+      ),
+      meta: { useTypography: false },
+    }),
+    columnHelper.display({
+      id: 'actions',
+      header: () => <span className="block text-right">Actions</span>,
+      cell: (info) => {
+        const department = info.row.original;
+        return (
+          <div className="whitespace-nowrap text-right space-x-2">
+            <button
+              type="button"
+              onClick={() => onEdit(department._id)}
+              className="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700 transition hover:border-primary hover:text-primary"
+            >
+              Edit
+            </button>
+            <button
+              type="button"
+              onClick={() => onDelete(department._id)}
+              className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold text-red-700 transition hover:bg-red-100"
+            >
+              Delete
+            </button>
+          </div>
+        );
+      },
+      meta: { useTypography: false, useHeaderTypography: false },
+    }),
+  ];
+
   return (
     <div className="overflow-x-auto rounded-3xl border border-gray-200 bg-white shadow-sm">
-      <table className="min-w-full divide-y divide-gray-200">
-        <thead className="bg-[#FBFBFB]">
-          <tr>
-            <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-              Department name
-            </th>
-            <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-              Code
-            </th>
-            <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-              Description
-            </th>
-            <th className="px-4 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500">
-              Status
-            </th>
-            <th className="px-4 py-4 text-right text-xs font-semibold uppercase tracking-wider text-gray-500">
-              Actions
-            </th>
-          </tr>
-        </thead>
-        <tbody className="divide-y divide-gray-200 bg-white">
-          {departments.length ? (
-            departments.map((department) => (
-              <tr key={department._id}>
-                <td className="whitespace-nowrap px-4 py-4 text-sm font-medium text-gray-900">
-                  {department.name}
-                </td>
-                <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-600">
-                  {department.code}
-                </td>
-                <td className="px-4 py-4 text-sm text-gray-600">
-                  {department.description}
-                </td>
-                <td className="whitespace-nowrap px-4 py-4 text-sm text-gray-600">
-                  <span className={cn(
-                    'inline-flex rounded-full px-2 py-0.5 text-xs font-semibold',
-                    department.status === 'Active'
-                      ? 'bg-emerald-100 text-emerald-700'
-                      : 'bg-gray-100 text-gray-700'
-                  )}>
-                    {department.status}
-                  </span>
-                </td>
-                <td className="whitespace-nowrap px-4 py-4 text-right text-sm font-medium space-x-2">
-                  <button
-                    type="button"
-                    onClick={() => onEdit(department._id)}
-                    className="rounded-full border border-gray-200 bg-white px-3 py-1 text-xs font-semibold text-gray-700 transition hover:border-primary hover:text-primary"
-                  >
-                    Edit
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => onDelete(department._id)}
-                    className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold text-red-700 transition hover:bg-red-100"
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))
-          ) : (
-            <tr>
-              <td colSpan={5} className="px-4 py-8 text-center text-sm text-gray-500">
-                No departments available.
-              </td>
-            </tr>
-          )}
-        </tbody>
-      </table>
+      <DataTable
+        data={departments}
+        columns={columns}
+        isLoading={false}
+        theadClassName="bg-[#FBFBFB]"
+        thClassName={cn('px-4 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500', Inter_500.className)}
+        tdClassName="px-4 py-4"
+        rowClassName="border-b border-gray-200 last:border-b-0"
+        tableClassName="min-w-full divide-y divide-gray-200"
+        useCardWrapper={false}
+        wrapCellsInTypography={false}
+        wrapHeadersInTypography={false}
+        enableSorting={false}
+        enableFiltering={false}
+        emptyStateMessage="No departments available."
+      />
     </div>
   );
 };

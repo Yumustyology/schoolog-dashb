@@ -33,6 +33,7 @@ type StudentRow = {
   status?: string;
   classGrade?: string;
   classGrade_obj?: any;
+  photo?: string | null;
 };
 
 type Props = {
@@ -152,7 +153,7 @@ export default function StudentsTableList({
         const student = info.row.original;
         return (
           <div className="flex gap-2 items-center text-sm">
-            <AvatarIcon size={40} />
+            <AvatarIcon size={40} src={student.photo} />
             <span className="ml-2">
               {student.firstName} {student.lastName}
             </span>

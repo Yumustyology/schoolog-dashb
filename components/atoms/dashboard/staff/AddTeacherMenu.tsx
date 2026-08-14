@@ -4,6 +4,7 @@ import {
   closeAddTeacherMenu,
   isAddTeacherMenuOpen,
   openUploadTeacherModal,
+  openInviteTutorModal,
 } from '@/app/lib/entities/staff.entity';
 import {
   closeAddStudentsMenu,
@@ -11,7 +12,7 @@ import {
 } from '@/app/lib/entities/student.entity';
 import { cn } from '@/app/lib/utils';
 import ArrowRightIcon2 from '@/components/atoms/icons/ArrowRightIcon2';
-import { ExportIcon } from '@/components/atoms/icons/Icons';
+import { ExportIcon, LinkIcon } from '@/components/atoms/icons/Icons';
 import Cancel from '@/components/atoms/icons/ModalIcons/Cancel';
 import StudentsIcon from '@/components/atoms/icons/SideBar/StudentsIcon';
 import { useRouter } from 'next/navigation';
@@ -33,6 +34,18 @@ export const AddTeacherMenu = () => {
       text: 'Add teachers manually',
       click: () => {
         router.push('/school/teaching-staffs/add-new-teacher');
+      },
+    },
+    {
+      icon: <LinkIcon />,
+      text: 'Invite tutor via link',
+      click: openInviteTutorModal,
+    },
+    {
+      icon: <LinkIcon />,
+      text: 'Manage invite links',
+      click: () => {
+        router.push('/school/teaching-staffs/invites');
       },
     },
   ];

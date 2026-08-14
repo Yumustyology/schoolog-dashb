@@ -1,9 +1,7 @@
+'use client';
+
 import Input from '@/components/atoms/form/Input';
-import {
-  poppins_400,
-  poppins_500,
-  poppins_600,
-} from '@/app/lib/config/font.config';
+import { poppins_400, poppins_500, poppins_600 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import React from 'react';
 import { Label } from '@/components/ui/label';
@@ -16,29 +14,32 @@ import { useEntity } from 'simpler-state';
 import {
   selectedAnnouncementPreference,
   setSelectedAnnoncementPreference,
+  announcementFormState,
+  updateAnnouncementForm,
 } from '@/app/lib/entities/annoucement.entity';
 import { AnnouncementMediumDropdown } from '@/components/atoms/dashboard/announcement/AnnoucementMediumDropdown';
-import { AnnouncementStaffCategoryDropdown } from '@/components/atoms/dashboard/announcement/AnnoucementStaffCategory';
+import { useClassGradeFilter } from '@/app/lib/hooks/useClassGradeFilter';
 
 function Step2() {
   const selectedAnnouncement = useEntity(selectedAnnouncementPreference);
+  const form = useEntity(announcementFormState);
+  const { classGrades } = useClassGradeFilter({ disableUrlSync: true });
+
   const options = [
     { value: 'all', label: 'All' },
     { value: 'students', label: 'Students' },
     { value: 'staff', label: 'Staff' },
     { value: 'parents', label: 'Parents' },
   ];
-  const classes = [
-    { value: 'jss1', label: 'JSS1' },
-    { value: 'jss2', label: 'JSS2' },
-    { value: 'jss3', label: 'JSS3' },
-    { value: 'ss1', label: 'SS1' },
-    { value: 'ss2', label: 'SS2' },
-    { value: 'ss3', label: 'SS3 ' },
-  ];
-  const [selectedClass, setSelectedClass] = React.useState<
-    MultiValue<OptionType>
-  >([]);
+
+  const classOptions: OptionType[] = classGrades.map((c) => ({
+    value: c._id,
+    label: c.name,
+  }));
+  const selectedClassOptions = classOptions.filter((c) =>
+    form.classIds.includes(c.value)
+  );
+
   return (
     <div>
       <div className="mb-12 mt-6">
@@ -71,21 +72,23 @@ function Step2() {
               Select Class
             </Label>
             <DropdownMultiSelect
-              options={classes}
-              value={selectedClass}
-              onChange={setSelectedClass}
+              options={classOptions}
+              value={selectedClassOptions}
+              onChange={(selected: MultiValue<OptionType>) =>
+                updateAnnouncementForm({
+                  classIds: selected.map((s) => s.value),
+                })
+              }
               placeholder="Select classes..."
             />
           </div>
         )}
 
-        {selectedAnnouncement === 'staff' && (
-          <div className="mt-6">
-            <AnnouncementStaffCategoryDropdown />
-          </div>
-        )}
-        <div className=" mt-6">
-          <AnnouncementMediumDropdown />
+        <div className="mt-6">
+          <AnnouncementMediumDropdown
+            value={form.channel}
+            onChange={(channel) => updateAnnouncementForm({ channel })}
+          />
         </div>
 
         <Input
@@ -94,10 +97,12 @@ function Step2() {
           type="date"
           labelClassName="label text-gray2 mt-6"
           className=" h-11 rounded-lg"
-          name="text"
+          name="expiresAt"
           placeholder="Select date"
-          // value={loginInfo.password}
-          // handleChange={updateLoginInfo}
+          value={form.expiresAt}
+          handleChange={(e) =>
+            updateAnnouncementForm({ expiresAt: e.target.value })
+          }
         />
       </div>
     </div>
@@ -105,78 +110,3 @@ function Step2() {
 }
 
 export default Step2;
-
-// 'use client'
-// import { poppins_400 } from '@/app/lib/config/font.config';
-// import { closeGraduateModal, graduateModal, selectedGraduateType, setSelectedGraduateType } from '@/app/lib/entities/student.entity';
-// import { cn } from '@/app/lib/utils';
-// import Button from '@/components/atoms/form/Button';
-// import DropdownMultiSelect, { OptionType } from '@/components/atoms/form/DropdownMultiSelect';
-// import Modal from '@/components/molecules/Modal'
-// import { Label } from '@/components/ui/label';
-// import React from 'react'
-// import { MultiValue } from 'react-select';
-// import { useEntity } from 'simpler-state';
-// import { SelectedStudents } from '../SelectedStudents';
-// import ConfirmModal from './ConfirmModal';
-// import { GraduateModalIcon } from '@/components/atoms/icons/Icon2';
-// import { RadioOptionType } from '@/components/atoms/form/RadioOptionType';
-// import { selectedAnnouncementPreference, setSelectedAnnoncementPreference } from '@/app/lib/entities/annoucement.entity';
-// export const GraduateModal = () => {
-//   const [isGraduateSuccessModalOpen, setIsGraduateSuccessModalOpen] = React.useState(false)
-//   const periods = [
-//     { value: "jss1", label: "JSS1" },
-//     { value: "jss2", label: "JSS2" },
-//     { value: "jss3", label: "JSS3" },
-//     { value: "ss1", label: "SS1" },
-//     { value: "ss2", label: "SS2" },
-//     { value: "ss3", label: "SS3 " },
-//   ];
-//   const [selectedPeriod, setSelectedPeriod] = React.useState<MultiValue<OptionType>>([]);
-//   const isOpen = useEntity(graduateModal)
-
-//   const selectedGraduate = useEntity(selectedGraduateType);
-
-//   const handleConfirmGraduate = () => {
-//     closeGraduateModal
-//     setIsGraduateSuccessModalOpen(true)
-//   }
-
-//   return (
-//     <div>
-//       <Modal
-//         isOpen={isOpen}
-//         onClose={closeGraduateModal}
-//         title="Graduate"
-//       >
-//         <div>
-
-//           {selectedGraduate === 'wholeClass' ?
-//             (
-
-//               <div className='mt-8'>
-//                 <Label className={cn('text-base text-gray1 mb-2', poppins_400.className)}>
-//                   Select Class
-//                 </Label>
-
-//                 <DropdownMultiSelect options={periods} value={selectedPeriod} onChange={setSelectedPeriod} placeholder="Select classes..." />
-//               </div>
-
-//             )
-//             : (
-//               <div>
-//                 <SelectedStudents />
-//               </div>
-//             )
-
-//           }
-
-//         </div>
-//         <Button wide round className="h-12 mt-8" onClick={() => { handleConfirmGraduate }}>
-//           Graduate
-//         </Button>
-//       </Modal>
-//       <ConfirmModal icon={<GraduateModalIcon />} title='Graduate 100 students' content='Are you sure you want to graduate these students? these students won’t be among active students again' btnText='Graduate' open={isGraduateSuccessModalOpen} close={() => { setIsGraduateSuccessModalOpen(false) }} />
-//     </div>
-//   )
-// }

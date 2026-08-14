@@ -5,6 +5,7 @@ import { cn } from '@/app/lib/utils';
 import { AddTeacherMenu } from '@/components/atoms/dashboard/staff/AddTeacherMenu';
 import { StaffStatusDropdown } from '@/components/atoms/dashboard/staff/StaffStatusDropdown';
 import { UploadTeachersModal } from '@/components/atoms/dashboard/staff/modal/UploadTeachersModal';
+import InviteTutorModal from '@/components/atoms/dashboard/staff/modal/InviteTutorModal';
 import BreadcrumbBox from '@/components/atoms/dashboard/subjects/Breadcrumb';
 import Button from '@/components/atoms/form/Button';
 import { DatePicker } from '@/components/atoms/form/DatePicker';
@@ -44,6 +45,7 @@ const page = () => {
           </Button>
           <AddTeacherMenu />
           <UploadTeachersModal />
+          <InviteTutorModal />
         </div>
       </div>
 

@@ -14,12 +14,18 @@ import Image from 'next/image';
 export function CountriesSelect({
   labelClassName,
   id,
+  value,
+  onChange,
 }: {
   labelClassName?: string;
   id?: string;
+  value?: string;
+  onChange?: (value: string) => void;
 }) {
   const { countries } = useCountries();
-  const [country, setCountry] = useState<string>('');
+  const [internalCountry, setInternalCountry] = useState<string>('');
+  const country = value ?? internalCountry;
+  const setCountry = onChange ?? setInternalCountry;
 
   return (
     <div className="w-full">

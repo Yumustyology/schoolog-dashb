@@ -5,6 +5,7 @@ import SelectBox from '@/components/atoms/dashboard/subjects/Select';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import React from 'react';
+import useSWR from 'swr';
 import SelectComp from '@/components/atoms/form/Select';
 import TemplateCard from '@/components/molecules/templates/TemplateCard';
 import {
@@ -20,30 +21,60 @@ import PurchasedTemplate from '@/components/molecules/templates/PurchasedTemplat
 import Button from '@/components/atoms/form/Button';
 import { EditIcon } from '@/components/atoms/icons/Icons';
 import EyeClose from '@/components/atoms/icons/EyeClose';
+import templatesActions from '@/app/lib/actions/templates.action';
+import paymentsActions from '@/app/lib/actions/payments.action';
+import Empty from '@/components/molecules/empty/Empty';
+import { NoSubjectIcon } from '@/components/atoms/icons/Icons';
 
-const TemplatesList = () => (
-  <>
-    <section className="grid grid-cols-1 lgTablet:grid-cols-2 laptop:grid-cols-3 xlgDesktop:grid-cols-4 gap-6">
-      {[1, 2, 3, 4, 5, 6, 7, 8, 9, 0].map((template: number) => {
-        return <TemplateCard key={template} />;
-      })}
-    </section>
+const TemplatesList = () => {
+  const { data, isLoading } = useSWR(['templates'], () =>
+    templatesActions.fetchTemplates()
+  );
+  const templates = data?.data || [];
 
-    <footer className="my-5 flex justify-between items-center">
-      <div className="flex gap-4 items-center">
-        <h5 className="text-r2"> Showing </h5>
-        <SelectBox />
-      </div>
+  if (!isLoading && templates.length === 0) {
+    return (
+      <Empty
+        icon={<NoSubjectIcon />}
+        title="No templates available yet"
+        description="Check back later for new website templates"
+      />
+    );
+  }
 
-      <div>
-        <PaginationBox />
-      </div>
-    </footer>
-  </>
-);
+  return (
+    <>
+      <section className="grid grid-cols-1 lgTablet:grid-cols-2 laptop:grid-cols-3 xlgDesktop:grid-cols-4 gap-6">
+        {templates.map((template) => (
+          <TemplateCard key={template._id} template={template} />
+        ))}
+      </section>
+
+      <footer className="my-5 flex justify-between items-center">
+        <div className="flex gap-4 items-center">
+          <h5 className="text-r2"> Showing </h5>
+          <SelectBox />
+        </div>
+
+        <div>
+          <PaginationBox />
+        </div>
+      </footer>
+    </>
+  );
+};
 
 function Page() {
   const breadcrumbs = [{ label: 'Templates', isActive: true }];
+
+  const { data: purchasesResp } = useSWR(['payments-purchases'], () =>
+    paymentsActions.listMyPurchases()
+  );
+  const activePurchase = purchasesResp?.data?.[0];
+  const purchasedTemplateId =
+    typeof activePurchase?.templateId === 'string'
+      ? activePurchase.templateId
+      : activePurchase?.templateId?._id;
 
   const analyticsTabs = [
     {
@@ -106,20 +137,20 @@ function Page() {
                     placeholder={'Pick date'}
                   />
                 </div>
-              ) : (
+              ) : purchasedTemplateId ? (
                 <div className="flex gap-4">
                   <Button
                     flat
                     outlined
                     round
-                    to="/school/templates/edit/1234"
+                    to={`/school/templates/edit/${purchasedTemplateId}`}
                     className="bg-transparent gap-2 px-6 h-[44px] rounded-full"
                   >
                     <EditIcon color="#21B55A" size={18} />
                     <span>Edit website</span>
                   </Button>
                   <Button
-                    // onClick={openMakePaymentModal}
+                    to={`/school/templates/${purchasedTemplateId}`}
                     round
                     className="gap-2 px-6 h-[44px] rounded-full"
                   >
@@ -127,6 +158,8 @@ function Page() {
                     <span>Preview website</span>
                   </Button>
                 </div>
+              ) : (
+                <div />
               )}
 
               <TabsHeader

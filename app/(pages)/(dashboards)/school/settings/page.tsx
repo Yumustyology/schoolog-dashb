@@ -13,8 +13,10 @@ import NotificationSettings from '@/components/organisms/settings/NotificationSe
 import PreferenceSettings from '@/components/organisms/settings/PreferenceSettings';
 import DomainManagement from '@/components/organisms/settings/DomainManagement';
 import { teacherImg2 } from '@/app/assets';
+import { profileState } from '@/app/lib/entities/profile.entity';
 
 const Page = () => {
+  const profile = profileState.use();
   const data = [
     {
       label: 'Profile',
@@ -55,7 +57,9 @@ const Page = () => {
           </div>
           <div className="absolute pt-6 left-36 w-full">
             <p className={cn(Inter_600.className, 'text-xl text-black mb-1.5')}>
-              Yusuf Mustahan
+              {profile.firstName || profile.lastName
+                ? `${profile.firstName} ${profile.lastName}`.trim()
+                : 'Administrator'}
             </p>
             <p
               className={cn(
@@ -63,7 +67,7 @@ const Page = () => {
                 Inter_400.className
               )}
             >
-              Administrator / jimohjamiu2000@gmail.com
+              Administrator{profile.email ? ` / ${profile.email}` : ''}
             </p>
           </div>
 

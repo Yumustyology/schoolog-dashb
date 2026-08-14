@@ -2,8 +2,10 @@
 import Button from '@/components/atoms/form/Button';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
-import { Card, Typography } from '@material-tailwind/react';
+import { Typography } from '@material-tailwind/react';
 import { useState } from 'react';
+import { createColumnHelper } from '@tanstack/react-table';
+import DataTable from '@/components/molecules/DataTable';
 import { DrawerSide } from '../DrawerSide';
 import EyeClose from '@/components/atoms/icons/EyeClose';
 import MakePaymentModal from '../../Payment/MakePaymentModal';
@@ -76,153 +78,83 @@ const TABLE_ROWS: TableRow[] = [
   },
 ];
 
-export function InvoiceTable(): JSX.Element {
-  const TABLE_HEAD: string[] = [
-    'Invoice title',
-    'Reference',
-    'Amount',
-    'Category',
-    'Date',
-    'Status',
-    '',
-  ];
+const columnHelper = createColumnHelper<TableRow>();
 
+const statusClasses = (status: TableRow['status']) =>
+  status === 'Success'
+    ? 'text-lightSuccess bg-success'
+    : status === 'Pending'
+      ? 'text-[#F2994A] bg-[#F2994A14]'
+      : status === 'Failed'
+        ? 'text-[#EB5757] bg-[#EB575714]'
+        : 'text-gray-600 bg-gray-200';
+
+export function InvoiceTable(): JSX.Element {
   const [open, setOpen] = useState(false);
 
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
 
-  return (
-    <Card className="shadow-none h-full w-full overflow-y-visible --overflow-x-auto">
-      <table className="min-w-[800px] w-full table-auto text-left">
-        <thead>
-          <tr>
-            {TABLE_HEAD.map((head) => (
-              <th key={head} className="bg-[#FBFBFB] p-4">
-                <Typography
-                  variant="small"
-                  className={cn(
-                    'font-normal text-gray1 leading-none opacity-70',
-                    poppins_400.className
-                  )}
-                >
-                  {head}
-                </Typography>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {TABLE_ROWS.map(
-            (
-              {
-                paymentID,
-                date,
-                invoiceCategory,
-                amount,
-                status,
-                invoiceTitle,
-              },
-              index
-            ) => {
-              const isLast = index === TABLE_ROWS.length - 1;
-              const classes = cn(isLast ? 'p-4' : 'p-4 border-b border-gray4');
-
-              return (
-                <tr key={paymentID}>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      className={cn(
-                        'font-normal text-gray1 flex items-center gap-3',
-                        poppins_400.className
-                      )}
-                    >
-                      {invoiceTitle}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      className={cn(
-                        'font-normal text-gray1',
-                        poppins_400.className
-                      )}
-                    >
-                      <span>{paymentID}</span>
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      className={cn(
-                        'font-normal text-gray1',
-                        poppins_400.className
-                      )}
-                    >
-                      <span>{amount}</span>
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      className={cn(
-                        'font-normal text-gray1',
-                        poppins_400.className
-                      )}
-                    >
-                      {invoiceCategory}
-                    </Typography>
-                  </td>
-
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      className={cn(
-                        'font-normal text-gray1',
-                        poppins_400.className
-                      )}
-                    >
-                      {date}
-                    </Typography>
-                  </td>
-
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      className={cn(
-                        'font-normal rounded-full w-[92px] py-1.5 px-8',
-                        status === 'Success'
-                          ? 'text-lightSuccess bg-success'
-                          : status === 'Pending'
-                            ? 'text-[#F2994A] bg-[#F2994A14]'
-                            : status === 'Failed'
-                              ? 'text-[#EB5757] bg-[#EB575714]'
-                              : 'text-gray-600 bg-gray-200',
-                        poppins_400.className
-                      )}
-                    >
-                      {status}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Button
-                      onClick={openDrawer}
-                      className={cn(
-                        'bg-gray7 text-gray6 flex gap-3 text-sm rounded-full',
-                        poppins_400.className
-                      )}
-                    >
-                      <EyeClose />
-                      <span>View</span>
-                    </Button>
-                  </td>
-                </tr>
-              );
-            }
+  const columns = [
+    columnHelper.accessor('invoiceTitle', {
+      header: 'Invoice title',
+    }),
+    columnHelper.accessor('paymentID', {
+      header: 'Reference',
+    }),
+    columnHelper.accessor('amount', {
+      header: 'Amount',
+    }),
+    columnHelper.accessor('invoiceCategory', {
+      header: 'Category',
+    }),
+    columnHelper.accessor('date', {
+      header: 'Date',
+    }),
+    columnHelper.accessor('status', {
+      header: 'Status',
+      cell: (info) => (
+        <span className={cn('font-normal rounded-full w-[92px] py-1.5 px-8', statusClasses(info.getValue()))}>
+          {info.getValue()}
+        </span>
+      ),
+      meta: { useTypography: false },
+    }),
+    columnHelper.display({
+      id: 'actions',
+      header: '',
+      cell: () => (
+        <Button
+          onClick={openDrawer}
+          className={cn(
+            'bg-gray7 text-gray6 flex gap-3 text-sm rounded-full',
+            poppins_400.className
           )}
-        </tbody>
-      </table>
+        >
+          <EyeClose />
+          <span>View</span>
+        </Button>
+      ),
+      meta: { useTypography: false },
+    }),
+  ];
+
+  return (
+    <>
+      <DataTable
+        data={TABLE_ROWS}
+        columns={columns}
+        isLoading={false}
+        className="shadow-none h-full w-full overflow-y-visible --overflow-x-auto"
+        theadClassName=""
+        thClassName={cn('bg-[#FBFBFB] p-4 font-normal text-gray1 leading-none opacity-70', poppins_400.className)}
+        tdClassName={cn('border-gray4 font-normal text-gray1', poppins_400.className)}
+        tableClassName="min-w-[800px] w-full table-auto text-left"
+        wrapCellsInTypography={false}
+        wrapHeadersInTypography={false}
+        enableSorting={false}
+        enableFiltering={false}
+      />
 
       <DrawerSide
         open={open}
@@ -342,6 +274,6 @@ export function InvoiceTable(): JSX.Element {
         </>
       </DrawerSide>
       <MakePaymentModal />
-    </Card>
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { cn } from '@/app/lib/utils';
 import {
   Inter_400,
@@ -11,6 +11,9 @@ import FileUploader from '@/components/atoms/form/FileUploader';
 import CustomImageUploaderSmall from './CustomImageUploaderSmall';
 import { IoAdd } from 'react-icons/io5';
 import { DatePicker } from '@/components/atoms/form/DatePicker';
+import resourcesActions from '@/app/lib/actions/resources.action';
+import websiteContentActions from '@/app/lib/actions/website-content.action';
+import showToast from '@/app/lib/utils/toast';
 
 interface Testimonial {
   name: string;
@@ -18,12 +21,59 @@ interface Testimonial {
   date: string;
   testimonial: string;
   image: File | null;
+  savedImageUrl?: string;
 }
 
 const TestimonialTemplateEdit: React.FC = () => {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([
     { name: '', role: '', date: '', testimonial: '', image: null },
   ]);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    websiteContentActions
+      .getMyWebsiteContent()
+      .then((res) => {
+        const saved = res.data?.testimonials;
+        if (saved && saved.length > 0) {
+          setTestimonials(
+            saved.map((t) => ({
+              name: t.name,
+              role: t.role,
+              date: t.date ?? '',
+              testimonial: t.testimonial,
+              image: null,
+              savedImageUrl: t.image,
+            }))
+          );
+        }
+      })
+      .catch(() => {
+        // no saved content yet
+      });
+  }, []);
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      const payload = await Promise.all(
+        testimonials.map(async (t) => {
+          let imageUrl = t.savedImageUrl;
+          if (t.image) {
+            const uploaded = await resourcesActions.uploadResource({ file: t.image, name: t.image.name });
+            if (uploaded.data?.fileUrl) imageUrl = uploaded.data.fileUrl;
+          }
+          return { name: t.name, role: t.role, date: t.date, testimonial: t.testimonial, image: imageUrl };
+        })
+      );
+      await websiteContentActions.saveTestimonialsSection(payload);
+      showToast('Testimonials saved', 'testimonials-save', { type: 'success' });
+    } catch {
+      showToast('Failed to save testimonials', 'testimonials-save-failed', { type: 'error' });
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const handleInputChange = (
     index: number,
@@ -60,8 +110,8 @@ const TestimonialTemplateEdit: React.FC = () => {
             Edit and add testimonials to the website
           </p>
         </div>
-        <Button className="text-white text-sm rounded-full">
-          Save changes
+        <Button type="button" onClick={handleSave} disabled={saving} className="text-white text-sm rounded-full">
+          {saving ? 'Saving…' : 'Save changes'}
         </Button>
       </div>
 

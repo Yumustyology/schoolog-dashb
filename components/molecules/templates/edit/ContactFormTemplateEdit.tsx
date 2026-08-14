@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { cn } from '@/app/lib/utils';
 import Button from '@/components/atoms/form/Button';
 import Input from '@/components/atoms/form/Input';
 import { PhoneNumberInput } from '@/components/atoms/form/PhoneNumberInput';
 import TagsInput from 'react-tagsinput';
+import websiteContentActions from '@/app/lib/actions/website-content.action';
+import showToast from '@/app/lib/utils/toast';
 
 interface ContactFormData {
   websiteName: string;
@@ -24,7 +26,43 @@ const ContactFormTemplateEdit: React.FC = () => {
     phoneNumber: '',
   });
 
-  const [tags, setTags] = useState<string[]>(['foo']);
+  const [tags, setTags] = useState<string[]>([]);
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    websiteContentActions
+      .getMyWebsiteContent()
+      .then((res) => {
+        const contact = res.data?.contact;
+        if (contact) {
+          setContactFormData((prev) => ({
+            ...prev,
+            websiteName: contact.websiteName ?? prev.websiteName,
+            address: contact.address ?? prev.address,
+            email: contact.email ?? prev.email,
+            customUrl: contact.customUrl ?? prev.customUrl,
+            supportEmail: contact.supportEmail ?? prev.supportEmail,
+            phoneNumber: contact.phoneNumber ?? prev.phoneNumber,
+          }));
+          if (contact.seoKeywords) setTags(contact.seoKeywords);
+        }
+      })
+      .catch(() => {
+        // no saved content yet — keep defaults
+      });
+  }, []);
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      await websiteContentActions.saveContactSection({ ...contactFormData, seoKeywords: tags });
+      showToast('Contact information saved', 'contact-save', { type: 'success' });
+    } catch {
+      showToast('Failed to save contact information', 'contact-save-failed', { type: 'error' });
+    } finally {
+      setSaving(false);
+    }
+  };
 
   const handleContactFormChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -56,8 +94,8 @@ const ContactFormTemplateEdit: React.FC = () => {
             Set and change your contact information
           </p>
         </div>
-        <Button className="text-white text-sm rounded-full">
-          Save changes
+        <Button type="button" onClick={handleSave} disabled={saving} className="text-white text-sm rounded-full">
+          {saving ? 'Saving…' : 'Save changes'}
         </Button>
       </div>
       <div className="grid grid-cols-2 gap-6">

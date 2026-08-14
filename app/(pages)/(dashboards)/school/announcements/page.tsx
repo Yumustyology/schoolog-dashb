@@ -53,7 +53,7 @@ const page = () => {
         </div>
 
         <div className="h-full">
-          <AnnoucementsList />
+          <AnnoucementsList type="school" />
         </div>
       </div>
     </div>

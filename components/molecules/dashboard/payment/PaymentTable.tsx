@@ -1,13 +1,15 @@
 'use client';
 import Button from '@/components/atoms/form/Button';
-import DownloadIcon from '@/components/atoms/icons/dashboard/DownloadIcon';
 import AcrobatPdfIcon from '@/components/atoms/icons/dashboard/materials/AcrobatPdfIcon';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
-import { Card, Typography } from '@material-tailwind/react';
+import { Typography } from '@material-tailwind/react';
 import { useState } from 'react';
+import { createColumnHelper } from '@tanstack/react-table';
+import DataTable from '@/components/molecules/DataTable';
 import { DrawerSide } from '../DrawerSide';
 import EyeClose from '@/components/atoms/icons/EyeClose';
+import DownloadIcon from '@/components/atoms/icons/dashboard/DownloadIcon';
 
 type TableRow = {
   paymentID: string;
@@ -69,154 +71,102 @@ const TABLE_ROWS: TableRow[] = [
   },
 ];
 
+const columnHelper = createColumnHelper<TableRow>();
+
+const statusClasses = (status: TableRow['status']) =>
+  status === 'Success'
+    ? 'text-lightSuccess bg-success'
+    : status === 'Pending'
+      ? 'text-[#F2994A] bg-[#F2994A14]'
+      : status === 'Failed'
+        ? 'text-[#EB5757] bg-[#EB575714]'
+        : 'text-gray-600 bg-gray-200';
+
 export function PaymentTable({
   type = 'student',
 }: {
   type: 'school' | 'student' | 'teacher' | 'parent';
 }): JSX.Element {
-  const TABLE_HEAD: string[] = ['Payment ID', 'Amount', 'Payment type'];
-
-  if (type === 'school' || type === 'teacher') {
-    TABLE_HEAD.push('Student');
-  } else if (type === 'parent') {
-    TABLE_HEAD.push('Ward');
-  }
-
-  TABLE_HEAD.push('Date', 'Status', '');
-
   const [open, setOpen] = useState(false);
 
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
 
-  return (
-    <Card className="shadow-none h-full w-full overflow-y-visible --overflow-x-auto">
-      {/* <table className="w-full min-w-max table-auto text-left"> */}
-      <table className="min-w-[800px] w-full table-auto text-left">
-        <thead>
-          <tr>
-            {TABLE_HEAD.map((head) => (
-              <th key={head} className="bg-[#FBFBFB] p-4">
-                <Typography
-                  variant="small"
-                  className={cn(
-                    'font-normal text-gray1 leading-none opacity-70',
-                    poppins_400.className
-                  )}
-                >
-                  {head}
-                </Typography>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody>
-          {TABLE_ROWS.map(
-            ({ paymentID, date, paymentType, amount, status }, index) => {
-              const isLast = index === TABLE_ROWS.length - 1;
-              const classes = isLast ? 'p-4' : 'p-4 border-b border-gray4';
+  const showStudentWardColumn =
+    type === 'school' || type === 'teacher' || type === 'parent';
 
-              return (
-                <tr key={paymentID}>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      className={cn(
-                        'font-normal text-gray1 flex items-center gap-3',
-                        poppins_400.className
-                      )}
-                    >
-                      <AcrobatPdfIcon /> <span>{paymentID}</span>
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      className={cn(
-                        'font-normal text-gray1',
-                        poppins_400.className
-                      )}
-                    >
-                      {amount}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      className={cn(
-                        'font-normal text-gray1',
-                        poppins_400.className
-                      )}
-                    >
-                      {paymentType}
-                    </Typography>
-                  </td>
-
-                  {/* Conditionally render Student/Ward column */}
-                  {(type === 'school' ||
-                    type === 'teacher' ||
-                    type === 'parent') && (
-                    <td className={classes}>
-                      <Typography
-                        variant="small"
-                        className={cn(
-                          'font-normal text-gray1 truncate',
-                          poppins_400.className
-                        )}
-                      >
-                        Muhammad Jamiu
-                      </Typography>
-                    </td>
-                  )}
-
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      className={cn(
-                        'font-normal text-gray1',
-                        poppins_400.className
-                      )}
-                    >
-                      {date}
-                    </Typography>
-                  </td>
-
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      className={cn(
-                        'font-normal rounded-full w-[92px] py-1.5 text-center',
-                        status === 'Success'
-                          ? 'text-lightSuccess bg-success'
-                          : status === 'Pending'
-                            ? 'text-[#F2994A] bg-[#F2994A14]'
-                            : status === 'Failed'
-                              ? 'text-[#EB5757] bg-[#EB575714]'
-                              : 'text-gray-600 bg-gray-200',
-                        poppins_400.className
-                      )}
-                    >
-                      {status}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Button
-                      onClick={openDrawer}
-                      className={cn(
-                        'bg-gray7 text-gray6 flex gap-3 text-sm rounded-full',
-                        poppins_400.className
-                      )}
-                    >
-                      <EyeClose />
-                      <span>View</span>
-                    </Button>
-                  </td>
-                </tr>
-              );
-            }
+  const columns = [
+    columnHelper.accessor('paymentID', {
+      header: 'Payment ID',
+      cell: (info) => (
+        <div className="flex items-center gap-3">
+          <AcrobatPdfIcon /> <span>{info.getValue()}</span>
+        </div>
+      ),
+      meta: { useTypography: false },
+    }),
+    columnHelper.accessor('amount', {
+      header: 'Amount',
+    }),
+    columnHelper.accessor('paymentType', {
+      header: 'Payment type',
+    }),
+    ...(showStudentWardColumn
+      ? [
+          columnHelper.display({
+            id: 'studentWard',
+            header: type === 'parent' ? 'Ward' : 'Student',
+            cell: () => <span className="truncate">Muhammad Jamiu</span>,
+          }),
+        ]
+      : []),
+    columnHelper.accessor('date', {
+      header: 'Date',
+    }),
+    columnHelper.accessor('status', {
+      header: 'Status',
+      cell: (info) => (
+        <span className={cn('font-normal rounded-full w-[92px] py-1.5 text-center', statusClasses(info.getValue()))}>
+          {info.getValue()}
+        </span>
+      ),
+      meta: { useTypography: false },
+    }),
+    columnHelper.display({
+      id: 'actions',
+      header: '',
+      cell: () => (
+        <Button
+          onClick={openDrawer}
+          className={cn(
+            'bg-gray7 text-gray6 flex gap-3 text-sm rounded-full',
+            poppins_400.className
           )}
-        </tbody>
-      </table>
+        >
+          <EyeClose />
+          <span>View</span>
+        </Button>
+      ),
+      meta: { useTypography: false },
+    }),
+  ];
+
+  return (
+    <>
+      <DataTable
+        data={TABLE_ROWS}
+        columns={columns}
+        isLoading={false}
+        className="shadow-none h-full w-full overflow-y-visible --overflow-x-auto"
+        theadClassName=""
+        thClassName={cn('bg-[#FBFBFB] p-4 font-normal text-gray1 leading-none opacity-70', poppins_400.className)}
+        tdClassName={cn('border-gray4 font-normal text-gray1', poppins_400.className)}
+        tableClassName="min-w-[800px] w-full table-auto text-left"
+        wrapCellsInTypography={false}
+        wrapHeadersInTypography={false}
+        enableSorting={false}
+        enableFiltering={false}
+      />
 
       <DrawerSide
         open={open}
@@ -297,6 +247,6 @@ export function PaymentTable({
           </div>
         </>
       </DrawerSide>
-    </Card>
+    </>
   );
 }

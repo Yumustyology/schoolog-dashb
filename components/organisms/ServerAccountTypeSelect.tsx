@@ -21,8 +21,11 @@ export default async function ServerAccountTypeSelect() {
     const xTenant = tenant.isSubdomain && !tenant.isCustomDomain ? tenant.id : host;
     try {
       const res = await fetchSchoolByTenant(xTenant);
-      // keep the response data available
-      schoolResponse = res?.data;
+      // Keep the *whole* response (not just res.data) — AccountTypeSelect
+      // expects `school.data` to be the school object (it checks
+      // `school.data?.schoolImage` etc.), so unwrapping here would make it
+      // always fall back to the "Tenant: {id}" placeholder text.
+      schoolResponse = res;
       // server log for debugging - only stringify the data part (response has circular refs)
       // eslint-disable-next-line no-console
       console.debug('[server] SchoolService.findByTenant ->', JSON.stringify(res?.data, null, 2));

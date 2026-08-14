@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
+import useSWR from 'swr';
 import { Inter_400, Inter_500, Inter_600 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import Switch from '../../atoms/form/Switch';
+import notificationPreferencesActions, {
+  NotificationChannelPreferences,
+} from '@/app/lib/actions/notification-preferences.action';
 
 interface NotificationItemProps {
   label: string;
@@ -44,48 +48,52 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
   );
 };
 
+const CHANNEL_KEYS: (keyof NotificationChannelPreferences)[] = [
+  'announcement',
+  'subjectUpdate',
+  'classUpdate',
+  'assignmentUpdate',
+  'bookUpdate',
+  'messageUpdate',
+];
+
 const NotificationSettings = () => {
-  const [settings, setSettings] = useState({
-    inApp: {
-      announcement: true,
-      subjectUpdate: false,
-      classUpdate: false,
-      assignmentUpdate: true,
-      bookUpdate: true,
-      messageUpdate: true,
-    },
-    email: {
-      announcement: true,
-      subjectUpdate: false,
-      classUpdate: false,
-      assignmentUpdate: true,
-      bookUpdate: false,
-      messageUpdate: true,
-    },
-  });
-  console.log(settings);
+  const { data: resp, mutate } = useSWR(['notification-preferences'], () =>
+    notificationPreferencesActions.fetchMyNotificationPreferences()
+  );
+  const preferences = resp?.data;
 
   const handleSwitchChange = (
     type: 'inApp' | 'email',
-    key: string,
+    key: keyof NotificationChannelPreferences,
     value: boolean
   ) => {
-    setSettings((prev) => ({
-      ...prev,
-      [type]: {
-        ...prev[type],
-        [key]: value,
+    if (!preferences) return;
+
+    // Optimistic local update, then persist — revert via mutate() if the
+    // request fails so the UI never drifts from what's actually saved.
+    mutate(
+      {
+        ...resp!,
+        data: { ...preferences, [type]: { ...preferences[type], [key]: value } },
       },
-    }));
+      false
+    );
+
+    notificationPreferencesActions
+      .updateMyNotificationPreferences({ [type]: { [key]: value } })
+      .then(() => mutate())
+      .catch(() => mutate());
   };
 
   const renderSettings = (type: 'inApp' | 'email') =>
-    Object.keys(settings[type]).map((key) => (
+    preferences &&
+    CHANNEL_KEYS.map((key) => (
       <NotificationItem
-        key={key + settings[type]}
-        name={key + settings[type]}
+        key={key}
+        name={`${type}-${key}`}
         label={key.replace(/([A-Z])/g, ' $1')}
-        checked={settings[type][key as keyof (typeof settings)['inApp']]}
+        checked={preferences[type][key]}
         onChange={(checked: boolean) => handleSwitchChange(type, key, checked)}
       />
     ));

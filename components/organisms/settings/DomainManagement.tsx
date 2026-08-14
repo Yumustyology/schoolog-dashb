@@ -6,9 +6,22 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from '@/components/ui/select';
 import showToast from '@/app/lib/utils/toast';
 import * as actions from '@/app/lib/actions/domains.action';
 import DomainDetailsDrawer from './DomainDetailsDrawer';
+import { validateCustomDomainInput } from '@/app/lib/utils/reservedDomains';
+
+const PURPOSE_LABEL: Record<actions.DomainPurpose, string> = {
+  website: 'Website',
+  portal: 'Portal',
+};
 
 export default function DomainManagement() {
   const [domains, setDomains] = useState<actions.Domain[]>([]);
@@ -16,6 +29,8 @@ export default function DomainManagement() {
   // loading state omitted for now
   const [addOpen, setAddOpen] = useState(false);
   const [hostname, setHostname] = useState('');
+  const [purpose, setPurpose] = useState<actions.DomainPurpose>('portal');
+  const [hostnameError, setHostnameError] = useState<string | null>(null);
   const [selected, setSelected] = useState<actions.Domain | null>(null);
 
   useEffect(() => {
@@ -36,12 +51,18 @@ export default function DomainManagement() {
   }
 
   async function handleAdd() {
-    if (!hostname) return;
+    const validation = validateCustomDomainInput(hostname);
+    if (!validation.valid) {
+      setHostnameError(validation.error || 'Invalid domain');
+      return;
+    }
+    setHostnameError(null);
     try {
-      const created = await actions.createDomain({ hostname });
+      const created = await actions.createDomain({ hostname, type: purpose });
       if (created.data) setDomains((s) => [created.data as actions.Domain, ...s]);
       setAddOpen(false);
       setHostname('');
+      setPurpose('portal');
       showToast('Domain added. Follow the DNS instructions and click Verify when ready.', 'domain-add', { type: 'success' });
     } catch {
       showToast('Failed to add domain', 'domain-add-failed', { type: 'error' });
@@ -103,7 +124,7 @@ export default function DomainManagement() {
               <TableCell>
                 <button className="text-left text-sm text-primary" onClick={() => setSelected(d)}>{d.hostname}</button>
               </TableCell>
-              <TableCell><Badge variant={d.type === 'custom' ? 'default' : 'secondary'}>{d.type}</Badge></TableCell>
+              <TableCell><Badge variant={d.type === 'website' ? 'default' : 'secondary'}>{PURPOSE_LABEL[d.type] ?? d.type}</Badge></TableCell>
               <TableCell>
                 <span className={`px-2 py-1 rounded text-sm ${d.status === 'verified' ? 'bg-green-100 text-green-700' : d.status === 'pending' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`}>{d.status}</span>
               </TableCell>
@@ -121,7 +142,7 @@ export default function DomainManagement() {
         </Table>
       )}
 
-      <Dialog open={addOpen} onOpenChange={setAddOpen}>
+      <Dialog open={addOpen} onOpenChange={(open) => { setAddOpen(open); if (!open) setHostnameError(null); }}>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>Add domain</DialogTitle>
@@ -131,7 +152,24 @@ export default function DomainManagement() {
           <div className="mt-4 space-y-4">
             <div>
               <label className="block text-sm mb-1">Hostname</label>
-              <Input value={hostname} onChange={(e) => setHostname(e.target.value)} placeholder="myschool.example.com" />
+              <Input
+                value={hostname}
+                onChange={(e) => { setHostname(e.target.value); if (hostnameError) setHostnameError(null); }}
+                placeholder="myschool.example.com"
+              />
+              {hostnameError && <p className="text-sm text-red-600 mt-1">{hostnameError}</p>}
+            </div>
+            <div>
+              <label className="block text-sm mb-1">What is this domain for?</label>
+              <Select value={purpose} onValueChange={(v) => setPurpose(v as actions.DomainPurpose)}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="website">Public website (visitors see your school's site)</SelectItem>
+                  <SelectItem value="portal">Portal (staff/students/parents sign in here)</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
           </div>
 

@@ -1,25 +1,26 @@
 'use client';
 import React from 'react';
 import Image from 'next/image';
-import { cn } from '@/app/lib/utils';
+import { cn, formatCurrency } from '@/app/lib/utils';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import Link from 'next/link';
+import { thumbnailImage } from '@/app/assets';
+import type { Template } from '@/app/lib/actions/templates.action';
 
-const TemplateCard: React.FC = () => {
+const TemplateCard: React.FC<{ template: Template }> = ({ template }) => {
   return (
     <div className="flex flex-col gap-4 min-w-[300px] relative">
-      <Link href={`/school/templates/1234`}>
+      <Link href={`/school/templates/${template._id}`}>
         <div className="relative h-[216px] overflow-hidden rounded-lg">
           <Image
             className="w-full"
-            src={'/assets/images/thumbnail.png'}
-            alt={'thumbnail'}
+            src={template.previewImages[0] || thumbnailImage}
+            alt={template.name}
             layout="fill"
           />
         </div>
       </Link>
       <div className="flex flex-col gap-3">
-        {/* <Link href={`/${role}/subjects/1234`}> */}
         <div className="flex justify-between items-center">
           <h3
             className={cn(
@@ -27,13 +28,16 @@ const TemplateCard: React.FC = () => {
               poppins_500.className
             )}
           >
-            Eleganza custom website
+            {template.name}
           </h3>
         </div>
-        {/* </Link> */}
         <p className={cn('text-base mt-3 text-gray6', poppins_500.className)}>
-          ₦10,000{' '}
-          <span className={cn(poppins_400.className, 'text-sm')}>/monthly</span>
+          {formatCurrency(template.price, template.currency)}{' '}
+          {template.billingInterval !== 'one_time' && (
+            <span className={cn(poppins_400.className, 'text-sm')}>
+              /{template.billingInterval === 'yearly' ? 'yearly' : 'monthly'}
+            </span>
+          )}
         </p>
       </div>
     </div>

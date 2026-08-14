@@ -2,7 +2,17 @@ const environment = process.env.NODE_ENV || 'development';
 export const appConfig = {
   environment,
   // loginRedirectUrl: process.env.VITE_LOGIN_REDIRECT_URL,
-  axiosBaseUrl: process.env.NEXT_PUBLIC_AXIOS_BASE_URL,
+  axiosBaseUrl:
+    process.env.NEXT_PUBLIC_AXIOS_BASE_URL ||
+    process.env.NEXT_PUBLIC_BACKEND_URL ||
+    'http://localhost:5080',
   // The root domain of this app (used to detect custom domains). Example: 'schoolog.com' or 'localhost'
   appDomain: process.env.NEXT_PUBLIC_APP_DOMAIN || 'localhost',
+  // Comma-separated list of additional hostnames schools must not be able to claim as
+  // their own custom domain (our future dev/staging/prod deployment URLs, etc.). Populate
+  // this as those environments get real hostnames — e.g. "schoolog-dev.vercel.app,staging.schoolog.com".
+  reservedDomains: (process.env.NEXT_PUBLIC_RESERVED_DOMAINS || '')
+    .split(',')
+    .map((d) => d.trim().toLowerCase())
+    .filter(Boolean),
 };

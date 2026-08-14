@@ -38,6 +38,19 @@ export function getInitials(firstName?: string | null, lastName?: string | null)
   return `${firstName?.[0] || ''}${lastName?.[0] || ''}`.toUpperCase();
 }
 
+/** Formats an amount stored in the smallest currency unit (kobo/cents) as a display string, e.g. formatCurrency(1000000, 'NGN') -> "₦10,000". */
+export function formatCurrency(amountInSmallestUnit: number, currency = 'NGN'): string {
+  try {
+    return new Intl.NumberFormat('en-NG', {
+      style: 'currency',
+      currency,
+      maximumFractionDigits: 0,
+    }).format(amountInSmallestUnit / 100);
+  } catch {
+    return `${currency} ${(amountInSmallestUnit / 100).toLocaleString()}`;
+  }
+}
+
 export function truncateFileName(fileName: string, maxBaseLength = 19): string {
   const lastDotIndex = fileName.lastIndexOf('.');
   if (lastDotIndex <= 0 || lastDotIndex === fileName.length - 1) {

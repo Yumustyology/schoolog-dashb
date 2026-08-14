@@ -169,13 +169,13 @@ function SubjectInfoPage({ subject }: { subject: string }) {
           status: t.covered ? 'Completed' : undefined,
           details: t.description || '',
           subtopics: undefined,
-          arrange_order: typeof t.arrange_order === 'number' ? t.arrange_order : (typeof t.index === 'number' ? t.index : 0),
+          arrangeOrder: typeof t.arrangeOrder === 'number' ? t.arrangeOrder : (typeof t.index === 'number' ? t.index : 0),
         });
       });
     });
 
-    // sort by arrange_order ascending
-    items.sort((a, b) => (a.arrange_order ?? 0) - (b.arrange_order ?? 0));
+    // sort by arrangeOrder ascending
+    items.sort((a, b) => (a.arrangeOrder ?? 0) - (b.arrangeOrder ?? 0));
 
     return items;
   }, [curriculumResp]);

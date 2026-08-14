@@ -11,9 +11,9 @@ export interface ClassDataShape {
   className: string;
   teacherImg?: string | unknown;
   teacher?: string;
-  number_of_student?: number;
-  number_of_male?: number;
-  number_of_female?: number;
+  studentCount?: number;
+  studentMaleCount?: number;
+  studentFemaleCount?: number;
 }
 
 interface ClassArrangeEntryProps {
@@ -39,7 +39,7 @@ const ClassArrangeEntry: React.FC<ClassArrangeEntryProps> = ({ classData, dragLi
             {classData.className}
           </span>
         </div>
-        <div className={cn('text-sm text-gray1 font-normal', poppins_400.className)}>{classData.number_of_student ?? 0} students</div>
+        <div className={cn('text-sm text-gray1 font-normal', poppins_400.className)}>{classData.studentCount ?? 0} students</div>
       </div>
     </div>
   );

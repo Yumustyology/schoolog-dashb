@@ -24,3 +24,37 @@ export const selectedAnnouncementPreference = entity<string>('all');
 export const setSelectedAnnoncementPreference = (value: string) => {
   selectedAnnouncementPreference.set(value);
 };
+
+export type AnnouncementMedium = 'inApp' | 'email' | 'sms';
+
+export type AnnouncementFormState = {
+  title: string;
+  message: string;
+  classIds: string[];
+  channel: AnnouncementMedium;
+  expiresAt: string;
+};
+
+const defaultAnnouncementForm: AnnouncementFormState = {
+  title: '',
+  message: '',
+  classIds: [],
+  channel: 'inApp',
+  expiresAt: '',
+};
+
+export const announcementFormState = entity<AnnouncementFormState>(
+  defaultAnnouncementForm
+);
+
+export const updateAnnouncementForm = (
+  patch: Partial<AnnouncementFormState>
+) => {
+  announcementFormState.set((prev) => ({ ...prev, ...patch }));
+};
+
+export const resetAnnouncementForm = () => {
+  announcementFormState.set(defaultAnnouncementForm);
+  selectedAnnouncementPreference.set('all');
+  createAnnoucementProgessState.set(0);
+};

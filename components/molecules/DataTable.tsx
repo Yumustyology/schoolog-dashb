@@ -11,6 +11,9 @@ import {
 } from '@tanstack/react-table';
 import { Card, Typography } from '@material-tailwind/react';
 import { cn } from '@/app/lib/utils';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Inter_500 } from '@/app/lib/config/font.config';
+import { SearchOutlineIcon } from '@/components/atoms/icons/Icons';
 
 /* ============================================================
    Types
@@ -22,6 +25,7 @@ export interface DataTableProps<TData, TMeta = unknown> {
   meta?: TMeta;
 
   isLoading?: boolean;
+  onRowClick?: (row: TData) => void;
 
   // Search
   showSearch?: boolean;
@@ -92,6 +96,7 @@ function DataTable<TData, TMeta = unknown>({
   meta,
 
   isLoading = false,
+  onRowClick,
 
   showSearch = false,
   searchPlaceholder = 'Search...',
@@ -150,9 +155,15 @@ function DataTable<TData, TMeta = unknown>({
 
   const renderSearchBar = () => (
     <div className={cn('relative w-full max-w-sm', searchClassName)}>
+      <div className="pointer-events-none absolute inset-y-0 left-3 flex items-center">
+        <SearchOutlineIcon size={18} />
+      </div>
       <input
         type="text"
-        className="pl-4 pr-4 py-2 border rounded-lg w-full h-12"
+        className={cn(
+          'h-12 w-full rounded-lg border border-gray4 pl-10 pr-4 text-sm outline-none transition-colors focus:border-primary',
+          Inter_500.className
+        )}
         placeholder={searchPlaceholder}
         value={clientSearch ? globalFilter : undefined}
         onChange={(e) => {
@@ -190,10 +201,34 @@ function DataTable<TData, TMeta = unknown>({
   };
 
   /* =======================
+     Default loading skeleton
+  ======================= */
+
+  const renderDefaultLoading = () => (
+    <div className={cn('w-full overflow-hidden rounded-xl border border-gray4 bg-white', loadingClassName)}>
+      <div className="flex items-center gap-6 border-b border-gray4 bg-gray4/40 px-4 py-3">
+        {(columns.length ? columns : [1, 2, 3, 4]).map((_, i) => (
+          <Skeleton key={i} className="h-3 w-20" />
+        ))}
+      </div>
+      <div className="divide-y divide-gray4">
+        {Array.from({ length: 5 }).map((_, rowIndex) => (
+          <div key={rowIndex} className="flex items-center gap-6 px-4 py-3.5">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-4 w-32" />
+            <Skeleton className="h-4 w-16" />
+            <Skeleton className="h-4 flex-1" />
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  /* =======================
      Empty logic
   ======================= */
 
-  const isSearchActive = Boolean(globalFilter.trim());
+  const isSearchActive = Boolean(globalFilter?.trim());
   const hasData = data.length > 0;
   const hasRows = table.getRowModel().rows.length > 0;
 
@@ -260,7 +295,14 @@ function DataTable<TData, TMeta = unknown>({
                 : rowClassName ?? '';
 
             return (
-              <tr key={row.id} className={computedRowClassName}>
+              <tr
+                key={row.id}
+                onClick={onRowClick ? () => onRowClick(row.original) : undefined}
+                className={cn(
+                  onRowClick && 'cursor-pointer hover:bg-gray4/40 transition-colors',
+                  computedRowClassName
+                )}
+              >
                 {row.getVisibleCells().map((cell) => {
                   const content = flexRender(
                     cell.column.columnDef.cell,
@@ -298,16 +340,7 @@ function DataTable<TData, TMeta = unknown>({
       {renderHeader()}
 
       {isLoading ? (
-        loadingComponent || (
-          <div
-            className={cn(
-              'flex items-center justify-center h-64',
-              loadingClassName
-            )}
-          >
-            <Typography>Loading...</Typography>
-          </div>
-        )
+        loadingComponent || renderDefaultLoading()
       ) : useCardWrapper ? (
         <Card className={cn('mt-6 overflow-x-auto shadow-none', className)}>
           {tableContent}
@@ -318,7 +351,7 @@ function DataTable<TData, TMeta = unknown>({
         </div>
       )}
 
-      {!isLoading && footer && (
+      {!isLoading && hasRows && footer && (
         <div className={cn('flex justify-center mt-4', footerClassName)}>
           {footer}
         </div>

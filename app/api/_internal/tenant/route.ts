@@ -10,20 +10,23 @@ export async function GET(req: Request) {
     const tenantHeader = tenant.isCustomDomain ? tenant.hostname : tenant.isSubdomain ? tenant.id : tenant.hostname;
 
     const endpoint = `${BACKEND}/api/school/tenant`;
+    const isDev = process.env.NODE_ENV !== 'production';
     const url = new URL(req.url);
     const debug = url.searchParams.get('debug');
     if (debug === '1') {
-      // quick health/debug response so client can verify the proxy route and tenant resolution
+      if (!isDev) {
+        // debug introspection (raw host/tenant resolution, no backend call) is
+        // dev-only — it must never be reachable in a deployed environment.
+        return NextResponse.json({ error: 'not_found' }, { status: 404 });
+      }
       // eslint-disable-next-line no-console
       console.log('[proxy-debug] host=', host, 'tenantHeader=', tenantHeader);
       return NextResponse.json({ ok: true, host, tenantHeader });
     }
-    // log diagnostic info to server console to help debug 404s
-    // (check your Next.js console for these logs)
-    // Incoming request host, resolved tenant header, and target endpoint
-    // This will confirm the proxy route is being hit and what it forwards.
-    // eslint-disable-next-line no-console
-    console.log('[proxy] incoming host=', host, 'tenantHeader=', tenantHeader, 'forward->', endpoint);
+    if (isDev) {
+      // eslint-disable-next-line no-console
+      console.log('[proxy] incoming host=', host, 'tenantHeader=', tenantHeader, 'forward->', endpoint);
+    }
 
     // server-side fetch to backend - avoids browser CORS
     const res = await fetch(endpoint, {
@@ -34,8 +37,10 @@ export async function GET(req: Request) {
     });
 
     const data = await res.json();
-    // eslint-disable-next-line no-console
-    console.log('[proxy] upstream status=', res.status);
+    if (isDev) {
+      // eslint-disable-next-line no-console
+      console.log('[proxy] upstream status=', res.status);
+    }
     return NextResponse.json(data, { status: res.status });
   } catch (err) {
     // eslint-disable-next-line no-console

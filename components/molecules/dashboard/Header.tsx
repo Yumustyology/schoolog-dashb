@@ -3,13 +3,8 @@ import { SidebarTrigger } from '@/components/ui/sidebar';
 import React, { useState } from 'react';
 import SearchInput from '../../atoms/form/SearchInput';
 import NotificationIcon from '../../atoms/icons/dashboard/NotificationIcon';
-import {
-  Menu,
-  MenuHandler,
-  MenuList,
-  MenuItem,
-  Avatar,
-} from '@material-tailwind/react';
+import { Popover, PopoverTrigger, PopoverContent } from '@/components/ui/popover';
+import TextAvatar from '@/components/atoms/TextAvatar';
 import { cn } from '@/app/lib/utils';
 import {
   Inter_500,
@@ -159,13 +154,11 @@ const HeaderInfo = ({ truncateLength = 0 }: { truncateLength?: number }) => {
   return (
   <>
     <div>
-      <Avatar
-        height={32}
-        width={32}
-        variant="circular"
-        alt="tania andrew"
-        className="cursor-pointer h-[32px] w-[32px]"
-        src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1480&q=80"
+      <TextAvatar
+        firstName={profile.firstName}
+        lastName={profile.lastName}
+        size={32}
+        className="cursor-pointer"
       />
     </div>
 
@@ -183,60 +176,63 @@ const HeaderInfo = ({ truncateLength = 0 }: { truncateLength?: number }) => {
 
 export function ProfileMenu() {
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <>
-      <Menu>
-        <MenuHandler>
+      <Popover open={isOpen} onOpenChange={setIsOpen}>
+        <PopoverTrigger asChild>
           <div className="cursor-pointer flex h-[48px] items-center gap-3 rounded-[90px] bg-[#F7F7F8] p-2">
             <HeaderInfo truncateLength={8} />
             <div className="flex h-[48px] items-center">
               <DownArrow />
             </div>
           </div>
-        </MenuHandler>
-        <MenuList className="bg-white p-0 pb-2">
-          <MenuItem className="rounded-none flex items-center gap-2 --mb-1.5">
+        </PopoverTrigger>
+        <PopoverContent align="end" sideOffset={6} className="bg-white p-0 pb-2">
+          <div className="rounded-none flex items-center gap-2 px-3 pt-2">
             <HeaderInfo truncateLength={0} />
-          </MenuItem>
+          </div>
           <hr className="border border-gray4 w-full" />
           <div className="px-2 border-none outline-none">
-            <Link href="/student/settings">
-              <MenuItem className="mt-1.5 flex items-center gap-2 px-1.5">
-                <ProfileIcon />
-                <h2
-                  className={cn(
-                    'font-medium text-gray1 text-sm',
-                    poppins_400.className
-                  )}
-                >
-                  View Profile
-                </h2>
-              </MenuItem>
+            <Link
+              href="/student/settings"
+              className="mt-1.5 flex items-center gap-2 px-1.5 py-2 rounded-md hover:bg-gray4 transition-colors"
+              onClick={() => setIsOpen(false)}
+            >
+              <ProfileIcon />
+              <h2
+                className={cn(
+                  'font-medium text-gray1 text-sm',
+                  poppins_400.className
+                )}
+              >
+                View Profile
+              </h2>
             </Link>
           </div>
 
           <div className="px-2 border-none outline-none">
-            <Link href="/student/">
-              <MenuItem
-                className="flex items-center gap-2 px-1.5"
-                onClick={() => {
-                  setIsLogoutModalOpen(true);
-                }}
+            <button
+              type="button"
+              className="flex items-center gap-2 px-1.5 py-2 w-full text-left rounded-md hover:bg-gray4 transition-colors"
+              onClick={() => {
+                setIsOpen(false);
+                setIsLogoutModalOpen(true);
+              }}
+            >
+              <LogoutIcon />
+              <h2
+                className={cn(
+                  'font-medium text-[#EB5757] text-sm',
+                  poppins_400.className
+                )}
               >
-                <LogoutIcon />
-                <h2
-                  className={cn(
-                    'font-medium text-[#EB5757] text-sm',
-                    poppins_400.className
-                  )}
-                >
-                  Logout
-                </h2>
-              </MenuItem>
-            </Link>
+                Logout
+              </h2>
+            </button>
           </div>
-        </MenuList>
-      </Menu>
+        </PopoverContent>
+      </Popover>
 
       <LogoutModal
         open={isLogoutModalOpen}

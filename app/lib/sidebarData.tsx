@@ -112,6 +112,45 @@ export const studentSidebarItems: SidebarItemsType = [
   },
 ];
 
+export const teacherSidebarItems: SidebarItemsType = [
+  {
+    title: 'Dashboard',
+    url: '/teacher',
+    icon: <Dashboard />,
+    activeIcon: <Dashboard color="#FFFFFF" />,
+  },
+  {
+    title: 'My Classes',
+    url: '/teacher/classes',
+    icon: <ClassesIcon />,
+    activeIcon: <ClassesIcon color="#FFFFFF" />,
+  },
+  {
+    title: 'Attendance',
+    url: '/teacher/attendance',
+    icon: <Attendance />,
+    activeIcon: <Attendance color="#FFFFFF" />,
+  },
+  {
+    title: 'Gradebook',
+    url: '/teacher/gradebook',
+    icon: <Result />,
+    activeIcon: <Result color="#FFFFFF" />,
+  },
+  {
+    title: 'Timetable',
+    url: '/teacher/timetable',
+    icon: <Timetable />,
+    activeIcon: <Timetable color="#FFFFFF" />,
+  },
+  {
+    title: 'Announcement',
+    url: '/teacher/announcements',
+    icon: <Annoucement />,
+    activeIcon: <Annoucement color="#FFFFFF" />,
+  },
+];
+
 export const shoolSidebarItems: SidebarItemsType = [
   {
     title: 'Dashboard',

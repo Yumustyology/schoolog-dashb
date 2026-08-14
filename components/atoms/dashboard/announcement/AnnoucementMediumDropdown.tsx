@@ -1,19 +1,24 @@
 'use client';
 
-import { useState } from 'react';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/app/lib/utils';
 import { poppins_400 } from '@/app/lib/config/font.config';
 import { Dropdown } from '@/components/atoms/form/Dropdown';
+import type { AnnouncementMedium } from '@/app/lib/entities/annoucement.entity';
 
-export function AnnouncementMediumDropdown() {
-  const [selectedMedium, setSelectedMedium] = useState('inAppNotication');
-  const mediums = [
-    { value: 'inAppNotication', label: 'In app notification only' },
-    { value: 'email', label: 'Email' },
-    { value: 'sms', label: 'SMS' },
-  ];
+const mediums = [
+  { value: 'inApp', label: 'In app notification only' },
+  { value: 'email', label: 'Email' },
+  { value: 'sms', label: 'SMS' },
+];
 
+export function AnnouncementMediumDropdown({
+  value,
+  onChange,
+}: {
+  value: AnnouncementMedium;
+  onChange: (value: AnnouncementMedium) => void;
+}) {
   return (
     <>
       <Label className={cn('text-base text-gray6 mt-4', poppins_400.className)}>
@@ -21,8 +26,8 @@ export function AnnouncementMediumDropdown() {
       </Label>
       <Dropdown
         options={mediums}
-        selectedOption={selectedMedium}
-        onChange={setSelectedMedium}
+        selectedOption={value}
+        onChange={(v) => onChange(v as AnnouncementMedium)}
         placeholder="Select medium"
       />
     </>

@@ -16,9 +16,19 @@ type Props = {
 
 export default function DomainDetailsDrawer({ domain, onClose, onVerify, onRemove }: Props) {
   if (!domain) return null;
-  const instructions = domain.dnsTarget
-    ? `Add a TXT record: Name: ${domain.hostname} or @ (see provider docs). Value: ${domain.dnsTarget}`
-    : 'Follow the provider instructions to add CNAME or A record as instructed.';
+
+  const target = domain.dnsTarget ?? (domain.type === 'website' ? 'website.schoolog.app' : 'portal.schoolog.app');
+  const purposeCopy =
+    domain.type === 'website'
+      ? {
+          heading: 'Point this domain to your public website',
+          body: `Visitors to ${domain.hostname} will see your school's public website. Add a CNAME record pointing this hostname to your target, then verify below.`,
+        }
+      : {
+          heading: 'Point this domain to your portal',
+          body: `Staff, students and parents will sign in at ${domain.hostname}. Add a CNAME record pointing this hostname to your target, then verify below.`,
+        };
+  const instructions = `${purposeCopy.body}\n\nAdd a CNAME record:\nName: ${domain.hostname === domain.hostname.split('.').slice(-2).join('.') ? '@' : domain.hostname.split('.')[0]}\nValue: ${target}`;
 
   return (
     <DialogContent className="w-full max-w-lg">
@@ -37,8 +47,8 @@ export default function DomainDetailsDrawer({ domain, onClose, onVerify, onRemov
         </div>
 
         <div>
-          <h4 className="text-sm font-medium">How to configure DNS</h4>
-          <p className="text-sm text-neutral-600 mt-2">{instructions}</p>
+          <h4 className="text-sm font-medium">{purposeCopy.heading}</h4>
+          <p className="text-sm text-neutral-600 mt-2 whitespace-pre-line">{instructions}</p>
           <div className="mt-2 flex gap-2">
             <Button size="sm" variant="outline" onClick={() => navigator.clipboard.writeText(instructions)}>
               <Copy className="w-4 h-4" /> Copy instructions

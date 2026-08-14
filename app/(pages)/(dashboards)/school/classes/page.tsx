@@ -55,7 +55,7 @@ export default function ClassesPage() {
     debouncedSearch || ''
   )}`;
 
-  const { data, isValidating, mutate } = useSWR(swrKey, () =>
+  const { data, isLoading, mutate } = useSWR(swrKey, () =>
     classGradeActions.fetchClassGradesPaginated({
       page,
       limit: pageSize,
@@ -79,8 +79,8 @@ export default function ClassesPage() {
   }, [data, classItems.length]);
 
   const isSearching = debouncedSearch.trim().length > 0;
-  const showNoResults = classItems.length === 0 && !isValidating && isSearching;
-  const showNoClassCreated = classItems.length === 0 && !isValidating && !isSearching && !hasEverLoadedData;
+  const showNoResults = classItems.length === 0 && !isLoading && isSearching;
+  const showNoClassCreated = classItems.length === 0 && !isLoading && !isSearching && !hasEverLoadedData;
 
   return (
     <main className="w-full">
@@ -148,7 +148,7 @@ export default function ClassesPage() {
           )}
         </div>
 
-        {isValidating && classItems.length === 0 ? (
+        {isLoading && classItems.length === 0 ? (
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
             {Array.from({ length: pageSize }).map((_, i) => (
               <div

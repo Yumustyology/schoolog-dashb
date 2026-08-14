@@ -4,18 +4,9 @@ import PaginationBox from '@/components/atoms/dashboard/subjects/Pagination';
 import SelectBox from '@/components/atoms/dashboard/subjects/Select';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
-import { Typography } from '@material-tailwind/react';
 import Image from 'next/image';
-
-const TABLE_HEAD: string[] = [
-  'S/N',
-  'Student name',
-  'ID',
-  'Class',
-  'Attendance',
-  'Grade',
-  'Rank',
-];
+import { createColumnHelper } from '@tanstack/react-table';
+import DataTable from '@/components/molecules/DataTable';
 
 export type TableRow = {
   subject: string;
@@ -82,143 +73,77 @@ const TABLE_ROWS: TableRow[] = [
   },
 ];
 
+const columnHelper = createColumnHelper<TableRow>();
+
+const statusClasses = (status: TableRow['status']) =>
+  status === 'Pass'
+    ? 'text-lightSuccess bg-success'
+    : status === 'Good'
+      ? 'text-[#F2994A] bg-[#F2994A14]'
+      : status === 'Fair'
+        ? 'text-[#F2994A] bg-[#F2994A14]'
+        : status === 'Fail'
+          ? 'text-[#EB5757] bg-[#EB575714]'
+          : 'text-gray-600 bg-gray-200';
+
+const columns = [
+  columnHelper.accessor('subject', {
+    header: 'S/N',
+    cell: (info) => (
+      <div className="flex items-center gap-3">
+        <Image src={teacherImg2} alt="teacher-image" />
+        {info.getValue()}
+      </div>
+    ),
+    meta: { useTypography: false },
+  }),
+  columnHelper.accessor('studentId', {
+    header: 'Student name',
+  }),
+  columnHelper.accessor('secondCA', {
+    header: 'ID',
+  }),
+  columnHelper.accessor('examScore', {
+    header: 'Class',
+  }),
+  columnHelper.accessor('total', {
+    id: 'attendance',
+    header: 'Attendance',
+    cell: (info) => {
+      const row = info.row.original;
+      return (
+        <span className={cn('font-normal rounded-full w-[92px] py-1.5 px-8', statusClasses(row.status))}>
+          {info.getValue()}%
+        </span>
+      );
+    },
+    meta: { useTypography: false },
+  }),
+  columnHelper.accessor('grade', {
+    header: 'Grade',
+  }),
+  columnHelper.accessor('rank', {
+    header: 'Rank',
+  }),
+];
+
 export function StudentsListTable(): JSX.Element {
   return (
     <div>
-      <table className="w-full min-w-max table-auto text-left">
-        <thead>
-          <tr>
-            {TABLE_HEAD.map((head) => (
-              <th key={head} className="bg-[#FBFBFB] p-4">
-                <Typography
-                  variant="small"
-                  className={cn(
-                    'font-normal text-sm text-gray1 leading-none opacity-70',
-                    poppins_400.className
-                  )}
-                >
-                  {head}
-                </Typography>
-              </th>
-            ))}
-          </tr>
-        </thead>
-        <tbody className={''}>
-          {TABLE_ROWS.map(
-            (
-              {
-                subject,
-                studentId,
-                secondCA,
-                examScore,
-                total,
-                grade,
-                status,
-                rank,
-              },
-              index
-            ) => {
-              const isLast = index === TABLE_ROWS.length - 1;
-              const classes = isLast
-                ? 'p-4 text-sm'
-                : 'p-4 border-b border-gray4 text-sm';
-
-              return (
-                <tr key={`${studentId}-${index}`}>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      className={cn(
-                        'font-normal text-gray1 flex items-center gap-3',
-                        poppins_400.className
-                      )}
-                    >
-                      <Image src={teacherImg2} alt="teacher-image" />
-                      {subject}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      className={cn(
-                        'font-normal text-gray1',
-                        poppins_400.className
-                      )}
-                    >
-                      {studentId}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      className={cn(
-                        'font-normal text-gray1',
-                        poppins_400.className
-                      )}
-                    >
-                      {secondCA}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      className={cn(
-                        'font-normal text-gray1',
-                        poppins_400.className
-                      )}
-                    >
-                      {examScore}
-                    </Typography>
-                  </td>
-
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      className={cn(
-                        'font-normal rounded-full w-[92px] py-1.5 px-8',
-                        status === 'Pass'
-                          ? 'text-lightSuccess bg-success'
-                          : status === 'Good'
-                            ? 'text-[#F2994A] bg-[#F2994A14]'
-                            : status === 'Fair'
-                              ? 'text-[#F2994A] bg-[#F2994A14]'
-                              : status === 'Fail'
-                                ? 'text-[#EB5757] bg-[#EB575714]'
-                                : 'text-gray-600 bg-gray-200',
-                        poppins_400.className
-                      )}
-                    >
-                      {total}%
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      className={cn(
-                        'font-normal text-gray1',
-                        poppins_400.className
-                      )}
-                    >
-                      {grade}
-                    </Typography>
-                  </td>
-                  <td className={classes}>
-                    <Typography
-                      variant="small"
-                      className={cn(
-                        'font-normal text-gray1',
-                        poppins_400.className
-                      )}
-                    >
-                      {rank}
-                    </Typography>
-                  </td>
-                </tr>
-              );
-            }
-          )}
-        </tbody>
-      </table>
+      <DataTable
+        data={TABLE_ROWS}
+        columns={columns}
+        isLoading={false}
+        theadClassName=""
+        thClassName={cn('bg-[#FBFBFB] p-4 font-normal text-sm text-gray1 leading-none opacity-70', poppins_400.className)}
+        tdClassName={cn('border-gray4 text-sm font-normal text-gray1', poppins_400.className)}
+        tableClassName="w-full min-w-max table-auto text-left"
+        useCardWrapper={false}
+        wrapCellsInTypography={false}
+        wrapHeadersInTypography={false}
+        enableSorting={false}
+        enableFiltering={false}
+      />
       <footer
         className={cn(
           'w-full mt-6 flex justify-between items-center',

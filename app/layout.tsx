@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/components/organisms/ThemeProvider';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import TenantHeadManager from '@/components/organisms/TenantHeadManager';
+import { SWRProvider } from '@/components/organisms/SWRProvider';
 import { getTenantFromHost } from './lib/tenant';
 import { headers } from 'next/headers';
 
@@ -110,11 +111,13 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
-        <ThemeProvider>
-          <TenantHeadManager />
-          {children}
-          <ToastContainer />
-        </ThemeProvider>
+        <SWRProvider>
+          <ThemeProvider>
+            <TenantHeadManager />
+            {children}
+            <ToastContainer />
+          </ThemeProvider>
+        </SWRProvider>
       </body>
     </html>
   );

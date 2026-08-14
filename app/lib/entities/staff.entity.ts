@@ -132,3 +132,14 @@ export const openEditStaffPermissionModal = () => {
 export const closeEditStaffPermissionModal = () => {
   isEditStaffPermissionOpen.set(false);
 };
+
+//INVITE TUTOR MODAL
+export const isInviteTutorModalOpen = entity(false);
+
+export const openInviteTutorModal = () => {
+  isInviteTutorModalOpen.set(true);
+};
+
+export const closeInviteTutorModal = () => {
+  isInviteTutorModalOpen.set(false);
+};

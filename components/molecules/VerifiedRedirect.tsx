@@ -5,6 +5,7 @@ import { cn } from '@/app/lib/utils';
 import { Inter_400, Inter_600 } from '@/app/lib/config/font.config';
 import Button from '@/components/atoms/form/Button';
 import Review from '@/components/atoms/icons/ModalIcons/Review';
+import { getDashboardPathForAudience } from '@/app/lib/utils/audienceDashboard';
 
 type Props = {
   audience?: string | null;
@@ -15,7 +16,7 @@ type Props = {
 export default function VerifiedRedirect({ audience, onClose, initialSeconds = 4 }: Props) {
   const router = useRouter();
   const [seconds, setSeconds] = React.useState<number>(initialSeconds);
-  const dest = audience === 'Admin' ? '/school' : '/';
+  const dest = getDashboardPathForAudience(audience);
 
   React.useEffect(() => {
     let mounted = true;

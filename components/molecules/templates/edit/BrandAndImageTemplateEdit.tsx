@@ -7,6 +7,11 @@ import { poppins_400 } from '@/app/lib/config/font.config';
 import { Inter_600, Inter_400 } from '@/app/lib/config/font.config';
 import FileUploader from '@/components/atoms/form/FileUploader';
 import CustomImageUploaderSmall from './CustomImageUploaderSmall';
+import resourcesActions from '@/app/lib/actions/resources.action';
+import websiteContentActions, {
+  BrandSection,
+} from '@/app/lib/actions/website-content.action';
+import showToast from '@/app/lib/utils/toast';
 
 type ImageField = {
   label: string;
@@ -23,12 +28,61 @@ export function BrandAndImageTemplateEdit({
   const [selectedFiles, setSelectedFiles] = React.useState<
     Record<string, File | null>
   >({});
+  const [savedUrls, setSavedUrls] = React.useState<Record<string, string>>({});
+  const [saving, setSaving] = React.useState(false);
+
+  React.useEffect(() => {
+    websiteContentActions
+      .getMyWebsiteContent()
+      .then((res) => {
+        const brand = res.data?.brand;
+        if (brand) {
+          const urls: Record<string, string> = {};
+          if (brand.websiteLogo) urls.websiteLogo = brand.websiteLogo;
+          if (brand.heroSectionImage) urls.heroSectionImage = brand.heroSectionImage;
+          if (brand.aboutUsImage) urls.aboutUsImage = brand.aboutUsImage;
+          if (brand.retinaLogo) urls.retinaLogo = brand.retinaLogo;
+          setSavedUrls(urls);
+        }
+      })
+      .catch(() => {
+        // no saved content yet
+      });
+  }, []);
 
   const handleImageChange = (fieldName: string, file: File) => {
     setSelectedFiles((prev) => ({
       ...prev,
       [fieldName]: file,
     }));
+  };
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      const uploadedUrls: Record<string, string> = { ...savedUrls };
+      for (const [fieldName, file] of Object.entries(selectedFiles)) {
+        if (!file) continue;
+        const uploaded = await resourcesActions.uploadResource({ file, name: file.name });
+        if (uploaded.data?.fileUrl) {
+          uploadedUrls[fieldName] = uploaded.data.fileUrl;
+        }
+      }
+      const payload: BrandSection = {
+        websiteLogo: uploadedUrls.websiteLogo,
+        heroSectionImage: uploadedUrls.heroSectionImage,
+        aboutUsImage: uploadedUrls.aboutUsImage,
+        retinaLogo: uploadedUrls.retinaLogo,
+      };
+      await websiteContentActions.saveBrandSection(payload);
+      setSavedUrls(uploadedUrls);
+      setSelectedFiles({});
+      showToast('Brand & images saved', 'brand-save', { type: 'success' });
+    } catch {
+      showToast('Failed to save brand & images', 'brand-save-failed', { type: 'error' });
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -42,8 +96,8 @@ export function BrandAndImageTemplateEdit({
             Input and edit template & brand images.
           </p>
         </div>
-        <Button className="text-white text-sm rounded-full">
-          Save changes
+        <Button type="button" onClick={handleSave} disabled={saving} className="text-white text-sm rounded-full">
+          {saving ? 'Saving…' : 'Save changes'}
         </Button>
       </div>
 

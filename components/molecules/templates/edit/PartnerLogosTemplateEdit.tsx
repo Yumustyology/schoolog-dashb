@@ -11,17 +11,57 @@ import FileUploader from '@/components/atoms/form/FileUploader';
 import CustomImageUploaderSmall from './CustomImageUploaderSmall';
 import { IoAdd } from 'react-icons/io5';
 import Button from '@/components/atoms/form/Button';
+import resourcesActions from '@/app/lib/actions/resources.action';
+import websiteContentActions from '@/app/lib/actions/website-content.action';
+import showToast from '@/app/lib/utils/toast';
+
+type Slot = { file: File | null; savedUrl?: string };
 
 function PartnerLogosTemplateEdit() {
-  const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
-  const [partners, setPartners] = React.useState<number[]>([1, 2, 3, 4, 5, 6]);
+  const [slots, setSlots] = React.useState<Slot[]>([{}, {}, {}, {}, {}, {}].map(() => ({ file: null })));
+  const [saving, setSaving] = React.useState(false);
 
-  const handleImageChange = (file: File) => {
-    setSelectedFile(file);
+  React.useEffect(() => {
+    websiteContentActions
+      .getMyWebsiteContent()
+      .then((res) => {
+        const saved = res.data?.partnerLogos;
+        if (saved && saved.length > 0) {
+          setSlots(saved.map((p) => ({ file: null, savedUrl: p.logo })));
+        }
+      })
+      .catch(() => {
+        // no saved content yet
+      });
+  }, []);
+
+  const handleImageChange = (index: number, file: File) => {
+    setSlots((prev) => prev.map((slot, i) => (i === index ? { ...slot, file } : slot)));
   };
 
   const handleAddPartner = () => {
-    setPartners((prev) => [...prev, prev.length + 1]);
+    setSlots((prev) => [...prev, { file: null }]);
+  };
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      const uploaded = await Promise.all(
+        slots.map(async (slot) => {
+          if (slot.file) {
+            const res = await resourcesActions.uploadResource({ file: slot.file, name: slot.file.name });
+            return { logo: res.data?.fileUrl ?? slot.savedUrl ?? '' };
+          }
+          return { logo: slot.savedUrl ?? '' };
+        })
+      );
+      await websiteContentActions.savePartnerLogosSection(uploaded.filter((p) => p.logo));
+      showToast('Partner logos saved', 'partners-save', { type: 'success' });
+    } catch {
+      showToast('Failed to save partner logos', 'partners-save-failed', { type: 'error' });
+    } finally {
+      setSaving(false);
+    }
   };
 
   return (
@@ -36,30 +76,30 @@ function PartnerLogosTemplateEdit() {
           </p>
         </div>
 
-        <Button type="button" className="text-white text-sm rounded-full">
-          Save changes
+        <Button type="button" onClick={handleSave} disabled={saving} className="text-white text-sm rounded-full">
+          {saving ? 'Saving…' : 'Save changes'}
         </Button>
       </div>
 
       <div className="grid grid-cols-2 gap-6 mb-6">
-        {partners.map((i) => (
-          <div key={i} className="bg-white relative w-full ">
+        {slots.map((slot, index) => (
+          <div key={index} className="bg-white relative w-full ">
             <label
               className={cn(
                 'block text-left w-full text-base mb-2 text-gray1 font-medium',
                 poppins_400.className
               )}
             >
-              Partner logo {i}
+              Partner logo {index + 1}
             </label>
             <FileUploader
               className="flex items-center !bg-[#F8F8F8] lg:h-[70px] overflow-hidden"
-              onFileSelected={(file) => handleImageChange(file!)}
+              onFileSelected={(file) => handleImageChange(index, file!)}
               renderUI={(props) => (
                 <CustomImageUploaderSmall
                   className="flex flex-row items-center gap-4"
                   {...props}
-                  selectedFile={selectedFile}
+                  selectedFile={slot.file}
                 />
               )}
               overwriteAccepted={true}

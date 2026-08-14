@@ -1,7 +1,9 @@
 import { cn } from '@/app/lib/utils';
 import Button from '@/components/atoms/form/Button';
 import Input from '@/components/atoms/form/Input';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import websiteContentActions from '@/app/lib/actions/website-content.action';
+import showToast from '@/app/lib/utils/toast';
 
 // Define the type for the form data
 interface SocialFormData {
@@ -19,6 +21,33 @@ const SocialSettingsTemplateEdit = () => {
     instagram: '',
     facebook: '',
   });
+  const [saving, setSaving] = useState(false);
+
+  useEffect(() => {
+    websiteContentActions
+      .getMyWebsiteContent()
+      .then((res) => {
+        const social = res.data?.social;
+        if (social) {
+          setSocialFormData((prev) => ({ ...prev, ...social }));
+        }
+      })
+      .catch(() => {
+        // no saved content yet — keep defaults
+      });
+  }, []);
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      await websiteContentActions.saveSocialSection(socialFormData);
+      showToast('Social settings saved', 'social-save', { type: 'success' });
+    } catch {
+      showToast('Failed to save social settings', 'social-save-failed', { type: 'error' });
+    } finally {
+      setSaving(false);
+    }
+  };
 
   // Define the social media fields dynamically
   const socialMediaFields = [
@@ -48,8 +77,8 @@ const SocialSettingsTemplateEdit = () => {
             Input and edit social links for this application
           </p>
         </div>
-        <Button className="text-white text-sm rounded-full">
-          Save changes
+        <Button type="button" onClick={handleSave} disabled={saving} className="text-white text-sm rounded-full">
+          {saving ? 'Saving…' : 'Save changes'}
         </Button>
       </div>
       <div className="grid grid-cols-2 gap-6">

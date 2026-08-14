@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import localforage from 'localforage';
 import { profileState } from '@/app/lib/entities/profile.entity';
 import { authState } from '@/app/lib/entities/auth.entity';
+import { getDashboardPathForAudience } from '@/app/lib/utils/audienceDashboard';
 
 /**
  * Hook: useRedirectIfAuthenticated
@@ -28,7 +29,7 @@ export default function useRedirectIfAuthenticated() {
               ? (profile as { audience?: string }).audience
               : authState.get?.()?.audienceType) || undefined;
 
-          const dest = audience === 'Admin' ? '/school' : '/';
+          const dest = getDashboardPathForAudience(audience);
           // use replace so user can't go back to auth pages
           router.replace(dest);
           return;

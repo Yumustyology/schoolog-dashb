@@ -4,35 +4,29 @@ import Button from '../../form/Button';
 import { cn } from '@/app/lib/utils';
 import { Inter_400, poppins_500 } from '@/app/lib/config/font.config';
 import MenuLists from '../students/MenuLists';
-import { DeleteIcon, EditIcon, ViewProfileEyeIcon } from '../../icons/Icons';
+import { DeleteIcon, ViewProfileEyeIcon } from '../../icons/Icons';
 import AnnoucementSideDrawer from '@/components/molecules/dashboard/announcement/AnnoucementSideDrawer';
+import notificationsActions from '@/app/lib/actions/notifications.action';
+import showToast from '@/app/lib/utils/toast';
+import { useSWRConfig } from 'swr';
 
-const menuItems = [
-  {
-    label: 'View details',
-    onClick: () => console.log('Profile clicked'),
-    icon: <ViewProfileEyeIcon />,
-  },
-  {
-    label: 'Edit details',
-    onClick: () => console.log('Profile clicked'),
-    icon: <EditIcon />,
-  },
-  {
-    label: 'Delete',
-    onClick: () => console.log('Settings clicked'),
-    icon: <DeleteIcon />,
-  },
-];
+export type AnnouncementCardData = {
+  id: string;
+  headline: string;
+  content: string;
+  date: string;
+};
+
 const Announcement = ({
   announcement,
   type,
 }: {
-  announcement: { headline: string; content: string; date: string };
+  announcement: AnnouncementCardData;
   type?: 'school';
 }) => {
   const [openAnnoucementDrawer, setopenAnnoucementDrawer] =
     React.useState(false);
+  const { mutate } = useSWRConfig();
 
   const handleOpenDrawer = () => {
     setopenAnnoucementDrawer(true);
@@ -40,15 +34,43 @@ const Announcement = ({
 
   const handleCloseDrawer = () => {
     setopenAnnoucementDrawer(false);
-    console.log(openAnnoucementDrawer);
   };
+
+  const handleDelete = async () => {
+    try {
+      await notificationsActions.deleteNotification(announcement.id);
+      showToast('Announcement deleted', 'success', { type: 'success' });
+      mutate(
+        (key) => Array.isArray(key) && key[0] === 'notifications',
+        undefined,
+        { revalidate: true }
+      );
+    } catch {
+      // handleRequest already surfaces a toast for API errors
+    }
+  };
+
+  const menuItems = [
+    {
+      label: 'View details',
+      onClick: handleOpenDrawer,
+      icon: <ViewProfileEyeIcon />,
+    },
+    {
+      label: 'Delete',
+      onClick: handleDelete,
+      icon: <DeleteIcon />,
+      danger: true,
+    },
+  ];
+
   return (
     <Button
       wide
       onClick={handleOpenDrawer}
       childrenClassName="w-full !justify-between items-start gap-8"
       className="!justify-start text-left items-start flex p-3 bg-[#F8F8F8] border border-[#E5E5EA] rounded-md"
-      key={announcement.date}
+      key={announcement.id}
     >
       <div>
         <h2 className={cn('text-sm text-gray1', poppins_500.className)}>
@@ -63,7 +85,10 @@ const Announcement = ({
           {announcement.date}
         </p>
         {type === 'school' && (
-          <div className="mt-3">
+          <div
+            className="mt-3"
+            onClick={(e) => e.stopPropagation()}
+          >
             <MenuLists
               label="Options"
               items={menuItems}
@@ -76,6 +101,7 @@ const Announcement = ({
       <AnnoucementSideDrawer
         open={openAnnoucementDrawer}
         closeDrawer={handleCloseDrawer}
+        announcement={announcement}
       />
     </Button>
   );

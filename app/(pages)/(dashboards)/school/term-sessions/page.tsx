@@ -101,7 +101,7 @@ function TermSessionsPage() {
   // Build SWR key with search and pagination parameters
   const termSessionsKey = `/term-sessions?search=${encodeURIComponent(debouncedSearch || '')}&page=${page}&limit=${pageSize}`;
 
-  const { data: termSessionsResp, isValidating } = useSWR(termSessionsKey, () => {
+  const { data: termSessionsResp, isLoading } = useSWR(termSessionsKey, () => {
     const query: Record<string, string | number | boolean> = {
       page,
       limit: pageSize,
@@ -130,8 +130,8 @@ function TermSessionsPage() {
   }, [terms]);
 
   const isSearching = debouncedSearch.trim().length > 0;
-  const showNoResults = terms.length === 0 && !isValidating && isSearching;
-  const showNoTermsCreated = terms.length === 0 && !isValidating && !isSearching && !hasEverLoadedData;
+  const showNoResults = terms.length === 0 && !isLoading && isSearching;
+  const showNoTermsCreated = terms.length === 0 && !isLoading && !isSearching && !hasEverLoadedData;
 
   return (
     <main className="w-full">
@@ -161,7 +161,7 @@ function TermSessionsPage() {
           </div>
         )}
 
-        {isValidating && terms.length === 0 ? (
+        {isLoading && terms.length === 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Array.from({ length: 6 }).map((_, i) => (
               <TermCardSkeleton key={`skeleton-${i}`} />

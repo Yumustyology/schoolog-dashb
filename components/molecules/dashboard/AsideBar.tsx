@@ -24,7 +24,7 @@ import Image from 'next/image';
 import Settings from '../../atoms/icons/SideBar/Settings';
 import { ChevronUp } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { studentSidebarItems, shoolSidebarItems } from '@/app/lib/sidebarData';
+import { studentSidebarItems, shoolSidebarItems, teacherSidebarItems } from '@/app/lib/sidebarData';
 
 export function AppSidebar({
   type,
@@ -42,13 +42,7 @@ export function AppSidebar({
   const currentSchool = schoolState.use();
 
   console.log("current school ",currentSchool)
-  const [showLogo, setShowLogo] = useState<boolean>(() => {
-    try {
-      return typeof window !== 'undefined' && document.readyState === 'complete';
-    } catch {
-      return false;
-    }
-  });
+  const [showLogo, setShowLogo] = useState<boolean>(false);
 
   const resolveImage = React.useCallback((s?: typeof currentSchool) => {
     try {
@@ -79,7 +73,7 @@ export function AppSidebar({
     return null;
   }, []);
 
-  const [logoUrl, setLogoUrl] = useState<string | null>(() => resolveImage(currentSchool));
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
 
   // update logo when persisted entity changes
   React.useEffect(() => {
@@ -160,7 +154,9 @@ export function AppSidebar({
                 ? studentSidebarItems
                 : type == 'school'
                   ? shoolSidebarItems
-                  : []
+                  : type == 'teacher'
+                    ? teacherSidebarItems
+                    : []
               ).map((item) => {
                 const isActive =
                   cleanedPath === item.url ||

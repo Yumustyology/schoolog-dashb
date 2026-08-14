@@ -1,13 +1,6 @@
 'use client';
-import React, { useState } from 'react';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from '@/components/ui/table';
+import React from 'react';
+import { createColumnHelper } from '@tanstack/react-table';
 import { cn } from '@/app/lib/utils';
 import { Inter_400, Inter_500 } from '@/app/lib/config/font.config';
 import Empty from '@/components/molecules/empty/Empty';
@@ -21,19 +14,22 @@ import {
 import Image from 'next/image';
 import { mathTextbook, teacherImg } from '@/app/assets';
 import MenuLists from '@/components/atoms/dashboard/students/MenuLists';
+import DataTable from '@/components/molecules/DataTable';
+
+type BooksListType = {
+  bookImage: string;
+  bookName: string;
+  studentImage: string;
+  studnetName: string;
+  borrowedDate: string;
+  dueDate: string;
+  fine: number;
+  status: 'Pending' | 'Due';
+}[];
+
+const columnHelper = createColumnHelper<BooksListType[number]>();
 
 function BorrowedBooksTableList() {
-  type BooksListType = {
-    bookImage: string;
-    bookName: string;
-    studentImage: string;
-    studnetName: string;
-    borrowedDate: string;
-    dueDate: string;
-    fine: number;
-    status: 'Pending' | 'Due';
-  }[];
-
   const borrowedBookList: BooksListType = [
     {
       bookImage: '',
@@ -70,6 +66,70 @@ function BorrowedBooksTableList() {
     },
   ];
 
+  const columns = [
+    columnHelper.accessor('bookName', {
+      header: 'Book',
+      cell: (info) => (
+        <div className="flex gap-2 items-center text-sm">
+          <Image src={mathTextbook} alt="" width={40} height={40} />
+          {info.getValue()}
+        </div>
+      ),
+      meta: { useTypography: false },
+    }),
+    columnHelper.accessor('studnetName', {
+      header: 'Student',
+      cell: (info) => (
+        <div className="flex gap-2 items-center text-sm">
+          <Image src={teacherImg} alt="" />
+          {info.getValue()}
+        </div>
+      ),
+      meta: { useTypography: false },
+    }),
+    columnHelper.accessor('borrowedDate', {
+      header: 'Borrowed date ',
+    }),
+    columnHelper.accessor('dueDate', {
+      header: 'Due date',
+    }),
+    columnHelper.accessor('fine', {
+      header: 'Fine',
+      cell: (info) => `$${info.getValue()}`,
+    }),
+    columnHelper.accessor('status', {
+      header: 'Status',
+      cell: (info) => {
+        const status = info.getValue();
+        return (
+          <div
+            className={cn(
+              'font-normal rounded-full py-2 px-2 text-sm text-center',
+              status === 'Pending'
+                ? 'text-[#EB5757] bg-[#EB575714]'
+                : 'text-[#F2994A] bg-[#F2994A14]'
+            )}
+          >
+            {status}
+          </div>
+        );
+      },
+      meta: { useTypography: false },
+    }),
+    columnHelper.display({
+      id: 'actions',
+      header: '',
+      cell: () => (
+        <MenuLists
+          label="Options"
+          items={menuItems}
+          placement="bottom-start"
+          maxHeight="150px"
+        />
+      ),
+    }),
+  ];
+
   return (
     <div className="my-8 ">
       {borrowedBookList.length === 0 ? (
@@ -82,73 +142,20 @@ function BorrowedBooksTableList() {
           />
         </div>
       ) : (
-        <Table className="border-none bg-white">
-          <TableHeader
-            className={cn(
-              'bg-[#FBFBFB] border-none text-gray text-sm',
-              Inter_500.className
-            )}
-          >
-            <TableRow className="border-none text-gray3 text-sm">
-              <TableHead>Book</TableHead>
-              <TableHead>Student</TableHead>
-              <TableHead>Borrowed date </TableHead>
-              <TableHead>Due date</TableHead>
-              <TableHead>Fine</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead></TableHead>
-            </TableRow>
-          </TableHeader>
-
-          <TableBody>
-            {borrowedBookList.map((book) => (
-              <TableRow
-                key={book.bookName}
-                className={cn(
-                  'border-b border-gray4 text-gray1 text-base items-center',
-                  Inter_400.className
-                )}
-              >
-                <TableCell>
-                  <div className="flex gap-2 items-center text-sm">
-                    <Image src={mathTextbook} alt="" width={40} height={40} />
-                    {book.bookName}
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <div className="flex gap-2 items-center text-sm">
-                    <Image src={teacherImg} alt="" />
-                    {book.studnetName}
-                  </div>
-                </TableCell>
-                <TableCell> {book.borrowedDate}</TableCell>
-                <TableCell>{book.dueDate}</TableCell>
-                <TableCell>${book.fine}</TableCell>
-                <TableCell>
-                  <div
-                    className={cn(
-                      'font-normal rounded-full py-2 px-2 text-sm text-center',
-                      book.status === 'Pending'
-                        ? 'text-[#EB5757] bg-[#EB575714]'
-                        : 'text-[#F2994A] bg-[#F2994A14]'
-                    )}
-                  >
-                    {book.status}
-                  </div>
-                </TableCell>
-
-                <TableCell>
-                  <MenuLists
-                    label="Options"
-                    items={menuItems}
-                    placement="bottom-start"
-                    maxHeight="150px"
-                  />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
+        <DataTable
+          data={borrowedBookList}
+          columns={columns}
+          isLoading={false}
+          theadClassName={cn('bg-[#FBFBFB] border-none text-gray text-sm', Inter_500.className)}
+          tdClassName="p-4"
+          rowClassName={cn('border-b border-gray4 text-gray1 text-base items-center', Inter_400.className)}
+          tableClassName="border-none bg-white w-full caption-bottom text-sm"
+          useCardWrapper={false}
+          wrapCellsInTypography={false}
+          wrapHeadersInTypography={false}
+          enableSorting={false}
+          enableFiltering={false}
+        />
       )}
     </div>
   );

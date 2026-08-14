@@ -1,19 +1,9 @@
 'use client';
 import { poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
-import { Typography } from '@material-tailwind/react';
 import { JSX } from 'react';
-
-const TABLE_HEAD: string[] = [
-  'S/N',
-  'Subject',
-  'First CA',
-  'Second CA',
-  'Exam',
-  'Total',
-  'Grade',
-  'Status',
-];
+import { createColumnHelper } from '@tanstack/react-table';
+import DataTable from '@/components/molecules/DataTable';
 
 export type TableRow = {
   serialnumber: string;
@@ -80,148 +70,67 @@ const TABLE_ROWS: TableRow[] = [
   },
 ];
 
+const columnHelper = createColumnHelper<TableRow>();
+
+const statusClasses = (status: TableRow['status']) =>
+  status === 'Pass'
+    ? 'text-lightSuccess bg-success'
+    : status === 'Good'
+      ? 'text-[#F2994A] bg-[#F2994A14]'
+      : status === 'Fair'
+        ? 'text-[#F2994A] bg-[#F2994A14]'
+        : status === 'Fail'
+          ? 'text-[#EB5757] bg-[#EB575714]'
+          : 'text-gray-600 bg-gray-200';
+
+const columns = [
+  columnHelper.accessor('serialnumber', {
+    header: 'S/N',
+  }),
+  columnHelper.accessor('subject', {
+    header: 'Subject',
+  }),
+  columnHelper.accessor('firstCA', {
+    header: 'First CA',
+  }),
+  columnHelper.accessor('secondCA', {
+    header: 'Second CA',
+  }),
+  columnHelper.accessor('examScore', {
+    header: 'Exam',
+  }),
+  columnHelper.accessor('total', {
+    header: 'Total',
+  }),
+  columnHelper.accessor('grade', {
+    header: 'Grade',
+  }),
+  columnHelper.accessor('status', {
+    header: 'Status',
+    cell: (info) => (
+      <span className={cn('font-normal rounded-full w-[92px] py-1.5 px-8', statusClasses(info.getValue()))}>
+        {info.getValue()}
+      </span>
+    ),
+    meta: { useTypography: false },
+  }),
+];
+
 export function ResultTable(): JSX.Element {
   return (
-    <table className="w-full min-w-max table-auto text-left">
-      <thead>
-        <tr>
-          {TABLE_HEAD.map((head) => (
-            <th key={head} className="bg-[#FBFBFB] p-4">
-              <Typography
-                variant="small"
-                className={cn(
-                  'font-normal text-sm text-gray1 leading-none opacity-70',
-                  poppins_400.className
-                )}
-              >
-                {head}
-              </Typography>
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody className={''}>
-        {TABLE_ROWS.map(
-          (
-            {
-              serialnumber,
-              subject,
-              firstCA,
-              secondCA,
-              examScore,
-              total,
-              grade,
-              status,
-            },
-            index
-          ) => {
-            const isLast = index === TABLE_ROWS.length - 1;
-            const classes = isLast ? 'p-4' : 'p-4 border-b border-gray4';
-
-            return (
-              <tr key={serialnumber}>
-                <td className={classes}>
-                  <Typography
-                    variant="small"
-                    className={cn(
-                      'font-normal text-gray1',
-                      poppins_400.className
-                    )}
-                  >
-                    {serialnumber}
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography
-                    variant="small"
-                    className={cn(
-                      'font-normal text-gray1',
-                      poppins_400.className
-                    )}
-                  >
-                    {subject}
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography
-                    variant="small"
-                    className={cn(
-                      'font-normal text-gray1',
-                      poppins_400.className
-                    )}
-                  >
-                    {firstCA}
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography
-                    variant="small"
-                    className={cn(
-                      'font-normal text-gray1',
-                      poppins_400.className
-                    )}
-                  >
-                    {secondCA}
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography
-                    variant="small"
-                    className={cn(
-                      'font-normal text-gray1',
-                      poppins_400.className
-                    )}
-                  >
-                    {examScore}
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography
-                    variant="small"
-                    className={cn(
-                      'font-normal text-gray1',
-                      poppins_400.className
-                    )}
-                  >
-                    {total}
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography
-                    variant="small"
-                    className={cn(
-                      'font-normal text-gray1',
-                      poppins_400.className
-                    )}
-                  >
-                    {grade}
-                  </Typography>
-                </td>
-                <td className={classes}>
-                  <Typography
-                    variant="small"
-                    className={cn(
-                      'font-normal rounded-full w-[92px] py-1.5 px-8',
-                      status === 'Pass'
-                        ? 'text-lightSuccess bg-success'
-                        : status === 'Good'
-                          ? 'text-[#F2994A] bg-[#F2994A14]'
-                          : status === 'Fair'
-                            ? 'text-[#F2994A] bg-[#F2994A14]'
-                            : status === 'Fail'
-                              ? 'text-[#EB5757] bg-[#EB575714]'
-                              : 'text-gray-600 bg-gray-200',
-                      poppins_400.className
-                    )}
-                  >
-                    {status}
-                  </Typography>
-                </td>
-              </tr>
-            );
-          }
-        )}
-      </tbody>
-    </table>
+    <DataTable
+      data={TABLE_ROWS}
+      columns={columns}
+      isLoading={false}
+      theadClassName=""
+      thClassName={cn('bg-[#FBFBFB] p-4 font-normal text-sm text-gray1 leading-none opacity-70', poppins_400.className)}
+      tdClassName={cn('border-gray4 font-normal text-gray1', poppins_400.className)}
+      tableClassName="w-full min-w-max table-auto text-left"
+      useCardWrapper={false}
+      wrapCellsInTypography={false}
+      wrapHeadersInTypography={false}
+      enableSorting={false}
+      enableFiltering={false}
+    />
   );
 }
