@@ -58,7 +58,15 @@ export function middleware(req: NextRequest) {
   // global/default host restrictions (the app's marketing root domain — no tenant)
   if (tenant.isDefault) {
     // allowed paths on global host (supports exact paths or prefix with '/*')
-  const allowedPaths = ['/', '/signup', '/select-school', '/account-login'];
+  const allowedPaths = [
+    '/',
+    '/signup',
+    '/signup/*',
+    '/select-school',
+    '/account-login',
+    '/super-admin',
+    '/super-admin/*',
+  ];
 
     const matchesPattern = (pattern: string, path: string) => {
       if (pattern === path) return true;

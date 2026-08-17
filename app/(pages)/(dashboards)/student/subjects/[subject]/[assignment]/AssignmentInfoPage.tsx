@@ -6,7 +6,8 @@ import Review from '@/components/atoms/icons/ModalIcons/Review';
 import DraftIcon from '@/components/atoms/icons/dashboard/DraftIcon';
 import SubmitIcon from '@/components/atoms/icons/dashboard/SubmitIcon';
 import Modal from '@/components/molecules/Modal';
-import YNmodal from '@/components/molecules/YNmodal';
+import ConfirmModal from '@/components/molecules/ConfirmModal';
+import { OrangeCheckBadgeIcon } from '@/components/atoms/icons/Icons';
 import AnswerBox from '@/components/molecules/dashboard/student/subjects/AnswerBox';
 import {
   Inter_400,
@@ -107,16 +108,19 @@ function AssignmentInfoPage() {
         </div>
       </div>
 
-      <YNmodal
-        isOpen={confirmSubmitAssignmentModal}
-        onClose={() => setConfirmSubmitAssignmentModal(false)}
+      <ConfirmModal
+        open={confirmSubmitAssignmentModal}
+        close={() => setConfirmSubmitAssignmentModal(false)}
         title="Submit assignment"
-        submit={() => {
+        onConfirm={() => {
           setConfirmSubmitAssignmentModal(false);
           setAssignmentSubmittedModalOpen(true);
         }}
         body="Are you sure you want to submit this answer? You will be graded based on the answer provided"
-      ></YNmodal>
+        icon={<OrangeCheckBadgeIcon />}
+        confirmText="Submit"
+        cancelClassName="bg-transparent border text-primary border-primary"
+      />
 
       <Modal
         isOpen={assignmentSubmittedModalOpen}

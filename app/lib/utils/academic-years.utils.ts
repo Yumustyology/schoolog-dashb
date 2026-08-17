@@ -1,4 +1,16 @@
 import { AcademicYear } from '@/app/lib/types/academicYear.types';
+import { isFutureDate, isPastDate } from '@/app/lib/utils/dateUtils';
+
+export type AcademicYearStatus = 'Upcoming' | 'Active' | 'Completed';
+
+export function getAcademicYearStatus(
+  start: string,
+  end: string
+): AcademicYearStatus {
+  if (isFutureDate(start)) return 'Upcoming';
+  if (isPastDate(end)) return 'Completed';
+  return 'Active';
+}
 
 export const normalizeAcademicYear = (data?: AcademicYear) => {
   if (!data) return null;

@@ -2,29 +2,62 @@ import { biology1 } from '@/app/assets';
 import Button from '@/components/atoms/form/Button';
 import {
   ArchiveIcon,
-  ArchiveModalIcon,
   DeleteIcon,
-  DeleteModalIcon,
-  UnachiveModalIcon,
   UnarchiveIcon,
 } from '@/components/atoms/icons/Icons';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { cn } from '@/app/lib/utils';
 import Image from 'next/image';
-import React, { useState } from 'react';
-import SubjectModal from '@/components/atoms/dashboard/subjects/subjectsInfoModals/SubjectModal';
-import { isArchive } from '@/app/lib/entities/subject.entity';
+import React from 'react';
+import useSWR from 'swr';
+import subjectsActions from '@/app/lib/actions/subjects.action';
+import useArchiveSubject from '@/app/lib/hooks/useArchiveSubject';
+import useUnarchiveSubject from '@/app/lib/hooks/useUnarchiveSubject';
+import useDeleteSubject from '@/app/lib/hooks/useDeleteSubject';
 
 import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 
-function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {
-  const [deleteModal, setDeleteModal] = useState(false);
-  const [archiveModal, setArchiveModal] = useState(false);
-  const [unarchiveModal, setUnarchiveModal] = useState(false);
-  // const archive = useEntity(isArchive);
-
+function SubjectInfoCard({
+  role,
+  subjectId,
+}: {
+  role: 'school' | 'student' | 'parent';
+  subjectId?: string;
+}) {
   const { theme } = useSlgTheme();
+
+  const { data: subjectResp, mutate: mutateSubject } = useSWR(
+    subjectId && role === 'school' ? ['subject', subjectId] : null,
+    () => subjectsActions.getSubjectById(subjectId as string)
+  );
+  const isArchived = !!subjectResp?.data?.isArchived;
+
+  const {
+    openArchive,
+    showArchiveModal,
+    ArchiveConfirmModal,
+  } = useArchiveSubject(subjectId);
+  const {
+    openUnarchive,
+    showUnarchiveModal,
+    UnarchiveConfirmModal,
+  } = useUnarchiveSubject(subjectId);
+  const { openDelete, showDeleteModal, DeleteConfirmModal } = useDeleteSubject(subjectId);
+
+  // The archive/unarchive/delete hooks only revalidate the subjects *list*
+  // cache on success — this card fetches its own single-subject detail
+  // under a different SWR key, so re-fetch it whenever one of those modals
+  // closes (covers both success and cancel; a redundant re-fetch on cancel
+  // is harmless).
+  const wasModalOpen = React.useRef(false);
+  React.useEffect(() => {
+    const isAnyOpen = showArchiveModal || showUnarchiveModal || showDeleteModal;
+    if (wasModalOpen.current && !isAnyOpen) {
+      mutateSubject();
+    }
+    wasModalOpen.current = isAnyOpen;
+  }, [showArchiveModal, showUnarchiveModal, showDeleteModal, mutateSubject]);
 
   return (
     <Card className="bg-white py-6 h-[390px] pb-10 px-6 rounded-md col-span-2 border-none">
@@ -205,21 +238,17 @@ function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {
               className={cn(
                 'flex  text-r2 h-[48px] w-[191px] border border-r2'
               )}
-              onClick={() => {
-                setDeleteModal(true);
-              }}
+              onClick={openDelete}
             >
               <DeleteIcon />
               <span className="text-r2">Delete Subject</span>
             </Button>
 
-            {isArchive ? (
+            {isArchived ? (
               <Button
                 round
                 className={cn('flex  text-primary h-[48px] w-[191px] bg-light')}
-                onClick={() => {
-                  setUnarchiveModal(true);
-                }}
+                onClick={openUnarchive}
               >
                 <UnarchiveIcon color={theme.primary} />
                 <span className="text-primary">Post Subject</span>
@@ -228,9 +257,7 @@ function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {
               <Button
                 round
                 className={cn('flex  text-primary h-[48px] w-[191px] bg-light')}
-                onClick={() => {
-                  setArchiveModal(true);
-                }}
+                onClick={openArchive}
               >
                 <ArchiveIcon color={theme.primary} />
                 <span className="text-primary">Archive</span>
@@ -239,34 +266,9 @@ function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {
           </div>
         )}
       </CardContent>
-      <SubjectModal
-        type="delete"
-        title="Delete Subject"
-        content="Are you sure you want to delete this subject? this subject can’t be recovered"
-        icon={<DeleteModalIcon />}
-        open={deleteModal}
-        close={() => setDeleteModal(false)}
-      />
-      <SubjectModal
-        type="archive"
-        title="Archive study"
-        content="Are you sure you want to archive this subjest? it won’t be visible to students and teachers again"
-        icon={<ArchiveModalIcon color={theme.primary} />}
-        open={archiveModal}
-        close={() => setArchiveModal(false)}
-      />
-      <SubjectModal
-        type="unarchive"
-        title="Post Subject"
-        content="Are you sure you want to post this subject? This will make it visible to students and teachers"
-        icon={
-          <UnachiveModalIcon
-            color={{ light: theme.light, primary: theme.primary }}
-          />
-        }
-        open={unarchiveModal}
-        close={() => setUnarchiveModal(false)}
-      />
+      {DeleteConfirmModal}
+      {ArchiveConfirmModal}
+      {UnarchiveConfirmModal}
     </Card>
   );
 }

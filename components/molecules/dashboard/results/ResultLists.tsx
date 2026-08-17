@@ -1,7 +1,6 @@
 'use client';
 
 import {
-  Inter_400,
   Inter_500,
   Inter_600,
   poppins_400,
@@ -11,8 +10,7 @@ import { Card } from '@material-tailwind/react';
 import { JSX, useState } from 'react';
 import { ResultTable } from './ResultTable';
 import EyeOpen from '@/components/atoms/icons/EyeOpen';
-import FormModal from '../FormModal';
-import Input from '@/components/atoms/form/Input';
+import { CheckResultModal } from './CheckResultModal';
 // import SelectComp from '@/components/atoms/form/Select';
 import HideArrow from '@/components/atoms/icons/SideBar/HideArrow';
 import Button from '@/components/atoms/form/Button';
@@ -171,32 +169,10 @@ export function ResultLists(): JSX.Element {
         ))}
       </Card>
 
-      <FormModal
+      <CheckResultModal
         isOpen={viewResultModalOpen}
         onClose={() => setViewResultModalOpen(false)}
-        title="Check result"
-      >
-        <div>
-          <div>
-            <h2 className={cn('text-2xl text-gray1 ', Inter_600.className)}>
-              Input <span className="text-primary"> result code </span>
-            </h2>
-            <p className={cn('text-sm text-gray mt-1', Inter_400.className)}>
-              Input the 5 unique code issued to your parents after purchasing
-              the report card pass
-            </p>
-          </div>
-
-          <div className="mt-10">
-            <Input
-              label="Report card code"
-              labelClassName="-mb-3"
-              placeholder="Input code"
-              className="h-[56px] mt-6 border border-gray2 rounded-md"
-            />
-          </div>
-        </div>
-      </FormModal>
+      />
     </>
   );
 }

@@ -1,17 +1,21 @@
 import {
-  ArchiveModalIcon,
-  DeleteModalIcon,
-  UnachiveModalIcon,
+  ArchiveIcon,
+  DeleteIcon,
+  UnarchiveIcon,
 } from '@/components/atoms/icons/Icons';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { cn, formatActiveTermYears } from '@/app/lib/utils';
 import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import type { ActiveTerm } from '@/app/lib/types/class.types';
-import SubjectModal from '@/components/atoms/dashboard/subjects/subjectsInfoModals/SubjectModal';
+import ConfirmModal from '@/components/molecules/ConfirmModal';
 import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 import Button from '@/components/atoms/form/Button';
 import Timetable from '@/components/atoms/icons/SideBar/Timetable';
+import classGradeActions from '@/app/lib/actions/class-grade.actions';
+import showToast from '@/app/lib/utils/toast';
+import { mutate } from 'swr';
 
 type StudentCounts = { total: number; male: number; female: number };
 type Attendance = { todayPercentage: number; monthPercentage: number };
@@ -24,20 +28,88 @@ function ClassInfoCard({
   studentCounts,
   attendance,
   activeTerm,
+  isArchived,
 }: {
   classId: string;
   classGradeName: string;
   studentCounts?: StudentCounts | null;
   attendance?: Attendance | null;
   activeTerm?: ActiveTerm | null;
+  isArchived?: boolean;
 }) {
-  // mark classId as used to avoid lint "defined but never used"
-  void classId;
+  const router = useRouter();
   const [deleteModal, setDeleteModal] = useState(false);
   const [archiveModal, setArchiveModal] = useState(false);
   const [unarchiveModal, setUnarchiveModal] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { theme } = useSlgTheme();
+
+  const revalidateClass = () =>
+    mutate((key) => Array.isArray(key) && key[0] === 'class-grade-detail');
+
+  const handleDelete = async () => {
+    setIsSubmitting(true);
+    try {
+      await classGradeActions.deleteClassGrade(classId);
+      showToast('Class deleted successfully', 'class-deleted', {
+        theme: 'light',
+        type: 'success',
+      });
+      setDeleteModal(false);
+      router.push('/school/classes');
+    } catch (error) {
+      showToast('Failed to delete class', 'class-delete-error', {
+        theme: 'light',
+        type: 'error',
+      });
+      console.error('Error deleting class:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleArchive = async () => {
+    setIsSubmitting(true);
+    try {
+      await classGradeActions.archiveClassGrade(classId);
+      showToast('Class archived successfully', 'class-archived', {
+        theme: 'light',
+        type: 'success',
+      });
+      setArchiveModal(false);
+      revalidateClass();
+    } catch (error) {
+      showToast('Failed to archive class', 'class-archive-error', {
+        theme: 'light',
+        type: 'error',
+      });
+      console.error('Error archiving class:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleUnarchive = async () => {
+    setIsSubmitting(true);
+    try {
+      await classGradeActions.unarchiveClassGrade(classId);
+      showToast('Class unarchived successfully', 'class-unarchived', {
+        theme: 'light',
+        type: 'success',
+      });
+      setUnarchiveModal(false);
+      revalidateClass();
+    } catch (error) {
+      showToast('Failed to unarchive class', 'class-unarchive-error', {
+        theme: 'light',
+        type: 'error',
+      });
+      console.error('Error unarchiving class:', error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   const totalStudents = studentCounts?.total ?? 0;
   const todayAttendance = attendance?.todayPercentage ?? 0;
@@ -118,33 +190,69 @@ function ClassInfoCard({
             </Button>
           </div>
         </div>
+
+        <div className="flex justify-between gap-4">
+          <Button
+            round
+            flat
+            className={cn('flex text-r2 h-[48px] w-full border border-r2')}
+            onClick={() => setDeleteModal(true)}
+          >
+            <DeleteIcon />
+            <span className="text-r2">Delete Class</span>
+          </Button>
+
+          {isArchived ? (
+            <Button
+              round
+              className={cn('flex text-primary h-[48px] w-full bg-light')}
+              onClick={() => setUnarchiveModal(true)}
+            >
+              <UnarchiveIcon color={theme.primary} />
+              <span className="text-primary">Unarchive</span>
+            </Button>
+          ) : (
+            <Button
+              round
+              className={cn('flex text-primary h-[48px] w-full bg-light')}
+              onClick={() => setArchiveModal(true)}
+            >
+              <ArchiveIcon color={theme.primary} />
+              <span className="text-primary">Archive</span>
+            </Button>
+          )}
+        </div>
       </CardContent>
 
-      <SubjectModal
-        type="delete"
-        title="Delete Subject"
-        content="Are you sure you want to delete this subject? this subject can’t be recovered"
-        icon={<DeleteModalIcon />}
+      <ConfirmModal
         open={deleteModal}
         close={() => setDeleteModal(false)}
+        title="Delete Class"
+        body="Are you sure you want to delete this class? this action cannot be undone."
+        icon={<DeleteIcon size={24} />}
+        onConfirm={handleDelete}
+        confirmText="Delete"
+        isLoading={isSubmitting}
       />
-      <SubjectModal
-        type="archive"
-        title="Archive study"
-        content="Are you sure you want to archive this subjest? it won’t be visible to students and teachers again"
-        icon={<ArchiveModalIcon color={theme.primary} />}
+      <ConfirmModal
         open={archiveModal}
         close={() => setArchiveModal(false)}
+        title="Archive Class"
+        body="Are you sure you want to archive this class? it won’t be visible to students and teachers again."
+        icon={<ArchiveIcon color={theme.primary} size={24} />}
+        onConfirm={handleArchive}
+        confirmText="Archive"
+        isLoading={isSubmitting}
       />
-      <SubjectModal
-        type="unarchive"
-        title="Post Subject"
-        content="Are you sure you want to post this subject? This will make it visible to students and teachers"
-        icon={
-          <UnachiveModalIcon color={{ light: theme.light, primary: theme.primary }} />
-        }
+      <ConfirmModal
         open={unarchiveModal}
         close={() => setUnarchiveModal(false)}
+        title="Unarchive Class"
+        body="Are you sure you want to unarchive this class? This will make it visible to students and teachers again."
+        icon={<UnarchiveIcon color={theme.primary} size={24} />}
+        onConfirm={handleUnarchive}
+        confirmText="Unarchive"
+        isLoading={isSubmitting}
       />
     </Card>
   );

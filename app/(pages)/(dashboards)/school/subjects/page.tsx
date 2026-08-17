@@ -9,10 +9,10 @@ import {
   poppins_600,
 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import useActiveTab from '@/app/lib/hooks/useActiveTab';
 import { Tab, Tabs, TabsHeader } from '@material-tailwind/react';
-import useSWR from 'swr';
+import useSWR, { useSWRConfig } from 'swr';
 import subjectsActions from '@/app/lib/actions/subjects.action';
 import SearchInput from '@/components/atoms/form/SearchInput';
 import { ClassGradeDropdown } from '@/components/atoms/dashboard/classes/ClassGradeDropdown';
@@ -20,11 +20,14 @@ import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 import { useClassGradeFilter } from '@/app/lib/hooks/useClassGradeFilter';
 import { usePaginatedSearch } from '@/app/lib/hooks/usePaginatedSearch';
 import SubjectsTableList from '@/components/atoms/dashboard/subjects/SubjectsTableList';
+import CreateSubjectModal from '@/components/molecules/dashboard/subjects/CreateSubjectModal';
 
 const breadcrumbs = [{ label: 'Subjects', isActive: true }];
 
 function Page() {
   const { theme } = useSlgTheme();
+  const { mutate } = useSWRConfig();
+  const [isCreateSubjectOpen, setIsCreateSubjectOpen] = useState(false);
   const {
     classGrades,
     selectedClassGrade,
@@ -91,18 +94,10 @@ function Page() {
       <div className="flex justify-between items-center">
         <BreadcrumbBox crumbs={breadcrumbs} className="mb-0" />
         <Button
-          to="/school/subjects/create-new-subject"
           round
-          disabled={classGrades.length === 0}
-          title={
-            classGrades.length === 0
-              ? 'Please create a class grade first'
-              : 'Create subject'
-          }
-          className={cn(
-            'h-[44px] py-3 px-6 flex gap-2',
-            classGrades.length === 0 && 'bg-disabled'
-          )}
+          onClick={() => setIsCreateSubjectOpen(true)}
+          title="Create subject"
+          className="h-[44px] py-3 px-6 flex gap-2"
         >
           <AdditionIcon />
           <span className={cn('text-base', Inter_500.className)}>
@@ -214,6 +209,12 @@ function Page() {
           />
         )}
       </div>
+
+      <CreateSubjectModal
+        isOpen={isCreateSubjectOpen}
+        onClose={() => setIsCreateSubjectOpen(false)}
+        onCreated={() => mutate((key) => Array.isArray(key) && key[0] === 'subjects')}
+      />
     </main>
   );
 }

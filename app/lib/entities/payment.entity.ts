@@ -29,3 +29,8 @@ export const closeFeeCategoryModal = () => feeCategoryOpenState.set(false);
 
 export const openMakePaymentModal = () => makePaymentOpenState.set(true);
 export const closeMakePaymentModal = () => makePaymentOpenState.set(false);
+
+// The fee category currently being edited or deleted (null = creating new)
+export const selectedFeeCategoryId = entity<string | null>(null);
+export const setSelectedFeeCategoryId = (id: string | null) =>
+  selectedFeeCategoryId.set(id);

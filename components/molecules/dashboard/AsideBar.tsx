@@ -24,12 +24,17 @@ import Image from 'next/image';
 import Settings from '../../atoms/icons/SideBar/Settings';
 import { ChevronUp } from 'lucide-react';
 import { useRef, useState } from 'react';
-import { studentSidebarItems, shoolSidebarItems, teacherSidebarItems } from '@/app/lib/sidebarData';
+import {
+  studentSidebarItems,
+  shoolSidebarItems,
+  teacherSidebarItems,
+  superAdminSidebarItems,
+} from '@/app/lib/sidebarData';
 
 export function AppSidebar({
   type,
 }: {
-  type: 'school' | 'student' | 'teacher' | 'parent';
+  type: 'school' | 'student' | 'teacher' | 'parent' | 'super-admin';
 }) {
   const pathname = usePathname();
   const { state, setOpen } = useSidebar();
@@ -156,7 +161,9 @@ export function AppSidebar({
                   ? shoolSidebarItems
                   : type == 'teacher'
                     ? teacherSidebarItems
-                    : []
+                    : type == 'super-admin'
+                      ? superAdminSidebarItems
+                      : []
               ).map((item) => {
                 const isActive =
                   cleanedPath === item.url ||

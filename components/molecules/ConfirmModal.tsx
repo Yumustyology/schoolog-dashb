@@ -15,6 +15,7 @@ interface ConfirmModalProps {
   confirmText?: string;
   cancelText?: string;
   confirmClassName?: string;
+  cancelClassName?: string;
   isLoading?: boolean;
 }
 
@@ -28,6 +29,7 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
   confirmText = 'Confirm',
   cancelText = 'Cancel',
   confirmClassName = 'bg-r text-white',
+  cancelClassName = 'bg-transparent border text-gray8 border-gray8',
   isLoading = false,
 }) => {
   if (!open) return null;
@@ -70,7 +72,8 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
             disabled={isLoading}
             round
             className={cn(
-              'bg-transparent border text-gray8 text-base border-gray8 h-[44px] w-[185px]',
+              'text-base h-[44px] w-[185px]',
+              cancelClassName,
               Inter_500.className
             )}
           >

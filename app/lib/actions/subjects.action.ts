@@ -46,6 +46,13 @@ export const unarchiveSubject = async (
   return patchRequest<unknown>(`/subjects/${id}/unarchive`, {});
 };
 
+/** Fetch a single subject by id */
+export const getSubjectById = async (
+  id: string
+): Promise<ResponseType<{ isArchived?: boolean; [key: string]: unknown }>> => {
+  return getRequest(`/subjects/${id}`);
+};
+
 /** Link a subject to a class grade and optional department */
 export const linkSubjectToClass = async (
   subjectId: string,
@@ -61,6 +68,7 @@ const subjectsActions = {
   deleteSubject,
   archiveSubject,
   unarchiveSubject,
+  getSubjectById,
   linkSubjectToClass,
 };
 

@@ -1,50 +1,53 @@
 import React from 'react';
-import DropdownSearch from '../../form/DropdownSearch';
-import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
+import useSWR from 'swr';
+import { poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
-import ImageOptionBox from '../../form/ImageOptionBox';
-import { AddedTeacherList } from '../subjects/AddedTeacherList';
+import DropdownMultiSelect, {
+  OptionType,
+} from '../../form/DropdownMultiSelect';
+import studentActions from '@/app/lib/actions/student.actions';
+import { MultiValue } from 'react-select';
 
-export const SelectedStudents = () => {
-  const [selectedOption, setSelectedOption] = React.useState('');
+type SelectedStudentsProps = {
+  selectedStudentIds: string[];
+  onChange: (ids: string[]) => void;
+  classGradeId?: string;
+};
 
-  const options = [
-    {
-      value: 'Abdulateef Kayode',
-      label: <ImageOptionBox name="Abdulateef Kayode" role="Matematics" />,
-    },
-    { value: 'Mahmud Yussuf', label: <ImageOptionBox name="Mahmud Yussuf" /> },
-    {
-      value: 'oke Aderonke',
-      label: <ImageOptionBox name="Joke Aderonke" role="English" />,
-    },
-  ];
+export const SelectedStudents = ({
+  selectedStudentIds,
+  onChange,
+  classGradeId,
+}: SelectedStudentsProps) => {
+  const { data, isLoading } = useSWR(
+    ['students-picker', classGradeId],
+    () => studentActions.fetchStudents({ classGradeId, limit: 200 })
+  );
+
+  const students = (data?.data || []) as Record<string, unknown>[];
+
+  const options: OptionType[] = students.map((s) => ({
+    value: String(s._id ?? ''),
+    label: `${String(s.firstName ?? '')} ${String(s.lastName ?? '')}`.trim(),
+  }));
+
+  const value: MultiValue<OptionType> = options.filter((o) =>
+    selectedStudentIds.includes(o.value)
+  );
+
   return (
     <div>
-      <div>
-        <div className="mt-10">
-          <div className="max-w-sm mx-auto">
-            <p
-              className={cn('text-base text-gray1 mb-2', poppins_400.className)}
-            >
-              Select Students
-            </p>
-            <DropdownSearch
-              options={options}
-              value={selectedOption}
-              onChange={setSelectedOption}
-              placeholder="Input name"
-            />
-          </div>
-        </div>
-      </div>
-
-      <div className="mt-8 ">
-        <h3 className={cn('text-base text-gray mb-6', poppins_500.className)}>
-          Students{' '}
-        </h3>
-        <div className="flex flex-col gap-3">
-          <AddedTeacherList />
+      <div className="mt-10">
+        <div className="max-w-sm mx-auto">
+          <p className={cn('text-base text-gray1 mb-2', poppins_400.className)}>
+            Select Students
+          </p>
+          <DropdownMultiSelect
+            options={options}
+            value={value}
+            onChange={(newValue) => onChange(newValue.map((v) => v.value))}
+            placeholder={isLoading ? 'Loading students…' : 'Search students...'}
+          />
         </div>
       </div>
     </div>

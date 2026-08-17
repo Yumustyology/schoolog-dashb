@@ -8,7 +8,8 @@ import { useSearchParams } from 'next/navigation';
 import FileUploader from '@/components/atoms/form/FileUploader';
 import { uploadResourcesBatch } from '@/app/lib/actions/resources.action';
 import showToast from '@/app/lib/utils/toast';
-import { getCurrentFolderId, parseFolderPath } from '@/app/lib/utils/resource.util';
+import { getCurrentFolderId, parseFolderPath, getFileIcon } from '@/app/lib/utils/resource.util';
+import type { MaterialType } from '@/app/lib/types/materials.types';
 
 interface UploadResourcesModalProps {
   isOpen: boolean;
@@ -19,6 +20,8 @@ interface UploadResourcesModalProps {
   folderId?: string;
   accept?: Record<string, string[]>;
   maxSizeInMB?: number;
+  onOptimisticUpload?: (item: MaterialType) => void;
+  onUploadError?: (tempId: string) => void;
   onUploadSuccess?: () => void;
 }
 
@@ -31,6 +34,8 @@ export const UploadResourcesModal = ({
   folderId,
   accept,
   maxSizeInMB = 50,
+  onOptimisticUpload,
+  onUploadError,
   onUploadSuccess,
 }: UploadResourcesModalProps) => {
   const searchParams = useSearchParams();
@@ -65,9 +70,27 @@ export const UploadResourcesModal = ({
   const handleSubmit = async () => {
     if (selectedFiles.length === 0) return;
 
+    const filesToUpload = selectedFiles;
+    const tempIds = filesToUpload.map((file, i) => `temp-${Date.now()}-${i}`);
+    filesToUpload.forEach((file, i) => {
+      onOptimisticUpload?.({
+        id: tempIds[i],
+        type: 'material',
+        icon: getFileIcon({ _id: '', type: 'material', name: file.name, mimeType: file.type }),
+        name: file.name,
+        size: formatFileSize(file.size),
+        date: new Date().toLocaleDateString(),
+        folderId: effectiveFolderId,
+      });
+    });
+
+    setSelectedFiles([]);
+    setUploadProgress({});
+    setIsOpen();
+
     setIsUploading(true);
     try {
-      const results = await uploadResourcesBatch(selectedFiles, {
+      const results = await uploadResourcesBatch(filesToUpload, {
          folderId: effectiveFolderId,
         classGradeId: effectiveClassGradeId,
         classId,
@@ -77,6 +100,10 @@ export const UploadResourcesModal = ({
       });
 
       const errors = results.filter(r => r instanceof Error || !r);
+      results.forEach((r, i) => {
+        if (r instanceof Error || !r) onUploadError?.(tempIds[i]);
+      });
+
       if (errors.length > 0) {
         showToast(
           `${errors.length} file(s) failed to upload`,
@@ -85,17 +112,14 @@ export const UploadResourcesModal = ({
         );
       } else {
         showToast(
-          `${selectedFiles.length} file(s) uploaded successfully`,
+          `${filesToUpload.length} file(s) uploaded successfully`,
           'upload-success',
           { theme: 'light', type: 'success' }
         );
-        onUploadSuccess?.();
       }
-
-      setSelectedFiles([]);
-      setUploadProgress({});
-      setIsOpen();
+      onUploadSuccess?.();
     } catch (error) {
+      tempIds.forEach((id) => onUploadError?.(id));
       showToast('Upload failed', 'upload-error', { theme: 'light', type: 'error' });
       console.error('Error uploading files:', error);
     } finally {

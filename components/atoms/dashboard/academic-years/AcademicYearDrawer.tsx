@@ -13,22 +13,13 @@ import type {
 } from '@/app/lib/types/academicYear.types';
 import AcademicYearDrawerSkeleton from '@/components/atoms/skeleton/AcademicYearDrawerSkeleton';
 import { formatDate } from '@/app/lib/utils/dateUtils';
+import { getAcademicYearStatus } from '@/app/lib/utils/academic-years.utils';
 
 interface AcademicYearDrawerProps {
   open: boolean;
   closeDrawer: () => void;
   academicYearId: string;
 }
-
-// Determine academic year status
-export const getAcademicYearStatus = (start: string, end: string) => {
-  const now = new Date();
-  const startDate = new Date(start);
-  const endDate = new Date(end);
-  if (now < startDate) return 'Upcoming';
-  if (now > endDate) return 'Completed';
-  return 'Active';
-};
 
 const AcademicYearDrawer: React.FC<AcademicYearDrawerProps> = ({
   open,

@@ -51,6 +51,18 @@ export function formatCurrency(amountInSmallestUnit: number, currency = 'NGN'): 
   }
 }
 
+/** Triggers a browser "Save As" download for an in-memory Blob (e.g. a downloaded file response). */
+export function triggerBlobDownload(blob: Blob, filename: string): void {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  URL.revokeObjectURL(url);
+}
+
 export function truncateFileName(fileName: string, maxBaseLength = 19): string {
   const lastDotIndex = fileName.lastIndexOf('.');
   if (lastDotIndex <= 0 || lastDotIndex === fileName.length - 1) {

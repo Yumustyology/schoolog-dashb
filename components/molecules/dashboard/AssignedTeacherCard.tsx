@@ -38,6 +38,9 @@ function AssignedTeacherCard({
   page,
   className,
   teacher,
+  subjectId,
+  classGradeId,
+  subjectName,
 }: {
   role: 'school' | 'student' | 'parent' | 'school';
   page?: 'classInfo' | 'subjectInfo';
@@ -50,6 +53,9 @@ function AssignedTeacherCard({
     phone?: string;
     image?: string;
   } | null;
+  subjectId?: string;
+  classGradeId?: string;
+  subjectName?: string;
 }) {
   const { theme } = useSlgTheme();
 
@@ -323,6 +329,9 @@ function AssignedTeacherCard({
       <TeachersListDrawer
         isTeacherListOpen={isTeachersListOpen}
         setIsTeacherListOpen={setIsTeacherListOpen}
+        subjectId={subjectId}
+        classGradeId={classGradeId}
+        subjectName={subjectName}
       />
     </Card>
   );

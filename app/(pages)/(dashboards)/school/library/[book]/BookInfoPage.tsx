@@ -48,7 +48,7 @@ export const BookInfoPage = ({ book }: { book: string }) => {
       </div>
 
       <main className="">
-        <BookInfoPageHeader />
+        <BookInfoPageHeader bookId={book} />
         <div className="bg-white p-6">
           <div className="flex justify-between items-center">
             <h2 className={cn('text-base text-black1', poppins_700.className)}>

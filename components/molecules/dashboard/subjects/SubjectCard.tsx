@@ -10,11 +10,12 @@ import MenuLists from '@/components/atoms/dashboard/students/MenuLists';
 import useArchiveSubject from '@/app/lib/hooks/useArchiveSubject';
 import useUnarchiveSubject from '@/app/lib/hooks/useUnarchiveSubject';
 import useDeleteSubject from '@/app/lib/hooks/useDeleteSubject';
-import subjectsActions from '@/app/lib/actions/subjects.action';
+import classGradeActions from '@/app/lib/actions/class-grade.actions';
 import departmentsActions from '@/app/lib/actions/departments.action';
 import showToast from '@/app/lib/utils/toast';
 import type { Department } from '@/app/lib/types/department.types';
 import { SubjectType } from '@/app/lib/types/subject.types';
+import type { ClassSubject, ClassSubjectType } from '@/app/lib/types/class.types';
 import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { ClassGradeDropdown } from '@/components/atoms/dashboard/classes/ClassGradeDropdown';
@@ -28,6 +29,12 @@ interface SubjectCardProps {
   onDeleteSuccess?: () => void;
 }
 
+export const classSubjectTypeBadgeClasses: Record<ClassSubjectType, string> = {
+  general: 'bg-blue-50 text-blue-600 border border-blue-200',
+  departmental: 'bg-red-50 text-red-600 border border-red-200',
+  elective: 'bg-orange-50 text-orange-600 border border-orange-200',
+};
+
 const SubjectCard: React.FC<SubjectCardProps> = ({
   subject,
   classGradeId,
@@ -40,6 +47,12 @@ const SubjectCard: React.FC<SubjectCardProps> = ({
   const [selectedLinkMode, setSelectedLinkMode] = React.useState<'general' | 'departmental' | 'elective'>('general');
   const [selectedDepartment, setSelectedDepartment] = React.useState<string>('');
   const [isSavingLink, setIsSavingLink] = React.useState(false);
+
+  const { data: classSubjectsResp, mutate: mutateClassSubjects } = useSWR(
+    subject._id ? ['class-subjects-for-subject', subject._id] : null,
+    () => classGradeActions.fetchClassSubjects({ subjectId: subject._id })
+  );
+  const linkedClassSubjects: ClassSubject[] = classSubjectsResp?.data?.data || [];
 
   const { data: departmentResponse } = useSWR('/departments', () => departmentsActions.fetchDepartments());
   const departmentOptions: Array<{ id: string; label: string }> = React.useMemo(() => {
@@ -137,38 +150,28 @@ const SubjectCard: React.FC<SubjectCardProps> = ({
     setIsSavingLink(true);
 
     try {
-      const payload = {
+      const response = await classGradeActions.createClassSubject({
         classGradeId: selectedClassGrade || classGradeId || '',
-        linkMode: selectedLinkMode,
-        departmentId: selectedLinkMode === 'departmental' ? selectedDepartment : undefined,
-      };
-
-      const response = await subjectsActions.linkSubjectToClass(subject._id, payload);
+        subjectId: subject._id,
+        type: selectedLinkMode,
+        departmentIds: selectedLinkMode === 'departmental' && selectedDepartment ? [selectedDepartment] : undefined,
+      });
       if (response?.status === 'success') {
         showToast(response.message || 'Subject linked successfully', 'subject-linked', {
           type: 'success',
         });
+        mutateClassSubjects();
+        setIsLinkModalOpen(false);
       } else {
         showToast('Subject link could not be created', 'subject-link-failed', {
           type: 'error',
         });
       }
-
-      const departmentQuery =
-        selectedLinkMode === 'departmental' && selectedDepartment
-          ? `&department=${selectedDepartment}`
-          : '';
-
-      router.push(
-        `/${role}/subjects/${subject._id}/?title=${encodeURIComponent(String(
-          subject.name || ''
-        ))}&classGrade=${selectedClassGrade || classGradeId || ''}&linkMode=${selectedLinkMode}${departmentQuery}`
-      );
-      setIsLinkModalOpen(false);
-    } catch {
-      showToast('An error occurred while linking the subject', 'subject-link-error', {
-        type: 'error',
-      });
+    } catch (err) {
+      const message =
+        (err as { response?: { data?: { message?: string } } })?.response?.data?.message ||
+        'An error occurred while linking the subject';
+      showToast(message, 'subject-link-error', { type: 'error' });
     } finally {
       setIsSavingLink(false);
     }
@@ -226,13 +229,29 @@ const SubjectCard: React.FC<SubjectCardProps> = ({
         <p className={cn('text-sm text-gray6', poppins_400.className)}>
           {subject.currentTopic}
         </p>
-        <p className={cn(poppins_400.className)}>
-          Classes:{' '}
-          {subject.classGrades && subject.classGrades.length > 0
-            ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
-              subject.classGrades.map((cg: any) => `${cg.name}`).join(', ')
-            : 'No classes assigned'}
-        </p>
+        <div className="flex flex-wrap gap-1.5">
+          {linkedClassSubjects.length > 0 ? (
+            linkedClassSubjects.map((cs) => {
+              const cls = typeof cs.classGradeId === 'object' ? cs.classGradeId : null;
+              return (
+                <span
+                  key={cs._id}
+                  className={cn(
+                    'px-2 py-0.5 rounded-full text-xs capitalize',
+                    classSubjectTypeBadgeClasses[cs.type],
+                    poppins_400.className
+                  )}
+                >
+                  {cls?.name || 'Class'} · {cs.type}
+                </span>
+              );
+            })
+          ) : (
+            <p className={cn('text-sm text-gray6', poppins_400.className)}>
+              No classes linked yet
+            </p>
+          )}
+        </div>
         <div
           className={cn(
             'flex-- items-center gap-2 text-gray6',

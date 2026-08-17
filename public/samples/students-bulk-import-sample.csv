@@ -1,0 +1,2 @@
+firstName,lastName,email,gender,classGradeId,dob,guardianId,guardianFirstName,guardianLastName,guardianPhoneNumber,guardianRelationship,guardianEmail,guardianSecondaryPhoneNumber,guardianAddress
+Jane,Smith,jane.smith@example.com,female,65f89e8c4d9a420012345678,2010-05-12,,Mary,Smith,+2348012345678,Mother,mary.smith@example.com,,"123 Street, City, Country"

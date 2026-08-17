@@ -5,7 +5,8 @@ import Button from '@/components/atoms/form/Button';
 import DraftIcon from '@/components/atoms/icons/dashboard/DraftIcon';
 import SubmitIcon from '@/components/atoms/icons/dashboard/SubmitIcon';
 import { ImageViewModal } from '@/components/molecules/ImageViewModal';
-import YNmodal from '@/components/molecules/YNmodal';
+import ConfirmModal from '@/components/molecules/ConfirmModal';
+import { OrangeCheckBadgeIcon } from '@/components/atoms/icons/Icons';
 import { UploadAnswer } from '@/components/molecules/dashboard/student/subjects/UploadAnswer';
 import {
   Inter_600,
@@ -93,13 +94,16 @@ function Page() {
         </div>
       </div>
       {isModalOpen && (
-        <YNmodal
-          submit={() => console.log('ff')}
-          isOpen={true}
-          onClose={onClose}
+        <ConfirmModal
+          open={true}
+          close={onClose}
+          onConfirm={() => console.log('ff')}
           title="Submit assignment"
           body="Are you sure you want to submit this answer? You will be graded based on the answer provided"
-        ></YNmodal>
+          icon={<OrangeCheckBadgeIcon />}
+          confirmText="Submit"
+          cancelClassName="bg-transparent border text-primary border-primary"
+        />
       )}
     </main>
   );

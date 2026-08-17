@@ -1,0 +1,2 @@
+firstName,lastName,email,phone,role,isTeachingStaff,payroll
+John,Doe,john.doe@example.com,+2348123456789,Teacher,true,PR-0001

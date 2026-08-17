@@ -12,7 +12,7 @@ export default function LayoutClient({
   sidebarType,
 }: {
   children: React.ReactNode;
-  sidebarType: 'school' | 'student' | 'teacher' | 'parent';
+  sidebarType: 'school' | 'student' | 'teacher' | 'parent' | 'super-admin';
 }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 

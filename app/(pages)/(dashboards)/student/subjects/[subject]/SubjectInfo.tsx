@@ -64,7 +64,7 @@ function Page({ subject }: { subject: string }) {
 
         <div className="flex space-x-3 mt-4">
           <div className="w-[446px]">
-            <SubjectInfoCard role={'student'} />
+            <SubjectInfoCard role={'student'} subjectId={subject} />
           </div>
           <div className="flex-1 ">
             <AssignedTeacherCard role={'student'} />

@@ -92,11 +92,14 @@ export default function LoginClient({ initialLogo, initialSchool }: Props) {
             await localforage.setItem('refreshToken', resp.data.refreshToken);
           }
 
+          const resolvedAudienceRole = resp.data?.user?.audienceRole || '';
+
           replaceProfileState({
             slgId: resp.data.user?.slgId || '',
             schoolId: resp.data?.user?.schoolId || '',
             slugId: resp.data?.user?.slugId || '',
             audience: resp.data?.user?.audience || audienceType || '',
+            audienceRole: resolvedAudienceRole,
             slug: resp.data?.user?.slug || '',
             schoolSlugId: resp.data?.user?.schoolSlugId || '',
             firstName: resp.data?.user?.firstName || '',
@@ -104,7 +107,9 @@ export default function LoginClient({ initialLogo, initialSchool }: Props) {
             email: resp.data?.user?.email || '',
           });
 
-          navigate.replace('/school/');
+          navigate.replace(
+            resolvedAudienceRole === AudienceTypes.PLATFORM_ADMIN ? '/super-admin/' : '/school/'
+          );
         }
         setIsModalOpen(true);
       } finally {

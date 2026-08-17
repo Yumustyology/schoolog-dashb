@@ -14,13 +14,11 @@ import Empty from '@/components/molecules/empty/Empty';
 import MaterialIcon from '@/components/atoms/icons/SideBar/Material';
 import AddFolderIcon from '@/components/atoms/icons/dashboard/materials/AddFolderIcon';
 import Button from '@/components/atoms/form/Button';
-import Modal from '@/components/molecules/Modal';
 import { cn } from '@/app/lib/utils';
 import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
-import Input from '@/components/atoms/form/Input';
 import { UploadResourcesModal } from '@/components/atoms/dashboard/subjects/subjectsInfoModals/UploadResourcesModal';
+import { CreateFolderModal } from '@/components/molecules/dashboard/materials/CreateFolderModal';
 import resourcesActions from '@/app/lib/actions/resources.action';
-import showToast from '@/app/lib/utils/toast';
 import { ClassGradeDropdown } from '@/components/atoms/dashboard/classes/ClassGradeDropdown';
 import MaterialCardSkeleton from '@/components/atoms/skeleton/MaterialCardSkeleton';
 import { useUrlFilter } from '@/app/lib/hooks/useUrlFilter';
@@ -49,11 +47,13 @@ import { BackArrowIcon } from '@/components/atoms/icons/Icons';
 
 interface MaterialsListProps {
   classId?: string;
+  subjectId?: string;
   breadcrumb?: BreadcrumbItemType[];
 }
 
 const MaterialsList: React.FC<MaterialsListProps> = ({
   classId: initialClassId,
+  subjectId: initialSubjectId,
   breadcrumb,
 }) => {
   const pathname = usePathname();
@@ -65,27 +65,31 @@ const MaterialsList: React.FC<MaterialsListProps> = ({
     paramName: 'classGrade',
     defaultValue: initialClassId,
   });
-  const { value: subjectId } = useUrlFilter({ paramName: 'subjectId' });
+  const { value: subjectId } = useUrlFilter({
+    paramName: 'subjectId',
+    defaultValue: initialSubjectId,
+  });
+  // Subject-scoped views (no classId prop) show materials across every
+  // class the subject is taught in, so the class-grade picker doesn't apply.
+  const showClassGradeFilter = !initialSubjectId || !!initialClassId;
   const { value: folderPath, setValue: setFolderPath } = useUrlFilter({ 
     paramName: 'folder' 
   });
 
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [showUploadModal, setShowUploadModal] = useState(false);
-  const [folderName, setFolderName] = useState('');
-  const [isCreating, setIsCreating] = useState(false);
-  
+
   const folderIds = parseFolderPath(folderPath);
   const currentFolderId = getCurrentFolderId(folderIds);
 
 
 
   const { data: resourcesResp, isLoading, mutate } = useSWR(
-    classGradeId
-      ? ['/resources', { 
-          ...(classGradeId && { classGradeId }), 
-          ...(subjectId && { subjectId }), 
-          ...(currentFolderId && { folderId: currentFolderId }) 
+    classGradeId || subjectId
+      ? ['/resources', {
+          ...(classGradeId && { classGradeId }),
+          ...(subjectId && { subjectId }),
+          ...(currentFolderId && { folderId: currentFolderId })
         }]
       : null,
     async (key) => {
@@ -97,6 +101,20 @@ const MaterialsList: React.FC<MaterialsListProps> = ({
   );
 
   const resources: MaterialType[] = resourcesResp || [];
+
+  // Injects a placeholder item into the SWR cache immediately (no network
+  // round-trip), so the list updates the instant a user submits — the
+  // caller follows up with mutate() on success (reconciles with the real
+  // server record) or removeOptimistic() on failure (rolls it back).
+  const addOptimistic = (item: MaterialType) => {
+    mutate((current) => [item, ...(current || [])], { revalidate: false });
+  };
+
+  const removeOptimistic = (tempId: string) => {
+    mutate((current) => (current || []).filter((m) => m.id !== tempId), {
+      revalidate: false,
+    });
+  };
 
   const folderDetails = folderIds.map((id, index) => ({
     id,
@@ -113,35 +131,6 @@ const MaterialsList: React.FC<MaterialsListProps> = ({
     }
 
     setFolderPath(removeLastFolderPath(folderIds));
-  };
-
-  const handleCreateFolder = async () => {
-    if (!folderName.trim()) return;
-
-    setIsCreating(true);
-    try {
-      await resourcesActions.createFolder({
-        name: folderName,
-        parentFolderId: currentFolderId || undefined,
-        classGradeId: classGradeId || undefined,
-        subjectId: subjectId || undefined,
-      });
-      setFolderName('');
-      setShowCreateModal(false);
-      await mutate();
-      showToast('Folder created successfully', 'folder-created', {
-        theme: 'light',
-        type: 'success',
-      });
-    } catch (error) {
-      showToast('Failed to create folder', 'folder-error', {
-        theme: 'light',
-        type: 'error',
-      });
-      console.error('Error creating folder:', error);
-    } finally {
-      setIsCreating(false);
-    }
   };
 
   const handleClassGradeChange = (value: string | string[]) => {
@@ -187,19 +176,20 @@ const MaterialsList: React.FC<MaterialsListProps> = ({
 
   return (
     <div>
-      {breadcrumb && (
-        <>
-          <BreadcrumbBox crumbs={mergedBreadcrumbs} />
-          <div className="flex flex-col gap-4 mb-4">
-            <div className="w-full max-w-xs">
-              <ClassGradeDropdown
-                value={classGradeId || ''}
-                onValueChange={handleClassGradeChange}
-                placeholder="Select class/level"
-                className="w-full"
-              />
+      {breadcrumb && <BreadcrumbBox crumbs={mergedBreadcrumbs} />}
+      <>
+          {showClassGradeFilter && (
+            <div className="flex flex-col gap-4 mb-4">
+              <div className="w-full max-w-xs">
+                <ClassGradeDropdown
+                  value={classGradeId || ''}
+                  onValueChange={handleClassGradeChange}
+                  placeholder="Select class/level"
+                  className="w-full"
+                />
+              </div>
             </div>
-          </div>
+          )}
 
           <div className="flex items-center gap-4">
             <div className="flex max-w-[42vw] gap-4 items-center flex-1">
@@ -207,7 +197,7 @@ const MaterialsList: React.FC<MaterialsListProps> = ({
                 className="border-gray4 bg-white"
                 placeholder="Search materials, Subject"
               />
-              <SelectSubject className="w-[200px]" />
+              {showClassGradeFilter && <SelectSubject className="w-[200px]" />}
               <DatePicker />
             </div>
             <div className="flex gap-2">
@@ -220,8 +210,7 @@ const MaterialsList: React.FC<MaterialsListProps> = ({
               </Button>
             </div>
           </div>
-        </>
-      )}
+      </>
 
       <main className="my-5 gap-5 grid grid-cols-1 md:grid-cols-3 laptop:grid-cols-4 desktop:grid-cols-5 xlgDesktop:grid-cols-6">
         {!isLoading && folderIds.length > 0 && (
@@ -332,55 +321,16 @@ const MaterialsList: React.FC<MaterialsListProps> = ({
       )}
 
 
-      <Modal
+      <CreateFolderModal
         isOpen={showCreateModal}
-        onClose={() => {
-          setShowCreateModal(false);
-          setFolderName('');
-        }}
-        className="max-w-md"
-        title="Create New Folder"
-      >
-        <div className="p-6 pt-4 pb-0 ">
-          <div className="space-y-10">
-            <div>
-              <Input
-                id="folderName"
-                value={folderName}
-                className="mb-4 w-full"
-                handleChange={(e) => setFolderName(e.target.value)}
-                placeholder="Enter folder name"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter') {
-                    handleCreateFolder();
-                  }
-                }}
-              />
-            </div>
-            <div className="flex gap-3 justify-end mt-10">
-              <Button
-                type="button"
-                onClick={() => {
-                  setShowCreateModal(false);
-                  setFolderName('');
-                }}
-                className="bg-gray-200 text-gray-700 hover:bg-gray-300"
-                disabled={isCreating}
-              >
-                Cancel
-              </Button>
-              <Button
-                type="button"
-                onClick={handleCreateFolder}
-                disabled={!folderName.trim() || isCreating}
-                loading={isCreating}
-              >
-                Create Folder
-              </Button>
-            </div>
-          </div>
-        </div>
-      </Modal>
+        onClose={() => setShowCreateModal(false)}
+        parentFolderId={currentFolderId || undefined}
+        classGradeId={classGradeId || undefined}
+        subjectId={subjectId || undefined}
+        onOptimisticCreate={addOptimistic}
+        onCreateError={removeOptimistic}
+        onCreateSuccess={mutate}
+      />
 
       <UploadResourcesModal
         isOpen={showUploadModal}
@@ -389,6 +339,8 @@ const MaterialsList: React.FC<MaterialsListProps> = ({
         classId={initialClassId}
         folderId={currentFolderId || undefined}
         subjectId={subjectId || undefined}
+        onOptimisticUpload={addOptimistic}
+        onUploadError={removeOptimistic}
         onUploadSuccess={handleUploadSuccess}
       />
     </div>

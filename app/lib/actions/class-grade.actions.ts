@@ -1,6 +1,27 @@
-import { getRequest, patchRequest, deleteRequest } from '../service/apiRequests';
+import { getRequest, patchRequest, deleteRequest, postRequest } from '../service/apiRequests';
 import type { ResponseType } from '@/app/lib/types/api-response.types';
-import type { ClassGradeDetailResponse } from '@/app/lib/types/class.types';
+import type {
+  ClassGradeDetail,
+  ClassSubject,
+  ClassSubjectListResponse,
+  ClassSubjectType,
+} from '@/app/lib/types/class.types';
+
+/**
+ * Create a new class grade
+ */
+export const createClassGrade = async (payload: {
+  name: string;
+  code?: string;
+  levelCategory?: 'junior' | 'senior';
+  hasDepartments?: boolean;
+  departmentIds?: string[];
+  academicYear?: string;
+  capacity?: number;
+  description?: string;
+}): Promise<ResponseType<Record<string, unknown>>> => {
+  return postRequest<Record<string, unknown>>('/class-grades', payload);
+};
 
 /**
  * Fetch paginated class grades for a school
@@ -37,9 +58,9 @@ export const reorderClassGrades = async (
  */
 export const fetchClassGradeById = async (
   id: string
-): Promise<ResponseType<ClassGradeDetailResponse>> => {
+): Promise<ResponseType<ClassGradeDetail>> => {
   if (!id) return Promise.reject(new Error('ID is required'));
-  return getRequest<ClassGradeDetailResponse>(`/class-grades/${id}`);
+  return getRequest<ClassGradeDetail>(`/class-grades/${id}`);
 };
 
 /**
@@ -64,13 +85,107 @@ export const deleteClassGrade = async (
   return deleteRequest<null>(`/class-grades`, id);
 };
 
+/**
+ * Archive a class grade by id
+ */
+export const archiveClassGrade = async (
+  id: string
+): Promise<ResponseType<unknown>> => {
+  if (!id) return Promise.reject(new Error('ID is required'));
+  return patchRequest<unknown>(`/class-grades/${id}/archive`, {});
+};
+
+/**
+ * Unarchive a class grade by id
+ */
+export const unarchiveClassGrade = async (
+  id: string
+): Promise<ResponseType<unknown>> => {
+  if (!id) return Promise.reject(new Error('ID is required'));
+  return patchRequest<unknown>(`/class-grades/${id}/unarchive`, {});
+};
+
+/**
+ * Remove a teacher from a class-subject assignment
+ */
+export const removeTeacherFromClassSubject = async (
+  classSubjectId: string,
+  teacherId: string
+): Promise<ResponseType<unknown>> => {
+  if (!classSubjectId || !teacherId)
+    return Promise.reject(new Error('classSubjectId and teacherId are required'));
+  return patchRequest<unknown>(
+    `/class-grades/subjects/${classSubjectId}/remove-teacher`,
+    { teacherId }
+  );
+};
+
+/**
+ * Fetch the class-subject rule (with populated teachers) and students for a
+ * given subject + class grade pair.
+ */
+export const getClassSubjectForSubjectAndClass = async (
+  subjectId: string,
+  classGradeId: string
+): Promise<ResponseType<{ classSubject: Record<string, any>; students: unknown[] }>> => {
+  if (!subjectId || !classGradeId)
+    return Promise.reject(new Error('subjectId and classGradeId are required'));
+  return getRequest(`/class-grades/subjects/${subjectId}/students/${classGradeId}`);
+};
+
+/**
+ * Create a class-subject rule (link a subject to a class)
+ */
+export const createClassSubject = async (payload: {
+  classGradeId: string;
+  subjectId: string;
+  type: ClassSubjectType;
+  departmentIds?: string[];
+  teacherIds?: string[];
+}): Promise<ResponseType<ClassSubject>> => {
+  return postRequest<ClassSubject>('/class-grades/subjects', payload);
+};
+
+/**
+ * List class-subject rules, optionally filtered by subject and/or class
+ */
+export const fetchClassSubjects = async (query?: {
+  subjectId?: string;
+  classGradeId?: string;
+  page?: number;
+  limit?: number;
+}): Promise<ResponseType<ClassSubjectListResponse>> => {
+  return getRequest<ClassSubjectListResponse>('/class-grades/subjects', {
+    limit: 100,
+    ...query,
+  });
+};
+
+/**
+ * Delete (unlink) a class-subject rule
+ */
+export const deleteClassSubject = async (
+  id: string
+): Promise<ResponseType<null>> => {
+  if (!id) return Promise.reject(new Error('ID is required'));
+  return deleteRequest<null>('/class-grades/subjects', id);
+};
+
 const classGradeActions = {
+  createClassGrade,
   fetchClassGradesPaginated,
   fetchClassGradesAll,
   reorderClassGrades,
   fetchClassGradeById,
   updateClassGrade,
   deleteClassGrade,
+  archiveClassGrade,
+  unarchiveClassGrade,
+  removeTeacherFromClassSubject,
+  getClassSubjectForSubjectAndClass,
+  createClassSubject,
+  fetchClassSubjects,
+  deleteClassSubject,
 };
 
 export default classGradeActions;

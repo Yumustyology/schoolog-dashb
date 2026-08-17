@@ -16,10 +16,13 @@ import ParentIcon from '@/components/atoms/icons/dashboard/ParentIcon';
 import DashboardLinkBox from '@/components/molecules/dashboard/DashboardLinkBox';
 import RevenueAnalytics from '@/components/molecules/dashboard/finance/RevenueAnalytics';
 import React from 'react';
+import useSWR from 'swr';
 import { activities1 } from '@/app/assets';
 import Image from 'next/image';
 import { OptionIcon } from '@/components/atoms/icons/Icons';
-import PaymentCategory from '@/components/molecules/dashboard/finance/PaymentCategory';
+import PaymentCategory, {
+  PaymentCategoryItem,
+} from '@/components/molecules/dashboard/finance/PaymentCategory';
 import CardTickIcon from '@/components/atoms/icons/dashboard/CardTick';
 import FeeCategoryModal from '@/components/molecules/dashboard/finance/FeeCategoryModal';
 import DeleteFeeModal from '@/components/molecules/dashboard/finance/DeleteFeeCategory';
@@ -27,11 +30,46 @@ import ActivatePaymentModal from '@/components/molecules/dashboard/finance/Activ
 import {
   openActivateFeeCategoryModal,
   openFeeCategoryModal,
+  openDeleteFeeCategoryModal,
   openSalaryCategoryModal,
+  setSelectedFeeCategoryId,
 } from '@/app/lib/entities/payment.entity';
 import SalaryCategoryModal from '@/components/molecules/dashboard/finance/SalaryCategoryModal';
+import feeCategoryActions from '@/app/lib/actions/feeCategory.action';
+import { formatCurrency } from '@/app/lib/utils';
 
 const Page = () => {
+  const { data: feeCategoriesResp } = useSWR(
+    ['fee-categories'],
+    feeCategoryActions.fetchFeeCategories
+  );
+
+  const feeCategoryItems: PaymentCategoryItem[] = (
+    feeCategoriesResp?.data || []
+  ).map((fc) => ({
+    id: fc._id,
+    title: fc.name,
+    amount: formatCurrency(fc.amount, fc.currency),
+    description: (fc.classGradeIds || [])
+      .map((cg) => (typeof cg === 'string' ? cg : cg.name))
+      .join(', '),
+  }));
+
+  const handleAddFeeCategory = () => {
+    setSelectedFeeCategoryId(null);
+    openFeeCategoryModal();
+  };
+
+  const handleEditFeeCategory = (id: string) => {
+    setSelectedFeeCategoryId(id);
+    openFeeCategoryModal();
+  };
+
+  const handleDeleteFeeCategory = (id: string) => {
+    setSelectedFeeCategoryId(id);
+    openDeleteFeeCategoryModal();
+  };
+
   return (
     <div className="w-full rounded-lg bg-white-- min-h-[40dvh]">
       <div className="flex justify-between">
@@ -187,7 +225,10 @@ const Page = () => {
 
         <div className="mt-8 grid gap-5 grid-cols-2">
           <PaymentCategory
-            onClickAddButton={openFeeCategoryModal}
+            onClickAddButton={handleAddFeeCategory}
+            items={feeCategoryItems}
+            onEditItem={handleEditFeeCategory}
+            onDeleteItem={handleDeleteFeeCategory}
             title="Fees categories"
             subTitle="Click on any category to view details, edit or delete"
           />

@@ -5,6 +5,7 @@ import {
 } from '../service/apiRequests';
 import type { ResponseType } from '@/app/lib/types/api-response.types';
 import type { Template } from './templates.action';
+import type { Plan } from '@/app/lib/types/billing.types';
 
 export enum PaymentProvider {
   STRIPE = 'stripe',
@@ -96,6 +97,56 @@ export const listMyPurchases = async (): Promise<
   return getRequest<TemplatePurchase[]>('/payments/purchases');
 };
 
+export type CheckoutPlanPayload = {
+  planId: string;
+  provider: PaymentProvider;
+  idempotencyKey: string;
+  saveCard?: boolean;
+};
+
+export type ChargeSavedMethodForPlanPayload = {
+  planId: string;
+  paymentMethodId: string;
+  idempotencyKey: string;
+};
+
+export const checkoutPlan = async (
+  payload: CheckoutPlanPayload
+): Promise<ResponseType<CheckoutResult>> => {
+  return postRequest<CheckoutResult>('/payments/checkout-plan', payload);
+};
+
+export const chargeSavedMethodForPlan = async (
+  payload: ChargeSavedMethodForPlanPayload
+): Promise<ResponseType<CheckoutResult>> => {
+  return postRequest<CheckoutResult>(
+    '/payments/charge-saved-method-plan',
+    payload
+  );
+};
+
+export type MySubscription = {
+  plan: Plan | null;
+  planStatus: 'pending_payment' | 'active' | 'past_due' | 'cancelled';
+  planActivatedAt: string | null;
+  subscription: {
+    _id: string;
+    status: 'active' | 'past_due' | 'cancelled';
+    currentPeriodEnd: string;
+  } | null;
+  usage: {
+    liveClassMinutesUsedThisMonth: number;
+    liveClassMinutesIncluded: number;
+    periodStart: string;
+  };
+};
+
+export const getMySubscription = async (): Promise<
+  ResponseType<MySubscription>
+> => {
+  return getRequest<MySubscription>('/payments/my-subscription');
+};
+
 export const newIdempotencyKey = (): string => {
   if (typeof crypto !== 'undefined' && crypto.randomUUID) {
     return crypto.randomUUID();
@@ -110,6 +161,9 @@ const paymentsActions = {
   deleteSavedMethod,
   listMyPurchases,
   newIdempotencyKey,
+  checkoutPlan,
+  chargeSavedMethodForPlan,
+  getMySubscription,
 };
 
 export default paymentsActions;

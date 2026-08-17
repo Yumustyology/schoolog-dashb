@@ -28,7 +28,7 @@ export default function EditClassPage({ params }: Params) {
 
   const { data: resp } = useSWR<ClassGradeDetail | undefined>(
     classId ? ['class-grade-detail', classId] : null,
-    () => classGradeActions.fetchClassGradeById(classId!).then((r) => r?.data?.data)
+    () => classGradeActions.fetchClassGradeById(classId!).then((r) => r?.data)
   );
 
   const [className, setClassName] = useState<string>('');

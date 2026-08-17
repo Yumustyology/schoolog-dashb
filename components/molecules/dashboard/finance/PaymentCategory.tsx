@@ -17,41 +17,27 @@ import {
   openFeeCategoryModal,
 } from '@/app/lib/entities/payment.entity';
 
-const feeCategory = [
+export type PaymentCategoryItem = {
+  id: string;
+  title: string;
+  amount: string;
+  description: string;
+};
+
+// Fallback demo data — used only when no real `items` are passed (e.g. the
+// not-yet-built Salary categories usage).
+const mockCategory: PaymentCategoryItem[] = [
   {
+    id: 'mock-1',
     title: 'Grade 1 fee',
     amount: '$100',
     description: 'JSS1,JSS2,JSS3',
   },
   {
+    id: 'mock-2',
     title: 'Grade 2 fee',
     amount: '$100',
     description: 'SS1,SS2,SS3',
-  },
-  {
-    title: 'Grade 3 fee',
-    description: 'JSS1,JSS2,JSS3',
-    amount: '$100',
-  },
-  {
-    title: 'Grade 4 fee',
-    description: 'JSS1,JSS2,JSS3',
-    amount: '$100',
-  },
-  {
-    title: 'Grade 5 fee',
-    description: 'JSS1,JSS2,JSS3',
-    amount: '$100',
-  },
-  {
-    title: 'Grade 6 fee',
-    description: 'JSS1,JSS2,JSS3',
-    amount: '$100',
-  },
-  {
-    title: 'Grade 7 fee',
-    amount: '$100',
-    description: 'JSS1,JSS2,JSS3',
   },
 ];
 
@@ -97,6 +83,10 @@ const PaymentFeeBox = ({
 type PaymentCategoriesProps = React.ComponentProps<typeof Card> & {
   subTitle: string;
   onClickAddButton?: () => void;
+  /** Real data to render — falls back to demo data when omitted (e.g. Salary categories, not yet backed by an API). */
+  items?: PaymentCategoryItem[];
+  onEditItem?: (id: string) => void;
+  onDeleteItem?: (id: string) => void;
 };
 
 const PaymentCategory = ({
@@ -104,9 +94,13 @@ const PaymentCategory = ({
   title,
   subTitle,
   onClickAddButton,
+  items,
+  onEditItem,
+  onDeleteItem,
   ...props
 }: PaymentCategoriesProps) => {
   const [open, setOpen] = useState(false);
+  const displayItems = items ?? mockCategory;
 
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
@@ -151,12 +145,12 @@ const PaymentCategory = ({
         </CardHeader>
         <CardContent className="grid gap-4 mt-0 max-h-[320px] overflow-auto sidebar-scroll">
           <div>
-            {feeCategory.map((notification, index) => (
+            {displayItems.map((item) => (
               <PaymentFeeBox
-                amount={notification.amount}
-                description={notification.description}
-                title={notification.title}
-                key={index}
+                amount={item.amount}
+                description={item.description}
+                title={item.title}
+                key={item.id}
               />
             ))}
           </div>
@@ -184,22 +178,26 @@ const PaymentCategory = ({
       >
         <div className="p-6 overflow-y-auto max-h-[calc(100vh-140px)]">
           <div className="mt-0 max-h-[70dvh]">
-            {feeCategory.map((notification, index) => (
+            {displayItems.map((item) => (
               <div
                 className="flex gap-2 flex-grow w-full items-center justify-between"
-                key={index}
+                key={item.id}
               >
                 <PaymentFeeBox
-                  amount={notification.amount}
-                  description={notification.description}
-                  title={notification.title}
+                  amount={item.amount}
+                  description={item.description}
+                  title={item.title}
                 />
                 <div className="flex -mt-4 gap-2">
                   <Button
                     className="bg-gray10 bg-opacity-10 rounded-full p-1.5"
                     onClick={() => {
                       closeDrawer();
-                      openFeeCategoryModal();
+                      if (onEditItem) {
+                        onEditItem(item.id);
+                      } else {
+                        openFeeCategoryModal();
+                      }
                     }}
                   >
                     <EditIcon color="#001F3F" size={18} />
@@ -209,7 +207,11 @@ const PaymentCategory = ({
                     className="bg-[#EB57570F] bg-opacity-5 rounded-full p-1.5"
                     onClick={() => {
                       closeDrawer();
-                      openDeleteFeeCategoryModal();
+                      if (onDeleteItem) {
+                        onDeleteItem(item.id);
+                      } else {
+                        openDeleteFeeCategoryModal();
+                      }
                     }}
                   >
                     <CloseIcon />

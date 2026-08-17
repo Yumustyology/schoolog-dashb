@@ -7,6 +7,11 @@ export type ProfileState = {
   schoolId: string; // e.g. Mongo _id
   slugId: string; // e.g. "AOM-ADM-290Y479"
   audience: Audience; // defaults to "Admin"
+  // The specific role within `audience` (e.g. 'Platform_Admin' for a
+  // cross-school platform operator whose broad `audience` is still 'Admin')
+  // — distinct from `audience`, which only tells you the general account
+  // category.
+  audienceRole?: string;
   // token?: string;
   schoolSlugId: string; // e.g. "AOM-ADM-290Y479"
   slug: string;
@@ -21,6 +26,7 @@ export const profileState = entity<ProfileState>(
     schoolId: '',
     slugId: '',
     audience: '',
+    audienceRole: '',
     slug: '',
     schoolSlugId: '', // e.g. "AOM-ADM-290Y479"
     firstName: '',
@@ -50,6 +56,7 @@ export const resetProfileState = () => {
     schoolId: '',
     slugId: '',
     audience: '',
+    audienceRole: '',
     slug: '',
     schoolSlugId: '', // e.g. "AOM-ADM-290Y479",
     firstName: '',

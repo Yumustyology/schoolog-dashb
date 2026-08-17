@@ -228,6 +228,12 @@ export const shoolSidebarItems: SidebarItemsType = [
     activeIcon: <LiveClassIcon color="#FFFFFF" />,
   },
   {
+    title: 'Billing',
+    url: '/school/billing',
+    icon: <PaymentIcon />,
+    activeIcon: <PaymentIcon color="#FFFFFF" />,
+  },
+  {
     title: 'Library',
     url: '/school/library',
     icon: <Library color="#828282" />,
@@ -291,5 +297,26 @@ export const shoolSidebarItems: SidebarItemsType = [
     url: '/school/suggestions-box',
     icon: <SuggestionBoxIcon />,
     activeIcon: <SuggestionBoxIcon color="#FFFFFF" />,
+  },
+];
+
+export const superAdminSidebarItems: SidebarItemsType = [
+  {
+    title: 'Dashboard',
+    url: '/super-admin',
+    icon: <Dashboard />,
+    activeIcon: <Dashboard color="#FFFFFF" />,
+  },
+  {
+    title: 'Schools',
+    url: '/super-admin/schools',
+    icon: <ClassesIcon />,
+    activeIcon: <ClassesIcon color="#FFFFFF" />,
+  },
+  {
+    title: 'Billing',
+    url: '/super-admin/billing',
+    icon: <PaymentIcon />,
+    activeIcon: <PaymentIcon color="#FFFFFF" />,
   },
 ];

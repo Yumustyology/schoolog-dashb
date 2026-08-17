@@ -132,7 +132,7 @@ function CreatePasswordForm(): JSX.Element {
             email: resp.data?.email || '',
           });
 
-          navigate.push('/school/');
+          navigate.push('/signup/select-plan');
         }
       } catch (err) {
         const errorMsg = handleError(err);

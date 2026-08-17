@@ -20,7 +20,8 @@ import {
 } from '@/components/atoms/icons/Icons';
 import { Inter_500, poppins_400 } from '@/app/lib/config/font.config';
 import { ResponseType } from '@/app/lib/types/response';
-import { ClassGrade, ClassGradeResponse } from '@/app/lib/types/class.types';
+import { ClassGrade } from '@/app/lib/types/class.types';
+import CreateClassModal from '@/components/molecules/dashboard/classes/CreateClassModal';
 
 export default function ClassesPage() {
   const [page, setPage] = React.useState<number>(1);
@@ -28,6 +29,7 @@ export default function ClassesPage() {
   const [search, setSearch] = React.useState<string>('');
   const [debouncedSearch, setDebouncedSearch] = React.useState<string>('');
   const [isArrangeModalOpen, setIsArrangeModalOpen] = React.useState(false);
+  const [isCreateClassOpen, setIsCreateClassOpen] = React.useState(false);
   const [hasEverLoadedData, setHasEverLoadedData] = React.useState(false);
 
   const debouncedSetSearch = React.useMemo(
@@ -63,9 +65,9 @@ export default function ClassesPage() {
     })
   );
 
-  const resp = data as ResponseType<ClassGradeResponse> | undefined;
-  const classItems: ClassGrade[] = (resp?.data?.data as ClassGrade[]) || [];
-  const meta = (resp?.meta || {}) as NonNullable<ResponseType<ClassGradeResponse>['meta']>;
+  const resp = data as ResponseType<ClassGrade[]> | undefined;
+  const classItems: ClassGrade[] = resp?.data || [];
+  const meta = (resp?.meta || {}) as NonNullable<ResponseType<ClassGrade[]>['meta']>;
 
   const computedTotalPages = ((meta.totalPages ??
     Math.ceil((meta.count ?? 0) / pageSize)) ||
@@ -120,7 +122,7 @@ export default function ClassesPage() {
           )}
 
           <Button
-            to="/school/classes/create-new-class"
+            onClick={() => setIsCreateClassOpen(true)}
             round
             title={'Create class'}
             className={cn('h-[44px] py-3 px-6 flex gap-2')}
@@ -244,6 +246,12 @@ export default function ClassesPage() {
           mutate();
           setPage(1);
         }}
+      />
+
+      <CreateClassModal
+        isOpen={isCreateClassOpen}
+        onClose={() => setIsCreateClassOpen(false)}
+        onCreated={() => mutate()}
       />
     </main>
   );

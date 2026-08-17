@@ -94,6 +94,23 @@ export const getRequest = async <T>(
   return handleRequest(axiosConfig.get<ResponseType<T>>(url, config));
 };
 
+/** Downloads a binary response (e.g. a generated CSV/XLSX file) and returns it with its server-suggested filename. */
+export const getFileRequest = async (
+  endpoint: string,
+  params?: Record<string, unknown>
+): Promise<{ blob: Blob; filename: string }> => {
+  const response = await axiosConfig.get(endpoint, {
+    params,
+    responseType: 'blob',
+  });
+
+  const disposition = response.headers['content-disposition'] as string | undefined;
+  const match = disposition?.match(/filename="?([^"]+)"?/);
+  const filename = match?.[1] || 'download';
+
+  return { blob: response.data as Blob, filename };
+};
+
 // allow sending extra headers (useful for server-side requests where axios interceptor
 // can't derive tenant from window.location)
 export const getRequestWithHeaders = async <T>(

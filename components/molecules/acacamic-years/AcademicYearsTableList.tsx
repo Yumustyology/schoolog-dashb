@@ -19,7 +19,7 @@ import {
   getAcademicYears,
   deleteAcademicYearById,
 } from '@/app/lib/actions/academicYear.actions';
-import { getAcademicYearStatus } from '@/components/atoms/dashboard/academic-years/AcademicYearDrawer';
+import { getAcademicYearStatus } from '@/app/lib/utils/academic-years.utils';
 import ConfirmModal from '@/components/molecules/ConfirmModal';
 import EyeClose from '@/components/atoms/icons/EyeClose';
 import TermSessionIcon from '@/components/atoms/icons/SideBar/TermSessionIcon';

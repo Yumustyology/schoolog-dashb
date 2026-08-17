@@ -1,4 +1,5 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import useSWR, { mutate } from 'swr';
 import Modal from '../../Modal';
 import { cn } from '@/app/lib/utils';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
@@ -6,6 +7,8 @@ import Button from '@/components/atoms/form/Button';
 import {
   closeFeeCategoryModal,
   feeCategoryOpenState,
+  selectedFeeCategoryId,
+  setSelectedFeeCategoryId,
 } from '@/app/lib/entities/payment.entity';
 import { useEntity } from 'simpler-state';
 import Input from '@/components/atoms/form/Input';
@@ -14,14 +17,86 @@ import { DatePicker } from '@/components/atoms/form/DatePicker';
 import { IoAdd } from 'react-icons/io5';
 import SubtotalDetail, { SubtotalDetailHandles } from './SubtotalDetail'; // ⬅️ import the component here
 import type { Subtotal } from '@/app/lib/types/finance.types';
+import { ClassGradeDropdown } from '@/components/atoms/dashboard/classes/ClassGradeDropdown';
+import feeCategoryActions from '@/app/lib/actions/feeCategory.action';
+import showToast from '@/app/lib/utils/toast';
 
 const FeeCategoryModal: React.FC = () => {
   const feeCategoryOpen = useEntity(feeCategoryOpenState);
+  const editingFeeCategoryId = useEntity(selectedFeeCategoryId);
   const [latePayment, setLatePayment] = useState<boolean>(false);
   const subtotalDetailRef = useRef<SubtotalDetailHandles>(null);
 
   const [subtotals, setSubtotals] = useState<Subtotal[]>([]);
   const [editingId, setEditingId] = useState<number | null>(1);
+
+  const [name, setName] = useState('');
+  const [amount, setAmount] = useState('');
+  const [classGradeIds, setClassGradeIds] = useState<string[]>([]);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const { data: feeCategoriesResp } = useSWR(
+    ['fee-categories'],
+    feeCategoryActions.fetchFeeCategories
+  );
+
+  useEffect(() => {
+    if (!feeCategoryOpen) return;
+    if (!editingFeeCategoryId) {
+      setName('');
+      setAmount('');
+      setClassGradeIds([]);
+      return;
+    }
+    const existing = feeCategoriesResp?.data?.find(
+      (fc) => fc._id === editingFeeCategoryId
+    );
+    if (existing) {
+      setName(existing.name);
+      setAmount(String(existing.amount / 100));
+      setClassGradeIds(
+        (existing.classGradeIds || []).map((cg) =>
+          typeof cg === 'string' ? cg : cg._id
+        )
+      );
+    }
+  }, [feeCategoryOpen, editingFeeCategoryId, feeCategoriesResp]);
+
+  const handleClose = () => {
+    setSelectedFeeCategoryId(null);
+    closeFeeCategoryModal();
+  };
+
+  const handleSaveCategory = async () => {
+    if (!name.trim() || !amount || classGradeIds.length === 0) return;
+    setIsSaving(true);
+    try {
+      const payload = {
+        name: name.trim(),
+        amount: Math.round(Number(amount) * 100),
+        classGradeIds,
+      };
+      if (editingFeeCategoryId) {
+        await feeCategoryActions.updateFeeCategory(editingFeeCategoryId, payload);
+      } else {
+        await feeCategoryActions.createFeeCategory(payload);
+      }
+      mutate(['fee-categories']);
+      showToast('Fee category saved successfully', 'fee-category-saved', {
+        theme: 'light',
+        type: 'success',
+      });
+      handleClose();
+    } catch (error) {
+      showToast('Failed to save fee category', 'fee-category-error', {
+        theme: 'light',
+        type: 'error',
+      });
+      console.error('Error saving fee category:', error);
+    } finally {
+      setIsSaving(false);
+    }
+  };
 
   const handleAddNewSubtotal = () => {
     const currentEntrySave = handleSaveClick() as unknown as () => boolean;
@@ -65,11 +140,7 @@ const FeeCategoryModal: React.FC = () => {
 
   return (
     <div>
-      <Modal
-        isOpen={feeCategoryOpen}
-        onClose={closeFeeCategoryModal}
-        title="Fees category"
-      >
+      <Modal isOpen={feeCategoryOpen} onClose={handleClose} title="Fees category">
         <p
           className={cn(
             'text-base text-gray1 text-center px-16',
@@ -80,9 +151,33 @@ const FeeCategoryModal: React.FC = () => {
         </p>
 
         <div className="flex flex-col items-center gap-8 justify-center">
-          <Input label="Category name" placeholder="Juniors school fees" />
-          <Input label="Amount ($)" placeholder="100" />
-          <Input label="Class involved" placeholder="JSS1,JSS2" />
+          <Input
+            label="Category name"
+            placeholder="Juniors school fees"
+            value={name}
+            handleChange={(e) => setName(e.target.value)}
+            className="w-full"
+          />
+          <Input
+            label="Amount"
+            placeholder="100"
+            type="number"
+            value={amount}
+            handleChange={(e) => setAmount(e.target.value)}
+            className="w-full"
+          />
+          <div className="w-full">
+            <p className={cn('text-sm text-gray6 mb-2 text-left', poppins_400.className)}>
+              Class involved
+            </p>
+            <ClassGradeDropdown
+              multiselect
+              value={classGradeIds}
+              onValueChange={(v) => setClassGradeIds(Array.isArray(v) ? v : [v])}
+              placeholder="Select classes"
+              className="w-full"
+            />
+          </div>
         </div>
 
         <div
@@ -160,7 +255,9 @@ const FeeCategoryModal: React.FC = () => {
 
         <div className="flex items-center gap-6 mt-8">
           <Button
-            onClick={closeFeeCategoryModal}
+            onClick={handleSaveCategory}
+            disabled={!name.trim() || !amount || classGradeIds.length === 0 || isSaving}
+            loading={isSaving}
             wide
             round
             className="h-12 mt-7 rounded-full"

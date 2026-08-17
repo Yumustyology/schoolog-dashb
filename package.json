@@ -10,6 +10,7 @@
     "lint": "next lint",
     "format": "prettier --write .",
     "setup-dev": "node ./scripts/setup-dev.js",
+    "generate:samples": "node ./scripts/generate-bulk-import-samples.cjs",
     "serve": "npm run build && npm run start"
   },
   "dependencies": {
@@ -17,6 +18,8 @@
     "@dnd-kit/modifiers": "^9.0.0",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",
+    "@dytesdk/react-ui-kit": "^3.0.8",
+    "@dytesdk/react-web-core": "^3.1.11",
     "@headlessui/react": "^2.2.0",
     "@hookform/resolvers": "^5.0.1",
     "@material-tailwind/react": "^2.0.5",
@@ -74,6 +77,7 @@
     "recharts": "^2.15.0",
     "sharp": "^0.33.5",
     "simpler-state": "^1.2.2",
+    "socket.io-client": "^4.8.3",
     "sonner": "^2.0.3",
     "swr": "^2.3.6",
     "tailwind-merge": "^2.5.5",

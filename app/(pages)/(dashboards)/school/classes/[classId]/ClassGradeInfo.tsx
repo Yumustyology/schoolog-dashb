@@ -27,6 +27,7 @@ import ImageIcon from '@/components/atoms/icons/dashboard/materials/Image';
 import AssignedTeacherCard from '@/components/molecules/dashboard/AssignedTeacherCard';
 // import { MaterialType } from '@/app/types';
 import MaterialsList from '@/components/molecules/dashboard/materials/MaterialList';
+import ChatThread from '@/components/molecules/dashboard/message/ChatThread';
 import SubjectsTableList from '@/components/atoms/dashboard/subjects/SubjectsTableList';
 import StudentsTableList from '@/components/atoms/dashboard/students/StudentsTableLists';
 import { usePaginatedSearch } from '@/app/lib/hooks/usePaginatedSearch';
@@ -169,10 +170,7 @@ function ClassGradeInfoPage({ classId }: { classId: string }) {
     classId ? ['class-grade-detail', classId] : null,
     async () => {
       const resp = await classGradeActions.fetchClassGradeById(classId);
-
-      // eslint-disable-next-line no-console
-      console.log('fetchClassGradeById response', resp);
-      return resp?.data?.data;
+      return resp?.data;
     }
   );
   const [isUploadResourceModalOpen, setIsResourceModalOpen] =
@@ -240,15 +238,15 @@ function ClassGradeInfoPage({ classId }: { classId: string }) {
       content: <StudentsAttendanceList />,
     },
      {
-      label: 'Resources',
-      value: 'resources',
+      label: 'Materials',
+      value: 'materials',
       content: <MaterialsList classId={classId} />,
     },
-    // {
-    //   label: 'Discussions',
-    //   value: 'discussions',
-    //   content: <Topics />,
-    // },
+    {
+      label: 'Message',
+      value: 'message',
+      content: <ChatThread scope="class" classGradeId={classId} />,
+    },
   ];
 
   const { activeTab: activeTopicAssignmtentTab, handleTabClick: handleTopicAssignmentTabClick } =
@@ -331,6 +329,7 @@ function ClassGradeInfoPage({ classId }: { classId: string }) {
               studentCounts={classGradeResp?.studentCounts ?? undefined}
               attendance={classGradeResp?.attendance ?? undefined}
               activeTerm={classGradeResp?.activeTerm ?? undefined}
+              isArchived={classGradeResp?.classGrade?.isArchived}
             />
           </div>
           <div className="flex-1 ">

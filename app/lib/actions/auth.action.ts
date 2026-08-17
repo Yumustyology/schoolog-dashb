@@ -15,6 +15,7 @@ type LoginResponse = {
     schoolSlugId: string;
     userType: AudienceTypes;
     audience: string;
+    audienceRole?: string;
     slug: string;
     firstName: string;
     lastName: string;
