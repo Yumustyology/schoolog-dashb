@@ -309,7 +309,7 @@ const MaterialsList: React.FC<MaterialsListProps> = ({
             title="No materials found"
             description="There are currently no materials available"
           />
-          <div className="mt-6 flex gap-2">
+          <div className="mt-6 flex gap-3">
             <Button
               type="button"
               round
@@ -321,9 +321,10 @@ const MaterialsList: React.FC<MaterialsListProps> = ({
             <Button
               type="button"
               round
+              outlined
+              flat
               onClick={() => setShowUploadModal(true)}
               className="px-6 py-3 rounded-full"
-              flat
             >
               + Upload Files
             </Button>
