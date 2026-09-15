@@ -7,10 +7,7 @@ import { cn } from '@/app/lib/utils';
 import { Card, CardBody, Typography } from '@material-tailwind/react';
 import { BookOpen } from 'lucide-react';
 
-import React from 'react';
-import Button from '@/components/atoms/form/Button';
-import EyeClose from '@/components/atoms/icons/EyeClose';
-import { TopicDetailDrawer } from '@/components/atoms/dashboard/subjects/SubjectsDrawer/TopicDetailsDrawer';
+import Empty from '@/components/molecules/empty/Empty';
 import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 type TopicsList = {
   id?: string;
@@ -229,22 +226,12 @@ function Topics({ items, isLoading }: { items?: TopicsList; isLoading?: boolean 
 
   if (list.length === 0) {
     return (
-      <div
-        className="flex flex-col items-center justify-center py-16 px-4 text-center border border-dashed rounded-2xl my-2"
-        style={{
-          backgroundColor: `${theme.primary}0D`,
-          borderColor: `${theme.primary}30`,
-        }}
-      >
-        <div className="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3 shadow-xs">
-          <BookOpen className="w-6 h-6" />
-        </div>
-        <h3 className={cn('text-base font-semibold text-gray-900 mb-1', Inter_500.className)}>
-          No curriculum topics added yet
-        </h3>
-        <p className={cn('text-xs text-gray-500 max-w-md', poppins_400.className)}>
-          No topics or modules have been added to this curriculum yet. Use the "Edit Curriculum" button above to add topics and schedule learning modules.
-        </p>
+      <div className="flex flex-col items-center justify-center py-12 px-4 text-center my-2">
+        <Empty
+          icon={<BookOpen className="w-16 h-16 text-primary" />}
+          title="No curriculum topics added yet"
+          description='No topics or modules have been added to this curriculum yet. Use the "Edit Curriculum" button above to add topics and schedule learning modules.'
+        />
       </div>
     );
   }

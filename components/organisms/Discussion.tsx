@@ -166,7 +166,7 @@ export default function Discussion({
       {threads.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-12">
           <Empty
-            icon={<Message color={theme.primary} size="72" />}
+            icon={<Message color={theme.primary} size="64" />}
             title="No discussions started yet"
             description="Start a topic or ask a question to begin a discussion with students and teachers."
           />
