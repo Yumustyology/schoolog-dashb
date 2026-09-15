@@ -93,14 +93,15 @@ function AssignedTeacherCard({
                     height={56}
                     className="object-cover w-full h-full"
                   />
-                ) : teacher && (teacher.firstName || teacher.lastName) ? (
+                ) : teacher ? (
                   <TextAvatar
-                    firstName={teacher.firstName || ''}
-                    lastName={teacher.lastName || ''}
+                    firstName={teacher.firstName}
+                    lastName={teacher.lastName}
+                    email={teacher.email}
                     size={56}
                   />
                 ) : (
-                  <AvatarIcon size={56} />
+                  <TextAvatar name="Unassigned Teacher" size={56} />
                 )}
               </div>
               <div>
@@ -111,7 +112,7 @@ function AssignedTeacherCard({
                   )}
                 >
                   {teacher
-                    ? `${teacher.firstName || ''} ${teacher.lastName || ''}`.trim()
+                    ? `${teacher.firstName || ''} ${teacher.lastName || ''}`.trim() || teacher.email || 'Assigned Teacher'
                     : 'No assigned teacher'}
                 </h3>
                 <p className={cn('text-xs text-gray-500', poppins_400.className)}>
@@ -133,14 +134,15 @@ function AssignedTeacherCard({
                       height={40}
                       className="w-full h-full object-cover"
                     />
-                  ) : teacher && (teacher.firstName || teacher.lastName) ? (
+                  ) : teacher ? (
                     <TextAvatar
-                      firstName={teacher.firstName || ''}
-                      lastName={teacher.lastName || ''}
+                      firstName={teacher.firstName}
+                      lastName={teacher.lastName}
+                      email={teacher.email}
                       size={40}
                     />
                   ) : (
-                    <AvatarIcon size={40} />
+                    <TextAvatar name="Unassigned Teacher" size={40} />
                   )}
                 </div>
                 <div>

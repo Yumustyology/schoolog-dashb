@@ -1,4 +1,3 @@
-import { teacherImg2 } from '@/app/assets';
 import { Inter_500, Inter_600 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import NotificationBigIcon from '@/components/atoms/icons/ModalIcons/NotificationBigIcon';
@@ -51,7 +50,7 @@ export const TeachersListDrawer = ({
               return (
                 <AssignedTeacherDetail
                   key={teacher._id || index}
-                  img={teacher.image || teacherImg2}
+                  img={teacher.image}
                   name={fullName}
                   subjectAssignedTo={teacher.subjectAssignedTo || subjectTitle || 'Subject'}
                   setIsTeacherListOpen={setIsTeacherListOpen}

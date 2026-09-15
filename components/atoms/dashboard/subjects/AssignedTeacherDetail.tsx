@@ -30,7 +30,7 @@ export const AssignedTeacherDetail = ({
             {isStringImg ? (
               <Image src={img} alt={name} width={36} height={36} className="w-full h-full object-cover" />
             ) : name ? (
-              <TextAvatar firstName={name.split(' ')[0] || ''} lastName={name.split(' ')[1] || ''} size={36} />
+              <TextAvatar name={name} size={36} />
             ) : (
               <AvatarIcon size={36} />
             )}
