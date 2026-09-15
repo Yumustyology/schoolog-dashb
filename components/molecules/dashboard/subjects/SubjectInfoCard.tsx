@@ -178,7 +178,7 @@ function SubjectInfoCard({
 
       <CardContent className="flex flex-col p-0 gap-4 my-4 flex-grow justify-center">
         <main className="w-full">
-          <section className="grid grid-cols-3 gap-2 w-full bg-[#F9FAFB] p-4 rounded-xl border border-gray-100">
+          <section className="grid grid-cols-3 gap-2 w-full bg-primary/[0.04] p-4 rounded-xl border border-primary/10">
             <div className="text-center">
               <h3 className={cn('text-lg sm:text-xl font-bold text-gray-900 mb-0.5', poppins_500.className)}>
                 {totalStudents}
@@ -188,7 +188,7 @@ function SubjectInfoCard({
               </p>
             </div>
 
-            <div className="text-center border-x border-gray-200 px-1">
+            <div className="text-center border-x border-primary/15 px-1">
               <h3 className={cn('text-lg sm:text-xl font-bold text-primary mb-0.5', poppins_500.className)}>
                 {curriculumCoveredPct}%
               </h3>

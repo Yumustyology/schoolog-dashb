@@ -204,7 +204,7 @@ function AssignedTeacherCard({
 
       {role === 'school' && page === 'subjectInfo' && (
         <CardContent className="flex flex-col p-0 my-3 flex-grow justify-center">
-          <div className="bg-[#F9FAFB] p-4 rounded-xl border border-gray-100 flex flex-col gap-3">
+          <div className="bg-primary/[0.04] p-4 rounded-xl border border-primary/10 flex flex-col gap-3">
             <div>
               <h3 className={cn('text-sm font-semibold text-gray-900', poppins_500.className)}>
                 {nextClassSchedule || 'To be scheduled'}
@@ -214,7 +214,7 @@ function AssignedTeacherCard({
               </p>
             </div>
 
-            <div className="pt-2 border-t border-gray-200">
+            <div className="pt-2 border-t border-primary/15">
               <p className={cn('text-xs text-gray-500 mb-0.5', poppins_400.className)}>
                 Next topic
               </p>
