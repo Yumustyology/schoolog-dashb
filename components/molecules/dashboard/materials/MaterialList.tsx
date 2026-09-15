@@ -305,7 +305,7 @@ const MaterialsList: React.FC<MaterialsListProps> = ({
       {!isLoading && resources.length === 0 && (
         <div className="flex flex-col items-center justify-center py-12 mt-5">
           <Empty
-            icon={<MaterialIcon size="64" color="#2F80ED" />}
+            icon={<MaterialIcon size="64" color={theme.primary} />}
             title="No materials found"
             description="There are currently no materials available"
           />
