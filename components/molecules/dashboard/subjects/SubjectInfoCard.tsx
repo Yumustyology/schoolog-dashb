@@ -252,7 +252,7 @@ function SubjectInfoCard({
                 setArchiveModal(true);
               }}
             >
-              <ArchiveIcon color="#D97706" />
+              <ArchiveModalIcon size={20} color="#D97706" />
               <span className="whitespace-nowrap font-medium">Archive</span>
             </button>
           )}
