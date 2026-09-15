@@ -1,4 +1,10 @@
-import { getRequest, postRequest, patchRequest, deleteRequest } from '../service/apiRequests';
+import {
+  getRequest,
+  postRequest,
+  patchRequest,
+  deleteRequest,
+  downloadRequest,
+} from '../service/apiRequests';
 import type { ResponseType } from '@/app/lib/types/api-response.types';
 import type {
   Department,
@@ -40,12 +46,17 @@ export const deleteDepartment = async (
   return deleteRequest<null>('/departments', id);
 };
 
+export const exportDepartments = async (query?: { search?: string }): Promise<Blob> => {
+  return downloadRequest('/departments/export', query);
+};
+
 const departmentsActions = {
   fetchDepartments,
   getDepartmentById,
   createDepartment,
   updateDepartment,
   deleteDepartment,
+  exportDepartments,
 };
 
 export default departmentsActions;

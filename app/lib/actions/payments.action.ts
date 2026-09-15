@@ -103,6 +103,79 @@ export const newIdempotencyKey = (): string => {
   return `${Date.now()}-${Math.random().toString(36).slice(2)}`;
 };
 
+export type Plan = {
+  _id: string;
+  name: string;
+  pricePerStudent: number;
+  currency: string;
+  annualDiscountPercent: number;
+  includedLiveClassMinutes: number;
+  maxParticipantsPerSession: number;
+  hasBrainyAI: boolean;
+  isCustomPricing: boolean;
+  features: string[];
+  isActive: boolean;
+};
+
+export enum SubscriptionStatus {
+  ACTIVE = 'active',
+  PAST_DUE = 'past_due',
+  CANCELLED = 'cancelled',
+}
+
+export type Subscription = {
+  _id: string;
+  planId?: string | null;
+  provider: PaymentProvider;
+  status: SubscriptionStatus;
+  amount: number;
+  currency: string;
+  currentPeriodEnd: string;
+  consecutiveFailedRenewals: number;
+  cancelledAt?: string | null;
+};
+
+export type MySubscription = {
+  plan: Plan | null;
+  planStatus: string;
+  planActivatedAt: string | null;
+  subscription: Subscription | null;
+  usage: {
+    liveClassMinutesUsedThisMonth: number;
+    liveClassMinutesIncluded: number;
+    periodStart: string;
+  };
+};
+
+export const getMySubscription = async (): Promise<ResponseType<MySubscription>> => {
+  return getRequest<MySubscription>('/payments/my-subscription');
+};
+
+export type CheckoutPlanPayload = {
+  planId: string;
+  provider: PaymentProvider;
+  idempotencyKey: string;
+  saveCard?: boolean;
+};
+
+export const checkoutPlan = async (
+  payload: CheckoutPlanPayload
+): Promise<ResponseType<CheckoutResult>> => {
+  return postRequest<CheckoutResult>('/payments/checkout-plan', payload);
+};
+
+export type ChargeSavedMethodForPlanPayload = {
+  planId: string;
+  paymentMethodId: string;
+  idempotencyKey: string;
+};
+
+export const chargeSavedMethodForPlan = async (
+  payload: ChargeSavedMethodForPlanPayload
+): Promise<ResponseType<CheckoutResult>> => {
+  return postRequest<CheckoutResult>('/payments/charge-saved-method-plan', payload);
+};
+
 const paymentsActions = {
   checkout,
   chargeSavedMethod,
@@ -110,6 +183,9 @@ const paymentsActions = {
   deleteSavedMethod,
   listMyPurchases,
   newIdempotencyKey,
+  getMySubscription,
+  checkoutPlan,
+  chargeSavedMethodForPlan,
 };
 
 export default paymentsActions;

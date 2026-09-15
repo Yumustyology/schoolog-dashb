@@ -2,26 +2,28 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { Table, TableHeader, TableBody, TableRow, TableHead, TableCell } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Badge } from '@/components/ui/badge';
-import {
-  Select,
-  SelectTrigger,
-  SelectValue,
-  SelectContent,
-  SelectItem,
-} from '@/components/ui/select';
+import Button from '@/components/atoms/form/Button';
+import Input from '@/components/atoms/form/Input';
+import SelectComp from '@/components/atoms/form/Select';
+import { cn } from '@/app/lib/utils';
+import { Inter_400, Inter_500, Inter_600 } from '@/app/lib/config/font.config';
 import showToast from '@/app/lib/utils/toast';
 import * as actions from '@/app/lib/actions/domains.action';
 import DomainDetailsDrawer from './DomainDetailsDrawer';
 import { validateCustomDomainInput } from '@/app/lib/utils/reservedDomains';
+import ConfirmModal from '@/components/molecules/ConfirmModal';
 
 const PURPOSE_LABEL: Record<actions.DomainPurpose, string> = {
   website: 'Website',
   portal: 'Portal',
 };
+
+const PURPOSE_OPTIONS = [
+  { id: 'website', name: "Public website (visitors see your school's site)" },
+  { id: 'portal', name: 'Portal (staff/students/parents sign in here)' },
+];
 
 export default function DomainManagement() {
   const [domains, setDomains] = useState<actions.Domain[]>([]);
@@ -31,7 +33,10 @@ export default function DomainManagement() {
   const [hostname, setHostname] = useState('');
   const [purpose, setPurpose] = useState<actions.DomainPurpose>('portal');
   const [hostnameError, setHostnameError] = useState<string | null>(null);
+  const [adding, setAdding] = useState(false);
   const [selected, setSelected] = useState<actions.Domain | null>(null);
+  const [domainToRemove, setDomainToRemove] = useState<actions.Domain | null>(null);
+  const [removing, setRemoving] = useState(false);
 
   useEffect(() => {
     fetchList();
@@ -57,6 +62,7 @@ export default function DomainManagement() {
       return;
     }
     setHostnameError(null);
+    setAdding(true);
     try {
       const created = await actions.createDomain({ hostname, type: purpose });
       if (created.data) setDomains((s) => [created.data as actions.Domain, ...s]);
@@ -66,6 +72,8 @@ export default function DomainManagement() {
       showToast('Domain added. Follow the DNS instructions and click Verify when ready.', 'domain-add', { type: 'success' });
     } catch {
       showToast('Failed to add domain', 'domain-add-failed', { type: 'error' });
+    } finally {
+      setAdding(false);
     }
   }
 
@@ -83,57 +91,118 @@ export default function DomainManagement() {
   }
 
   async function handleRemove(id: string) {
-    if (!confirm('Remove domain? This will unbind the domain from your school.')) return;
+    const domain = domains.find((d) => d._id === id) ?? null;
+    setDomainToRemove(domain);
+  }
+
+  async function confirmRemove() {
+    if (!domainToRemove) return;
+    setRemoving(true);
     try {
-      await actions.removeDomain(id);
-      setDomains((s) => s.filter((d) => d._id !== id));
+      await actions.removeDomain(domainToRemove._id);
+      setDomains((s) => s.filter((d) => d._id !== domainToRemove._id));
       showToast('Domain removed', 'domain-removed', { type: 'success' });
+      setDomainToRemove(null);
+      setSelected(null);
     } catch {
       showToast('Failed to remove domain', 'domain-remove-failed', { type: 'error' });
+    } finally {
+      setRemoving(false);
     }
   }
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-4">
+      <div className="flex items-start justify-between pb-4 border-b border-b-[#E5E5EA] mb-8">
         <div>
-          <h3 className="text-xl font-semibold">Custom Domains</h3>
-          <p className="text-sm text-neutral-500">Connect a custom domain so students and staff can access your tenant at your address.</p>
+          <h2 className={cn(Inter_600.className, 'text-black1 mb-2 text-lg')}>
+            Custom Domains
+          </h2>
+          <p className={cn(Inter_400.className, 'text-[#475467] text-sm')}>
+            Connect a custom domain so students and staff can access your tenant at your address.
+          </p>
         </div>
-        <div className="flex gap-2">
-          <Button onClick={() => setAddOpen(true)}>Add domain</Button>
-        </div>
+        <Button
+          type="button"
+          onClick={() => setAddOpen(true)}
+          className="text-white text-sm rounded-full"
+        >
+          Add domain
+        </Button>
       </div>
 
       {loading ? (
-        <div className="p-6 text-center text-sm text-neutral-500">Loading domains...</div>
+        <div className="p-6 text-center text-sm text-gray3">Loading domains...</div>
+      ) : domains.length === 0 ? (
+        <div className={cn(Inter_400.className, 'p-10 text-center text-sm text-gray3 bg-gray7 rounded-lg')}>
+          No custom domains yet — add one to get started.
+        </div>
       ) : (
         <Table>
         <TableHeader>
           <TableRow>
-            <TableHead>Hostname</TableHead>
-            <TableHead>Type</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>DNS Target</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead className={Inter_500.className}>Hostname</TableHead>
+            <TableHead className={Inter_500.className}>Type</TableHead>
+            <TableHead className={Inter_500.className}>Status</TableHead>
+            <TableHead className={Inter_500.className}>DNS Target</TableHead>
+            <TableHead className={Inter_500.className}>Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {domains.map((d) => (
             <TableRow key={d._id}>
               <TableCell>
-                <button className="text-left text-sm text-primary" onClick={() => setSelected(d)}>{d.hostname}</button>
+                <button
+                  type="button"
+                  className={cn(Inter_500.className, 'text-left text-sm text-primary hover:underline')}
+                  onClick={() => setSelected(d)}
+                >
+                  {d.hostname}
+                </button>
               </TableCell>
               <TableCell><Badge variant={d.type === 'website' ? 'default' : 'secondary'}>{PURPOSE_LABEL[d.type] ?? d.type}</Badge></TableCell>
               <TableCell>
-                <span className={`px-2 py-1 rounded text-sm ${d.status === 'verified' ? 'bg-green-100 text-green-700' : d.status === 'pending' ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`}>{d.status}</span>
+                <span
+                  className={cn(
+                    Inter_500.className,
+                    'px-3 py-1 rounded-full text-xs',
+                    d.status === 'verified'
+                      ? 'bg-green-100 text-green-700'
+                      : d.status === 'pending'
+                        ? 'bg-amber-100 text-amber-700'
+                        : 'bg-red-100 text-red-700'
+                  )}
+                >
+                  {d.status}
+                </span>
               </TableCell>
-              <TableCell>{d.dnsTarget ?? '-'}</TableCell>
+              <TableCell className={cn(Inter_400.className, 'text-sm text-gray3')}>{d.dnsTarget ?? '-'}</TableCell>
               <TableCell>
                 <div className="flex gap-2">
-                  <Button size="sm" variant="outline" onClick={() => handleVerify(d._id)}>Verify</Button>
-                  <Button size="sm" variant="ghost" onClick={() => setSelected(d)}>Details</Button>
-                  <Button size="sm" variant="destructive" onClick={() => handleRemove(d._id)}>Remove</Button>
+                  <Button
+                    type="button"
+                    outlined
+                    flat
+                    onClick={() => handleVerify(d._id)}
+                    className="!py-1.5 !px-4 text-xs rounded-full"
+                  >
+                    Check
+                  </Button>
+                  <Button
+                    type="button"
+                    flat
+                    onClick={() => setSelected(d)}
+                    className="!py-1.5 !px-4 text-xs rounded-full !bg-gray7"
+                  >
+                    Details
+                  </Button>
+                  <Button
+                    type="button"
+                    onClick={() => handleRemove(d._id)}
+                    className="!py-1.5 !px-4 text-xs rounded-full !bg-red-50 !text-red-600"
+                  >
+                    Remove
+                  </Button>
                 </div>
               </TableCell>
             </TableRow>
@@ -145,37 +214,50 @@ export default function DomainManagement() {
       <Dialog open={addOpen} onOpenChange={(open) => { setAddOpen(open); if (!open) setHostnameError(null); }}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Add domain</DialogTitle>
-            <DialogDescription>Enter the hostname you want to verify.</DialogDescription>
+            <DialogTitle className={cn(Inter_600.className, 'text-black1 text-lg')}>Add domain</DialogTitle>
+            <DialogDescription className={cn(Inter_400.className, 'text-[#475467] text-sm')}>
+              Enter the hostname you want to verify.
+            </DialogDescription>
           </DialogHeader>
 
-          <div className="mt-4 space-y-4">
-            <div>
-              <label className="block text-sm mb-1">Hostname</label>
-              <Input
-                value={hostname}
-                onChange={(e) => { setHostname(e.target.value); if (hostnameError) setHostnameError(null); }}
-                placeholder="myschool.example.com"
-              />
-              {hostnameError && <p className="text-sm text-red-600 mt-1">{hostnameError}</p>}
-            </div>
-            <div>
-              <label className="block text-sm mb-1">What is this domain for?</label>
-              <Select value={purpose} onValueChange={(v) => setPurpose(v as actions.DomainPurpose)}>
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="website">Public website (visitors see your school's site)</SelectItem>
-                  <SelectItem value="portal">Portal (staff/students/parents sign in here)</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+          <div className="mt-2 space-y-5">
+            <Input
+              inputClassName={cn(Inter_500.className, 'text-base text-gray1')}
+              label="Hostname"
+              type="text"
+              className="input h-14 rounded-lg"
+              value={hostname}
+              handleChange={(e) => { setHostname(e.target.value); if (hostnameError) setHostnameError(null); }}
+              placeholder="myschool.example.com"
+              errMsg={hostnameError}
+              required={false}
+            />
+            <SelectComp
+              label="What is this domain for?"
+              value={purpose}
+              onValueChange={(v) => setPurpose(v as actions.DomainPurpose)}
+              options={PURPOSE_OPTIONS}
+            />
           </div>
 
-          <DialogFooter>
-            <Button variant="ghost" onClick={() => setAddOpen(false)}>Cancel</Button>
-            <Button onClick={handleAdd}>Add domain</Button>
+          <DialogFooter className="mt-6">
+            <Button
+              type="button"
+              flat
+              onClick={() => setAddOpen(false)}
+              className="text-sm rounded-full"
+            >
+              Cancel
+            </Button>
+            <Button
+              type="button"
+              onClick={handleAdd}
+              loading={adding}
+              disabled={adding}
+              className="text-white text-sm rounded-full"
+            >
+              Add domain
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
@@ -185,6 +267,17 @@ export default function DomainManagement() {
           <DomainDetailsDrawer domain={selected} open={!!selected} onClose={() => setSelected(null)} onVerify={handleVerify} onRemove={handleRemove} />
         )}
       </Dialog>
+
+      <ConfirmModal
+        open={!!domainToRemove}
+        close={() => setDomainToRemove(null)}
+        title="Remove domain"
+        body={`Remove ${domainToRemove?.hostname ?? 'this domain'}? This will unbind it from your school.`}
+        isLoading={removing}
+        confirmText="Remove"
+        confirmClassName="bg-r text-white"
+        onConfirm={confirmRemove}
+      />
     </div>
   );
 }

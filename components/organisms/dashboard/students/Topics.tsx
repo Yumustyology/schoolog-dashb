@@ -12,6 +12,7 @@ import EyeClose from '@/components/atoms/icons/EyeClose';
 import { TopicDetailDrawer } from '@/components/atoms/dashboard/subjects/SubjectsDrawer/TopicDetailsDrawer';
 import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 type TopicsList = {
+  id?: string;
   isMarked: boolean;
   topic: string;
   week: number;
@@ -227,10 +228,10 @@ function Topics({ items, isLoading }: { items?: TopicsList; isLoading?: boolean 
 
   return (
     <>
-      {list.map((topic) => {
+      {list.map((topic, idx) => {
         return (
           <Card
-            key={topic.topic}
+            key={topic.id || `topic-${idx}-${topic.topic}`}
             className="bg-[#F8F8F8] shadow-none w-full mb-4"
           >
             <CardBody className="w-full flex justify-between items-center gap-3 p-3">

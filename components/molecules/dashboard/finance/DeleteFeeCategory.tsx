@@ -9,13 +9,34 @@ import { useEntity } from 'simpler-state';
 import {
   closeDeleteFeeCategoryModal,
   deleteFeeCategoryOpenState,
+  selectedFeeCategoryState,
 } from '@/app/lib/entities/payment.entity';
 import { BsTrash3 } from 'react-icons/bs';
+import showToast from '@/app/lib/utils/toast';
+import feeCategoryActions from '@/app/lib/actions/fee-category.action';
+import { refreshFeeCategories } from './PaymentCategory';
 
 const DeleteFeeModal = () => {
   const deleteFeeCategoryOpen = useEntity(deleteFeeCategoryOpenState);
+  const selected = useEntity(selectedFeeCategoryState);
+  const [isDeleting, setIsDeleting] = React.useState(false);
 
   if (!deleteFeeCategoryOpen) return null;
+
+  const handleDelete = async () => {
+    if (!selected) return;
+    setIsDeleting(true);
+    try {
+      await feeCategoryActions.deleteFeeCategory(selected._id);
+      showToast('Fee category deleted', 'fee-category-deleted', { type: 'success' });
+      closeDeleteFeeCategoryModal();
+      refreshFeeCategories();
+    } catch {
+      // handleRequest already surfaces a toast for API errors
+    } finally {
+      setIsDeleting(false);
+    }
+  };
 
   return (
     <div className="fixed inset-0 bg-[rgb(0,0,0,0.25)] flex items-center justify-center z-50 w-full">
@@ -33,8 +54,7 @@ const DeleteFeeModal = () => {
         </div>
 
         <main className="flex flex-col items-center justify-center text-center px-6">
-          {/* Add modal content here */}
-          <h3 className="text-xl mb-4 ">Delete Grade 1 fee?</h3>
+          <h3 className="text-xl mb-4 ">Delete {selected?.name || 'this'} fee?</h3>
           <p
             className={cn(
               'text-sm text-gray9 text-center px-[34px]',
@@ -49,6 +69,7 @@ const DeleteFeeModal = () => {
         <div className="w-full mt-8 mb-6 text-center flex justify-center gap-4">
           <Button
             onClick={closeDeleteFeeCategoryModal}
+            disabled={isDeleting}
             round
             className={cn(
               'bg-transparent border text-primary text-base border-primary h-[44px] w-[185px]',
@@ -59,6 +80,9 @@ const DeleteFeeModal = () => {
           </Button>
           <Button
             round
+            loading={isDeleting}
+            disabled={isDeleting}
+            onClick={handleDelete}
             className={cn(
               'text-base bg-red border bg-r2 text-white h-[44px] w-[185px]',
               Inter_500.className

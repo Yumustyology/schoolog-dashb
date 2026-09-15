@@ -46,6 +46,15 @@ export const unarchiveSubject = async (
   return patchRequest<unknown>(`/subjects/${id}/unarchive`, {});
 };
 
+/**
+ * Fetch single subject by ID
+ */
+export const getSubjectById = async (
+  id: string
+): Promise<ResponseType<Record<string, unknown>>> => {
+  return getRequest<Record<string, unknown>>(`/subjects/${id}`);
+};
+
 /** Link a subject to a class grade and optional department */
 export const linkSubjectToClass = async (
   subjectId: string,
@@ -55,13 +64,45 @@ export const linkSubjectToClass = async (
   return postRequest<unknown>(`/subjects/${subjectId}/link`, payload);
 };
 
+export type AssignTutorPayload = {
+  classGradeId: string;
+  teacherId: string;
+  departmentId?: string;
+};
+
+/**
+ * Assign a tutor/teacher to a subject for a specific class grade and optional department
+ */
+export const assignTutorToSubjectClass = async (
+  subjectId: string,
+  payload: AssignTutorPayload
+): Promise<ResponseType<unknown>> => {
+  if (!subjectId || !payload.classGradeId || !payload.teacherId) {
+    return Promise.reject(new Error('Required fields missing'));
+  }
+  return postRequest<unknown>(`/subjects/${subjectId}/assign-tutor`, payload);
+};
+
+/**
+ * Fetch all subject links for a subject
+ */
+export const getSubjectLinks = async (
+  subjectId: string
+): Promise<ResponseType<Record<string, unknown>[]>> => {
+  if (!subjectId) return Promise.reject(new Error('Subject ID is required'));
+  return getRequest<Record<string, unknown>[]>(`/subjects/${subjectId}/links`);
+};
+
 const subjectsActions = {
   getSchoolSubjects,
+  getSubjectById,
   createSubject,
   deleteSubject,
   archiveSubject,
   unarchiveSubject,
   linkSubjectToClass,
+  assignTutorToSubjectClass,
+  getSubjectLinks,
 };
 
 export default subjectsActions;

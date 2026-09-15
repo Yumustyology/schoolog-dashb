@@ -96,6 +96,19 @@ export const getRequest = async <T>(
 
 // allow sending extra headers (useful for server-side requests where axios interceptor
 // can't derive tenant from window.location)
+// Fetch a raw file (e.g. CSV export) as a Blob instead of the standard
+// { data, message } JSON envelope used by the rest of the API.
+export const downloadRequest = async (
+  endpoint: string,
+  payload?: Record<string, unknown>
+): Promise<Blob> => {
+  const response = await axiosConfig.get<Blob>(endpoint, {
+    params: payload,
+    responseType: 'blob',
+  });
+  return response.data;
+};
+
 export const getRequestWithHeaders = async <T>(
   endpoint: string,
   payload?: string | Record<string, unknown>,

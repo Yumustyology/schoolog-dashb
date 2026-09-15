@@ -88,7 +88,7 @@ function Page() {
 
   return (
     <main className="w-full">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <BreadcrumbBox crumbs={breadcrumbs} className="mb-0" />
         <Button
           to="/school/subjects/create-new-subject"
@@ -100,7 +100,7 @@ function Page() {
               : 'Create subject'
           }
           className={cn(
-            'h-[44px] py-3 px-6 flex gap-2',
+            'h-[44px] py-3 px-6 flex gap-2 w-full sm:w-auto justify-center',
             classGrades.length === 0 && 'bg-disabled'
           )}
         >
@@ -111,14 +111,32 @@ function Page() {
         </Button>
       </div>
 
-      <div className="bg-white min-h-[60dvh] p-6 rounded-xl mt-8">
+      <div className="bg-white min-h-[60dvh] p-4 sm:p-6 rounded-xl mt-6 sm:mt-8">
         {classGrades.length > 0 && (
-          <div className="w-full flex flex-row-reverse items-center mb-6 justify-between">
-            <div className="flex items-center gap-4">
+          <div className="w-full flex flex-col-reverse md:flex-row items-stretch md:items-center mb-6 justify-between gap-4">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 w-full md:w-auto">
+              <SearchInput
+                className="border-gray4 bg-white w-full sm:w-60 h-10 text-nowrap"
+                placeholder="Search subjects"
+                value={search}
+                onChange={handleSearchChange}
+              />
+              <ClassGradeDropdown
+                className="w-full sm:w-[200px] shadow-none"
+                value={selectedClassGrade}
+                onValueChange={(v: string | string[]) => {
+                  const id = Array.isArray(v) ? v[0] : v;
+                  setSelectedClassGrade(id);
+                  setPage(1);
+                }}
+              />
+            </div>
+
+            <div className="flex items-center gap-4 w-full md:w-auto justify-end">
               {archivedCount > 0 && (
-                <Tabs value={activeTab} className="">
+                <Tabs value={activeTab} className="w-full sm:w-auto">
                   <TabsHeader
-                    className="transition-all text-sm px-2 py-2 min-w-[340px] bg-[#F1F1F1] h-[53px] rounded-full"
+                    className="transition-all text-sm px-2 py-2 w-full sm:min-w-[280px] md:min-w-[340px] bg-[#F1F1F1] h-[53px] rounded-full"
                     indicatorProps={{
                       className: 'bg-transparent rounded-full shadow-none',
                     }}
@@ -143,24 +161,6 @@ function Page() {
                   </TabsHeader>
                 </Tabs>
               )}
-            </div>
-
-            <div className="flex max-w-[42vw] gap-4">
-              <SearchInput
-                className="border-gray4 bg-white w-60 h-10 text-nowrap"
-                placeholder="Search subjects"
-                value={search}
-                onChange={handleSearchChange}
-              />
-              <ClassGradeDropdown
-                className="w-[200px] shadow-none"
-                value={selectedClassGrade}
-                onValueChange={(v: string | string[]) => {
-                  const id = Array.isArray(v) ? v[0] : v;
-                  setSelectedClassGrade(id);
-                  setPage(1);
-                }}
-              />
             </div>
           </div>
         )}

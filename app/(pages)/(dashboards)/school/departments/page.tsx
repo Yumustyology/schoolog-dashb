@@ -2,12 +2,13 @@
 
 import React, { useMemo, useState } from 'react';
 import useSWR from 'swr';
-import { Inter_500 } from '@/app/lib/config/font.config';
+import { Inter_500, poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import BreadcrumbBox from '@/components/atoms/dashboard/subjects/Breadcrumb';
 import Button from '@/components/atoms/form/Button';
-import { AdditionIcon, ExportIcon } from '@/components/atoms/icons/Icons';
+import { ExportIcon } from '@/components/atoms/icons/Icons';
 import Search from '@/components/atoms/form/SearchInput';
+import SelectComp from '@/components/atoms/form/Select';
 import ConfirmModal from '@/components/molecules/ConfirmModal';
 import DepartmentsTableList from '@/components/molecules/dashboard/departments/DepartmentsTableList';
 import type { Department } from '@/app/lib/types/department.types';
@@ -24,6 +25,7 @@ const Page = () => {
   const [editingDepartmentId, setEditingDepartmentId] = useState<string | null>(null);
   const [deleteDepartmentId, setDeleteDepartmentId] = useState<string | null>(null);
   const [isSaving, setIsSaving] = useState(false);
+  const [isExporting, setIsExporting] = useState(false);
 
   const { data, error, isLoading, mutate } = useSWR(
     '/departments',
@@ -53,6 +55,29 @@ const Page = () => {
   );
 
   const isEditMode = Boolean(editingDepartmentId);
+
+  const handleExportDepartments = async () => {
+    setIsExporting(true);
+    try {
+      const blob = await departmentsActions.exportDepartments(
+        search.trim() ? { search: search.trim() } : undefined
+      );
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'departments.csv';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      showToast('Failed to export departments', 'department-export-error', {
+        type: 'error',
+      });
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   const resetForm = () => {
     setName('');
@@ -151,20 +176,18 @@ const Page = () => {
         <BreadcrumbBox crumbs={breadcrumbs} className="mb-0" />
 
         <div className="flex flex-wrap gap-4">
-          <Button flat round className="h-[44px] py-3 px-6 flex gap-2 border border-primary">
-            <ExportIcon color="#0F62FE" />
-            <span className={cn('text-base', Inter_500.className)}>Export Departments</span>
-          </Button>
           <Button
+            flat
             round
-            className="h-[44px] py-3 px-6 flex gap-2"
-            onClick={() => {
-              resetForm();
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
+            onClick={handleExportDepartments}
+            disabled={isExporting}
+            loading={isExporting}
+            className="h-[44px] py-3 px-6 flex gap-2 border border-primary"
           >
-            <AdditionIcon />
-            <span className={cn('text-base', Inter_500.className)}>New Department</span>
+            <ExportIcon color="#0F62FE" />
+            <span className={cn('text-base', Inter_500.className)}>
+              {isExporting ? 'Exporting...' : 'Export Departments'}
+            </span>
           </Button>
         </div>
       </div>
@@ -181,59 +204,72 @@ const Page = () => {
 
             <form onSubmit={handleCreateDepartment} className="mt-6 space-y-4">
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">Department name</label>
+                <label className={cn('mb-2 block text-sm font-medium text-gray-700', poppins_400.className)}>
+                  Department name
+                </label>
                 <input
                   value={name}
                   onChange={(event) => setName(event.target.value)}
-                  className="w-full rounded-3xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-primary"
+                  className={cn(
+                    'w-full rounded-3xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-primary',
+                    poppins_400.className
+                  )}
                   placeholder="e.g. Science"
                 />
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">Department code</label>
+                <label className={cn('mb-2 block text-sm font-medium text-gray-700', poppins_400.className)}>
+                  Department code
+                </label>
                 <input
                   value={code}
                   onChange={(event) => setCode(event.target.value)}
-                  className="w-full rounded-3xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-primary"
+                  className={cn(
+                    'w-full rounded-3xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-primary',
+                    poppins_400.className
+                  )}
                   placeholder="e.g. SCI"
                 />
               </div>
 
               <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">Description</label>
+                <label className={cn('mb-2 block text-sm font-medium text-gray-700', poppins_400.className)}>
+                  Description
+                </label>
                 <textarea
                   value={description}
                   onChange={(event) => setDescription(event.target.value)}
-                  className="w-full min-h-[120px] rounded-3xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-primary"
+                  className={cn(
+                    'w-full min-h-[120px] rounded-3xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-primary',
+                    poppins_400.className
+                  )}
                   placeholder="Describe this department"
                 />
               </div>
 
-              <div>
-                <label className="mb-2 block text-sm font-medium text-gray-700">Status</label>
-                <select
-                  value={status}
-                  onChange={(event) => setStatus(event.target.value as 'Active' | 'Inactive')}
-                  className="w-full rounded-3xl border border-gray-200 bg-white px-4 py-3 text-sm text-gray-900 outline-none focus:border-primary"
-                >
-                  <option value="Active">Active</option>
-                  <option value="Inactive">Inactive</option>
-                </select>
-              </div>
+              <SelectComp
+                label="Status"
+                htmlFor="department-status"
+                value={status}
+                onValueChange={(value) => setStatus(value as 'Active' | 'Inactive')}
+                options={[
+                  { id: 'Active', name: 'Active' },
+                  { id: 'Inactive', name: 'Inactive' },
+                ]}
+                labelClassName="text-sm font-medium text-gray-700 mb-2"
+                triggerClasses="rounded-3xl border-gray-200 h-[46px] bg-white"
+              />
 
               <div className="flex justify-end gap-3">
-                {isEditMode && (
-                  <Button
-                    type="button"
-                    outlined
-                    flat
-                    onClick={resetForm}
-                    className="h-[44px] py-3 px-6"
-                  >
-                    Cancel
-                  </Button>
-                )}
+                <Button
+                  type="button"
+                  flat
+                  onClick={resetForm}
+                  className="h-[44px] py-3 px-6 bg-transparent"
+                >
+                  Clear
+                </Button>
                 <Button
                   type="submit"
                   className="h-[44px] py-3 px-6 rounded-full"

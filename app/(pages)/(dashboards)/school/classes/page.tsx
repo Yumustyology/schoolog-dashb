@@ -20,7 +20,7 @@ import {
 } from '@/components/atoms/icons/Icons';
 import { Inter_500, poppins_400 } from '@/app/lib/config/font.config';
 import { ResponseType } from '@/app/lib/types/response';
-import { ClassGrade, ClassGradeResponse } from '@/app/lib/types/class.types';
+import { ClassGrade } from '@/app/lib/types/class.types';
 
 export default function ClassesPage() {
   const [page, setPage] = React.useState<number>(1);
@@ -63,9 +63,9 @@ export default function ClassesPage() {
     })
   );
 
-  const resp = data as ResponseType<ClassGradeResponse> | undefined;
-  const classItems: ClassGrade[] = (resp?.data?.data as ClassGrade[]) || [];
-  const meta = (resp?.meta || {}) as NonNullable<ResponseType<ClassGradeResponse>['meta']>;
+  const resp = data as ResponseType<ClassGrade[]> | undefined;
+  const classItems: ClassGrade[] = resp?.data || [];
+  const meta = (resp?.meta || {}) as NonNullable<ResponseType<ClassGrade[]>['meta']>;
 
   const computedTotalPages = ((meta.totalPages ??
     Math.ceil((meta.count ?? 0) / pageSize)) ||

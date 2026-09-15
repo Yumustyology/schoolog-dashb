@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 import { cn } from '@/app/lib/utils';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
-import { ArrangeIcon, VIsibilityIcon, AddTeacherIcon, EditIcon, DeleteIcon } from '@/components/atoms/icons/Icons';
+import { ArrangeIcon, VIsibilityIcon, AddTeacherIcon, EditIcon, DeleteIcon, PromoteIcon } from '@/components/atoms/icons/Icons';
 import MenuLists from '@/components/atoms/dashboard/students/MenuLists';
 import Dot from '@/components/atoms/Dot';
 import { ClassGrade } from '@/app/lib/types/class.types';
@@ -12,6 +12,14 @@ import ConfirmModal from '@/components/molecules/ConfirmModal';
 import { mutate } from 'swr';
 import showToast from '@/app/lib/utils/toast';
 import classGradeActions from '@/app/lib/actions/class-grade.actions';
+import studentActions from '@/app/lib/actions/student.actions';
+
+const refreshClassLists = () =>
+  mutate(
+    (key) => typeof key === 'string' && key.startsWith('/class-grades/school'),
+    undefined,
+    { revalidate: true }
+  );
 
 interface ClassCardProps {
   classData: ClassGrade;
@@ -30,6 +38,10 @@ const ClassCard: React.FC<ClassCardProps> = ({
   const router = useRouter();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
+  const [showPromoteModal, setShowPromoteModal] = useState(false);
+  const [isPromoting, setIsPromoting] = useState(false);
+  const [showDemoteModal, setShowDemoteModal] = useState(false);
+  const [isDemoting, setIsDemoting] = useState(false);
 
   const menuItems = [
     {
@@ -46,6 +58,20 @@ const ClassCard: React.FC<ClassCardProps> = ({
       label: 'Edit class',
       onClick: () => router.push(`/${'school'}/classes/${classData._id}/edit/`),
       icon: <EditIcon size={20} />,
+    },
+    {
+      label: 'Promote class',
+      onClick: () => setShowPromoteModal(true),
+      icon: <PromoteIcon />,
+    },
+    {
+      label: 'Demote class',
+      onClick: () => setShowDemoteModal(true),
+      icon: (
+        <span className="inline-block rotate-180">
+          <PromoteIcon />
+        </span>
+      ),
     },
     {
       label: 'Delete',
@@ -147,16 +173,64 @@ const ClassCard: React.FC<ClassCardProps> = ({
             await classGradeActions.deleteClassGrade(classData._id);
             showToast('Class deleted', 'class-deleted', { type: 'success' });
             setShowDeleteModal(false);
-            try {
-              mutate('/class-grades/school');
-            } catch {
-              // ignore if mutate is not available
-            }
+            refreshClassLists();
           } catch (err) {
             console.error(err);
             showToast('Failed to delete class', 'class-delete-error', { type: 'error' });
           } finally {
             setIsDeleting(false);
+          }
+        }}
+      />
+
+      <ConfirmModal
+        open={showPromoteModal}
+        close={() => setShowPromoteModal(false)}
+        title="Promote class"
+        body={`This will move every active student currently in ${classData?.name} up to the next class grade. If ${classData?.name} is the highest class grade, its students will be graduated instead. This action cannot be undone.`}
+        icon={<PromoteIcon />}
+        isLoading={isPromoting}
+        confirmText="Promote"
+        confirmClassName="bg-primary text-white"
+        onConfirm={async () => {
+          setIsPromoting(true);
+          try {
+            const res = await studentActions.promoteClassGrade(classData._id);
+            showToast(res.message || 'Class promoted', 'class-promoted', { type: 'success' });
+            setShowPromoteModal(false);
+            refreshClassLists();
+          } catch {
+            // handleRequest already surfaces a toast for API errors
+          } finally {
+            setIsPromoting(false);
+          }
+        }}
+      />
+
+      <ConfirmModal
+        open={showDemoteModal}
+        close={() => setShowDemoteModal(false)}
+        title="Demote class"
+        body={`This will move every active student currently in ${classData?.name} down to the previous class grade. This action cannot be undone.`}
+        icon={
+          <span className="inline-block rotate-180">
+            <PromoteIcon />
+          </span>
+        }
+        isLoading={isDemoting}
+        confirmText="Demote"
+        confirmClassName="bg-r text-white"
+        onConfirm={async () => {
+          setIsDemoting(true);
+          try {
+            const res = await studentActions.demoteClassGrade(classData._id);
+            showToast(res.message || 'Class demoted', 'class-demoted', { type: 'success' });
+            setShowDemoteModal(false);
+            refreshClassLists();
+          } catch {
+            // handleRequest already surfaces a toast for API errors
+          } finally {
+            setIsDemoting(false);
           }
         }}
       />

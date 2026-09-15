@@ -33,11 +33,19 @@ import { TeachersListDrawer } from '@/components/atoms/dashboard/subjects/Subjec
 import AddTeacherModal from '@/components/atoms/dashboard/subjects/subjectsInfoModals/AddTeacherModal';
 import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 
+import { TeacherDrawerItem } from '@/components/atoms/dashboard/subjects/SubjectsDrawer/TeachersListDrawer';
+
 function AssignedTeacherCard({
   role,
   page,
   className,
   teacher,
+  allTeachers = [],
+  subjectTitle,
+  subjectId,
+  classGradeId,
+  departmentId,
+  onAssignSuccess,
 }: {
   role: 'school' | 'student' | 'parent' | 'school';
   page?: 'classInfo' | 'subjectInfo';
@@ -50,6 +58,12 @@ function AssignedTeacherCard({
     phone?: string;
     image?: string;
   } | null;
+  allTeachers?: TeacherDrawerItem[];
+  subjectTitle?: string;
+  subjectId?: string;
+  classGradeId?: string;
+  departmentId?: string;
+  onAssignSuccess?: () => void;
 }) {
   const { theme } = useSlgTheme();
 
@@ -58,7 +72,7 @@ function AssignedTeacherCard({
   return (
     <Card
       className={cn(
-        'bg-white py-6 px-6 flex flex-col justify-between h-[390px] rounded-md col-span-2 border-none',
+        'bg-white py-6 px-4 sm:px-6 flex flex-col justify-between h-auto min-h-[390px] rounded-md col-span-2 border-none',
         className
       )}
     >
@@ -97,10 +111,10 @@ function AssignedTeacherCard({
             </div>
           </CardHeader>
         ) : (
-          <CardHeader className="bg-[#f8f8f8] rounded-full py-2 px-2 mb-6">
-            <div className="flex gap-5">
+          <CardHeader className="bg-[#f8f8f8] rounded-2xl sm:rounded-full py-2 px-3 mb-6">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-start sm:items-center">
               <Image src={teacherImg2} alt="teacher-image" />
-              <div className="flex justify-between items-center w-full">
+              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center w-full gap-2">
                 <div>
                   <h3
                     className={cn(
@@ -109,14 +123,14 @@ function AssignedTeacherCard({
                     )}
                   >
                     {teacher
-                      ? `${teacher.firstName || ''} ${teacher.lastName || ''}`.trim()
-                      : 'Jimoh Jamiu'}
+                      ? `${teacher.firstName || ''} ${teacher.lastName || ''}`.trim() || teacher.email || 'Assigned Teacher'
+                      : 'No assigned teacher'}
                   </h3>
                   {role === 'student' && (
                     <p
                       className={cn('text-sm text-gray', poppins_400.className)}
                     >
-                      Biology Teacher
+                      {subjectTitle ? `${subjectTitle} Teacher` : 'Subject Teacher'}
                     </p>
                   )}
 
@@ -157,7 +171,7 @@ function AssignedTeacherCard({
             <section className="flex justify-between items-center w-full">
               <div>
                 <h3 className={cn('text-sm text-black1', Inter_500.className)}>
-                  jimohjamiu200@gmail.com
+                  {teacher?.email || 'No email available'}
                 </h3>
                 <p className={cn('text-sm text-gray', poppins_400.className)}>
                   Email
@@ -168,7 +182,7 @@ function AssignedTeacherCard({
                 <h3
                   className={cn('text-sm text-black1', poppins_500.className)}
                 >
-                  07045321256{' '}
+                  {teacher?.phone || 'No phone available'}
                 </h3>
                 <p className={cn('text-sm text-gray', poppins_400.className)}>
                   Phone number
@@ -283,12 +297,12 @@ function AssignedTeacherCard({
         )}
 
         {role === 'school' && (
-          <div className="flex gap-4 w-full justify-between">
+          <div className="flex flex-col sm:flex-row gap-3 w-full justify-between">
             <Button
               round
               wide
               outlined
-              className="h-[45px] px-8 border border-primary"
+              className="h-[45px] px-4 sm:px-8 border border-primary w-full sm:w-auto"
               onClick={openChangeTeacherModal}
             >
               <ChangeTeacherIcon />
@@ -298,14 +312,17 @@ function AssignedTeacherCard({
               <Button
                 round
                 flat
-                className="h-[45px]  border px-14 bg-transparent border-primary flex-shrink-0 "
+                className="h-[45px] border px-4 sm:px-8 bg-transparent border-primary w-full sm:w-auto"
                 // onClick={}
               >
-                <p className="flex-shrink-0 text-primary">
+                <p className="text-primary text-center">
                   View Teacher Details
                 </p>
               </Button>
             ) : null}
+          </div>
+        )}
+      </CardFooter>
             {/* <Button
               round
               className="h-[45px] border px-8 bg-light"
@@ -314,15 +331,19 @@ function AssignedTeacherCard({
               <AddTeacherIcon color={theme.primary} />
               <p className="ml-2 text-primary">Add another Teacher</p>
             </Button> */}
-          </div>
-        )}
-      </CardFooter>
 
       <AddTeacherModal />
-      <ChangeTeacherModal />
+      <ChangeTeacherModal
+        subjectId={subjectId}
+        classGradeId={classGradeId}
+        departmentId={departmentId}
+        onSuccess={onAssignSuccess}
+      />
       <TeachersListDrawer
         isTeacherListOpen={isTeachersListOpen}
         setIsTeacherListOpen={setIsTeacherListOpen}
+        teachers={allTeachers}
+        subjectTitle={subjectTitle}
       />
     </Card>
   );

@@ -14,6 +14,11 @@ interface Option {
   name: string;
 }
 
+// Overrides the default shadcn accent (gray) hover/selected colors with the
+// app's own brand tokens so every dropdown across the app looks the same.
+const ITEM_CLASSES =
+  'text-gray1 rounded-lg my-0.5 cursor-pointer focus:bg-light focus:text-primary data-[state=checked]:text-primary data-[state=checked]:font-medium';
+
 interface SelectCompProps {
   label?: string;
   htmlFor?: string;
@@ -87,16 +92,16 @@ const SelectComp: React.FC<SelectCompProps> = ({
           style={{ zIndex: 1350 }}
         >
           {isLoading ? (
-            <SelectItem className={Inter_500.className} value="loading" disabled>
+            <SelectItem className={cn(Inter_500.className, ITEM_CLASSES)} value="loading" disabled>
               {loadingMessage}
             </SelectItem>
           ) : error ? (
-            <SelectItem className={Inter_500.className} value="error" disabled>
+            <SelectItem className={cn(Inter_500.className, ITEM_CLASSES)} value="error" disabled>
               {errorMessage}
             </SelectItem>
           ) : (
             options.map((option) => (
-              <SelectItem className={Inter_500.className} key={option.id} value={option.id}>
+              <SelectItem className={cn(Inter_500.className, ITEM_CLASSES)} key={option.id} value={option.id}>
                 {option.name}
               </SelectItem>
             ))

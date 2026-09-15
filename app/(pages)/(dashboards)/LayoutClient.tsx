@@ -6,6 +6,7 @@ import { AppSidebar } from '@/components/molecules/dashboard/AsideBar';
 import Header from '@/components/molecules/dashboard/Header';
 import { ThemeProvider } from '@/components/organisms/ThemeProvider';
 import NextLoader from '@/components/atoms/NextLoader';
+import useEnforcePortalAccess from '@/app/lib/hooks/useEnforcePortalAccess';
 
 export default function LayoutClient({
   children,
@@ -15,6 +16,7 @@ export default function LayoutClient({
   sidebarType: 'school' | 'student' | 'teacher' | 'parent';
 }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  useEnforcePortalAccess(sidebarType);
 
   useEffect(() => {
     // Read cookie from `document.cookie`
@@ -42,7 +44,7 @@ export default function LayoutClient({
             <div className="w-full bg-white py-3">
               <Header />
             </div>
-            <div className="p-8 h-full bg-[#F8F8F8]">{children}</div>
+            <div className="p-4 sm:p-6 md:p-8 h-full bg-[#F8F8F8]">{children}</div>
           </main>
           </SidebarInset>
         </SidebarProvider>

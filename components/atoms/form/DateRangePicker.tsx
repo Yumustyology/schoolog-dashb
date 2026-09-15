@@ -12,7 +12,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover';
-import { Inter_400 } from '@/app/lib/config/font.config';
+import { Inter_400, Inter_500 } from '@/app/lib/config/font.config';
+import showToast from '@/app/lib/utils/toast';
 
 export function DateRangePicker() {
   const [dateRange, setDateRange] = React.useState<{
@@ -28,13 +29,13 @@ export function DateRangePicker() {
 
     if (isStartDate) {
       if (dateRange.endDate && date > dateRange.endDate) {
-        alert('Start date cannot be after end date.');
+        showToast('Start date cannot be after end date.', 'date-range-start-after-end', { type: 'error' });
         return;
       }
       setDateRange((prev) => ({ ...prev, startDate: date }));
     } else {
       if (dateRange.startDate && date < dateRange.startDate) {
-        alert('End date cannot be before start date.');
+        showToast('End date cannot be before start date.', 'date-range-end-before-start', { type: 'error' });
         return;
       }
       setDateRange((prev) => ({ ...prev, endDate: date }));
@@ -47,12 +48,12 @@ export function DateRangePicker() {
         <Button
           variant={'outline'}
           className={cn(
-            'w-min rounded-full justify-start text-left font-normal',
-            !(dateRange.startDate && dateRange.endDate) &&
-              'text-muted-foreground'
+            'w-min rounded-full justify-start text-left font-normal border-gray4 bg-white hover:bg-gray7 hover:text-gray1',
+            Inter_500.className,
+            !(dateRange.startDate && dateRange.endDate) ? 'text-gray3' : 'text-gray1'
           )}
         >
-          <CalendarIcon className="mr-2" />
+          <CalendarIcon className="mr-2 text-primary" />
           {dateRange.startDate && dateRange.endDate ? (
             <span>
               {format(dateRange.startDate, 'PPP')} -{' '}

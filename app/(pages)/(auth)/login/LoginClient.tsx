@@ -15,7 +15,6 @@ import { AudienceTypes } from '@/app/lib/types/audience-types';
 import localforage from 'localforage';
 import { schoolState, SchoolEntity, setSchoolState } from '@/app/lib/entities/school.entity';
 import { replaceProfileState } from '@/app/lib/entities/profile.entity';
-import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { Skeleton } from '@/components/ui/skeleton';
 
@@ -25,7 +24,6 @@ type Props = {
 };
 
 export default function LoginClient({ initialLogo, initialSchool }: Props) {
-  const navigate = useRouter();
   const { audienceType } = authState.use();
 
   const [loginMethod, setLoginMethod] = React.useState<'id' | 'email'>('id');
@@ -104,9 +102,11 @@ export default function LoginClient({ initialLogo, initialSchool }: Props) {
             email: resp.data?.user?.email || '',
           });
 
-          navigate.replace('/school/');
+          // VerifiedRedirect (opened below) routes to the correct portal for
+          // this audience via getDashboardPathForAudience — don't race it
+          // with a hardcoded redirect here.
+          setIsModalOpen(true);
         }
-        setIsModalOpen(true);
       } finally {
         setIsLoading(false);
       }

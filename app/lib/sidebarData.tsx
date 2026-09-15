@@ -138,6 +138,12 @@ export const teacherSidebarItems: SidebarItemsType = [
     activeIcon: <Result color="#FFFFFF" />,
   },
   {
+    title: 'Library',
+    url: '/teacher/library',
+    icon: <Library />,
+    activeIcon: <Library color="#FFFFFF" />,
+  },
+  {
     title: 'Timetable',
     url: '/teacher/timetable',
     icon: <Timetable />,
@@ -222,6 +228,12 @@ export const shoolSidebarItems: SidebarItemsType = [
     activeIcon: <Attendance color="#FFFFFF" />,
   },
   {
+    title: 'Gradebook',
+    url: '/school/gradebook',
+    icon: <Result />,
+    activeIcon: <Result color="#FFFFFF" />,
+  },
+  {
     title: 'Live classes',
     url: '/school/live-classes',
     icon: <LiveClassIcon />,
@@ -261,6 +273,12 @@ export const shoolSidebarItems: SidebarItemsType = [
         url: '/school/finance/invoices',
       },
     ],
+  },
+  {
+    title: 'Billing',
+    url: '/school/billing',
+    icon: <PaymentIcon />,
+    activeIcon: <PaymentIcon color="#FFFFFF" />,
   },
   {
     title: 'Message',

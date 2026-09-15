@@ -44,13 +44,13 @@ const DropdownSearch: React.FC<ComboboxProps> = ({
             role="combobox"
             aria-expanded={open}
             className={cn(
-              'w-full justify-between h-14 rounded-lg border border-gray2 text-base text-gray3 p-4',
+              'w-full justify-between h-14 rounded-lg border border-gray2 bg-white text-base text-gray1 p-4 hover:bg-white hover:border-primary',
               className
             )}
           >
             {value
               ? options.find((opt) => opt.value === value)?.label
-              : placeholder}
+              : <span className="text-gray3">{placeholder}</span>}
             <ChevronDown color="#676767" className="opacity-50 h-2 w-1" />
           </Button>
         </PopoverTrigger>
@@ -74,12 +74,16 @@ const DropdownSearch: React.FC<ComboboxProps> = ({
                         onChange(currentValue === value ? '' : currentValue);
                       setOpen(false);
                     }}
-                    className="cursor-pointer px-4 py-2 hover:bg-gray4 transition-all"
+                    className={cn(
+                      'cursor-pointer rounded-lg px-4 py-2 my-0.5 text-gray1 transition-colors',
+                      'aria-selected:bg-light aria-selected:text-primary',
+                      value === option.value && 'text-primary font-medium'
+                    )}
                   >
                     {option.label}
                     <Check
                       className={cn(
-                        'ml-auto',
+                        'ml-auto text-primary',
                         value === option.value ? 'opacity-100' : 'opacity-0'
                       )}
                     />

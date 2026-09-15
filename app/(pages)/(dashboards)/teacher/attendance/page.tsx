@@ -111,6 +111,7 @@ const TeacherAttendancePage = () => {
             onValueChange={setClassGradeId}
             placeholder="Select a class"
             options={classOptions}
+            triggerClasses="rounded-full h-11 bg-[#F7F7F7] border-gray4"
           />
           <DatePicker
             label="Date"

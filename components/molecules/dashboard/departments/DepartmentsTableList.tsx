@@ -1,7 +1,7 @@
 'use client';
 
 import { createColumnHelper } from '@tanstack/react-table';
-import { Inter_500 } from '@/app/lib/config/font.config';
+import { Inter_400, Inter_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import type { Department } from '@/app/lib/types/department.types';
 import DataTable from '@/components/molecules/DataTable';
@@ -58,6 +58,7 @@ const DepartmentsTableList = ({ departments, onDelete, onEdit }: DepartmentsTabl
       header: () => <span className="block text-right">Actions</span>,
       cell: (info) => {
         const department = info.row.original;
+        const isSystemDefault = Boolean(department.isSystemDefault);
         return (
           <div className="whitespace-nowrap text-right space-x-2">
             <button
@@ -69,8 +70,19 @@ const DepartmentsTableList = ({ departments, onDelete, onEdit }: DepartmentsTabl
             </button>
             <button
               type="button"
+              disabled={isSystemDefault}
               onClick={() => onDelete(department._id)}
-              className="rounded-full border border-red-200 bg-red-50 px-3 py-1 text-xs font-semibold text-red-700 transition hover:bg-red-100"
+              title={
+                isSystemDefault
+                  ? 'Default departments cannot be deleted — set status to Inactive to hide it instead'
+                  : undefined
+              }
+              className={cn(
+                'rounded-full border px-3 py-1 text-xs font-semibold transition',
+                isSystemDefault
+                  ? 'cursor-not-allowed border-gray-200 bg-gray-50 text-gray-400'
+                  : 'border-red-200 bg-red-50 text-red-700 hover:bg-red-100'
+              )}
             >
               Delete
             </button>
@@ -90,7 +102,7 @@ const DepartmentsTableList = ({ departments, onDelete, onEdit }: DepartmentsTabl
         theadClassName="bg-[#FBFBFB]"
         thClassName={cn('px-4 py-4 text-left text-xs font-semibold uppercase tracking-wider text-gray-500', Inter_500.className)}
         tdClassName="px-4 py-4"
-        rowClassName="border-b border-gray-200 last:border-b-0"
+        rowClassName={cn('border-b border-gray-200 last:border-b-0', Inter_400.className)}
         tableClassName="min-w-full divide-y divide-gray-200"
         useCardWrapper={false}
         wrapCellsInTypography={false}

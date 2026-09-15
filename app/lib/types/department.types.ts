@@ -6,6 +6,7 @@ export type Department = {
   code: string;
   description?: string | null;
   status: 'Active' | 'Inactive' | string;
+  isSystemDefault?: boolean;
   createdAt?: string;
   updatedAt?: string;
 };

@@ -6,16 +6,13 @@ import {
   openUploadTeacherModal,
   openInviteTutorModal,
 } from '@/app/lib/entities/staff.entity';
-import {
-  closeAddStudentsMenu,
-  openUploadStudentModal,
-} from '@/app/lib/entities/student.entity';
 import { cn } from '@/app/lib/utils';
 import ArrowRightIcon2 from '@/components/atoms/icons/ArrowRightIcon2';
 import { ExportIcon, LinkIcon } from '@/components/atoms/icons/Icons';
 import Cancel from '@/components/atoms/icons/ModalIcons/Cancel';
 import StudentsIcon from '@/components/atoms/icons/SideBar/StudentsIcon';
 import { useRouter } from 'next/navigation';
+import { ListChecks } from 'lucide-react';
 
 import React from 'react';
 import { useEntity } from 'simpler-state';
@@ -42,7 +39,7 @@ export const AddTeacherMenu = () => {
       click: openInviteTutorModal,
     },
     {
-      icon: <LinkIcon />,
+      icon: <ListChecks color="#828282" size={20} />,
       text: 'Manage invite links',
       click: () => {
         router.push('/school/teaching-staffs/invites');
@@ -73,7 +70,7 @@ export const AddTeacherMenu = () => {
                 className="flex justify-between items-center p-4 border border-gray4 rounded-3xl cursor-pointer"
                 onClick={() => {
                   option.click?.();
-                  closeAddStudentsMenu;
+                  closeAddTeacherMenu();
                 }}
               >
                 <div className="flex items-center gap-4">

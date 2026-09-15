@@ -1,171 +1,164 @@
-import React, { useRef, useState } from 'react';
+'use client';
+import React from 'react';
 import Modal from '../../Modal';
 import { cn } from '@/app/lib/utils';
-import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
+import { poppins_400 } from '@/app/lib/config/font.config';
 import Button from '@/components/atoms/form/Button';
+import Input from '@/components/atoms/form/Input';
 import {
   closeFeeCategoryModal,
   feeCategoryOpenState,
+  selectedFeeCategoryState,
 } from '@/app/lib/entities/payment.entity';
 import { useEntity } from 'simpler-state';
-import Input from '@/components/atoms/form/Input';
-import { Checkbox } from '@/components/ui/checkbox';
-import { DatePicker } from '@/components/atoms/form/DatePicker';
-import { IoAdd } from 'react-icons/io5';
-import SubtotalDetail, { SubtotalDetailHandles } from './SubtotalDetail'; // ⬅️ import the component here
-import type { Subtotal } from '@/app/lib/types/finance.types';
+import showToast from '@/app/lib/utils/toast';
+import feeCategoryActions from '@/app/lib/actions/fee-category.action';
+import { fetchClassGradesAll } from '@/app/lib/actions/class-grade.actions';
+import { refreshFeeCategories } from './PaymentCategory';
 
 const FeeCategoryModal: React.FC = () => {
-  const feeCategoryOpen = useEntity(feeCategoryOpenState);
-  const [latePayment, setLatePayment] = useState<boolean>(false);
-  const subtotalDetailRef = useRef<SubtotalDetailHandles>(null);
+  const open = useEntity(feeCategoryOpenState);
+  const selected = useEntity(selectedFeeCategoryState);
+  const isEditing = !!selected;
 
-  const [subtotals, setSubtotals] = useState<Subtotal[]>([]);
-  const [editingId, setEditingId] = useState<number | null>(1);
+  const [name, setName] = React.useState('');
+  const [amount, setAmount] = React.useState('');
+  const [classGrades, setClassGrades] = React.useState<{ id: string; name: string }[]>([]);
+  const [selectedClassGradeIds, setSelectedClassGradeIds] = React.useState<string[]>([]);
+  const [submitting, setSubmitting] = React.useState(false);
 
-  const handleAddNewSubtotal = () => {
-    const currentEntrySave = handleSaveClick() as unknown as () => boolean;
+  React.useEffect(() => {
+    if (!open) return;
+    fetchClassGradesAll()
+      .then((res) => {
+        setClassGrades(
+          (res.data || []).map((c) => ({
+            id: String((c as Record<string, unknown>)._id),
+            name: String((c as Record<string, unknown>).name || ''),
+          }))
+        );
+      })
+      .catch(() => setClassGrades([]));
 
-    if (!currentEntrySave) return;
+    if (selected) {
+      setName(selected.name);
+      // amount is stored in the smallest currency unit; the form works in whole units
+      setAmount(String(selected.amount / 100));
+      setSelectedClassGradeIds(
+        (selected.classGradeIds || []).map((c) => (typeof c === 'string' ? c : c._id))
+      );
+    } else {
+      setName('');
+      setAmount('');
+      setSelectedClassGradeIds([]);
+    }
+  }, [open, selected]);
 
-    const newId = subtotals.length
-      ? Math.max(...subtotals.map((s) => s.id)) + 1
-      : 1;
-
-    const newSubtotal = { id: newId, title: '', price: '' };
-    setSubtotals([...subtotals, newSubtotal]);
-    setEditingId(newId);
-  };
-
-  const handleEditSubtotal = (updatedSubtotal: Subtotal) => {
-    setSubtotals((prev) =>
-      prev.map((s) => (s.id === updatedSubtotal.id ? updatedSubtotal : s))
+  const toggleClassGrade = (id: string) => {
+    setSelectedClassGradeIds((prev) =>
+      prev.includes(id) ? prev.filter((c) => c !== id) : [...prev, id]
     );
   };
 
-  const pruneEditing = () => setEditingId(null);
+  const handleSubmit = async () => {
+    if (!name.trim()) {
+      showToast('Category name is required', 'fee-category-missing-name', { type: 'error' });
+      return;
+    }
+    const parsedAmount = Number(amount);
+    if (!amount || Number.isNaN(parsedAmount) || parsedAmount < 0) {
+      showToast('Enter a valid amount', 'fee-category-missing-amount', { type: 'error' });
+      return;
+    }
+    if (selectedClassGradeIds.length === 0) {
+      showToast('Select at least one class', 'fee-category-missing-classes', { type: 'error' });
+      return;
+    }
 
-  const handleRemoveSubtotal = (id: number) => {
-    setSubtotals((prev) => prev.filter((s) => s.id !== id));
-    if (editingId === id) setEditingId(-1);
-  };
-
-  const handleSaveClick = () => {
-    if (subtotalDetailRef.current) {
-      return subtotalDetailRef.current.handleSave();
-    } else {
-      if (subtotals.length) {
-        alert('Please');
-        return false;
+    setSubmitting(true);
+    try {
+      const payload = {
+        name,
+        amount: Math.round(parsedAmount * 100),
+        classGradeIds: selectedClassGradeIds,
+      };
+      if (isEditing && selected) {
+        await feeCategoryActions.updateFeeCategory(selected._id, payload);
+        showToast('Fee category updated', 'fee-category-updated', { type: 'success' });
       } else {
-        return true;
+        await feeCategoryActions.createFeeCategory(payload);
+        showToast('Fee category created', 'fee-category-created', { type: 'success' });
       }
+      closeFeeCategoryModal();
+      refreshFeeCategories();
+    } catch {
+      // handleRequest already surfaces a toast for API errors
+    } finally {
+      setSubmitting(false);
     }
   };
 
   return (
     <div>
       <Modal
-        isOpen={feeCategoryOpen}
+        isOpen={open}
         onClose={closeFeeCategoryModal}
-        title="Fees category"
+        title={isEditing ? 'Edit fee category' : 'Add fee category'}
       >
-        <p
-          className={cn(
-            'text-base text-gray1 text-center px-16',
-            poppins_500.className
-          )}
-        >
-          Input the details of the fee category you want to create
+        <p className={cn('text-base text-gray1 text-center px-16 mb-6', poppins_400.className)}>
+          Input the details of the fee category you want to {isEditing ? 'update' : 'create'}
         </p>
 
-        <div className="flex flex-col items-center gap-8 justify-center">
-          <Input label="Category name" placeholder="Juniors school fees" />
-          <Input label="Amount ($)" placeholder="100" />
-          <Input label="Class involved" placeholder="JSS1,JSS2" />
-        </div>
-
-        <div
-          className={cn(
-            'mt-6 flex items-center space-x-2 text-sm',
-            poppins_400.className
-          )}
-        >
-          <Checkbox
-            id="terms2"
-            checked={latePayment}
-            onCheckedChange={(checked: boolean) =>
-              setLatePayment(Boolean(checked))
-            }
-            className="accent-primary data-[state=checked]:bg-primary data-[state=checked]:text-white"
+        <div className="flex flex-col gap-6">
+          <Input
+            label="Category name"
+            placeholder="Juniors school fees"
+            value={name}
+            handleChange={(e) => setName(e.target.value)}
           />
-          <label
-            htmlFor="terms2"
-            className="text-sm leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-          >
-            Set late payment fine
-          </label>
-        </div>
+          <Input
+            label="Amount (NGN)"
+            type="number"
+            placeholder="100"
+            value={amount}
+            handleChange={(e) => setAmount(e.target.value)}
+          />
 
-        {latePayment && (
-          <div className="mt-6 grid grid-cols-2 gap-6 items-center">
-            <div>
-              <label
-                className={cn(
-                  'block text-left w-full text-base mb-2 text-gray6',
-                  poppins_400.className
-                )}
-              >
-                Late payment starts on
-              </label>
-              <DatePicker className="rounded-lg h-[60px] w-full text-base" />
+          <div>
+            <label className={cn('label text-gray2 mb-2 block text-sm', poppins_400.className)}>
+              Applies to classes
+            </label>
+            <div className="flex flex-wrap gap-2 max-h-[160px] overflow-y-auto">
+              {classGrades.map((c) => (
+                <button
+                  key={c.id}
+                  type="button"
+                  onClick={() => toggleClassGrade(c.id)}
+                  className={cn(
+                    'text-xs px-3 py-1.5 rounded-full border',
+                    poppins_400.className,
+                    selectedClassGradeIds.includes(c.id)
+                      ? 'bg-primary text-white border-primary'
+                      : 'bg-white text-gray6 border-gray4'
+                  )}
+                >
+                  {c.name}
+                </button>
+              ))}
             </div>
-            <Input
-              label="Late payment fine (₦)"
-              className="flex-shrink-0"
-              placeholder="100"
-            />
           </div>
-        )}
-
-        {/* Subtotals */}
-        <div className="mt-6">
-          {subtotals.length > 0 && (
-            <h3 className="text-left text-base mb-4 text-gray6">Subtotals</h3>
-          )}
-
-          {subtotals.map((subtotal) => (
-            <SubtotalDetail
-              key={subtotal.id}
-              ref={subtotalDetailRef}
-              subtotal={subtotal}
-              isEditing={editingId === subtotal.id}
-              setIsEditing={() => setEditingId(subtotal.id)}
-              onEdit={handleEditSubtotal}
-              pruneEditing={pruneEditing}
-              onRemove={handleRemoveSubtotal}
-            />
-          ))}
-
-          <Button
-            wide
-            round
-            onClick={handleAddNewSubtotal}
-            className="rounded-full bg-[#F8F8F8] text-gray1 mt-6 border"
-          >
-            <IoAdd color={'#4F4F4F'} size={24} /> &nbsp;{' '}
-            {subtotals.length > 0 ? 'Add new subtotal' : 'Add fee breakdown'}
-          </Button>
         </div>
 
         <div className="flex items-center gap-6 mt-8">
           <Button
-            onClick={closeFeeCategoryModal}
+            onClick={handleSubmit}
+            loading={submitting}
+            disabled={submitting}
             wide
             round
-            className="h-12 mt-7 rounded-full"
+            className="h-12 rounded-full"
           >
-            Save category
+            {isEditing ? 'Save changes' : 'Save category'}
           </Button>
         </div>
       </Modal>

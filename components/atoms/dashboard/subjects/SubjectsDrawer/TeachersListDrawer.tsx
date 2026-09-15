@@ -1,4 +1,4 @@
-import { teacherImg, teacherImg2 } from '@/app/assets';
+import { teacherImg2 } from '@/app/assets';
 import { Inter_500, Inter_600 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import NotificationBigIcon from '@/components/atoms/icons/ModalIcons/NotificationBigIcon';
@@ -6,54 +6,68 @@ import { DrawerSide } from '@/components/molecules/dashboard/DrawerSide';
 import React from 'react';
 import { AssignedTeacherDetail } from '../AssignedTeacherDetail';
 import Button from '@/components/atoms/form/Button';
+import { openChangeTeacherModal } from '@/app/lib/entities/subject.entity';
 
-const teacherLists = [
-  {
-    name: 'Jamui Muhammmad',
-    img: teacherImg,
-    subjectAssignedTo: 'mathematics',
-  },
-  {
-    name: 'Jamui Yussuf',
-    img: teacherImg2,
-    subjectAssignedTo: 'mathematics',
-  },
-  {
-    name: 'Cross James',
-    img: teacherImg2,
-    subjectAssignedTo: 'mathematics',
-  },
-];
+export interface TeacherDrawerItem {
+  _id?: string;
+  name?: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  phone?: string;
+  image?: string;
+  subjectAssignedTo?: string;
+}
 
 export const TeachersListDrawer = ({
   isTeacherListOpen,
   setIsTeacherListOpen,
+  teachers = [],
+  subjectTitle,
 }: {
   isTeacherListOpen: boolean;
-  setIsTeacherListOpen: any;
+  setIsTeacherListOpen: (v: boolean) => void;
+  teachers?: TeacherDrawerItem[];
+  subjectTitle?: string;
 }) => {
+  const count = teachers.length;
+  const titleText = `${count} assigned teacher${count === 1 ? '' : 's'}`;
+
   return (
     <DrawerSide
       open={isTeacherListOpen}
       close={() => setIsTeacherListOpen(false)}
-      title="4 assigned teachers"
+      title={titleText}
       className="w-[472px]"
     >
       <div className="p-6 overflow-y-auto sidebar-scroll max-h-[calc(100vh-140px)]">
-        {teacherLists.length > 0 ? (
+        {teachers.length > 0 ? (
           <div className="">
-            {teacherLists.map((teacher, index) => (
-              <AssignedTeacherDetail
-                key={index}
-                img={teacher.img}
-                name={teacher.name}
-                subjectAssignedTo={teacher.subjectAssignedTo}
-                setIsTeacherListOpen={setIsTeacherListOpen}
-              />
-            ))}
-            <Button wide round className="bg-light text-primary py-3 mt-14">
-              {' '}
-              Add teacher{' '}
+            {teachers.map((teacher, index) => {
+              const fullName =
+                teacher.name ||
+                `${teacher.firstName || ''} ${teacher.lastName || ''}`.trim() ||
+                'Assigned Teacher';
+              return (
+                <AssignedTeacherDetail
+                  key={teacher._id || index}
+                  img={teacher.image || teacherImg2}
+                  name={fullName}
+                  subjectAssignedTo={teacher.subjectAssignedTo || subjectTitle || 'Subject'}
+                  setIsTeacherListOpen={setIsTeacherListOpen}
+                />
+              );
+            })}
+            <Button
+              wide
+              round
+              className="bg-light text-primary py-3 mt-14"
+              onClick={() => {
+                setIsTeacherListOpen(false);
+                openChangeTeacherModal();
+              }}
+            >
+              Assign Teacher
             </Button>
           </div>
         ) : (
@@ -68,9 +82,19 @@ export const TeachersListDrawer = ({
               >
                 No Teacher Assigned Yet
               </h1>
-              <p className={cn('text-sm text-gray', Inter_500.className)}>
-                Add a new teacher here
+              <p className={cn('text-sm text-gray mb-6', Inter_500.className)}>
+                Assign a teacher to this subject
               </p>
+              <Button
+                round
+                className="bg-primary text-white px-6 py-2"
+                onClick={() => {
+                  setIsTeacherListOpen(false);
+                  openChangeTeacherModal();
+                }}
+              >
+                Assign Teacher
+              </Button>
             </div>
           </div>
         )}

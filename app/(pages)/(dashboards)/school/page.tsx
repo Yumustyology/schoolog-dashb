@@ -161,7 +161,6 @@ const Page = () => {
             className="w-full"
             selected={calenderDate}
             onSelect={(date) => setCalenderDate(date)}
-            initialFocus
           />
         </div>
       </div>

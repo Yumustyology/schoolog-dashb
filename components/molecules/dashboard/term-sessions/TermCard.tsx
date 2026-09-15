@@ -16,6 +16,7 @@ import {
 } from '@/app/lib/types/academicYear.types';
 import { fetchHolidaysBetween } from '@/app/lib/actions/holiday.actions';
 import { deleteTermSession } from '@/app/lib/actions/term-session.actions';
+import ConfirmModal from '@/components/molecules/ConfirmModal';
 
 interface TermCardProps {
   term: AcademicTerm;
@@ -62,6 +63,8 @@ const TermCard: React.FC<TermCardProps> = ({
 }) => {
   const termId = String(term._id || term.id);
   const hasReconciledRef = useRef(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   /**
    * ─────────────────────────────
@@ -146,8 +149,14 @@ const TermCard: React.FC<TermCardProps> = ({
    * ─────────────────────────────
    */
   const handleDelete = async () => {
-    if (term._id) await deleteTermSession(term._id);
-    removeTerm(termId);
+    setIsDeleting(true);
+    try {
+      if (term._id) await deleteTermSession(term._id);
+      removeTerm(termId);
+      setShowDeleteModal(false);
+    } finally {
+      setIsDeleting(false);
+    }
   };
 
   return (
@@ -164,7 +173,7 @@ const TermCard: React.FC<TermCardProps> = ({
         {terms.length > 1 && (
           <button
             type="button"
-            onClick={handleDelete}
+            onClick={() => setShowDeleteModal(true)}
             className="mt-6 text-red-500"
           >
             <DeleteIcon size={14} />
@@ -173,6 +182,17 @@ const TermCard: React.FC<TermCardProps> = ({
 
         {isLoading && <Loader2 className="animate-spin w-4 h-4 mt-6" />}
       </div>
+
+      <ConfirmModal
+        open={showDeleteModal}
+        close={() => setShowDeleteModal(false)}
+        title="Delete term"
+        body={`Are you sure you want to delete "${term.name || 'this term'}"? This action cannot be undone.`}
+        isLoading={isDeleting}
+        confirmText="Delete"
+        confirmClassName="bg-r text-white"
+        onConfirm={handleDelete}
+      />
 
       {/* Date Range */}
       <div className="flex gap-4 items-center">

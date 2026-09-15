@@ -7,7 +7,7 @@
   padding: 0;
 }
 body {
-  font-family: Poppin, Arial, Helvetica, sans-serif;
+  font-family: 'Poppins', Arial, Helvetica, sans-serif;
 }
 
 /* Reusable Tailwind CSS Styles For Authentication Pages */
@@ -25,6 +25,11 @@ body {
 }
 
 @layer base {
+  button, input, select, textarea, optgroup, option {
+    font-family: inherit;
+    font-size: inherit;
+  }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 240 10% 3.9%;

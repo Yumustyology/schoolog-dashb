@@ -187,11 +187,13 @@ const Page = () => {
 
         <div className="mt-8 grid gap-5 grid-cols-2">
           <PaymentCategory
-            onClickAddButton={openFeeCategoryModal}
+            variant="fee"
+            onClickAddButton={() => openFeeCategoryModal()}
             title="Fees categories"
             subTitle="Click on any category to view details, edit or delete"
           />
           <PaymentCategory
+            variant="salary"
             onClickAddButton={openSalaryCategoryModal}
             title="Salary categories"
             subTitle="Click on any category to view details, edit or delete"

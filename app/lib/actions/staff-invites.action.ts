@@ -25,6 +25,9 @@ export type CreateStaffInvitePayload = {
   role?: string;
   classGradeIds?: string[];
   expiresInDays?: number;
+  // When true and `email` is set, the backend emails the invite link directly
+  // to that address in addition to returning it here.
+  sendEmail?: boolean;
 };
 
 export type InvitePreview = {

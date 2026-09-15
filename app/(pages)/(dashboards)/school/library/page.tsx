@@ -1,16 +1,18 @@
 'use client';
 import { Inter_500, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
-import { BookStatusDropdown } from '@/components/atoms/dashboard/library/BookStatusDropdown';
 import { AddBookModal } from '@/components/atoms/dashboard/library/modals/AddBookModal';
 import { GiveOutBookModal } from '@/components/atoms/dashboard/library/modals/GiveOutBookModal';
 import BreadcrumbBox from '@/components/atoms/dashboard/subjects/Breadcrumb';
 import Button from '@/components/atoms/form/Button';
-import SearchInput from '@/components/atoms/form/SearchInput';
 import { ClockIcon } from '@/components/atoms/icons/Icon2';
 import { AdditionIcon } from '@/components/atoms/icons/Icons';
-import AvailbelBooksTableList from '@/components/molecules/dashboard/library/AvailableBookTableList';
-import BorrowedBooksTableList from '@/components/molecules/dashboard/library/BorrowedBooksTableList';
+import AvailbelBooksTableList, {
+  refreshLibraryBooks,
+} from '@/components/molecules/dashboard/library/AvailableBookTableList';
+import BorrowedBooksTableList, {
+  refreshLibraryBorrows,
+} from '@/components/molecules/dashboard/library/BorrowedBooksTableList';
 import {
   Tab,
   TabPanel,
@@ -89,26 +91,22 @@ const LibraryPage = () => {
           <AddBookModal
             isOpen={openAddBookModal}
             setIsOpen={setOpenAddBookModal}
+            onAdded={refreshLibraryBooks}
           />
           <GiveOutBookModal
             isOpen={openGiveOutBookModal}
             setIsOpen={setOpenGiveOutBookModal}
+            onGivenOut={() => {
+              refreshLibraryBooks();
+              refreshLibraryBorrows();
+            }}
           />
         </div>
       </div>
 
       <div className="bg-white w-full p-6 mt-6 rounded-lg min-h-[398px] h-auto">
         <Tabs value={activeBooksTab}>
-          <div className="flex justify-between items-center">
-            <div className="flex gap-6 ">
-              <SearchInput
-                placeholder="Search student..."
-                className="w-[231px] h-[38px] rounded-full  bg-[#F7F7F7] border border-gray4"
-              />
-
-              <BookStatusDropdown type="available" />
-            </div>
-
+          <div className="flex justify-end items-center">
             <TabsHeader
               className="transition-all text-sm px-2 py-2 mb-6 w-[434px] bg-[#F1F1F1] h-[53px] rounded-full"
               indicatorProps={{

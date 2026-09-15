@@ -1,4 +1,5 @@
 'use client';
+import { mutate } from 'swr';
 import { Inter_500, poppins_400 } from '@/app/lib/config/font.config';
 import { openAddTeacherMenu } from '@/app/lib/entities/staff.entity';
 import { cn } from '@/app/lib/utils';
@@ -44,7 +45,7 @@ const page = () => {
             </span>
           </Button>
           <AddTeacherMenu />
-          <UploadTeachersModal />
+          <UploadTeachersModal onUploaded={() => mutate('/staff')} />
           <InviteTutorModal />
         </div>
       </div>

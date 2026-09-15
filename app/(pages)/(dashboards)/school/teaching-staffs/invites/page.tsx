@@ -16,6 +16,7 @@ import staffInvitesActions, {
 import showToast from '@/app/lib/utils/toast';
 import { openInviteTutorModal } from '@/app/lib/entities/staff.entity';
 import InviteTutorModal from '@/components/atoms/dashboard/staff/modal/InviteTutorModal';
+import ConfirmModal from '@/components/molecules/ConfirmModal';
 
 const statusStyles: Record<StaffInviteStatus, string> = {
   pending: 'bg-blue-50 text-blue-600',
@@ -29,6 +30,7 @@ const InviteRow: React.FC<{ invite: StaffInvite; onRevoked: () => void }> = ({
   onRevoked,
 }) => {
   const [revoking, setRevoking] = React.useState(false);
+  const [showRevokeModal, setShowRevokeModal] = React.useState(false);
 
   const handleCopy = () => {
     navigator.clipboard.writeText(invite.link);
@@ -40,6 +42,7 @@ const InviteRow: React.FC<{ invite: StaffInvite; onRevoked: () => void }> = ({
     try {
       await staffInvitesActions.revokeStaffInvite(invite._id);
       showToast('Invite revoked', 'invite-revoked', { type: 'success' });
+      setShowRevokeModal(false);
       onRevoked();
     } catch {
       // handleRequest already surfaces a toast for API errors
@@ -84,7 +87,7 @@ const InviteRow: React.FC<{ invite: StaffInvite; onRevoked: () => void }> = ({
         {invite.status === 'pending' && (
           <button
             type="button"
-            onClick={handleRevoke}
+            onClick={() => setShowRevokeModal(true)}
             disabled={revoking}
             className="text-gray-400 hover:text-red-500"
             aria-label="Revoke invite"
@@ -93,6 +96,17 @@ const InviteRow: React.FC<{ invite: StaffInvite; onRevoked: () => void }> = ({
           </button>
         )}
       </div>
+
+      <ConfirmModal
+        open={showRevokeModal}
+        close={() => setShowRevokeModal(false)}
+        title="Revoke invite"
+        body="Are you sure you want to revoke this invite link? Anyone holding it will no longer be able to use it to register."
+        isLoading={revoking}
+        confirmText="Revoke"
+        confirmClassName="bg-r text-white"
+        onConfirm={handleRevoke}
+      />
     </div>
   );
 };

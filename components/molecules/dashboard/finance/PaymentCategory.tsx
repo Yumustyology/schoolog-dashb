@@ -5,7 +5,9 @@ import {
   poppins_600,
 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
+import { formatCurrency } from '@/app/lib/utils';
 import React, { useState } from 'react';
+import useSWR, { mutate } from 'swr';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Button from '@/components/atoms/form/Button';
 import { IoAdd } from 'react-icons/io5';
@@ -16,43 +18,11 @@ import {
   openDeleteFeeCategoryModal,
   openFeeCategoryModal,
 } from '@/app/lib/entities/payment.entity';
+import feeCategoryActions, { FeeCategory } from '@/app/lib/actions/fee-category.action';
 
-const feeCategory = [
-  {
-    title: 'Grade 1 fee',
-    amount: '$100',
-    description: 'JSS1,JSS2,JSS3',
-  },
-  {
-    title: 'Grade 2 fee',
-    amount: '$100',
-    description: 'SS1,SS2,SS3',
-  },
-  {
-    title: 'Grade 3 fee',
-    description: 'JSS1,JSS2,JSS3',
-    amount: '$100',
-  },
-  {
-    title: 'Grade 4 fee',
-    description: 'JSS1,JSS2,JSS3',
-    amount: '$100',
-  },
-  {
-    title: 'Grade 5 fee',
-    description: 'JSS1,JSS2,JSS3',
-    amount: '$100',
-  },
-  {
-    title: 'Grade 6 fee',
-    description: 'JSS1,JSS2,JSS3',
-    amount: '$100',
-  },
-  {
-    title: 'Grade 7 fee',
-    amount: '$100',
-    description: 'JSS1,JSS2,JSS3',
-  },
+const salaryCategory = [
+  { title: 'Teaching staff', amount: '$100', description: 'JSS1,JSS2,JSS3' },
+  { title: 'Non-teaching staff', amount: '$100', description: 'SS1,SS2,SS3' },
 ];
 
 const PaymentFeeBox = ({
@@ -94,9 +64,20 @@ const PaymentFeeBox = ({
   </div>
 );
 
+const FEE_CATEGORIES_KEY = 'fee-categories';
+export const refreshFeeCategories = () =>
+  mutate((key: unknown) => Array.isArray(key) && key[0] === FEE_CATEGORIES_KEY);
+
+const classGradeNames = (category: FeeCategory): string =>
+  (category.classGradeIds || [])
+    .map((c) => (typeof c === 'string' ? c : c.name))
+    .filter(Boolean)
+    .join(', ') || 'No classes assigned';
+
 type PaymentCategoriesProps = React.ComponentProps<typeof Card> & {
   subTitle: string;
   onClickAddButton?: () => void;
+  variant?: 'fee' | 'salary';
 };
 
 const PaymentCategory = ({
@@ -104,12 +85,30 @@ const PaymentCategory = ({
   title,
   subTitle,
   onClickAddButton,
+  variant = 'fee',
   ...props
 }: PaymentCategoriesProps) => {
   const [open, setOpen] = useState(false);
 
   const openDrawer = () => setOpen(true);
   const closeDrawer = () => setOpen(false);
+
+  const { data, isLoading } = useSWR(
+    variant === 'fee' ? [FEE_CATEGORIES_KEY] : null,
+    () => feeCategoryActions.listFeeCategories()
+  );
+
+  const feeCategories = data?.data || [];
+  const items =
+    variant === 'fee'
+      ? feeCategories.map((c) => ({
+          title: c.name,
+          amount: formatCurrency(c.amount, c.currency),
+          description: classGradeNames(c),
+          raw: c,
+        }))
+      : salaryCategory.map((c) => ({ ...c, raw: null as FeeCategory | null }));
+
   return (
     <>
       <Card
@@ -151,14 +150,22 @@ const PaymentCategory = ({
         </CardHeader>
         <CardContent className="grid gap-4 mt-0 max-h-[320px] overflow-auto sidebar-scroll">
           <div>
-            {feeCategory.map((notification, index) => (
-              <PaymentFeeBox
-                amount={notification.amount}
-                description={notification.description}
-                title={notification.title}
-                key={index}
-              />
-            ))}
+            {variant === 'fee' && isLoading ? (
+              <p className="text-sm text-gray6 text-center py-6">Loading...</p>
+            ) : items.length === 0 ? (
+              <p className="text-sm text-gray6 text-center py-6">
+                No categories yet — add one to get started.
+              </p>
+            ) : (
+              items.map((item, index) => (
+                <PaymentFeeBox
+                  amount={item.amount}
+                  description={item.description}
+                  title={item.title}
+                  key={item.raw?._id ?? index}
+                />
+              ))
+            )}
           </div>
         </CardContent>
         <CardFooter>
@@ -175,7 +182,7 @@ const PaymentCategory = ({
       <DrawerSide
         open={open}
         close={closeDrawer}
-        title="School fees categories"
+        title={title as string}
         subtitle="Click on any category to view details, edit or delete"
         headerClassName="bg-transparent text-black border border-b-gray5"
         cancelClassName="bg-gray4"
@@ -184,37 +191,39 @@ const PaymentCategory = ({
       >
         <div className="p-6 overflow-y-auto max-h-[calc(100vh-140px)]">
           <div className="mt-0 max-h-[70dvh]">
-            {feeCategory.map((notification, index) => (
+            {items.map((item, index) => (
               <div
                 className="flex gap-2 flex-grow w-full items-center justify-between"
-                key={index}
+                key={item.raw?._id ?? index}
               >
                 <PaymentFeeBox
-                  amount={notification.amount}
-                  description={notification.description}
-                  title={notification.title}
+                  amount={item.amount}
+                  description={item.description}
+                  title={item.title}
                 />
-                <div className="flex -mt-4 gap-2">
-                  <Button
-                    className="bg-gray10 bg-opacity-10 rounded-full p-1.5"
-                    onClick={() => {
-                      closeDrawer();
-                      openFeeCategoryModal();
-                    }}
-                  >
-                    <EditIcon color="#001F3F" size={18} />
-                  </Button>
+                {variant === 'fee' && item.raw && (
+                  <div className="flex -mt-4 gap-2">
+                    <Button
+                      className="bg-gray10 bg-opacity-10 rounded-full p-1.5"
+                      onClick={() => {
+                        closeDrawer();
+                        openFeeCategoryModal(item.raw as FeeCategory);
+                      }}
+                    >
+                      <EditIcon color="#001F3F" size={18} />
+                    </Button>
 
-                  <Button
-                    className="bg-[#EB57570F] bg-opacity-5 rounded-full p-1.5"
-                    onClick={() => {
-                      closeDrawer();
-                      openDeleteFeeCategoryModal();
-                    }}
-                  >
-                    <CloseIcon />
-                  </Button>
-                </div>
+                    <Button
+                      className="bg-[#EB57570F] bg-opacity-5 rounded-full p-1.5"
+                      onClick={() => {
+                        closeDrawer();
+                        openDeleteFeeCategoryModal(item.raw as FeeCategory);
+                      }}
+                    >
+                      <CloseIcon />
+                    </Button>
+                  </div>
+                )}
               </div>
             ))}
           </div>

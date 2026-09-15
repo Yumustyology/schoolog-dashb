@@ -16,6 +16,8 @@ import useActiveTab from '@/app/lib/hooks/useActiveTab';
 import Topics from '@/components/organisms/dashboard/students/Topics';
 import useSWR from 'swr';
 import curriculumActions from '@/app/lib/actions/curriculum.actions';
+import subjectsActions from '@/app/lib/actions/subjects.action';
+import classGradeActions from '@/app/lib/actions/class-grade.actions';
 // import Assignments from '@/components/organisms/dashboard/students/Assignments';
 import SearchInput from '@/components/atoms/form/SearchInput';
 import SubjectInfoCard from '@/components/molecules/dashboard/subjects/SubjectInfoCard';
@@ -122,27 +124,51 @@ function SubjectInfoPage({ subject }: { subject: string }) {
   const [classGradeId, setClassGradeId] = React.useState<string | undefined>(
     undefined
   );
-  const [subjectTitle, setSubjectTitle] = React.useState<string | undefined>(
-    undefined
-  );
+
   React.useEffect(() => {
     try {
       const params = new URLSearchParams(window.location.search);
       const v = params.get('classGrade') || undefined;
-      const title = params.get('title') || undefined;
       setClassGradeId(v ?? undefined);
-      setSubjectTitle(title ?? undefined);
     } catch {
       setClassGradeId(undefined);
     }
   }, []);
 
+  // 1. Fetch single class grade by ID (if not in classGrades filter list)
+  const { data: classGradeDetailResp } = useSWR(
+    classGradeId ? ['class-grade-detail', classGradeId] : null,
+    () => classGradeActions.fetchClassGradeById(classGradeId!).catch(() => undefined),
+    { revalidateOnFocus: false }
+  );
+
+  const fetchedClassGradeObj =
+    (classGradeDetailResp?.data as any)?.data?.classGrade ||
+    (classGradeDetailResp?.data as any)?.classGrade ||
+    (classGradeDetailResp?.data as any)?.data;
+  const fetchedClassName = fetchedClassGradeObj?.name;
+  const classGradeNameFromFilter = getClassGradeName(
+    classGradeId,
+    classGrades,
+    undefined
+  );
   const classGradeLabel =
-    classGradeId == null
-      ? undefined
-      : classGradeIsLoading && (!classGrades || classGrades.length === 0)
-        ? 'Loading…'
-        : getClassGradeName(classGradeId, classGrades, classGradeId);
+    classGradeNameFromFilter ||
+    fetchedClassName ||
+    (classGradeIsLoading ? 'Loading…' : undefined);
+
+  // 2. Fetch subjects list / single subject to resolve subject title
+  const { data: allSubjectsResp } = useSWR(
+    '/subjects/school',
+    () => subjectsActions.getSchoolSubjects({ limit: 100 }).catch(() => undefined),
+    { revalidateOnFocus: false }
+  );
+
+  const { data: subjectResp } = useSWR(
+    subject ? `/subjects/${subject}` : null,
+    () => subjectsActions.getSubjectById(subject).catch(() => undefined),
+    { revalidateOnFocus: false }
+  );
 
   // fetch curriculum for selected class + subject
   const curriculumKey = classGradeId && subject ? `/curriculum/class/${classGradeId}/subject/${subject}` : null;
@@ -151,6 +177,22 @@ function SubjectInfoPage({ subject }: { subject: string }) {
     () => curriculumActions.getCurriculumForClassSubject(classGradeId as string, subject),
     { revalidateOnFocus: false }
   );
+
+  const matchedSubject = (allSubjectsResp?.data as any[])?.find(
+    (s) => String(s._id) === String(subject)
+  );
+
+  const subjectData = (subjectResp as any)?.data;
+  const curriculumSubjectName =
+    (curriculumResp?.data as any[])?.[0]?.subject?.name ||
+    (curriculumResp?.data as any[])?.[0]?.subjectName;
+
+  const subjectTitle =
+    matchedSubject?.name ||
+    subjectData?.name ||
+    (subjectData?.title as string) ||
+    curriculumSubjectName ||
+    'Subject Details';
 
   // Map backend curriculum entries into Topics list shape
   const topicsForDisplay = React.useMemo(() => {
@@ -161,6 +203,7 @@ function SubjectInfoPage({ subject }: { subject: string }) {
       const weekFromEntry = entry.week;
       (entry.topics || []).forEach((t: any) => {
         items.push({
+          id: t._id || t.id,
           isMarked: !!t.covered,
           topic: t.topic || t.title || '',
           week: typeof t.week === 'number' ? t.week : weekFromEntry ?? 0,
@@ -206,32 +249,67 @@ function SubjectInfoPage({ subject }: { subject: string }) {
   const { activeTab: activeTopicAssignmtentTab, handleTabClick: handleTopicAssignmentTabClick } =
     useActiveTab('subject-info', todayClassesTabs);
 
+  // 4. Fetch subject links to resolve real assigned tutors/teachers for this class grade
+  const { data: subjectLinksResp, mutate: revalidateSubjectLinks } = useSWR(
+    subject ? ['/subjects', subject, 'links'] : null,
+    () => subjectsActions.getSubjectLinks(subject).catch(() => undefined),
+    { revalidateOnFocus: false }
+  );
+
+  const realAssignedTeachers = React.useMemo(() => {
+    const links = (subjectLinksResp?.data as any[]) || [];
+    const currentLink = classGradeId
+      ? links.find(
+          (l) =>
+            String(l.classGradeId?._id || l.classGradeId) === String(classGradeId)
+        )
+      : links[0];
+
+    const rawTeachers = currentLink?.teacherIds || currentLink?.teachers || [];
+    return rawTeachers.map((t: any) => {
+      if (typeof t === 'string') return { _id: t };
+      return {
+        _id: t._id,
+        firstName: t.firstName,
+        lastName: t.lastName,
+        name: `${t.firstName || ''} ${t.lastName || ''}`.trim(),
+        email: t.email,
+        phone: t.phone,
+        image: t.image || t.avatar,
+        subjectAssignedTo: subjectTitle,
+      };
+    });
+  }, [subjectLinksResp, classGradeId, subjectTitle]);
+
+  const primaryTeacher = realAssignedTeachers[0] || null;
+
+  const crumbs = [
+    { label: 'Subjects', isActive: false, href: '/school/subjects' },
+    {
+      label: subjectTitle,
+      isActive: !classGradeId,
+      href: `/school/subjects/${subject}${classGradeId ? `?classGrade=${classGradeId}` : ''}`,
+    },
+  ];
+
+  if (classGradeId) {
+    crumbs.push({
+      label: classGradeLabel || 'Loading…',
+      isActive: true,
+      href: `/school/subjects?classGrade=${encodeURIComponent(classGradeId)}`,
+    });
+  }
+
   return (
     <main className="">
       <div>
-        <div className="flex justify-between items-center">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <BreadcrumbBox
             className="mb-0"
-            crumbs={[
-              { label: 'Subjects', isActive: false, href: '/student/subjects' },
-              {
-                label: subjectTitle || 'Loading...',
-                isActive: false,
-                href: `/school/subjects/${subject}?title=${encodeURIComponent(
-                  String(subjectTitle || '')
-                )}&classGrade=${classGradeId}`,
-              },
-              {
-                label: classGradeLabel || 'Loading...',
-                isActive: true,
-                href: `/school/subjects?classGrade=${encodeURIComponent(
-                  classGradeId ?? ''
-                )}`,
-              },
-            ]}
+            crumbs={crumbs}
           />
 
-          <div className="flex gap-2 items-center">
+          <div className="flex flex-wrap gap-2 items-center">
             <EditCurriculumLauncher
               classGradeId={classGradeId!}
               subjectId={subject}
@@ -240,7 +318,7 @@ function SubjectInfoPage({ subject }: { subject: string }) {
             <Button
               round
               flat
-              className="h-[48px] border border-primary ml-4  py-3 px-8 flex gap-2"
+              className="h-[48px] border border-primary sm:ml-4 py-3 px-6 sm:px-8 flex gap-2"
               onClick={() => {
                 setIsResourceModalOpen(true);
               }}
@@ -258,25 +336,38 @@ function SubjectInfoPage({ subject }: { subject: string }) {
           />
         </div>
 
-        <div className="flex space-x-3 mt-4">
-          <div className="w-[446px]">
-            <SubjectInfoCard role={role} />
+        <div className="flex flex-col xl:flex-row gap-4 mt-4">
+          <div className="w-full xl:w-[446px]">
+            <SubjectInfoCard
+              role={role}
+              subjectTitle={subjectTitle}
+              classGradeName={classGradeLabel}
+            />
           </div>
-          <div className="flex-1 ">
-            <AssignedTeacherCard role={role} />
+          <div className="flex-1 min-w-0">
+            <AssignedTeacherCard
+              role={role}
+              page="subjectInfo"
+              teacher={primaryTeacher}
+              allTeachers={realAssignedTeachers}
+              subjectTitle={subjectTitle}
+              subjectId={subject}
+              classGradeId={classGradeId}
+              onAssignSuccess={revalidateSubjectLinks}
+            />
           </div>
         </div>
 
-        <div className="bg-white w-full p-6 mt-6 rounded-lg min-h-[398px] h-auto">
+        <div className="bg-white w-full p-4 sm:p-6 mt-6 rounded-lg min-h-[398px] h-auto">
           <Tabs value={activeTopicAssignmtentTab}>
-            <div className="flex justify-between items-center">
+            <div className="flex flex-col-reverse md:flex-row items-stretch md:items-center justify-between gap-4 mb-6">
               <SearchInput
                 placeholder="search"
-                className="bg-[#F7F7F7] border border-gray4 rounded-[100px] mb-6 p-2 h-[38px] max-w-[327px]"
+                className="bg-[#F7F7F7] border border-gray4 rounded-[100px] p-2 h-[38px] w-full md:max-w-[327px]"
               />
 
               <TabsHeader
-                className="transition-all text-sm px-2 py-2 mb-6 w-[500px] bg-[#F1F1F1] h-[53px] rounded-full"
+                className="transition-all text-sm px-2 py-2 w-full md:w-[480px] bg-[#F1F1F1] h-[53px] rounded-full overflow-x-auto"
                 indicatorProps={{
                   className: 'bg-transparent rounded-full shadow-none',
                 }}

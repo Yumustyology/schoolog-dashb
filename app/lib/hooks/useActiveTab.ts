@@ -7,7 +7,7 @@ const useActiveTab = (name: string, data: { value: string }[]) => {
       return data[0]?.value || '';
     }
     const urlParams = new URLSearchParams(window.location.search);
-    const tabFromUrl = urlParams.get(`${name}-tab`);
+    const tabFromUrl = urlParams.get(`${name}-tab`) || urlParams.get('tab');
     return data.some((item) => item.value === tabFromUrl)
       ? tabFromUrl
       : data[0]?.value;
@@ -19,20 +19,10 @@ const useActiveTab = (name: string, data: { value: string }[]) => {
     if (typeof window === 'undefined') return;
 
     const urlParams = new URLSearchParams(window.location.search);
-    const tabFromUrl = urlParams.get(`${name}-tab`);
+    const tabFromUrl = urlParams.get(`${name}-tab`) || urlParams.get('tab');
 
     if (tabFromUrl && data.some((item) => item.value === tabFromUrl)) {
       setActiveTab(tabFromUrl);
-    } else if (!tabFromUrl) {
-      const fallbackValue = data[0]?.value;
-      if (fallbackValue) {
-        urlParams.set(`${name}-tab`, fallbackValue);
-        window.history.replaceState(
-          {},
-          '',
-          `${window.location.pathname}?${urlParams}`
-        );
-      }
     }
   }, [name, data]);
 
@@ -40,12 +30,22 @@ const useActiveTab = (name: string, data: { value: string }[]) => {
     setActiveTab(tabValue);
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
-      urlParams.set(`${name}-tab`, tabValue);
-      window.history.pushState(
-        {},
-        '',
-        `${window.location.pathname}?${urlParams}`
-      );
+      const defaultTab = data[0]?.value;
+      const paramKey = urlParams.has(`${name}-tab`) ? `${name}-tab` : 'tab';
+
+      if (tabValue === defaultTab) {
+        urlParams.delete(`${name}-tab`);
+        urlParams.delete('tab');
+      } else {
+        urlParams.set(paramKey, tabValue);
+      }
+
+      const queryString = urlParams.toString();
+      const newUrl = queryString
+        ? `${window.location.pathname}?${queryString}`
+        : window.location.pathname;
+
+      window.history.pushState({}, '', newUrl);
     }
   };
 
@@ -53,3 +53,4 @@ const useActiveTab = (name: string, data: { value: string }[]) => {
 };
 
 export default useActiveTab;
+

@@ -1,116 +1,101 @@
 'use client';
 import React from 'react';
+import useSWR, { mutate } from 'swr';
 import { createColumnHelper } from '@tanstack/react-table';
 import { cn } from '@/app/lib/utils';
 import { Inter_400, Inter_500 } from '@/app/lib/config/font.config';
 import Empty from '@/components/molecules/empty/Empty';
-import {
-  ArchiveIcon,
-  EditIcon,
-  NoBooksIcon,
-  ViewProfileEyeIcon,
-} from '@/components/atoms/icons/Icons';
-
-import Image from 'next/image';
-import { mathTextbook, teacherImg } from '@/app/assets';
+import { NoBooksIcon, SolidCheckIcon } from '@/components/atoms/icons/Icons';
 import MenuLists from '@/components/atoms/dashboard/students/MenuLists';
 import DataTable from '@/components/molecules/DataTable';
+import SearchInput from '@/components/atoms/form/SearchInput';
+import ConfirmModal from '@/components/molecules/ConfirmModal';
+import showToast from '@/app/lib/utils/toast';
+import libraryActions from '@/app/lib/actions/library.action';
+import type { BorrowRecord } from '@/app/lib/types/library.types';
+import { formatDate } from '@/app/lib/utils/dateUtils';
 
-type BooksListType = {
-  bookImage: string;
-  bookName: string;
-  studentImage: string;
-  studnetName: string;
-  borrowedDate: string;
-  dueDate: string;
-  fine: number;
-  status: 'Pending' | 'Due';
-}[];
+const columnHelper = createColumnHelper<BorrowRecord>();
 
-const columnHelper = createColumnHelper<BooksListType[number]>();
+export const LIBRARY_BORROWS_KEY = 'library-borrows';
+export const refreshLibraryBorrows = () =>
+  mutate((key: unknown) => Array.isArray(key) && key[0] === LIBRARY_BORROWS_KEY);
 
 function BorrowedBooksTableList() {
-  const borrowedBookList: BooksListType = [
-    {
-      bookImage: '',
-      bookName: 'General Mathematics',
-      studentImage: '',
-      studnetName: 'Jamiu Muhammad',
-      borrowedDate: '2/3/2025',
-      dueDate: '3/4/2025',
-      fine: 4,
-      status: 'Pending',
-    },
-    {
-      bookImage: '',
-      bookName: 'General Mathematics',
-      studentImage: '',
-      studnetName: 'Jamiu Muhammad',
-      borrowedDate: '2/3/2025',
-      dueDate: '3/4/2025',
-      fine: 4,
-      status: 'Pending',
-    },
-  ];
+  const [search, setSearch] = React.useState('');
+  const [returningId, setReturningId] = React.useState<string | null>(null);
+  const [isReturning, setIsReturning] = React.useState(false);
 
-  const menuItems = [
-    {
-      label: 'View details',
-      onClick: () => console.log('Profile clicked'),
-      icon: <ViewProfileEyeIcon />,
-    },
-    {
-      label: 'Edit details',
-      onClick: () => console.log('Settings clicked'),
-      icon: <EditIcon size="24" />,
-    },
-  ];
+  const { data, isLoading } = useSWR([LIBRARY_BORROWS_KEY], () =>
+    libraryActions.listBorrows({ isReturned: 'false', limit: 50 })
+  );
+
+  const allBorrows = data?.data || [];
+  const term = search.trim().toLowerCase();
+  const borrows = term
+    ? allBorrows.filter(
+        (b) =>
+          b.bookTitle?.toLowerCase().includes(term) ||
+          b.audienceName?.toLowerCase().includes(term)
+      )
+    : allBorrows;
+
+  const confirmReturn = async () => {
+    if (!returningId) return;
+    setIsReturning(true);
+    try {
+      await libraryActions.returnBook(returningId);
+      showToast('Book returned', 'book-returned', { type: 'success' });
+      setReturningId(null);
+      refreshLibraryBorrows();
+      // returning a physical book restores its stock count
+      mutate((key: unknown) => Array.isArray(key) && key[0] === 'library-books');
+    } catch {
+      // handleRequest already surfaces a toast for API errors
+    } finally {
+      setIsReturning(false);
+    }
+  };
 
   const columns = [
-    columnHelper.accessor('bookName', {
+    columnHelper.accessor('bookTitle', {
       header: 'Book',
       cell: (info) => (
-        <div className="flex gap-2 items-center text-sm">
-          <Image src={mathTextbook} alt="" width={40} height={40} />
-          {info.getValue()}
-        </div>
+        <div className="flex gap-2 items-center text-sm">{info.getValue() || 'Unknown'}</div>
       ),
       meta: { useTypography: false },
     }),
-    columnHelper.accessor('studnetName', {
-      header: 'Student',
+    columnHelper.accessor('audienceName', {
+      header: 'Borrower',
       cell: (info) => (
-        <div className="flex gap-2 items-center text-sm">
-          <Image src={teacherImg} alt="" />
-          {info.getValue()}
+        <div className="flex flex-col text-sm">
+          <span>{info.getValue() || 'Unknown'}</span>
+          <span className="text-xs text-gray6">{info.row.original.audienceType}</span>
         </div>
       ),
       meta: { useTypography: false },
     }),
     columnHelper.accessor('borrowedDate', {
-      header: 'Borrowed date ',
+      header: 'Borrowed date',
+      cell: (info) => formatDate(info.getValue()),
     }),
-    columnHelper.accessor('dueDate', {
+    columnHelper.accessor('expecteReturnDate', {
       header: 'Due date',
+      cell: (info) => formatDate(info.getValue()),
     }),
-    columnHelper.accessor('fine', {
-      header: 'Fine',
-      cell: (info) => `$${info.getValue()}`,
-    }),
-    columnHelper.accessor('status', {
+    columnHelper.display({
+      id: 'status',
       header: 'Status',
       cell: (info) => {
-        const status = info.getValue();
+        const isOverdue = new Date(info.row.original.expecteReturnDate) < new Date();
         return (
           <div
             className={cn(
               'font-normal rounded-full py-2 px-2 text-sm text-center',
-              status === 'Pending'
-                ? 'text-[#EB5757] bg-[#EB575714]'
-                : 'text-[#F2994A] bg-[#F2994A14]'
+              isOverdue ? 'text-[#EB5757] bg-[#EB575714]' : 'text-[#F2994A] bg-[#F2994A14]'
             )}
           >
-            {status}
+            {isOverdue ? 'Overdue' : 'Pending'}
           </div>
         );
       },
@@ -119,10 +104,16 @@ function BorrowedBooksTableList() {
     columnHelper.display({
       id: 'actions',
       header: '',
-      cell: () => (
+      cell: (info) => (
         <MenuLists
           label="Options"
-          items={menuItems}
+          items={[
+            {
+              label: 'Mark returned',
+              onClick: () => setReturningId(info.row.original._id),
+              icon: <SolidCheckIcon />,
+            },
+          ]}
           placement="bottom-start"
           maxHeight="150px"
         />
@@ -132,20 +123,28 @@ function BorrowedBooksTableList() {
 
   return (
     <div className="my-8 ">
-      {borrowedBookList.length === 0 ? (
+      <div className="flex gap-6 mb-4">
+        <SearchInput
+          placeholder="Search book or borrower..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="w-[231px] h-[38px] rounded-full bg-[#F7F7F7] border border-gray4"
+        />
+      </div>
+
+      {!isLoading && borrows.length === 0 ? (
         <div className="flex flex-col items-center justify-center text-gray-500 py-12">
           <Empty
             icon={<NoBooksIcon />}
-            title="No bporrowed book yet"
-            description="You have not yet uploaded any book. Click the button below to upload a book"
-            buttonText="+ Add Book"
+            title="No borrowed books"
+            description="No books are currently checked out."
           />
         </div>
       ) : (
         <DataTable
-          data={borrowedBookList}
+          data={borrows}
           columns={columns}
-          isLoading={false}
+          isLoading={isLoading}
           theadClassName={cn('bg-[#FBFBFB] border-none text-gray text-sm', Inter_500.className)}
           tdClassName="p-4"
           rowClassName={cn('border-b border-gray4 text-gray1 text-base items-center', Inter_400.className)}
@@ -157,6 +156,17 @@ function BorrowedBooksTableList() {
           enableFiltering={false}
         />
       )}
+
+      <ConfirmModal
+        open={!!returningId}
+        close={() => setReturningId(null)}
+        title="Mark book as returned"
+        body="Confirm that this book has been physically returned to the library."
+        isLoading={isReturning}
+        confirmText="Mark returned"
+        confirmClassName="bg-primary text-white"
+        onConfirm={confirmReturn}
+      />
     </div>
   );
 }

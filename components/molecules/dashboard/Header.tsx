@@ -150,13 +150,23 @@ function Header() {
 export default Header;
 
 const HeaderInfo = ({ truncateLength = 0 }: { truncateLength?: number }) => {
-   const profile = profileState.use();
+  const profile = profileState.use();
+  // profileState is persisted to localStorage, so it's already populated on the
+  // client's very first render but empty on the server — rendering it directly
+  // during that first pass causes a hydration mismatch. Render the same empty
+  // state the server saw until after mount, then swap in the real value.
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+  const firstName = mounted ? profile.firstName : '';
+  const lastName = mounted ? profile.lastName : '';
+  const audience = mounted ? profile.audience : '';
+
   return (
   <>
     <div>
       <TextAvatar
-        firstName={profile.firstName}
-        lastName={profile.lastName}
+        firstName={firstName}
+        lastName={lastName}
         size={32}
         className="cursor-pointer"
       />
@@ -165,10 +175,10 @@ const HeaderInfo = ({ truncateLength = 0 }: { truncateLength?: number }) => {
     <div className="flex flex-col gap-1">
       <h3 className={cn('text-gray1 text-sm truncate', poppins_500.className)}>
         {truncateLength
-          ? truncateText(profile.firstName + ' ' + profile.lastName, truncateLength)
-          : profile.firstName + ' ' + profile.lastName}
+          ? truncateText(firstName + ' ' + lastName, truncateLength)
+          : firstName + ' ' + lastName}
       </h3>
-      <p className={cn('text-gray text-xs', poppins_500.className)}>{profile.audience}</p>
+      <p className={cn('text-gray text-xs', poppins_500.className)}>{audience}</p>
     </div>
   </>
 );

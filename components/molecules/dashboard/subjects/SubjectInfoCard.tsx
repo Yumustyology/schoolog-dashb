@@ -18,7 +18,15 @@ import { isArchive } from '@/app/lib/entities/subject.entity';
 
 import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 
-function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {
+function SubjectInfoCard({
+  role,
+  subjectTitle = 'Subject Details',
+  classGradeName,
+}: {
+  role: 'school' | 'student' | 'parent';
+  subjectTitle?: string;
+  classGradeName?: string;
+}) {
   const [deleteModal, setDeleteModal] = useState(false);
   const [archiveModal, setArchiveModal] = useState(false);
   const [unarchiveModal, setUnarchiveModal] = useState(false);
@@ -27,7 +35,7 @@ function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {
   const { theme } = useSlgTheme();
 
   return (
-    <Card className="bg-white py-6 h-[390px] pb-10 px-6 rounded-md col-span-2 border-none">
+    <Card className="bg-white py-6 h-auto min-h-[390px] pb-6 sm:pb-10 px-4 sm:px-6 rounded-md col-span-2 border-none">
       <CardHeader className="w-full p-0">
         <div className="flex items-center gap-3 mb-8">
           <Image src={biology1} alt="Subject Image" />
@@ -35,7 +43,7 @@ function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {
           {role === 'student' && (
             <div>
               <h1 className={cn('text-sm text-black1', poppins_500.className)}>
-                Biology
+                {subjectTitle}
               </h1>
               <p className={cn('text-sm text-gray', poppins_400.className)}>
                 {' '}
@@ -47,16 +55,18 @@ function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {
           {role === 'school' && (
             <div>
               <h1 className={cn('text-sm text-black1', poppins_500.className)}>
-                Biology
+                {subjectTitle}
               </h1>
-              <p
-                className={cn(
-                  'text-sm text-gray mt-1.5',
-                  poppins_500.className
-                )}
-              >
-                SS1
-              </p>
+              {classGradeName && (
+                <p
+                  className={cn(
+                    'text-sm text-gray mt-1.5',
+                    poppins_500.className
+                  )}
+                >
+                  {classGradeName}
+                </p>
+              )}
             </div>
           )}
         </div>
@@ -198,12 +208,12 @@ function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {
         )}
 
         {role === 'school' && (
-          <div className="flex justify-between">
+          <div className="flex flex-col sm:flex-row gap-3 justify-between">
             <Button
               round
               flat
               className={cn(
-                'flex  text-r2 h-[48px] w-[191px] border border-r2'
+                'flex text-r2 h-[48px] w-full sm:w-[191px] border border-r2 justify-center'
               )}
               onClick={() => {
                 setDeleteModal(true);
@@ -216,7 +226,7 @@ function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {
             {isArchive ? (
               <Button
                 round
-                className={cn('flex  text-primary h-[48px] w-[191px] bg-light')}
+                className={cn('flex text-primary h-[48px] w-full sm:w-[191px] bg-light justify-center')}
                 onClick={() => {
                   setUnarchiveModal(true);
                 }}
@@ -227,7 +237,7 @@ function SubjectInfoCard({ role }: { role: 'school' | 'student' | 'parent' }) {
             ) : (
               <Button
                 round
-                className={cn('flex  text-primary h-[48px] w-[191px] bg-light')}
+                className={cn('flex text-primary h-[48px] w-full sm:w-[191px] bg-light justify-center')}
                 onClick={() => {
                   setArchiveModal(true);
                 }}

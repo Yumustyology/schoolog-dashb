@@ -1,8 +1,10 @@
 'use client';
 import React from 'react';
+import useSWR from 'swr';
+import { useRouter } from 'next/navigation';
 import { createColumnHelper } from '@tanstack/react-table';
 import { cn } from '@/app/lib/utils';
-import { poppins_400 } from '@/app/lib/config/font.config';
+import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import Empty from '../../empty/Empty';
 import {
   NoTeacherIcon,
@@ -11,89 +13,122 @@ import {
 } from '@/components/atoms/icons/Icons';
 import Message from '@/components/atoms/icons/SideBar/Message';
 import CancelIcon from '@/components/atoms/icons/dashboard/CancelIcon';
-import { teacherImg2 } from '@/app/assets';
-import Image from 'next/image';
 import MenuLists from '@/components/atoms/dashboard/students/MenuLists';
 import DataTable from '@/components/molecules/DataTable';
+import staffActions, { StaffListItem } from '@/app/lib/actions/staff.action';
+import { formatDate } from '@/app/lib/utils/dateUtils';
+import showToast from '@/app/lib/utils/toast';
 
-type ParentsListType = {
+type TeacherRow = {
+  _id: string;
   name: string;
-  img: string;
-  assignedSujects: string;
-  attendance: number;
+  email: string;
   phoneNumber: string;
   dateJoined: string;
-  status: 'Active' | 'Suspended' | 'Terminated';
-}[];
+  status: string;
+};
 
-const columnHelper = createColumnHelper<ParentsListType[number]>();
+const AVATAR_COLORS = [
+  { bg: 'bg-emerald-600', text: 'text-white' },
+  { bg: 'bg-indigo-600', text: 'text-white' },
+  { bg: 'bg-rose-600', text: 'text-white' },
+  { bg: 'bg-amber-500', text: 'text-gray-900' },
+  { bg: 'bg-sky-600', text: 'text-white' },
+  { bg: 'bg-violet-600', text: 'text-white' },
+  { bg: 'bg-fuchsia-600', text: 'text-white' },
+  { bg: 'bg-teal-600', text: 'text-white' },
+];
+
+function getAvatarColor(s: string) {
+  let hash = 0;
+  for (let i = 0; i < s.length; i++) {
+    hash = s.charCodeAt(i) + ((hash << 5) - hash);
+    hash = hash & hash;
+  }
+  return AVATAR_COLORS[Math.abs(hash) % AVATAR_COLORS.length];
+}
+
+function getInitials(name: string) {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return '?';
+  if (parts.length === 1) return parts[0][0]?.toUpperCase() || '?';
+  return `${parts[0][0] || ''}${parts[parts.length - 1][0] || ''}`.toUpperCase();
+}
+
+const statusStyles: Record<string, string> = {
+  active: 'text-primary bg-primary1',
+  suspended: 'text-[#F2994A] bg-[#F2994A14]',
+  terminated: 'text-[#EB5757] bg-[#EB575714]',
+  expelled: 'text-[#EB5757] bg-[#EB575714]',
+  withdrawn: 'text-[#EB5757] bg-[#EB575714]',
+};
+
+const columnHelper = createColumnHelper<TeacherRow>();
 
 function TeachersTableLists() {
-  const teachersList: ParentsListType = [
-    {
-      name: 'Muhammad Jamui',
-      img: '',
-      assignedSujects: 'Mathematics SSS1, SSS2',
-      attendance: 78,
-      phoneNumber: '08065095692',
-      dateJoined: 'Tue 28th June',
-      status: 'Active',
-    },
-    {
-      name: 'Muhammad Jamui',
-      img: '',
-      assignedSujects: 'Mathematics SSS1, SSS2',
-      attendance: 78,
-      phoneNumber: '08065095692',
-      dateJoined: 'Tue 28th June',
-      status: 'Terminated',
-    },
-  ];
+  const router = useRouter();
+  const { data, isLoading, mutate } = useSWR('/staff', () =>
+    staffActions.fetchSchoolStaff()
+  );
 
-  const menuItems = [
-    {
-      label: 'View Profile',
-      onClick: () => console.log('Profile clicked'),
-      icon: <ViewProfileEyeIcon />,
-    },
-    {
-      label: 'Message',
-      onClick: () => console.log('Settings clicked'),
-      icon: <Message size="24" />,
-    },
-    {
-      label: 'Suspend',
-      onClick: () => console.log('More clicked'),
-      icon: <SuspendIcon />,
-    },
-    {
-      label: 'Withdraw',
-      onClick: () => console.log('Another clicked'),
-      icon: <CancelIcon />,
-      danger: true,
-    },
-  ];
+  const teachersList: TeacherRow[] = React.useMemo(() => {
+    const staff: StaffListItem[] = data?.data || [];
+    return staff
+      .filter((s) => s.isTeachingStaff)
+      .map((s) => ({
+        _id: s._id,
+        name: `${s.firstName} ${s.lastName}`.trim(),
+        email: s.email,
+        phoneNumber: s.phone,
+        dateJoined: s.createdAt ? formatDate(s.createdAt) : '-',
+        status: s.status,
+      }));
+  }, [data]);
+
+  const notYetAvailable = (label: string) => () =>
+    showToast(`${label} isn't available yet`, `staff-${label.toLowerCase()}-soon`, {
+      type: 'info',
+    });
+
+  const changeStatus = (id: string, status: string, successMessage: string) => async () => {
+    try {
+      await staffActions.updateStaffStatus(id, status);
+      showToast(successMessage, `staff-status-${id}`, { type: 'success' });
+      mutate();
+    } catch {
+      // handleRequest already surfaces a toast for API errors
+    }
+  };
 
   const columns = [
     columnHelper.accessor('name', {
       header: 'Name',
-      cell: (info) => (
-        <div className="flex gap-2 items-center text-sm">
-          <Image src={teacherImg2} alt="teacher-image" width={25} height={25} />
-          {info.getValue()}
-        </div>
-      ),
+      cell: (info) => {
+        const name = info.getValue();
+        const color = getAvatarColor(name);
+        return (
+          <div className="flex gap-2 items-center text-sm">
+            <div
+              className={cn(
+                'h-[25px] w-[25px] rounded-full flex items-center justify-center text-[10px] font-semibold shrink-0',
+                color.bg,
+                color.text,
+                poppins_500.className
+              )}
+            >
+              {getInitials(name)}
+            </div>
+            {name}
+          </div>
+        );
+      },
       meta: { useTypography: false },
     }),
-    columnHelper.accessor('assignedSujects', {
-      header: 'Assigned subject',
+    columnHelper.accessor('email', {
+      header: 'Email',
     }),
     columnHelper.accessor('phoneNumber', {
       header: 'Phone number',
-    }),
-    columnHelper.accessor('attendance', {
-      header: 'Attendance',
-      cell: (info) => `${info.getValue()}%`,
     }),
     columnHelper.accessor('dateJoined', {
       header: 'Date joined',
@@ -105,14 +140,8 @@ function TeachersTableLists() {
         return (
           <div
             className={cn(
-              'font-normal rounded-full py-2 px-2 text-sm text-center',
-              status === 'Active'
-                ? 'text-primary bg-primary1'
-                : status === 'Suspended'
-                  ? 'text-[#F2994A] bg-[#F2994A14]'
-                  : status === 'Terminated'
-                    ? 'text-[#EB5757] bg-[#EB575714]'
-                    : 'text-gray-500 bg-gray-100'
+              'font-normal rounded-full py-2 px-2 text-sm text-center capitalize',
+              statusStyles[status] || 'text-gray-500 bg-gray-100'
             )}
           >
             {status}
@@ -124,25 +153,51 @@ function TeachersTableLists() {
     columnHelper.display({
       id: 'actions',
       header: '',
-      cell: () => (
-        <MenuLists
-          label="Options"
-          items={menuItems}
-          placement="bottom-start"
-          maxHeight="150px"
-        />
-      ),
+      cell: (info) => {
+        const row = info.row.original;
+        const menuItems = [
+          {
+            label: 'View Profile',
+            onClick: () => router.push(`/school/teaching-staffs/${row._id}`),
+            icon: <ViewProfileEyeIcon />,
+          },
+          {
+            label: 'Message',
+            onClick: notYetAvailable('Message'),
+            icon: <Message size="24" />,
+          },
+          {
+            label: 'Suspend',
+            onClick: changeStatus(row._id, 'suspended', 'Staff member suspended'),
+            icon: <SuspendIcon />,
+          },
+          {
+            label: 'Withdraw',
+            onClick: changeStatus(row._id, 'withdrawn', 'Staff member withdrawn'),
+            icon: <CancelIcon />,
+            danger: true,
+          },
+        ];
+        return (
+          <MenuLists
+            label="Options"
+            items={menuItems}
+            placement="bottom-start"
+            maxHeight="150px"
+          />
+        );
+      },
     }),
   ];
 
   return (
     <div className="my-8 ">
-      {teachersList.length === 0 ? (
+      {!isLoading && teachersList.length === 0 ? (
         <div className="flex flex-col items-center justify-center text-gray-500 py-12">
           <Empty
             icon={<NoTeacherIcon />}
             title="No staff added yet"
-            description="You have not yet added any staff. Cleck the button bellow tro add a staff"
+            description="You have not yet added any staff. Click the button below to add a staff"
             buttonText="+ Add staff"
           />
         </div>
@@ -150,7 +205,7 @@ function TeachersTableLists() {
         <DataTable
           data={teachersList}
           columns={columns}
-          isLoading={false}
+          isLoading={isLoading}
           theadClassName={cn('bg-[#FBFBFB] border-none text-gray text-sm', poppins_400.className)}
           tdClassName="p-4"
           rowClassName={cn('border-b border-gray4 text-gray1 text-sm items-center', poppins_400.className)}
