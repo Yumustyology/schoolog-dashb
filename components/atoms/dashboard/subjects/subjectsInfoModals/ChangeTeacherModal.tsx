@@ -14,6 +14,9 @@ import useSWR from 'swr';
 import staffActions from '@/app/lib/actions/staff.action';
 import subjectsActions from '@/app/lib/actions/subjects.action';
 import showToast from '@/app/lib/utils/toast';
+import { useRouter } from 'next/navigation';
+import { AdditionIcon } from '@/components/atoms/icons/Icons';
+import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 
 interface ChangeTeacherModalProps {
   subjectId?: string;
@@ -28,6 +31,8 @@ function ChangeTeacherModal({
   departmentId,
   onSuccess,
 }: ChangeTeacherModalProps) {
+  const router = useRouter();
+  const { theme } = useSlgTheme();
   const isOpen = useEntity(changeAssignedTeacherModal);
   const [selectedTeacherId, setSelectedTeacherId] = React.useState('');
   const [isSubmitting, setIsSubmitting] = React.useState(false);
@@ -40,27 +45,46 @@ function ChangeTeacherModal({
     const staffList = staffResp?.data || [];
     const teachingStaff = staffList.filter((s) => s.isTeachingStaff !== false);
 
-    if (teachingStaff.length === 0) {
-      return [
-        {
-          value: '',
-          label: 'No teaching staff found',
-        },
-      ];
-    }
-
-    return teachingStaff.map((s) => {
+    const mapped = teachingStaff.map((s) => {
       const name = `${s.firstName || ''} ${s.lastName || ''}`.trim() || s.email;
       return {
         value: s._id,
         label: <ImageOptionBox name={name} role={s.email || 'Teacher'} />,
       };
     });
-  }, [staffResp]);
+
+    return [
+      ...mapped,
+      {
+        value: '__create_teacher__',
+        label: (
+          <div className="flex items-center gap-2 text-primary font-semibold py-1">
+            <AdditionIcon color={theme.primary} />
+            <span>+ Create / Add Teaching Staff</span>
+          </div>
+        ),
+      },
+    ];
+  }, [staffResp, theme.primary]);
+
+  const handleSelectTeacher = (val: string) => {
+    if (val === '__create_teacher__') {
+      closeChangeTeacherModal();
+      router.push('/school/teaching-staffs/add-new-teacher');
+      return;
+    }
+    setSelectedTeacherId(val);
+  };
 
   const handleSubmit = async () => {
     if (!selectedTeacherId) {
       showToast('Please select a teacher', 'teacher-required', { type: 'error' });
+      return;
+    }
+
+    if (selectedTeacherId === '__create_teacher__') {
+      closeChangeTeacherModal();
+      router.push('/school/teaching-staffs/add-new-teacher');
       return;
     }
 
@@ -122,7 +146,7 @@ function ChangeTeacherModal({
         </div>
 
         <div>
-          <div className="mt-10">
+          <div className="mt-8">
             <div className="max-w-sm mx-auto">
               <p
                 className={cn(
@@ -135,9 +159,22 @@ function ChangeTeacherModal({
               <DropdownSearch
                 options={options}
                 value={selectedTeacherId}
-                onChange={setSelectedTeacherId}
+                onChange={handleSelectTeacher}
                 placeholder="Select teacher"
               />
+              <div className="mt-3 flex justify-end">
+                <button
+                  type="button"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-primary hover:underline cursor-pointer"
+                  onClick={() => {
+                    closeChangeTeacherModal();
+                    router.push('/school/teaching-staffs/add-new-teacher');
+                  }}
+                >
+                  <AdditionIcon color={theme.primary} />
+                  <span>Create / Add Teaching Staff</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>
