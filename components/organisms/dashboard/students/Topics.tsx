@@ -7,6 +7,10 @@ import { cn } from '@/app/lib/utils';
 import { Card, CardBody, Typography } from '@material-tailwind/react';
 import { BookOpen } from 'lucide-react';
 
+import React from 'react';
+import Button from '@/components/atoms/form/Button';
+import EyeClose from '@/components/atoms/icons/EyeClose';
+import { TopicDetailDrawer } from '@/components/atoms/dashboard/subjects/SubjectsDrawer/TopicDetailsDrawer';
 import Empty from '@/components/molecules/empty/Empty';
 import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 type TopicsList = {
