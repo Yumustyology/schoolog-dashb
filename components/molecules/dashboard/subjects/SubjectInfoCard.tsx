@@ -236,24 +236,24 @@ function SubjectInfoCard({
           {isSubjectArchived ? (
             <button
               type="button"
-              className="flex items-center justify-center gap-2 h-11 w-full sm:w-1/2 rounded-full bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 font-medium text-sm transition-colors px-4 py-2 cursor-pointer shadow-sm"
+              className="flex items-center justify-center gap-2 h-11 w-full sm:w-1/2 rounded-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-sm transition-colors px-4 py-2 cursor-pointer shadow-sm"
               onClick={() => {
                 setUnarchiveModal(true);
               }}
             >
-              <UnarchiveIcon color={theme.primary} />
-              <span className="whitespace-nowrap font-medium">Post Subject</span>
+              <UnarchiveIcon color="#FFFFFF" />
+              <span className="whitespace-nowrap font-semibold">Post Subject</span>
             </button>
           ) : (
             <button
               type="button"
-              className="flex items-center justify-center gap-2 h-11 w-full sm:w-1/2 rounded-full bg-amber-50 text-[#F59E0B] hover:bg-amber-100/80 border border-[#F59E0B]/50 font-medium text-sm transition-colors px-4 py-2 cursor-pointer shadow-sm"
+              className="flex items-center justify-center gap-2 h-11 w-full sm:w-1/2 rounded-full bg-[#F2994A] hover:bg-[#e0883b] text-white font-semibold text-sm transition-colors px-4 py-2 cursor-pointer shadow-sm"
               onClick={() => {
                 setArchiveModal(true);
               }}
             >
-              <ArchiveModalIcon size={20} color="#F59E0B" showBg={false} />
-              <span className="whitespace-nowrap font-medium">Archive</span>
+              <ArchiveModalIcon size={20} color="#FFFFFF" showBg={false} />
+              <span className="whitespace-nowrap font-semibold">Archive</span>
             </button>
           )}
         </div>
