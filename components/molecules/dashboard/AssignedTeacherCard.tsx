@@ -101,7 +101,7 @@ function AssignedTeacherCard({
                     size={56}
                   />
                 ) : (
-                  <TextAvatar name="Unassigned Teacher" size={56} />
+                  <AvatarIcon size={56} />
                 )}
               </div>
               <div>
@@ -142,7 +142,7 @@ function AssignedTeacherCard({
                       size={40}
                     />
                   ) : (
-                    <TextAvatar name="Unassigned Teacher" size={40} />
+                    <AvatarIcon size={40} />
                   )}
                 </div>
                 <div>
