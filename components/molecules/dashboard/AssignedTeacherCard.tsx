@@ -262,10 +262,10 @@ function AssignedTeacherCard({
           <div className="flex items-center gap-3 w-full">
             <button
               type="button"
-              className="flex items-center justify-center gap-2 h-11 w-full rounded-full bg-primary text-white hover:bg-primary/90 font-medium text-sm transition-colors px-6 py-2 cursor-pointer shadow-sm"
+              className="flex items-center justify-center gap-2 h-11 w-full rounded-full border border-primary text-primary hover:bg-primary/5 font-medium text-sm transition-colors px-6 py-2 cursor-pointer shadow-sm"
               onClick={openChangeTeacherModal}
             >
-              <ChangeTeacherIcon />
+              <ChangeTeacherIcon color={theme.primary} />
               <span className="whitespace-nowrap font-medium text-sm">
                 {teacher ? 'Change Teacher' : 'Assign Teacher'}
               </span>

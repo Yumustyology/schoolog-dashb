@@ -795,7 +795,7 @@ export const AddTeacherIcon = ({ color = '#21B55A', size, width, height, ...rest
   );
 };
 
-export const ChangeTeacherIcon = ({ size, width, height, ...rest }: IconProps) => {
+export const ChangeTeacherIcon = ({ color = 'currentColor', size, width, height, ...rest }: IconProps) => {
   const { w, h } = resolveDims({ size, width, height }, '21', '20');
   return (
     <svg
@@ -808,14 +808,14 @@ export const ChangeTeacherIcon = ({ size, width, height, ...rest }: IconProps) =
     >
     <path
       d="M10.5 9.99935C12.8012 9.99935 14.6666 8.13387 14.6666 5.83268C14.6666 3.5315 12.8012 1.66602 10.5 1.66602C8.19879 1.66602 6.33331 3.5315 6.33331 5.83268C6.33331 8.13387 8.19879 9.99935 10.5 9.99935Z"
-      stroke="white"
+      stroke={color}
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
     />
     <path
       d="M16.5083 13.1162L13.5583 16.0662C13.4416 16.1829 13.3333 16.3995 13.3083 16.5579L13.1499 17.6828C13.0916 18.0912 13.375 18.3745 13.7833 18.3162L14.9083 18.1579C15.0666 18.1329 15.2916 18.0245 15.4 17.9079L18.3499 14.9579C18.8583 14.4495 19.0999 13.8579 18.3499 13.1079C17.6083 12.3662 17.0166 12.6079 16.5083 13.1162Z"
-      stroke="white"
+      stroke={color}
       strokeWidth="1.5"
       strokeMiterlimit="10"
       strokeLinecap="round"
@@ -823,7 +823,7 @@ export const ChangeTeacherIcon = ({ size, width, height, ...rest }: IconProps) =
     />
     <path
       d="M16.0833 13.541C16.3333 14.441 17.0332 15.141 17.9332 15.391"
-      stroke="white"
+      stroke={color}
       strokeWidth="1.5"
       strokeMiterlimit="10"
       strokeLinecap="round"
@@ -831,7 +831,7 @@ export const ChangeTeacherIcon = ({ size, width, height, ...rest }: IconProps) =
     />
     <path
       d="M3.34167 18.3333C3.34167 15.1083 6.55003 12.5 10.5 12.5C11.3667 12.5 12.2 12.625 12.975 12.8583"
-      stroke="white"
+      stroke={color}
       strokeWidth="1.5"
       strokeLinecap="round"
       strokeLinejoin="round"
