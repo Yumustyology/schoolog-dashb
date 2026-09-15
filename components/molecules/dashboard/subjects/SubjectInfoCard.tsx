@@ -222,46 +222,39 @@ function SubjectInfoCard({
 
       {role === 'school' && (
         <div className="flex flex-col sm:flex-row gap-3 items-center justify-between pt-2">
-          <Button
-            round
-            flat
-            className={cn(
-              'flex items-center gap-2 h-11 w-full sm:w-1/2 border border-red-200 text-red-600 hover:bg-red-50 rounded-xl justify-center font-medium text-sm transition-colors'
-            )}
+          <button
+            type="button"
+            className="flex items-center justify-center gap-2 h-11 w-full sm:w-1/2 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 font-medium text-sm transition-colors px-4 py-2 cursor-pointer shadow-sm"
             onClick={() => {
               setDeleteModal(true);
             }}
           >
-            <DeleteIcon />
-            <span>Delete Subject</span>
-          </Button>
+            <DeleteIcon color="#DC2626" />
+            <span className="whitespace-nowrap font-medium">Delete Subject</span>
+          </button>
 
           {isSubjectArchived ? (
-            <Button
-              round
-              className={cn(
-                'flex items-center gap-2 h-11 w-full sm:w-1/2 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-xl justify-center font-medium text-sm transition-colors'
-              )}
+            <button
+              type="button"
+              className="flex items-center justify-center gap-2 h-11 w-full sm:w-1/2 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 font-medium text-sm transition-colors px-4 py-2 cursor-pointer shadow-sm"
               onClick={() => {
                 setUnarchiveModal(true);
               }}
             >
               <UnarchiveIcon color={theme.primary} />
-              <span>Post Subject</span>
-            </Button>
+              <span className="whitespace-nowrap font-medium">Post Subject</span>
+            </button>
           ) : (
-            <Button
-              round
-              className={cn(
-                'flex items-center gap-2 h-11 w-full sm:w-1/2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl justify-center font-medium text-sm transition-colors'
-              )}
+            <button
+              type="button"
+              className="flex items-center justify-center gap-2 h-11 w-full sm:w-1/2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200 font-medium text-sm transition-colors px-4 py-2 cursor-pointer shadow-sm"
               onClick={() => {
                 setArchiveModal(true);
               }}
             >
               <ArchiveIcon color="#4B5563" />
-              <span>Archive</span>
-            </Button>
+              <span className="whitespace-nowrap font-medium">Archive</span>
+            </button>
           )}
         </div>
       )}

@@ -260,15 +260,16 @@ function AssignedTeacherCard({
 
         {role === 'school' && (
           <div className="flex items-center gap-3 w-full">
-            <Button
-              round
-              wide
-              className="h-11 px-5 border border-primary text-primary hover:bg-primary/5 rounded-xl font-medium text-sm transition-colors flex items-center justify-center gap-2"
+            <button
+              type="button"
+              className="flex items-center justify-center gap-2 h-11 w-full rounded-xl bg-primary text-white hover:bg-primary/90 font-medium text-sm transition-colors px-6 py-2 cursor-pointer shadow-sm"
               onClick={openChangeTeacherModal}
             >
               <ChangeTeacherIcon />
-              <span>{teacher ? 'Change Teacher' : 'Assign Teacher'}</span>
-            </Button>
+              <span className="whitespace-nowrap font-medium text-sm">
+                {teacher ? 'Change Teacher' : 'Assign Teacher'}
+              </span>
+            </button>
           </div>
         )}
       </CardFooter>
