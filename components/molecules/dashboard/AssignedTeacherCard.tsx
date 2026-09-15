@@ -218,7 +218,7 @@ function AssignedTeacherCard({
               <p className={cn('text-xs text-gray-500 mb-0.5', poppins_400.className)}>
                 Next topic
               </p>
-              <h3 className={cn('text-sm font-medium text-gray-800', poppins_500.className)}>
+              <h3 className={cn('text-sm font-medium text-gray-800 line-clamp-2', poppins_500.className)}>
                 {nextTopic || 'No topics added yet'}
               </h3>
             </div>
