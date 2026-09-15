@@ -270,7 +270,7 @@ function SubjectInfoCard({
         type="archive"
         title="Archive study"
         content="Are you sure you want to archive this subjest? it won’t be visible to students and teachers again"
-        icon={<ArchiveModalIcon color={theme.primary} />}
+        icon={<ArchiveModalIcon color="#F59E0B" />}
         open={archiveModal}
         close={() => setArchiveModal(false)}
       />

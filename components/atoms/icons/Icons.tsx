@@ -886,7 +886,7 @@ export const DeleteModalIcon = ({ size = 64 }: { size?: number | string }) => (
     />
   </svg>
 );
-export const ArchiveModalIcon = ({ color = '#EB5757', size = 64 }: { color?: string; size?: number | string }) => (
+export const ArchiveModalIcon = ({ color = '#F59E0B', size = 64 }: { color?: string; size?: number | string }) => (
   <svg
     width={size}
     height={size}
