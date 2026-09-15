@@ -89,7 +89,7 @@ const SubjectModal = ({
             <Button
               round
               className={cn(
-                'text-base bg-amber-500 hover:bg-amber-600 text-white h-[44px] w-[185px]',
+                'text-base bg-[#F59E0B] hover:bg-[#D97706] text-white h-[44px] w-[185px]',
                 Inter_500.className
               )}
               onClick={() => {

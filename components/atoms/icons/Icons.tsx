@@ -886,7 +886,7 @@ export const DeleteModalIcon = ({ size = 64 }: { size?: number | string }) => (
     />
   </svg>
 );
-export const ArchiveModalIcon = ({ color = '#F59E0B', size = 64 }: { color?: string; size?: number | string }) => (
+export const ArchiveModalIcon = ({ color = '#F59E0B', size = 64, showBg = true }: { color?: string; size?: number | string; showBg?: boolean }) => (
   <svg
     width={size}
     height={size}
@@ -894,7 +894,7 @@ export const ArchiveModalIcon = ({ color = '#F59E0B', size = 64 }: { color?: str
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-    <rect width="48" height="48" rx="24" fill={color} fillOpacity="0.06" />
+    {showBg && <rect width="48" height="48" rx="24" fill={color} fillOpacity="0.06" />}
     <path
       d="M26.5299 21.4699L21.4699 26.5299C20.8199 25.8799 20.4199 24.9899 20.4199 23.9999C20.4199 22.0199 22.0199 20.4199 23.9999 20.4199C24.9899 20.4199 25.8799 20.8199 26.5299 21.4699Z"
       stroke={color}

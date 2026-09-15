@@ -247,12 +247,12 @@ function SubjectInfoCard({
           ) : (
             <button
               type="button"
-              className="flex items-center justify-center gap-2 h-11 w-full sm:w-1/2 rounded-full bg-amber-50 text-amber-700 hover:bg-amber-100 border border-amber-200 font-medium text-sm transition-colors px-4 py-2 cursor-pointer shadow-sm"
+              className="flex items-center justify-center gap-2 h-11 w-full sm:w-1/2 rounded-full bg-amber-50 text-[#F59E0B] hover:bg-amber-100/80 border border-[#F59E0B]/50 font-medium text-sm transition-colors px-4 py-2 cursor-pointer shadow-sm"
               onClick={() => {
                 setArchiveModal(true);
               }}
             >
-              <ArchiveModalIcon size={20} color="#D97706" />
+              <ArchiveModalIcon size={20} color="#F59E0B" showBg={false} />
               <span className="whitespace-nowrap font-medium">Archive</span>
             </button>
           )}
