@@ -117,10 +117,10 @@ function AssignedTeacherCard({
                   email={teacher?.email}
                   size={56}
                 />
-                <div>
+                <div className="min-w-0">
                   <h3
                     className={cn(
-                      'text-base text-gray-900 font-semibold mb-0.5',
+                      'text-base text-gray-900 font-semibold mb-0.5 whitespace-nowrap truncate',
                       poppins_500.className
                     )}
                   >
@@ -128,7 +128,7 @@ function AssignedTeacherCard({
                       ? `${teacher.firstName || ''} ${teacher.lastName || ''}`.trim() || teacher.email || 'Assigned Teacher'
                       : 'No assigned teacher'}
                   </h3>
-                  <p className={cn('text-xs text-gray-500', poppins_400.className)}>
+                  <p className={cn('text-xs text-gray-500 whitespace-nowrap', poppins_400.className)}>
                     Assigned teacher
                   </p>
                 </div>
@@ -137,7 +137,7 @@ function AssignedTeacherCard({
               {role === 'school' && (
                 <button
                   type="button"
-                  className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
+                  className="text-xs font-semibold px-3.5 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer whitespace-nowrap flex-shrink-0"
                   onClick={() => setIsTeacherListOpen(true)}
                 >
                   View all

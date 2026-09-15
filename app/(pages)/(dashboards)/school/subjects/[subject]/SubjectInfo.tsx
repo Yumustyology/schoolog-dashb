@@ -418,13 +418,13 @@ function SubjectInfoPage({ subject }: { subject: string }) {
         </div>
 
         <div className="bg-white w-full p-4 sm:p-6 mt-6 rounded-lg min-h-[398px] h-auto">
-          <div className="flex flex-col-reverse md:flex-row items-stretch md:items-center justify-between gap-4 mb-6">
+          <div className="flex flex-col-reverse lg:flex-row items-stretch lg:items-center justify-between gap-4 mb-6">
             <SearchInput
               placeholder="search"
-              className="bg-[#F7F7F7] border border-gray4 rounded-[100px] p-2 h-[42px] w-full md:max-w-[327px]"
+              className="bg-[#F7F7F7] border border-gray4 rounded-[100px] p-2 h-[42px] w-full lg:max-w-[300px]"
             />
 
-            <div className="flex items-center gap-1.5 p-1 bg-[#F1F1F1] rounded-full overflow-x-auto max-w-full">
+            <div className="flex flex-wrap items-center gap-1.5 p-1.5 bg-[#F1F1F1] rounded-2xl sm:rounded-full">
               {todayClassesTabs.map(({ label, value }) => {
                 const isActive = activeTopicAssignmtentTab === value;
                 return (
@@ -433,7 +433,7 @@ function SubjectInfoPage({ subject }: { subject: string }) {
                     type="button"
                     onClick={() => handleTopicAssignmentTabClick(value)}
                     className={cn(
-                      'px-5 py-2.5 rounded-full text-sm font-medium transition-all whitespace-nowrap flex-shrink-0 cursor-pointer',
+                      'px-5 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap flex-shrink-0 cursor-pointer',
                       poppins_500.className,
                       isActive
                         ? 'bg-primary text-white shadow-xs'
