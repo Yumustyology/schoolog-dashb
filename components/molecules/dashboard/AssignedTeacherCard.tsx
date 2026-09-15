@@ -46,6 +46,8 @@ function AssignedTeacherCard({
   classGradeId,
   departmentId,
   onAssignSuccess,
+  nextClassSchedule,
+  nextTopic,
 }: {
   role: 'school' | 'student' | 'parent' | 'school';
   page?: 'classInfo' | 'subjectInfo';
@@ -64,6 +66,8 @@ function AssignedTeacherCard({
   classGradeId?: string;
   departmentId?: string;
   onAssignSuccess?: () => void;
+  nextClassSchedule?: string;
+  nextTopic?: string;
 }) {
   const { theme } = useSlgTheme();
 
@@ -247,34 +251,27 @@ function AssignedTeacherCard({
       </div>
 
       {role === 'school' && page === 'subjectInfo' && (
-        <CardContent className="flex flex-col gap-6 w-full px-0 ">
-          <div className="flex justify-between">
-            <div>
-              <h3 className={cn('text-sm text-black1', poppins_500.className)}>
-                Monday - 22nd Nov, 2024
-              </h3>
-              <p className={cn('text-sm text-gray', poppins_400.className)}>
-                Next class
-              </p>
+        <CardContent className="flex flex-col gap-4 w-full px-0">
+          <div className="bg-[#F9FAFB] p-4 rounded-xl border border-gray-100 flex flex-col gap-3">
+            <div className="flex justify-between items-center">
+              <div>
+                <h3 className={cn('text-sm text-black1 font-semibold', poppins_500.className)}>
+                  {nextClassSchedule || 'As per timetable'}
+                </h3>
+                <p className={cn('text-xs text-gray-500', poppins_400.className)}>
+                  Next class schedule
+                </p>
+              </div>
             </div>
 
-            <div>
-              <h3 className={cn('text-sm text-black1', poppins_500.className)}>
-                9:00am{' '}
-              </h3>
-              <p className={cn('text-sm text-gray', poppins_400.className)}>
-                Next class time
+            <div className="pt-2 border-t border-gray-200">
+              <p className={cn('text-xs text-gray-500 mb-0.5', poppins_400.className)}>
+                Next topic
               </p>
+              <h3 className={cn('text-sm text-gray-800 font-medium', poppins_500.className)}>
+                {nextTopic || 'No upcoming topic'}
+              </h3>
             </div>
-          </div>
-
-          <div>
-            <p className={cn('text-sm text-gray', poppins_400.className)}>
-              Next class topic
-            </p>
-            <h3 className={cn('text-sm text-gray6', poppins_500.className)}>
-              Teacher Professional Development and Student Outcomes
-            </h3>
           </div>
         </CardContent>
       )}

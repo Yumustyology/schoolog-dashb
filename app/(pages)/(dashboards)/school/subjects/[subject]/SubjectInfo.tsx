@@ -38,6 +38,11 @@ import { useClassGradeFilter } from '@/app/lib/hooks/useClassGradeFilter';
 import { getClassGradeName } from '@/app/lib/utils/classGradeUtils';
 import { MaterialType } from '@/app/lib/types/materials.types';
 
+import studentActions from '@/app/lib/actions/student.actions';
+import resourcesActions from '@/app/lib/actions/resources.action';
+import timetableActions from '@/app/lib/actions/timetable.action';
+import { StudentsListTable } from '@/components/molecules/dashboard/student/StudentsListTable';
+
 export const materials: MaterialType[] = [
   {
     type: 'folder',
@@ -178,6 +183,30 @@ function SubjectInfoPage({ subject }: { subject: string }) {
     { revalidateOnFocus: false }
   );
 
+  // Fetch students for stats and Students tab
+  const { data: studentsResp } = useSWR(
+    classGradeId ? ['/students/classGrade', classGradeId] : '/students/all',
+    () => studentActions.fetchStudents(classGradeId ? { classGrade: classGradeId } : undefined),
+    { revalidateOnFocus: false }
+  );
+  const studentsList = (studentsResp?.data as any[]) || [];
+  const totalStudentsCount = studentsList.length;
+
+  // Fetch resources count
+  const { data: resourcesResp } = useSWR(
+    ['/resources/list', classGradeId, subject],
+    () => resourcesActions.listResources({ classGradeId, subjectId: subject }).catch(() => undefined),
+    { revalidateOnFocus: false }
+  );
+  const totalResourcesCount = (resourcesResp?.data as any[])?.length || 0;
+
+  // Fetch timetable for class schedule
+  const { data: timetableResp } = useSWR(
+    classGradeId ? ['/timetable/class', classGradeId] : null,
+    () => timetableActions.fetchClassTimetable(classGradeId!).catch(() => undefined),
+    { revalidateOnFocus: false }
+  );
+
   const matchedSubject = (allSubjectsResp?.data as any[])?.find(
     (s) => String(s._id) === String(subject)
   );
@@ -223,17 +252,41 @@ function SubjectInfoPage({ subject }: { subject: string }) {
     return items;
   }, [curriculumResp]);
 
+  const curriculumCoveredPct = React.useMemo(() => {
+    if (topicsForDisplay.length === 0) return 0;
+    const completedCount = topicsForDisplay.filter((t) => t.isMarked).length;
+    return Math.round((completedCount / topicsForDisplay.length) * 100);
+  }, [topicsForDisplay]);
+
+  const nextTopic = React.useMemo(() => {
+    const uncompleted = topicsForDisplay.find((t) => !t.isMarked);
+    return uncompleted?.topic || (topicsForDisplay.length > 0 ? 'All topics completed' : 'No topics added yet');
+  }, [topicsForDisplay]);
+
+  const timetableEntries = (timetableResp?.data as any[]) || [];
+  const subjectTimetable = timetableEntries.filter(
+    (t) =>
+      String(t.subject?._id || t.subject) === String(subject) ||
+      (t.subject as any)?.name?.toLowerCase() === subjectTitle?.toLowerCase()
+  );
+
+  const nextClassSchedule = React.useMemo(() => {
+    if (subjectTimetable.length === 0) return 'To be scheduled';
+    const entry = subjectTimetable[0];
+    return `${entry.day || 'Scheduled'} (Period ${entry.period || 1})`;
+  }, [subjectTimetable]);
+
   const todayClassesTabs = [
     {
       label: 'Curriculum',
       value: 'topics',
       content: <Topics items={topicsForDisplay} isLoading={curriculumLoading} />,
     },
-    // {
-    //   label: 'Students',
-    //   value: 'student_list',
-    //   content: <StudentsList />,
-    // },
+    {
+      label: 'Students',
+      value: 'student_list',
+      content: <StudentsListTable classGradeId={classGradeId} students={studentsList} />,
+    },
     {
       label: 'Resources',
       value: 'resources',
@@ -242,7 +295,7 @@ function SubjectInfoPage({ subject }: { subject: string }) {
     {
       label: 'Discussions',
       value: 'discussions',
-      content: <Topics />,
+      content: <Topics items={topicsForDisplay} isLoading={curriculumLoading} />,
     },
   ];
 
@@ -340,27 +393,28 @@ function SubjectInfoPage({ subject }: { subject: string }) {
           />
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-4 mt-4">
-          <div className="w-full lg:w-[440px] xl:w-[460px] flex-shrink-0">
-            <SubjectInfoCard
-              role={role}
-              subjectTitle={subjectTitle}
-              classGradeName={classGradeLabel}
-              coverImage={coverImage}
-            />
-          </div>
-          <div className="flex-1 min-w-0">
-            <AssignedTeacherCard
-              role={role}
-              page="subjectInfo"
-              teacher={primaryTeacher}
-              allTeachers={realAssignedTeachers}
-              subjectTitle={subjectTitle}
-              subjectId={subject}
-              classGradeId={classGradeId}
-              onAssignSuccess={revalidateSubjectLinks}
-            />
-          </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
+          <SubjectInfoCard
+            role={role}
+            subjectTitle={subjectTitle}
+            classGradeName={classGradeLabel}
+            coverImage={coverImage}
+            totalStudents={totalStudentsCount}
+            curriculumCoveredPct={curriculumCoveredPct}
+            totalResources={totalResourcesCount}
+          />
+          <AssignedTeacherCard
+            role={role}
+            page="subjectInfo"
+            teacher={primaryTeacher}
+            allTeachers={realAssignedTeachers}
+            subjectTitle={subjectTitle}
+            subjectId={subject}
+            classGradeId={classGradeId}
+            onAssignSuccess={revalidateSubjectLinks}
+            nextClassSchedule={nextClassSchedule}
+            nextTopic={nextTopic}
+          />
         </div>
 
         <div className="bg-white w-full p-4 sm:p-6 mt-6 rounded-lg min-h-[398px] h-auto">

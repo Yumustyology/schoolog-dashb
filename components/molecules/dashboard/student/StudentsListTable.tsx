@@ -1,141 +1,128 @@
 'use client';
-import { teacherImg2 } from '@/app/assets';
-import PaginationBox from '@/components/atoms/dashboard/subjects/Pagination';
-import SelectBox from '@/components/atoms/dashboard/subjects/Select';
+import useSWR from 'swr';
+import studentActions from '@/app/lib/actions/student.actions';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import Image from 'next/image';
+import TextAvatar from '@/components/atoms/TextAvatar';
+import AvatarIcon from '@/components/atoms/AvatarIcon';
 import { createColumnHelper } from '@tanstack/react-table';
 import DataTable from '@/components/molecules/DataTable';
 
-export type TableRow = {
-  subject: string;
-  studentId: string;
-  secondCA: number;
-  examScore: number;
-  total: number;
-  rank: string;
-  paid?: boolean;
-  grade: string;
-  status: 'Good' | 'Pass' | 'Fail' | 'Fair';
+export type StudentTableRow = {
+  sn: number;
+  id: string;
+  name: string;
+  studentCode: string;
+  gender: string;
+  image?: string;
+  firstName?: string;
+  lastName?: string;
 };
 
-const TABLE_ROWS: TableRow[] = [
-  {
-    subject: 'Mathematics',
-    studentId: '172928739HD',
-    secondCA: 18,
-    examScore: 60,
-    total: 90,
-    grade: 'A',
-    status: 'Pass',
-    rank: 'First',
-  },
-  {
-    subject: 'English',
-    studentId: '172928739HD',
-    secondCA: 16,
-    examScore: 55,
-    total: 85,
-    rank: 'First',
-    grade: 'B',
-    status: 'Fair',
-  },
-  {
-    subject: 'Physics',
-    studentId: '172928739HD',
-    rank: 'First',
-    secondCA: 17,
-    examScore: 62,
-    total: 97,
-    grade: 'A',
-    status: 'Fail',
-  },
-  {
-    subject: 'Chemistry',
-    studentId: '172928739HD',
-    secondCA: 19,
-    examScore: 60,
-    total: 95,
-    grade: 'A',
-    rank: 'First',
-    status: 'Good',
-  },
-  {
-    subject: 'Biology',
-    studentId: '172928739HD',
-    secondCA: 17,
-    examScore: 58,
-    total: 90,
-    rank: 'First',
-    grade: 'B',
-    status: 'Pass',
-  },
-];
-
-const columnHelper = createColumnHelper<TableRow>();
-
-const statusClasses = (status: TableRow['status']) =>
-  status === 'Pass'
-    ? 'text-lightSuccess bg-success'
-    : status === 'Good'
-      ? 'text-[#F2994A] bg-[#F2994A14]'
-      : status === 'Fair'
-        ? 'text-[#F2994A] bg-[#F2994A14]'
-        : status === 'Fail'
-          ? 'text-[#EB5757] bg-[#EB575714]'
-          : 'text-gray-600 bg-gray-200';
+const columnHelper = createColumnHelper<StudentTableRow>();
 
 const columns = [
-  columnHelper.accessor('subject', {
+  columnHelper.accessor('sn', {
     header: 'S/N',
-    cell: (info) => (
-      <div className="flex items-center gap-3">
-        <Image src={teacherImg2} alt="teacher-image" />
-        {info.getValue()}
-      </div>
-    ),
-    meta: { useTypography: false },
+    cell: (info) => info.getValue(),
   }),
-  columnHelper.accessor('studentId', {
-    header: 'Student name',
-  }),
-  columnHelper.accessor('secondCA', {
-    header: 'ID',
-  }),
-  columnHelper.accessor('examScore', {
-    header: 'Class',
-  }),
-  columnHelper.accessor('total', {
-    id: 'attendance',
-    header: 'Attendance',
+  columnHelper.accessor('name', {
+    header: 'Student Name',
     cell: (info) => {
       const row = info.row.original;
       return (
-        <span className={cn('font-normal rounded-full w-[92px] py-1.5 px-8', statusClasses(row.status))}>
-          {info.getValue()}%
-        </span>
+        <div className="flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 flex items-center justify-center bg-gray-100 border border-gray-200">
+            {row.image ? (
+              <Image
+                src={row.image}
+                alt={row.name}
+                width={32}
+                height={32}
+                className="w-full h-full object-cover"
+              />
+            ) : row.firstName || row.lastName ? (
+              <TextAvatar
+                firstName={row.firstName || ''}
+                lastName={row.lastName || ''}
+                size={32}
+              />
+            ) : (
+              <AvatarIcon size={32} />
+            )}
+          </div>
+          <span className="font-medium text-gray-900">{row.name}</span>
+        </div>
       );
     },
     meta: { useTypography: false },
   }),
-  columnHelper.accessor('grade', {
-    header: 'Grade',
+  columnHelper.accessor('studentCode', {
+    header: 'Student ID',
   }),
-  columnHelper.accessor('rank', {
-    header: 'Rank',
+  columnHelper.accessor('gender', {
+    header: 'Gender',
+    cell: (info) => (
+      <span className="capitalize text-gray-700">{info.getValue() || '-'}</span>
+    ),
   }),
 ];
 
-export function StudentsListTable(): JSX.Element {
+export function StudentsListTable({
+  classGradeId,
+  students: passedStudents,
+}: {
+  classGradeId?: string;
+  students?: any[];
+}): JSX.Element {
+  const { data: fetchResp, isLoading } = useSWR(
+    !passedStudents && classGradeId ? ['/students/classGrade', classGradeId] : null,
+    () => studentActions.fetchStudents({ classGrade: classGradeId }),
+    { revalidateOnFocus: false }
+  );
+
+  const rawList = passedStudents || (fetchResp?.data as any[]) || [];
+
+  const tableData: StudentTableRow[] = rawList.map((st: any, idx: number) => {
+    const fn = st.firstName || st.user?.firstName || '';
+    const ln = st.lastName || st.user?.lastName || '';
+    const fullName = `${fn} ${ln}`.trim() || st.name || st.email || 'Student';
+    const code = st.studentId || st.admissionNumber || st.regNo || st._id?.slice(-6) || '-';
+
+    return {
+      sn: idx + 1,
+      id: st._id || String(idx),
+      name: fullName,
+      studentCode: code,
+      gender: st.gender || st.user?.gender || '-',
+      image: st.image || st.avatar || st.user?.avatar,
+      firstName: fn,
+      lastName: ln,
+    };
+  });
+
+  if (!isLoading && tableData.length === 0) {
+    return (
+      <div className="py-12 text-center text-gray-500">
+        <p className={cn('text-sm', poppins_400.className)}>
+          No students enrolled in this class grade yet.
+        </p>
+      </div>
+    );
+  }
+
   return (
     <div>
       <DataTable
-        data={TABLE_ROWS}
+        data={tableData}
         columns={columns}
-        isLoading={false}
+        isLoading={isLoading}
         theadClassName=""
-        thClassName={cn('bg-[#FBFBFB] p-4 font-normal text-sm text-gray1 leading-none opacity-70', poppins_400.className)}
+        thClassName={cn(
+          'bg-[#FBFBFB] p-4 font-normal text-sm text-gray1 leading-none opacity-70',
+          poppins_400.className
+        )}
         tdClassName={cn('border-gray4 text-sm font-normal text-gray1', poppins_400.className)}
         tableClassName="w-full min-w-max table-auto text-left"
         useCardWrapper={false}
@@ -144,21 +131,7 @@ export function StudentsListTable(): JSX.Element {
         enableSorting={false}
         enableFiltering={false}
       />
-      <footer
-        className={cn(
-          'w-full mt-6 flex justify-between items-center',
-          poppins_500.className
-        )}
-      >
-        <div className="flex gap-4 items-center">
-          <h5> Showing </h5>
-          <SelectBox />
-        </div>
-
-        <div>
-          <PaginationBox />
-        </div>
-      </footer>
     </div>
   );
 }
+

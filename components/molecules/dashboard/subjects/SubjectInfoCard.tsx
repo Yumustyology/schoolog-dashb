@@ -23,11 +23,17 @@ function SubjectInfoCard({
   subjectTitle = 'Subject Details',
   classGradeName,
   coverImage,
+  totalStudents = 0,
+  curriculumCoveredPct = 0,
+  totalResources = 0,
 }: {
   role: 'school' | 'student' | 'parent';
   subjectTitle?: string;
   classGradeName?: string;
   coverImage?: string;
+  totalStudents?: number;
+  curriculumCoveredPct?: number;
+  totalResources?: number;
 }) {
   const [deleteModal, setDeleteModal] = useState(false);
   const [archiveModal, setArchiveModal] = useState(false);
@@ -93,9 +99,9 @@ function SubjectInfoCard({
   };
 
   return (
-    <Card className="bg-white py-6 h-auto min-h-[390px] pb-6 sm:pb-10 px-4 sm:px-6 rounded-md col-span-2 border-none">
+    <Card className="bg-white py-6 h-full min-h-[360px] pb-6 sm:pb-8 px-4 sm:px-6 rounded-md border-none flex flex-col justify-between">
       <CardHeader className="w-full p-0">
-        <div className="flex items-center gap-3 mb-8">
+        <div className="flex items-center gap-3 mb-4">
           {hasCoverImage ? (
             <Image
               src={coverImage || ''}
@@ -111,25 +117,24 @@ function SubjectInfoCard({
 
           {role === 'student' && (
             <div>
-              <h1 className={cn('text-sm text-black1', poppins_500.className)}>
+              <h1 className={cn('text-base text-black1 font-semibold', poppins_500.className)}>
                 {subjectTitle}
               </h1>
-              <p className={cn('text-sm text-gray', poppins_400.className)}>
-                {' '}
-                <span className="text-primary">4</span>/32 topics covered
+              <p className={cn('text-xs text-gray', poppins_400.className)}>
+                <span className="text-primary font-semibold">{curriculumCoveredPct}%</span> curriculum covered
               </p>
             </div>
           )}
 
           {role === 'school' && (
             <div>
-              <h1 className={cn('text-sm text-black1', poppins_500.className)}>
+              <h1 className={cn('text-base text-black1 font-semibold', poppins_500.className)}>
                 {subjectTitle}
               </h1>
               {classGradeName && (
                 <p
                   className={cn(
-                    'text-sm text-gray mt-1.5',
+                    'text-xs text-gray-500 mt-1',
                     poppins_500.className
                   )}
                 >
@@ -141,128 +146,36 @@ function SubjectInfoCard({
         </div>
       </CardHeader>
 
-      <CardContent className="flex flex-col p-0 gap-8">
-        <main className="flex justify-between items-center">
-          {role == 'student' && (
-            <div className="flex justify-between items-center w-full mt-10">
-              <div>
-                <h3
-                  className={cn('text-sm text-black1', poppins_500.className)}
-                >
-                  Monday - 22nd Nov, 2024
-                </h3>
-                <p className={cn('text-sm text-gray', poppins_400.className)}>
-                  Next class
-                </p>
-              </div>
-
-              <div>
-                <h3
-                  className={cn('text-sm text-black1', poppins_500.className)}
-                >
-                  9:00am{' '}
-                </h3>
-                <p className={cn('text-sm text-gray', poppins_400.className)}>
-                  Next class time
-                </p>
-              </div>
+      <CardContent className="flex flex-col p-0 gap-6 flex-grow justify-between">
+        <main className="w-full">
+          <section className="grid grid-cols-3 gap-3 w-full my-2 bg-[#F9FAFB] p-4 rounded-xl border border-gray-100">
+            <div className="text-center">
+              <h3 className={cn('text-base sm:text-lg font-bold text-black1 mb-0.5', poppins_500.className)}>
+                {totalStudents}
+              </h3>
+              <p className={cn('text-xs text-gray-500', poppins_400.className)}>
+                Total Students
+              </p>
             </div>
-          )}
 
-          {role == 'school' && (
-            <section className="flex flex-col gap-6 w-full">
-              <div className="flex  items-center">
-                <div className="flex-1 ">
-                  <h3
-                    className={cn(
-                      'text-sm text-black1 mb-1.5',
-                      poppins_500.className
-                    )}
-                  >
-                    150
-                  </h3>
-                  <p className={cn('text-sm text-gray', poppins_400.className)}>
-                    Total Students
-                  </p>
-                </div>
+            <div className="text-center border-x border-gray-200 px-1">
+              <h3 className={cn('text-base sm:text-lg font-bold text-primary mb-0.5', poppins_500.className)}>
+                {curriculumCoveredPct}%
+              </h3>
+              <p className={cn('text-xs text-gray-500', poppins_400.className)}>
+                Curriculum
+              </p>
+            </div>
 
-                <div>
-                  <h3
-                    className={cn(
-                      'text-sm text-black1 items-end text-right mb-1.5',
-                      poppins_500.className
-                    )}
-                  >
-                    90%
-                  </h3>
-                  <p className={cn('text-sm text-gray', poppins_400.className)}>
-                    Average Performance
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-center">
-                <div className="flex-1">
-                  <h3
-                    className={cn(
-                      'text-sm text-black1 mb-1.5',
-                      poppins_500.className
-                    )}
-                  >
-                    80%
-                  </h3>
-                  <p className={cn('text-sm text-gray', poppins_400.className)}>
-                    Teacher attendance
-                  </p>
-                </div>
-
-                <div>
-                  <h3
-                    className={cn(
-                      'text-sm text-black1 text-right mb-1.5',
-                      poppins_500.className
-                    )}
-                  >
-                    90%
-                  </h3>
-                  <p className={cn('text-sm text-gray', poppins_400.className)}>
-                    Student attendance
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-center">
-                <div className="flex-1">
-                  <h3
-                    className={cn(
-                      'text-sm text-black1 mb-1.5',
-                      poppins_500.className
-                    )}
-                  >
-                    52%
-                  </h3>
-                  <p className={cn('text-sm text-gray', poppins_400.className)}>
-                    Curriculum Covered
-                  </p>
-                </div>
-
-                <div>
-                  <h3
-                    className={cn(
-                      'text-sm text-black1 text-right',
-                      poppins_500.className
-                    )}
-                  >
-                    52
-                  </h3>
-                  <p className={cn('text-sm text-gray', poppins_400.className)}>
-                    Resources
-                  </p>
-                </div>
-              </div>
-            </section>
-            // <SchoolStats/>
-          )}
+            <div className="text-center">
+              <h3 className={cn('text-base sm:text-lg font-bold text-black1 mb-0.5', poppins_500.className)}>
+                {totalResources}
+              </h3>
+              <p className={cn('text-xs text-gray-500', poppins_400.className)}>
+                Resources
+              </p>
+            </div>
+          </section>
         </main>
 
         {role === 'student' && (
