@@ -9,7 +9,7 @@ import Modal from '@/components/molecules/Modal';
 import { cn } from '@/app/lib/utils';
 import { poppins_400, poppins_500, poppins_600 } from '@/app/lib/config/font.config';
 import { Send, MessageSquare, Plus, CornerDownRight } from 'lucide-react';
-import { theme } from '@/app/lib/config/theme.config';
+import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 
 export type DiscussionReply = {
   id: string;
@@ -44,6 +44,7 @@ export default function Discussion({
   subjectTitle,
   searchQuery = '',
 }: DiscussionProps) {
+  const { theme } = useSlgTheme();
   const storageKey = `schoolog:discussions:${subjectId || 'default'}:${classGradeId || 'default'}`;
 
   const [threads, setThreads] = useState<DiscussionThread[]>([]);
