@@ -3,9 +3,7 @@ import useSWR from 'swr';
 import studentActions from '@/app/lib/actions/student.actions';
 import { poppins_400, poppins_500 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
-import Image from 'next/image';
-import TextAvatar from '@/components/atoms/TextAvatar';
-import AvatarIcon from '@/components/atoms/AvatarIcon';
+import UserAvatar from '@/components/atoms/UserAvatar';
 import { createColumnHelper } from '@tanstack/react-table';
 import DataTable from '@/components/molecules/DataTable';
 
@@ -33,25 +31,13 @@ const columns = [
       const row = info.row.original;
       return (
         <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 flex items-center justify-center bg-gray-100 border border-gray-200">
-            {row.image ? (
-              <Image
-                src={row.image}
-                alt={row.name}
-                width={32}
-                height={32}
-                className="w-full h-full object-cover"
-              />
-            ) : row.firstName || row.lastName ? (
-              <TextAvatar
-                firstName={row.firstName || ''}
-                lastName={row.lastName || ''}
-                size={32}
-              />
-            ) : (
-              <AvatarIcon size={32} />
-            )}
-          </div>
+          <UserAvatar
+            image={row.image}
+            name={row.name}
+            firstName={row.firstName}
+            lastName={row.lastName}
+            size={32}
+          />
           <span className="font-medium text-gray-900">{row.name}</span>
         </div>
       );

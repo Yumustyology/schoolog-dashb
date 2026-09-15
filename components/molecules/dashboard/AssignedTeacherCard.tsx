@@ -13,9 +13,7 @@ import {
 } from '@/components/ui/card';
 import { cn } from '@/app/lib/utils';
 
-import Image from 'next/image';
-import AvatarIcon from '@/components/atoms/AvatarIcon';
-import TextAvatar from '@/components/atoms/TextAvatar';
+import UserAvatar from '@/components/atoms/UserAvatar';
 import React from 'react';
 import {
   AddTeacherIcon,
@@ -84,26 +82,13 @@ function AssignedTeacherCard({
         {page === 'classInfo' ? (
           <CardHeader className="bg-transparent p-0 mb-4">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center">
-                {teacher && teacher.image ? (
-                  <Image
-                    src={teacher.image}
-                    alt="teacher-image"
-                    width={56}
-                    height={56}
-                    className="object-cover w-full h-full"
-                  />
-                ) : teacher ? (
-                  <TextAvatar
-                    firstName={teacher.firstName}
-                    lastName={teacher.lastName}
-                    email={teacher.email}
-                    size={56}
-                  />
-                ) : (
-                  <AvatarIcon size={56} />
-                )}
-              </div>
+              <UserAvatar
+                image={teacher?.image}
+                firstName={teacher?.firstName}
+                lastName={teacher?.lastName}
+                email={teacher?.email}
+                size={56}
+              />
               <div>
                 <h3
                   className={cn(
@@ -125,26 +110,13 @@ function AssignedTeacherCard({
           <CardHeader className="bg-transparent p-0 mb-4">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center gap-4">
-                <div className="w-14 h-14 bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center flex-shrink-0">
-                  {teacher && teacher.image ? (
-                    <Image
-                      src={teacher.image}
-                      alt={teacher.firstName || 'Teacher'}
-                      width={56}
-                      height={56}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : teacher ? (
-                    <TextAvatar
-                      firstName={teacher.firstName}
-                      lastName={teacher.lastName}
-                      email={teacher.email}
-                      size={56}
-                    />
-                  ) : (
-                    <AvatarIcon size={56} />
-                  )}
-                </div>
+                <UserAvatar
+                  image={teacher?.image}
+                  firstName={teacher?.firstName}
+                  lastName={teacher?.lastName}
+                  email={teacher?.email}
+                  size={56}
+                />
                 <div>
                   <h3
                     className={cn(

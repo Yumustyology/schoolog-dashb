@@ -21,7 +21,7 @@ import type { Meta } from '@/app/lib/types/meta.types';
 import studentActions from '@/app/lib/actions/student.actions';
 import StudentListSkeleton from '@/components/atoms/skeleton/StudentListSkeleton';
 import { getStatusClass } from '@/app/lib/constants/status';
-import AvatarIcon from '@/components/atoms/AvatarIcon';
+import UserAvatar from '@/components/atoms/UserAvatar';
 import DataTable from '@/components/molecules/DataTable';
 
 type StudentRow = {
@@ -153,8 +153,13 @@ export default function StudentsTableList({
         const student = info.row.original;
         return (
           <div className="flex gap-2 items-center text-sm">
-            <AvatarIcon size={40} src={student.photo} />
-            <span className="ml-2">
+            <UserAvatar
+              image={student.photo}
+              firstName={student.firstName}
+              lastName={student.lastName}
+              size={36}
+            />
+            <span className="ml-2 font-medium">
               {student.firstName} {student.lastName}
             </span>
           </div>
