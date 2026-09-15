@@ -402,6 +402,7 @@ function SubjectInfoPage({ subject }: { subject: string }) {
             totalStudents={totalStudentsCount}
             curriculumCoveredPct={curriculumCoveredPct}
             totalResources={totalResourcesCount}
+            isArchived={matchedSubject?.archived ?? subjectData?.archived}
           />
           <AssignedTeacherCard
             role={role}

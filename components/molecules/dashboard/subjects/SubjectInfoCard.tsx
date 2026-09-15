@@ -13,6 +13,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { cn } from '@/app/lib/utils';
 import Image from 'next/image';
 import React, { useState } from 'react';
+import { useEntity } from 'simpler-state';
 import SubjectModal from '@/components/atoms/dashboard/subjects/subjectsInfoModals/SubjectModal';
 import { isArchive } from '@/app/lib/entities/subject.entity';
 
@@ -26,6 +27,7 @@ function SubjectInfoCard({
   totalStudents = 0,
   curriculumCoveredPct = 0,
   totalResources = 0,
+  isArchived,
 }: {
   role: 'school' | 'student' | 'parent';
   subjectTitle?: string;
@@ -34,11 +36,13 @@ function SubjectInfoCard({
   totalStudents?: number;
   curriculumCoveredPct?: number;
   totalResources?: number;
+  isArchived?: boolean;
 }) {
   const [deleteModal, setDeleteModal] = useState(false);
   const [archiveModal, setArchiveModal] = useState(false);
   const [unarchiveModal, setUnarchiveModal] = useState(false);
-  // const archive = useEntity(isArchive);
+  const archivedEntityState = useEntity(isArchive);
+  const isSubjectArchived = typeof isArchived === 'boolean' ? isArchived : archivedEntityState;
 
   const { theme } = useSlgTheme();
 
@@ -117,9 +121,22 @@ function SubjectInfoCard({
 
           {role === 'student' && (
             <div>
-              <h1 className={cn('text-lg text-gray-900 font-bold', poppins_500.className)}>
-                {subjectTitle}
-              </h1>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h1 className={cn('text-lg text-gray-900 font-bold', poppins_500.className)}>
+                  {subjectTitle}
+                </h1>
+                {isSubjectArchived && (
+                  <span
+                    className={cn(
+                      'inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200',
+                      poppins_500.className
+                    )}
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                    Archived
+                  </span>
+                )}
+              </div>
               <p className={cn('text-xs text-gray-500 mt-0.5', poppins_400.className)}>
                 <span className="text-primary font-bold">{curriculumCoveredPct}%</span> curriculum covered
               </p>
@@ -128,9 +145,22 @@ function SubjectInfoCard({
 
           {role === 'school' && (
             <div>
-              <h1 className={cn('text-lg text-gray-900 font-bold leading-tight', poppins_500.className)}>
-                {subjectTitle}
-              </h1>
+              <div className="flex items-center gap-2 flex-wrap">
+                <h1 className={cn('text-lg text-gray-900 font-bold leading-tight', poppins_500.className)}>
+                  {subjectTitle}
+                </h1>
+                {isSubjectArchived && (
+                  <span
+                    className={cn(
+                      'inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200',
+                      poppins_500.className
+                    )}
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                    Archived
+                  </span>
+                )}
+              </div>
               {classGradeName && (
                 <span
                   className={cn(
@@ -206,7 +236,7 @@ function SubjectInfoCard({
             <span>Delete Subject</span>
           </Button>
 
-          {isArchive ? (
+          {isSubjectArchived ? (
             <Button
               round
               className={cn(
@@ -223,13 +253,13 @@ function SubjectInfoCard({
             <Button
               round
               className={cn(
-                'flex items-center gap-2 h-11 w-full sm:w-1/2 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-xl justify-center font-medium text-sm transition-colors'
+                'flex items-center gap-2 h-11 w-full sm:w-1/2 bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl justify-center font-medium text-sm transition-colors'
               )}
               onClick={() => {
                 setArchiveModal(true);
               }}
             >
-              <ArchiveIcon color={theme.primary} />
+              <ArchiveIcon color="#4B5563" />
               <span>Archive</span>
             </Button>
           )}

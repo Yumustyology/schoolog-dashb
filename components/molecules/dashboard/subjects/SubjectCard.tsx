@@ -257,14 +257,22 @@ const SubjectCard: React.FC<SubjectCardProps> = ({
       <div className="flex flex-col gap-3 p-4">
         {/* <Link href={`/${role}/subjects/1234`}> */}
         <div className="flex justify-between items-center">
-          <h3
-            className={cn(
-              'text-base text-gray1 font-semibold',
-              poppins_500.className
+          <div className="flex items-center gap-2 flex-wrap">
+            <h3
+              className={cn(
+                'text-base text-gray1 font-semibold',
+                poppins_500.className
+              )}
+            >
+              {subject.name}
+            </h3>
+            {subject.archived && (
+              <span className="inline-flex items-center gap-1 text-[11px] font-semibold px-2 py-0.5 rounded-full bg-amber-50 text-amber-700 border border-amber-200">
+                <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse" />
+                Archived
+              </span>
             )}
-          >
-            {subject.name}
-          </h3>
+          </div>
           {role === 'school' && (
             <MenuLists
               label="Options"
