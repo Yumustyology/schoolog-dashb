@@ -162,14 +162,14 @@ function SubjectInfoCard({
                 )}
               </div>
               {classGradeName && (
-                <span
+                <p
                   className={cn(
-                    'inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full bg-primary/10 text-primary mt-1',
+                    'text-xs font-medium text-primary mt-0.5',
                     poppins_500.className
                   )}
                 >
                   {classGradeName}
-                </span>
+                </p>
               )}
             </div>
           )}
