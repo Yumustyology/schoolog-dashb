@@ -229,7 +229,13 @@ function Topics({ items, isLoading }: { items?: TopicsList; isLoading?: boolean 
 
   if (list.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-16 px-4 text-center bg-primary/[0.03] border border-dashed border-primary/20 rounded-2xl my-2">
+      <div
+        className="flex flex-col items-center justify-center py-16 px-4 text-center border border-dashed rounded-2xl my-2"
+        style={{
+          backgroundColor: `${theme.primary}0D`,
+          borderColor: `${theme.primary}30`,
+        }}
+      >
         <div className="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3 shadow-xs">
           <BookOpen className="w-6 h-6" />
         </div>

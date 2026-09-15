@@ -178,7 +178,13 @@ function SubjectInfoCard({
 
       <CardContent className="flex flex-col p-0 gap-4 my-4 flex-grow justify-center">
         <main className="w-full">
-          <section className="grid grid-cols-3 gap-2 w-full bg-primary/[0.04] p-4 rounded-xl border border-primary/10">
+          <section
+            className="grid grid-cols-3 gap-2 w-full p-4 rounded-xl border"
+            style={{
+              backgroundColor: `${theme.primary}0F`,
+              borderColor: `${theme.primary}26`,
+            }}
+          >
             <div className="text-center">
               <h3 className={cn('text-lg sm:text-xl font-bold text-gray-900 mb-0.5', poppins_500.className)}>
                 {totalStudents}

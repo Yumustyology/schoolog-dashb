@@ -176,7 +176,13 @@ function AssignedTeacherCard({
 
       {role === 'school' && page === 'subjectInfo' && (
         <CardContent className="flex flex-col p-0 my-3 flex-grow justify-center">
-          <div className="bg-primary/[0.04] p-4 rounded-xl border border-primary/10 flex flex-col gap-3">
+          <div
+            className="p-4 rounded-xl border flex flex-col gap-3"
+            style={{
+              backgroundColor: `${theme.primary}0F`,
+              borderColor: `${theme.primary}26`,
+            }}
+          >
             <div>
               <h3 className={cn('text-sm font-semibold text-gray-900', poppins_500.className)}>
                 {nextClassSchedule || 'To be scheduled'}
