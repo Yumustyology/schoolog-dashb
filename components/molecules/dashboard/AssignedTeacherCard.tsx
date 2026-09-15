@@ -76,37 +76,37 @@ function AssignedTeacherCard({
   return (
     <Card
       className={cn(
-        'bg-white py-6 px-4 sm:px-6 flex flex-col justify-between h-auto min-h-[390px] rounded-md col-span-2 border-none',
+        'bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-between h-full min-h-[340px]',
         className
       )}
     >
       <div>
         {page === 'classInfo' ? (
-          <CardHeader className="bg-transparent p-0 mb-6">
+          <CardHeader className="bg-transparent p-0 mb-4">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 bg-gray-100 rounded-md overflow-hidden flex items-center justify-center">
+              <div className="w-14 h-14 bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center">
                 {teacher && teacher.image ? (
                   <Image
                     src={teacher.image}
                     alt="teacher-image"
-                    width={64}
-                    height={64}
+                    width={56}
+                    height={56}
                     className="object-cover w-full h-full"
                   />
                 ) : teacher && (teacher.firstName || teacher.lastName) ? (
                   <TextAvatar
                     firstName={teacher.firstName || ''}
                     lastName={teacher.lastName || ''}
-                    size={64}
+                    size={56}
                   />
                 ) : (
-                  <AvatarIcon size={64} />
+                  <AvatarIcon size={56} />
                 )}
               </div>
               <div>
                 <h3
                   className={cn(
-                    'text-sm text-gray6 mb-1',
+                    'text-base text-gray-900 font-semibold mb-0.5',
                     poppins_500.className
                   )}
                 >
@@ -114,39 +114,39 @@ function AssignedTeacherCard({
                     ? `${teacher.firstName || ''} ${teacher.lastName || ''}`.trim()
                     : 'No assigned teacher'}
                 </h3>
-                <p className={cn('text-sm text-gray', poppins_400.className)}>
+                <p className={cn('text-xs text-gray-500', poppins_400.className)}>
                   Class Teacher
                 </p>
               </div>
             </div>
           </CardHeader>
         ) : (
-          <CardHeader className="bg-[#f8f8f8] rounded-2xl sm:rounded-full py-2 px-3 mb-6">
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-start sm:items-center">
-              <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 flex items-center justify-center bg-gray-100">
-                {teacher && teacher.image ? (
-                  <Image
-                    src={teacher.image}
-                    alt={teacher.firstName || 'Teacher'}
-                    width={48}
-                    height={48}
-                    className="w-full h-full object-cover"
-                  />
-                ) : teacher && (teacher.firstName || teacher.lastName) ? (
-                  <TextAvatar
-                    firstName={teacher.firstName || ''}
-                    lastName={teacher.lastName || ''}
-                    size={48}
-                  />
-                ) : (
-                  <AvatarIcon size={48} />
-                )}
-              </div>
-              <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center w-full gap-2">
+          <CardHeader className="p-0 mb-2">
+            <div className="flex items-center justify-between gap-3 bg-[#F9FAFB] p-3 rounded-xl border border-gray-100">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 flex items-center justify-center bg-gray-100 border border-gray-200">
+                  {teacher && teacher.image ? (
+                    <Image
+                      src={teacher.image}
+                      alt={teacher.firstName || 'Teacher'}
+                      width={40}
+                      height={40}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : teacher && (teacher.firstName || teacher.lastName) ? (
+                    <TextAvatar
+                      firstName={teacher.firstName || ''}
+                      lastName={teacher.lastName || ''}
+                      size={40}
+                    />
+                  ) : (
+                    <AvatarIcon size={40} />
+                  )}
+                </div>
                 <div>
                   <h3
                     className={cn(
-                      'text-sm text-gray6 mb-1',
+                      'text-sm font-semibold text-gray-900 leading-tight',
                       poppins_500.className
                     )}
                   >
@@ -154,95 +154,45 @@ function AssignedTeacherCard({
                       ? `${teacher.firstName || ''} ${teacher.lastName || ''}`.trim() || teacher.email || 'Assigned Teacher'
                       : 'No assigned teacher'}
                   </h3>
-                  {role === 'student' && (
-                    <p
-                      className={cn('text-sm text-gray', poppins_400.className)}
-                    >
-                      {subjectTitle ? `${subjectTitle} Teacher` : 'Subject Teacher'}
-                    </p>
-                  )}
-
-                  {role === 'school' && (
-                    <div>
-                      <p
-                        className={cn(
-                          'text-sm text-gray',
-                          poppins_400.className
-                        )}
-                      >
-                        Assigned teacher
-                      </p>
-                    </div>
-                  )}
+                  <p className={cn('text-xs text-gray-500', poppins_400.className)}>
+                    Assigned teacher
+                  </p>
                 </div>
-                {role === 'school' && (
-                  <Button
-                    round
-                    className={cn(
-                      'text-primary bg-light text-sm ',
-                      poppins_400.className
-                    )}
-                    onClick={() => {
-                      setIsTeacherListOpen(true);
-                    }}
-                  >
-                    View all teachers
-                  </Button>
-                )}
               </div>
+
+              {role === 'school' && (
+                <button
+                  type="button"
+                  className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors"
+                  onClick={() => setIsTeacherListOpen(true)}
+                >
+                  View all
+                </button>
+              )}
             </div>
           </CardHeader>
         )}
 
         {role === 'student' && (
-          <CardContent className="flex flex-col gap-6 w-full px-0 ">
+          <CardContent className="flex flex-col gap-4 w-full px-0 my-3">
             <section className="flex justify-between items-center w-full">
               <div>
-                <h3 className={cn('text-sm text-black1', Inter_500.className)}>
+                <h3 className={cn('text-sm text-gray-900 font-medium', Inter_500.className)}>
                   {teacher?.email || 'No email available'}
                 </h3>
-                <p className={cn('text-sm text-gray', poppins_400.className)}>
+                <p className={cn('text-xs text-gray-500', poppins_400.className)}>
                   Email
                 </p>
               </div>
 
               <div>
                 <h3
-                  className={cn('text-sm text-black1', poppins_500.className)}
+                  className={cn('text-sm text-gray-900 font-medium', poppins_500.className)}
                 >
                   {teacher?.phone || 'No phone available'}
                 </h3>
-                <p className={cn('text-sm text-gray', poppins_400.className)}>
+                <p className={cn('text-xs text-gray-500', poppins_400.className)}>
                   Phone number
-                </p>
-              </div>
-            </section>
-
-            <section className="flex justify-between items-center">
-              <div>
-                <h3
-                  className={cn('text-sm text-black1', poppins_500.className)}
-                >
-                  Admin Office
-                </h3>
-                <p className={cn('text-sm text-gray', poppins_400.className)}>
-                  Office
-                </p>
-              </div>
-
-              <div>
-                <h3
-                  className={cn('text-sm text-black1', poppins_500.className)}
-                >
-                  9:00am - 12:00pm
-                </h3>
-                <p
-                  className={cn(
-                    'text-sm text-gray text-right',
-                    poppins_400.className
-                  )}
-                >
-                  Time on seat
                 </p>
               </div>
             </section>
@@ -251,25 +201,23 @@ function AssignedTeacherCard({
       </div>
 
       {role === 'school' && page === 'subjectInfo' && (
-        <CardContent className="flex flex-col gap-4 w-full px-0">
+        <CardContent className="flex flex-col p-0 my-3 flex-grow justify-center">
           <div className="bg-[#F9FAFB] p-4 rounded-xl border border-gray-100 flex flex-col gap-3">
-            <div className="flex justify-between items-center">
-              <div>
-                <h3 className={cn('text-sm text-black1 font-semibold', poppins_500.className)}>
-                  {nextClassSchedule || 'As per timetable'}
-                </h3>
-                <p className={cn('text-xs text-gray-500', poppins_400.className)}>
-                  Next class schedule
-                </p>
-              </div>
+            <div>
+              <h3 className={cn('text-sm font-semibold text-gray-900', poppins_500.className)}>
+                {nextClassSchedule || 'To be scheduled'}
+              </h3>
+              <p className={cn('text-xs text-gray-500', poppins_400.className)}>
+                Next class schedule
+              </p>
             </div>
 
             <div className="pt-2 border-t border-gray-200">
               <p className={cn('text-xs text-gray-500 mb-0.5', poppins_400.className)}>
                 Next topic
               </p>
-              <h3 className={cn('text-sm text-gray-800 font-medium', poppins_500.className)}>
-                {nextTopic || 'No upcoming topic'}
+              <h3 className={cn('text-sm font-medium text-gray-800', poppins_500.className)}>
+                {nextTopic || 'No topics added yet'}
               </h3>
             </div>
           </div>
@@ -277,81 +225,51 @@ function AssignedTeacherCard({
       )}
 
       {page === 'classInfo' && (
-        <CardContent className="flex flex-col gap-6 w-full px-0 ">
+        <CardContent className="flex flex-col gap-4 w-full px-0 my-3">
           <section className="flex justify-between items-center w-full">
             <div>
-              <h3 className={cn('text-sm text-black1', poppins_500.className)}>
+              <h3 className={cn('text-sm text-gray-900 font-medium', poppins_500.className)}>
                 {teacher ? teacher.email : 'No email available'}
               </h3>
-              <p className={cn('text-sm text-gray', poppins_400.className)}>
+              <p className={cn('text-xs text-gray-500', poppins_400.className)}>
                 Email
               </p>
             </div>
 
             <div>
-              <h3 className={cn('text-sm text-black1', poppins_500.className)}>
+              <h3 className={cn('text-sm text-gray-900 font-medium', poppins_500.className)}>
                 {teacher ? (teacher.phone ?? '-') : 'No phone available'}
               </h3>
-              <p className={cn('text-sm text-gray', poppins_400.className)}>
+              <p className={cn('text-xs text-gray-500', poppins_400.className)}>
                 Phone number
               </p>
             </div>
           </section>
-
-          <section>
-            <p className={cn('text-sm text-gray', poppins_400.className)}>
-              Role
-            </p>
-            <h3 className={cn('text-sm text-gray6', poppins_500.className)}>
-              Class Teacher
-            </h3>
-          </section>
         </CardContent>
       )}
 
-      <CardFooter className="px-0 py-0 --mt-6 w-full">
+      <CardFooter className="p-0 pt-2 w-full">
         {role === 'student' && page !== 'classInfo' && (
-          <Button wide round className="h-[45px]">
+          <Button wide round className="h-11 rounded-xl">
             <Message color="#FFFFFF" />
             <p className="ml-2">Message Teacher</p>
           </Button>
         )}
 
         {role === 'school' && (
-          <div className="flex flex-col sm:flex-row gap-3 w-full justify-between">
+          <div className="flex items-center gap-3 w-full">
             <Button
               round
               wide
-              outlined
-              className="h-[45px] px-4 sm:px-8 border border-primary w-full sm:w-auto"
+              className="h-11 px-5 border border-primary text-primary hover:bg-primary/5 rounded-xl font-medium text-sm transition-colors flex items-center justify-center gap-2"
               onClick={openChangeTeacherModal}
             >
               <ChangeTeacherIcon />
-              <p className="ml-2">{teacher ? 'Change' : 'Assign'} Teacher</p>
+              <span>{teacher ? 'Change Teacher' : 'Assign Teacher'}</span>
             </Button>
-            {teacher ? (
-              <Button
-                round
-                flat
-                className="h-[45px] border px-4 sm:px-8 bg-transparent border-primary w-full sm:w-auto"
-                // onClick={}
-              >
-                <p className="text-primary text-center">
-                  View Teacher Details
-                </p>
-              </Button>
-            ) : null}
           </div>
         )}
       </CardFooter>
-            {/* <Button
-              round
-              className="h-[45px] border px-8 bg-light"
-              onClick={openAddTeacherModal}
-            >
-              <AddTeacherIcon color={theme.primary} />
-              <p className="ml-2 text-primary">Add another Teacher</p>
-            </Button> */}
 
       <AddTeacherModal />
       <ChangeTeacherModal

@@ -99,16 +99,16 @@ function SubjectInfoCard({
   };
 
   return (
-    <Card className="bg-white py-6 h-full min-h-[360px] pb-6 sm:pb-8 px-4 sm:px-6 rounded-md border-none flex flex-col justify-between">
+    <Card className="bg-white p-6 rounded-2xl border border-gray-100 shadow-sm flex flex-col justify-between h-full min-h-[340px]">
       <CardHeader className="w-full p-0">
-        <div className="flex items-center gap-3 mb-4">
+        <div className="flex items-center gap-4">
           {hasCoverImage ? (
             <Image
               src={coverImage || ''}
               alt={subjectTitle}
-              width={64}
-              height={64}
-              className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl object-cover flex-shrink-0"
+              width={56}
+              height={56}
+              className="w-14 h-14 rounded-2xl object-cover flex-shrink-0 shadow-sm"
               unoptimized={isBase64Image}
             />
           ) : (
@@ -117,61 +117,61 @@ function SubjectInfoCard({
 
           {role === 'student' && (
             <div>
-              <h1 className={cn('text-base text-black1 font-semibold', poppins_500.className)}>
+              <h1 className={cn('text-lg text-gray-900 font-bold', poppins_500.className)}>
                 {subjectTitle}
               </h1>
-              <p className={cn('text-xs text-gray', poppins_400.className)}>
-                <span className="text-primary font-semibold">{curriculumCoveredPct}%</span> curriculum covered
+              <p className={cn('text-xs text-gray-500 mt-0.5', poppins_400.className)}>
+                <span className="text-primary font-bold">{curriculumCoveredPct}%</span> curriculum covered
               </p>
             </div>
           )}
 
           {role === 'school' && (
             <div>
-              <h1 className={cn('text-base text-black1 font-semibold', poppins_500.className)}>
+              <h1 className={cn('text-lg text-gray-900 font-bold leading-tight', poppins_500.className)}>
                 {subjectTitle}
               </h1>
               {classGradeName && (
-                <p
+                <span
                   className={cn(
-                    'text-xs text-gray-500 mt-1',
+                    'inline-block text-xs font-semibold px-2.5 py-0.5 rounded-full bg-primary/10 text-primary mt-1',
                     poppins_500.className
                   )}
                 >
                   {classGradeName}
-                </p>
+                </span>
               )}
             </div>
           )}
         </div>
       </CardHeader>
 
-      <CardContent className="flex flex-col p-0 gap-6 flex-grow justify-between">
+      <CardContent className="flex flex-col p-0 gap-4 my-4 flex-grow justify-center">
         <main className="w-full">
-          <section className="grid grid-cols-3 gap-3 w-full my-2 bg-[#F9FAFB] p-4 rounded-xl border border-gray-100">
+          <section className="grid grid-cols-3 gap-2 w-full bg-[#F9FAFB] p-4 rounded-xl border border-gray-100">
             <div className="text-center">
-              <h3 className={cn('text-base sm:text-lg font-bold text-black1 mb-0.5', poppins_500.className)}>
+              <h3 className={cn('text-lg sm:text-xl font-bold text-gray-900 mb-0.5', poppins_500.className)}>
                 {totalStudents}
               </h3>
-              <p className={cn('text-xs text-gray-500', poppins_400.className)}>
+              <p className={cn('text-xs text-gray-500 font-medium', poppins_400.className)}>
                 Total Students
               </p>
             </div>
 
             <div className="text-center border-x border-gray-200 px-1">
-              <h3 className={cn('text-base sm:text-lg font-bold text-primary mb-0.5', poppins_500.className)}>
+              <h3 className={cn('text-lg sm:text-xl font-bold text-primary mb-0.5', poppins_500.className)}>
                 {curriculumCoveredPct}%
               </h3>
-              <p className={cn('text-xs text-gray-500', poppins_400.className)}>
+              <p className={cn('text-xs text-gray-500 font-medium', poppins_400.className)}>
                 Curriculum
               </p>
             </div>
 
             <div className="text-center">
-              <h3 className={cn('text-base sm:text-lg font-bold text-black1 mb-0.5', poppins_500.className)}>
+              <h3 className={cn('text-lg sm:text-xl font-bold text-gray-900 mb-0.5', poppins_500.className)}>
                 {totalResources}
               </h3>
-              <p className={cn('text-xs text-gray-500', poppins_400.className)}>
+              <p className={cn('text-xs text-gray-500 font-medium', poppins_400.className)}>
                 Resources
               </p>
             </div>
@@ -179,58 +179,62 @@ function SubjectInfoCard({
         </main>
 
         {role === 'student' && (
-          <div className="mt-10">
-            <p className={cn('text-sm text-gray', poppins_400.className)}>
+          <div className="mt-2">
+            <p className={cn('text-xs text-gray-500', poppins_400.className)}>
               Next class topic
             </p>
-            <h3 className={cn('text-sm text-gray6', poppins_500.className)}>
+            <h3 className={cn('text-sm text-gray-800 font-medium mt-0.5', poppins_500.className)}>
               Teacher Professional Development and Student Outcomes
             </h3>
           </div>
         )}
+      </CardContent>
 
-        {role === 'school' && (
-          <div className="flex flex-col sm:flex-row gap-3 justify-between">
+      {role === 'school' && (
+        <div className="flex flex-col sm:flex-row gap-3 items-center justify-between pt-2">
+          <Button
+            round
+            flat
+            className={cn(
+              'flex items-center gap-2 h-11 w-full sm:w-1/2 border border-red-200 text-red-600 hover:bg-red-50 rounded-xl justify-center font-medium text-sm transition-colors'
+            )}
+            onClick={() => {
+              setDeleteModal(true);
+            }}
+          >
+            <DeleteIcon />
+            <span>Delete Subject</span>
+          </Button>
+
+          {isArchive ? (
             <Button
               round
-              flat
               className={cn(
-                'flex text-r2 h-[48px] w-full sm:w-[191px] border border-r2 justify-center'
+                'flex items-center gap-2 h-11 w-full sm:w-1/2 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-xl justify-center font-medium text-sm transition-colors'
               )}
               onClick={() => {
-                setDeleteModal(true);
+                setUnarchiveModal(true);
               }}
             >
-              <DeleteIcon />
-              <span className="text-r2">Delete Subject</span>
+              <UnarchiveIcon color={theme.primary} />
+              <span>Post Subject</span>
             </Button>
-
-            {isArchive ? (
-              <Button
-                round
-                className={cn('flex text-primary h-[48px] w-full sm:w-[191px] bg-light justify-center')}
-                onClick={() => {
-                  setUnarchiveModal(true);
-                }}
-              >
-                <UnarchiveIcon color={theme.primary} />
-                <span className="text-primary">Post Subject</span>
-              </Button>
-            ) : (
-              <Button
-                round
-                className={cn('flex text-primary h-[48px] w-full sm:w-[191px] bg-light justify-center')}
-                onClick={() => {
-                  setArchiveModal(true);
-                }}
-              >
-                <ArchiveIcon color={theme.primary} />
-                <span className="text-primary">Archive</span>
-              </Button>
-            )}
-          </div>
-        )}
-      </CardContent>
+          ) : (
+            <Button
+              round
+              className={cn(
+                'flex items-center gap-2 h-11 w-full sm:w-1/2 bg-emerald-50 text-emerald-700 hover:bg-emerald-100 rounded-xl justify-center font-medium text-sm transition-colors'
+              )}
+              onClick={() => {
+                setArchiveModal(true);
+              }}
+            >
+              <ArchiveIcon color={theme.primary} />
+              <span>Archive</span>
+            </Button>
+          )}
+        </div>
+      )}
       <SubjectModal
         type="delete"
         title="Delete Subject"

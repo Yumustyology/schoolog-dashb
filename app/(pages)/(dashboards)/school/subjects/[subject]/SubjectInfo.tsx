@@ -393,7 +393,7 @@ function SubjectInfoPage({ subject }: { subject: string }) {
           />
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-4 items-stretch">
           <SubjectInfoCard
             role={role}
             subjectTitle={subjectTitle}
