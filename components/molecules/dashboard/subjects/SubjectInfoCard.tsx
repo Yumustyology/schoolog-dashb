@@ -42,7 +42,7 @@ function SubjectInfoCard({
   const [archiveModal, setArchiveModal] = useState(false);
   const [unarchiveModal, setUnarchiveModal] = useState(false);
   const archivedEntityState = useEntity(isArchive);
-  const isSubjectArchived = typeof isArchived === 'boolean' ? isArchived : archivedEntityState;
+  const isSubjectArchived = Boolean(isArchived || archivedEntityState);
 
   const { theme } = useSlgTheme();
 
@@ -224,7 +224,7 @@ function SubjectInfoCard({
         <div className="flex flex-col sm:flex-row gap-3 items-center justify-between pt-2">
           <button
             type="button"
-            className="flex items-center justify-center gap-2 h-11 w-full sm:w-1/2 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 font-medium text-sm transition-colors px-4 py-2 cursor-pointer shadow-sm"
+            className="flex items-center justify-center gap-2 h-11 w-full sm:w-1/2 rounded-full border border-red-200 text-red-600 hover:bg-red-50 font-medium text-sm transition-colors px-4 py-2 cursor-pointer shadow-sm"
             onClick={() => {
               setDeleteModal(true);
             }}
@@ -236,7 +236,7 @@ function SubjectInfoCard({
           {isSubjectArchived ? (
             <button
               type="button"
-              className="flex items-center justify-center gap-2 h-11 w-full sm:w-1/2 rounded-xl bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 font-medium text-sm transition-colors px-4 py-2 cursor-pointer shadow-sm"
+              className="flex items-center justify-center gap-2 h-11 w-full sm:w-1/2 rounded-full bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200 font-medium text-sm transition-colors px-4 py-2 cursor-pointer shadow-sm"
               onClick={() => {
                 setUnarchiveModal(true);
               }}
@@ -247,7 +247,7 @@ function SubjectInfoCard({
           ) : (
             <button
               type="button"
-              className="flex items-center justify-center gap-2 h-11 w-full sm:w-1/2 rounded-xl bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200 font-medium text-sm transition-colors px-4 py-2 cursor-pointer shadow-sm"
+              className="flex items-center justify-center gap-2 h-11 w-full sm:w-1/2 rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 border border-gray-200 font-medium text-sm transition-colors px-4 py-2 cursor-pointer shadow-sm"
               onClick={() => {
                 setArchiveModal(true);
               }}
