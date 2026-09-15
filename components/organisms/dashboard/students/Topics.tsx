@@ -5,6 +5,7 @@ import Unmarked from '@/components/atoms/icons/dashboard/Unmarked';
 import { Inter_500, poppins_400 } from '@/app/lib/config/font.config';
 import { cn } from '@/app/lib/utils';
 import { Card, CardBody, Typography } from '@material-tailwind/react';
+import { BookOpen } from 'lucide-react';
 
 import React from 'react';
 import Button from '@/components/atoms/form/Button';
@@ -224,6 +225,22 @@ function Topics({ items, isLoading }: { items?: TopicsList; isLoading?: boolean 
     ));
 
     return <>{placeholders}</>;
+  }
+
+  if (list.length === 0) {
+    return (
+      <div className="flex flex-col items-center justify-center py-16 px-4 text-center bg-[#F9FAFB] border border-dashed border-gray-200 rounded-2xl my-2">
+        <div className="w-12 h-12 rounded-full bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3 shadow-xs">
+          <BookOpen className="w-6 h-6" />
+        </div>
+        <h3 className={cn('text-base font-semibold text-gray-900 mb-1', Inter_500.className)}>
+          No curriculum topics added yet
+        </h3>
+        <p className={cn('text-xs text-gray-500 max-w-md', poppins_400.className)}>
+          No topics or modules have been added to this curriculum yet. Use the "Edit Curriculum" button above to add topics and schedule learning modules.
+        </p>
+      </div>
+    );
   }
 
   return (
