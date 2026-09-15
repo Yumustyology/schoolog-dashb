@@ -158,9 +158,22 @@ export function AppSidebar({
                     ? teacherSidebarItems
                     : []
               ).map((item) => {
+                const isRootDashboard =
+                  item.url === `/${type}` ||
+                  item.url === '/school' ||
+                  item.url === '/student' ||
+                  item.url === '/teacher';
+
                 const isActive =
                   cleanedPath === item.url ||
-                  item.subItems?.some((sub) => cleanedPath.startsWith(sub.url));
+                  (!isRootDashboard &&
+                    Boolean(item.url) &&
+                    cleanedPath.startsWith(`${item.url}/`)) ||
+                  item.subItems?.some(
+                    (sub) =>
+                      cleanedPath === sub.url ||
+                      cleanedPath.startsWith(`${sub.url}/`)
+                  );
                 return (
                   <SidebarMenuItem className="w-full" key={item.title}>
                     <SidebarMenuButton
@@ -260,7 +273,7 @@ export function AppSidebar({
               <SidebarMenuButton
                 className={cn(
                   'py-5 rounded-full text-gray3 flex items-center px-4 text-gray-300 hover:bg-gray-700',
-                  cleanedPath === '/${}settings'
+                  cleanedPath === `/${type}/settings`
                     ? 'hover:bg-primary bg-primary text-white hover:text-white'
                     : 'hover:bg-gray2 hover:text-gray3 '
                 )}

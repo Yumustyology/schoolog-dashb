@@ -18,7 +18,7 @@ import useSWR from 'swr';
 import curriculumActions from '@/app/lib/actions/curriculum.actions';
 import subjectsActions from '@/app/lib/actions/subjects.action';
 import classGradeActions from '@/app/lib/actions/class-grade.actions';
-// import Assignments from '@/components/organisms/dashboard/students/Assignments';
+import Discussion from '@/components/organisms/Discussion';
 import SearchInput from '@/components/atoms/form/SearchInput';
 import SubjectInfoCard from '@/components/molecules/dashboard/subjects/SubjectInfoCard';
 import Button from '@/components/atoms/form/Button';
@@ -295,7 +295,13 @@ function SubjectInfoPage({ subject }: { subject: string }) {
     {
       label: 'Discussions',
       value: 'discussions',
-      content: <Topics items={topicsForDisplay} isLoading={curriculumLoading} />,
+      content: (
+        <Discussion
+          subjectId={subject}
+          classGradeId={classGradeId}
+          subjectTitle={subjectTitle}
+        />
+      ),
     },
   ];
 
