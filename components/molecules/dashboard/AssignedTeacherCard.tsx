@@ -1,4 +1,3 @@
-import { teacherImg2 } from '@/app/assets';
 import Button from '@/components/atoms/form/Button';
 import Message from '@/components/atoms/icons/SideBar/Message';
 import {
@@ -16,6 +15,7 @@ import { cn } from '@/app/lib/utils';
 
 import Image from 'next/image';
 import AvatarIcon from '@/components/atoms/AvatarIcon';
+import TextAvatar from '@/components/atoms/TextAvatar';
 import React from 'react';
 import {
   AddTeacherIcon,
@@ -80,7 +80,7 @@ function AssignedTeacherCard({
         {page === 'classInfo' ? (
           <CardHeader className="bg-transparent p-0 mb-6">
             <div className="flex items-center gap-4">
-              <div className="w-16 h-16 bg-gray-100 rounded-md overflow-hidden">
+              <div className="w-16 h-16 bg-gray-100 rounded-md overflow-hidden flex items-center justify-center">
                 {teacher && teacher.image ? (
                   <Image
                     src={teacher.image}
@@ -88,6 +88,12 @@ function AssignedTeacherCard({
                     width={64}
                     height={64}
                     className="object-cover w-full h-full"
+                  />
+                ) : teacher && (teacher.firstName || teacher.lastName) ? (
+                  <TextAvatar
+                    firstName={teacher.firstName || ''}
+                    lastName={teacher.lastName || ''}
+                    size={64}
                   />
                 ) : (
                   <AvatarIcon size={64} />
@@ -113,7 +119,25 @@ function AssignedTeacherCard({
         ) : (
           <CardHeader className="bg-[#f8f8f8] rounded-2xl sm:rounded-full py-2 px-3 mb-6">
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-start sm:items-center">
-              <Image src={teacherImg2} alt="teacher-image" />
+              <div className="w-12 h-12 rounded-full overflow-hidden flex-shrink-0 flex items-center justify-center bg-gray-100">
+                {teacher && teacher.image ? (
+                  <Image
+                    src={teacher.image}
+                    alt={teacher.firstName || 'Teacher'}
+                    width={48}
+                    height={48}
+                    className="w-full h-full object-cover"
+                  />
+                ) : teacher && (teacher.firstName || teacher.lastName) ? (
+                  <TextAvatar
+                    firstName={teacher.firstName || ''}
+                    lastName={teacher.lastName || ''}
+                    size={48}
+                  />
+                ) : (
+                  <AvatarIcon size={48} />
+                )}
+              </div>
               <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center w-full gap-2">
                 <div>
                   <h3

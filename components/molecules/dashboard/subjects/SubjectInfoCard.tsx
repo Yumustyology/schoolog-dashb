@@ -22,10 +22,12 @@ function SubjectInfoCard({
   role,
   subjectTitle = 'Subject Details',
   classGradeName,
+  coverImage,
 }: {
   role: 'school' | 'student' | 'parent';
   subjectTitle?: string;
   classGradeName?: string;
+  coverImage?: string;
 }) {
   const [deleteModal, setDeleteModal] = useState(false);
   const [archiveModal, setArchiveModal] = useState(false);
@@ -34,11 +36,78 @@ function SubjectInfoCard({
 
   const { theme } = useSlgTheme();
 
+  const isBase64Image = coverImage?.startsWith('data:image');
+  const hasCoverImage = !!coverImage;
+
+  const getColorForString = (s?: string) => {
+    const colors = [
+      { bg: 'bg-emerald-600', text: 'text-white' },
+      { bg: 'bg-indigo-600', text: 'text-white' },
+      { bg: 'bg-rose-600', text: 'text-white' },
+      { bg: 'bg-amber-500', text: 'text-gray-900' },
+      { bg: 'bg-sky-600', text: 'text-white' },
+      { bg: 'bg-violet-600', text: 'text-white' },
+      { bg: 'bg-fuchsia-600', text: 'text-white' },
+      { bg: 'bg-teal-600', text: 'text-white' },
+      { bg: 'bg-orange-600', text: 'text-white' },
+      { bg: 'bg-pink-600', text: 'text-white' },
+      { bg: 'bg-cyan-600', text: 'text-white' },
+      { bg: 'bg-purple-600', text: 'text-white' },
+    ];
+
+    if (!s) return colors[0];
+
+    let hash = 0;
+    for (let i = 0; i < s.length; i++) {
+      hash = s.charCodeAt(i) + ((hash << 5) - hash);
+      hash = hash & hash;
+    }
+    const idx = Math.abs(hash) % colors.length;
+    return colors[idx];
+  };
+
+  const renderCoverPlaceholder = () => {
+    const text = (subjectTitle || 'SUBJECT').toUpperCase();
+    const short = text.length > 20 ? text.slice(0, 19) + '…' : text;
+    const colorScheme = getColorForString(subjectTitle);
+
+    return (
+      <div
+        className={cn(
+          'w-14 h-14 sm:w-16 sm:h-16 rounded-xl flex items-center justify-center font-bold flex-shrink-0 shadow-sm',
+          colorScheme.bg
+        )}
+        aria-hidden
+      >
+        <span
+          className={cn(
+            'text-xs drop-shadow-[0_1px_2px_rgba(0,0,0,0.4)] px-1 text-center font-bold uppercase truncate max-w-full',
+            colorScheme.text,
+            poppins_500.className
+          )}
+        >
+          {short.slice(0, 4)}
+        </span>
+      </div>
+    );
+  };
+
   return (
     <Card className="bg-white py-6 h-auto min-h-[390px] pb-6 sm:pb-10 px-4 sm:px-6 rounded-md col-span-2 border-none">
       <CardHeader className="w-full p-0">
         <div className="flex items-center gap-3 mb-8">
-          <Image src={biology1} alt="Subject Image" />
+          {hasCoverImage ? (
+            <Image
+              src={coverImage || ''}
+              alt={subjectTitle}
+              width={64}
+              height={64}
+              className="w-14 h-14 sm:w-16 sm:h-16 rounded-xl object-cover flex-shrink-0"
+              unoptimized={isBase64Image}
+            />
+          ) : (
+            renderCoverPlaceholder()
+          )}
 
           {role === 'student' && (
             <div>

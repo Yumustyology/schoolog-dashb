@@ -283,6 +283,11 @@ function SubjectInfoPage({ subject }: { subject: string }) {
 
   const primaryTeacher = realAssignedTeachers[0] || null;
 
+  const coverImage =
+    matchedSubject?.coverImage ||
+    subjectData?.coverImage ||
+    '';
+
   const crumbs = [
     { label: 'Subjects', isActive: false, href: '/school/subjects' },
     {
@@ -309,7 +314,7 @@ function SubjectInfoPage({ subject }: { subject: string }) {
             crumbs={crumbs}
           />
 
-          <div className="flex flex-wrap gap-2 items-center">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
             <EditCurriculumLauncher
               classGradeId={classGradeId!}
               subjectId={subject}
@@ -318,15 +323,14 @@ function SubjectInfoPage({ subject }: { subject: string }) {
             <Button
               round
               flat
-              className="h-[48px] border border-primary sm:ml-4 py-3 px-6 sm:px-8 flex gap-2"
+              className="h-[48px] border border-primary py-3 px-6 sm:px-8 flex gap-2 justify-center"
               onClick={() => {
                 setIsResourceModalOpen(true);
               }}
             >
-              {' '}
               <UploadIcon color={theme.primary} />
-              <span className={cn('text-base ', Inter_500.className)}>
-                Upload Resources{' '}
+              <span className={cn('text-base', Inter_500.className)}>
+                Upload Resources
               </span>
             </Button>
           </div>
@@ -336,12 +340,13 @@ function SubjectInfoPage({ subject }: { subject: string }) {
           />
         </div>
 
-        <div className="flex flex-col xl:flex-row gap-4 mt-4">
-          <div className="w-full xl:w-[446px]">
+        <div className="flex flex-col lg:flex-row gap-4 mt-4">
+          <div className="w-full lg:w-[440px] xl:w-[460px] flex-shrink-0">
             <SubjectInfoCard
               role={role}
               subjectTitle={subjectTitle}
               classGradeName={classGradeLabel}
+              coverImage={coverImage}
             />
           </div>
           <div className="flex-1 min-w-0">
