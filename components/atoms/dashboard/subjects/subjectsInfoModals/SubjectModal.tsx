@@ -24,8 +24,8 @@ const SubjectModal = ({
   if (!open) return null;
 
   return (
-    <div className="fixed inset-0 bg-[rgb(0,0,0,0.25)] flex items-center justify-center z-50 w-full">
-      <div className="bg-white rounded-lg tablet:w-[434px] xxs:w-full shadow-lg">
+    <div className="fixed inset-0 bg-[rgb(0,0,0,0.25)] flex items-center justify-center z-50 w-full p-4">
+      <div className="bg-white rounded-2xl tablet:w-[434px] xxs:w-full shadow-lg overflow-hidden">
         <div className="flex justify-end pt-3 pr-3">
           <Button
             onClick={close}
@@ -34,16 +34,15 @@ const SubjectModal = ({
             <Cancel />
           </Button>
         </div>
-        <div className="flex items-center justify-center mb-4">{icon}</div>
+        <div className="flex items-center justify-center mb-4 [&_svg]:w-16 [&_svg]:h-16">{icon}</div>
 
         <main className="flex flex-col items-center justify-center text-center px-6">
-          {/* Add modal content here */}
-          <h3 className={cn('text-base mb-4 text-black', Inter_500.className)}>
+          <h3 className={cn('text-lg mb-2 text-black font-semibold', Inter_500.className)}>
             {title}
           </h3>
           <p
             className={cn(
-              'text-sm text-gray9 text-center px-9',
+              'text-sm text-gray-500 text-center px-4',
               Inter_400.className
             )}
           >
@@ -52,12 +51,12 @@ const SubjectModal = ({
         </main>
 
         {type === 'delete' && (
-          <div className="w-full mt-8 mb-6 text-center flex justify-center gap-4">
+          <div className="w-full mt-8 mb-6 text-center flex justify-center gap-4 px-6">
             <Button
               onClick={close}
               round
               className={cn(
-                'bg-transparent border text-primary text-base border-primary h-[44px] w-[185px]',
+                'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-50 text-base h-[44px] w-[185px]',
                 Inter_500.className
               )}
             >
@@ -76,12 +75,12 @@ const SubjectModal = ({
         )}
 
         {type === 'archive' && (
-          <div className="w-full mt-8 mb-6 text-center flex justify-center gap-4">
+          <div className="w-full mt-8 mb-6 text-center flex justify-center gap-4 px-6">
             <Button
               onClick={close}
               round
               className={cn(
-                'bg-transparent border text-primary text-base border-primary h-[44px] w-[185px]',
+                'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-50 text-base h-[44px] w-[185px]',
                 Inter_500.className
               )}
             >
@@ -103,12 +102,12 @@ const SubjectModal = ({
         )}
 
         {type === 'unarchive' && (
-          <div className="w-full mt-8 mb-6 text-center flex justify-center gap-4">
+          <div className="w-full mt-8 mb-6 text-center flex justify-center gap-4 px-6">
             <Button
               onClick={close}
               round
               className={cn(
-                'bg-transparent border text-primary text-base border-primary h-[44px] w-[185px]',
+                'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-50 text-base h-[44px] w-[185px]',
                 Inter_500.className
               )}
             >

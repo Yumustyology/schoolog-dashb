@@ -840,15 +840,15 @@ export const ChangeTeacherIcon = ({ size, width, height, ...rest }: IconProps) =
   );
 };
 
-export const DeleteModalIcon = () => (
+export const DeleteModalIcon = ({ size = 64 }: { size?: number | string }) => (
   <svg
-    width="48"
-    height="48"
+    width={size}
+    height={size}
     viewBox="0 0 48 48"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-  <rect width="48" height="48" rx="24" fill="#EB5757" fillOpacity="0.06" />
+    <rect width="48" height="48" rx="24" fill="#EB5757" fillOpacity="0.06" />
     <path
       d="M33 17.9805C29.67 17.6505 26.32 17.4805 22.98 17.4805C21 17.4805 19.02 17.5805 17.04 17.7805L15 17.9805"
       stroke="#EB5757"
@@ -886,15 +886,15 @@ export const DeleteModalIcon = () => (
     />
   </svg>
 );
-export const ArchiveModalIcon = ({ color = '#EB5757' }) => (
+export const ArchiveModalIcon = ({ color = '#EB5757', size = 64 }: { color?: string; size?: number | string }) => (
   <svg
-    width="48"
-    height="48"
+    width={size}
+    height={size}
     viewBox="0 0 48 48"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
   >
-  <rect width="48" height="48" rx="24" fill={color} fillOpacity="0.06" />
+    <rect width="48" height="48" rx="24" fill={color} fillOpacity="0.06" />
     <path
       d="M26.5299 21.4699L21.4699 26.5299C20.8199 25.8799 20.4199 24.9899 20.4199 23.9999C20.4199 22.0199 22.0199 20.4199 23.9999 20.4199C24.9899 20.4199 25.8799 20.8199 26.5299 21.4699Z"
       stroke={color}
@@ -942,10 +942,14 @@ export const ArchiveModalIcon = ({ color = '#EB5757' }) => (
 
 export const UnachiveModalIcon = ({
   color = { light: '#E9F8EF', primary: '#21B55A' },
+  size = 64,
+}: {
+  color?: { light?: string; primary?: string };
+  size?: number | string;
 }) => (
   <svg
-    width="48"
-    height="48"
+    width={size}
+    height={size}
     viewBox="0 0 48 48"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
