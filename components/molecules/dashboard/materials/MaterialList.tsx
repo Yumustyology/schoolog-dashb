@@ -314,7 +314,7 @@ const MaterialsList: React.FC<MaterialsListProps> = ({
               type="button"
               round
               onClick={() => setShowCreateModal(true)}
-              className="px-6 py-3 rounded-full"
+              className="px-5 py-2 rounded-full"
             >
               + Create Folder
             </Button>
@@ -324,7 +324,7 @@ const MaterialsList: React.FC<MaterialsListProps> = ({
               outlined
               flat
               onClick={() => setShowUploadModal(true)}
-              className="px-6 py-3 rounded-full"
+              className="px-5 py-2 rounded-full"
             >
               + Upload Files
             </Button>

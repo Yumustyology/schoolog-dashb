@@ -22,10 +22,10 @@ export default function EditCurriculumLauncher({
           openEditor(classGradeId, subjectId);
         }}
         round
-        className="h-[48px] py-3 px-6 sm:px-8 flex gap-2 justify-center items-center whitespace-nowrap flex-shrink-0"
+        className="h-[42px] py-2 px-5 sm:px-6 flex gap-2 justify-center items-center whitespace-nowrap flex-shrink-0"
       >
         <EditIcon color="#FFFFFF" />
-        <span className={cn('text-base whitespace-nowrap', Inter_500.className)}>
+        <span className={cn('text-sm whitespace-nowrap font-medium', Inter_500.className)}>
           Edit Curriculum
         </span>
       </Button>

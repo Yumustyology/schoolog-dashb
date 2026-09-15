@@ -375,13 +375,13 @@ function SubjectInfoPage({ subject }: { subject: string }) {
             <Button
               round
               flat
-              className="h-[48px] border border-primary py-3 px-6 sm:px-8 flex gap-2 justify-center items-center whitespace-nowrap flex-shrink-0"
+              className="h-[42px] border border-primary py-2 px-5 sm:px-6 flex gap-2 justify-center items-center whitespace-nowrap flex-shrink-0"
               onClick={() => {
                 setIsResourceModalOpen(true);
               }}
             >
               <UploadIcon color={theme.primary} />
-              <span className={cn('text-base whitespace-nowrap', Inter_500.className)}>
+              <span className={cn('text-sm whitespace-nowrap font-medium', Inter_500.className)}>
                 Upload Resources
               </span>
             </Button>

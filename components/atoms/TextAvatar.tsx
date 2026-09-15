@@ -41,17 +41,16 @@ export function extractInitials(
   lastName?: string | null,
   email?: string | null
 ): string {
-  if (firstName || lastName) {
-    const fn = (firstName || '').trim();
-    const ln = (lastName || '').trim();
-    if (fn && ln) return `${fn[0]}${ln[0]}`.toUpperCase();
-    if (fn) return fn.slice(0, 2).toUpperCase();
-    if (ln) return ln.slice(0, 2).toUpperCase();
+  const fn = (firstName || '').trim();
+  const ln = (lastName || '').trim();
+
+  if (fn && ln) {
+    return `${fn[0]}${ln[0]}`.toUpperCase();
   }
 
-  const rawName = (name || '').trim();
-  if (rawName) {
-    const parts = rawName.split(/\s+/).filter(Boolean);
+  const combined = fn || ln || (name || '').trim();
+  if (combined) {
+    const parts = combined.split(/\s+/).filter(Boolean);
     if (parts.length >= 2) {
       return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
     }
@@ -104,7 +103,7 @@ const TextAvatar: React.FC<TextAvatarProps> = ({
   return (
     <div
       className={`relative flex items-center justify-center rounded-full shadow-2xs flex-shrink-0 select-none ${bgClass} ${className}`}
-      style={{ width: size, height: size }}
+      style={{ width: size, height: size, minWidth: size, minHeight: size }}
       title={displayTitle}
     >
       <span
