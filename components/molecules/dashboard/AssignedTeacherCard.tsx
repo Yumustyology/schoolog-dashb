@@ -122,16 +122,16 @@ function AssignedTeacherCard({
             </div>
           </CardHeader>
         ) : (
-          <CardHeader className="p-0 mb-2">
-            <div className="flex items-center justify-between gap-3 bg-[#F9FAFB] p-3 rounded-xl border border-gray-100">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full overflow-hidden flex-shrink-0 flex items-center justify-center bg-gray-100 border border-gray-200">
+          <CardHeader className="bg-transparent p-0 mb-4">
+            <div className="flex items-center justify-between gap-3">
+              <div className="flex items-center gap-4">
+                <div className="w-14 h-14 bg-gray-100 rounded-xl overflow-hidden flex items-center justify-center flex-shrink-0">
                   {teacher && teacher.image ? (
                     <Image
                       src={teacher.image}
                       alt={teacher.firstName || 'Teacher'}
-                      width={40}
-                      height={40}
+                      width={56}
+                      height={56}
                       className="w-full h-full object-cover"
                     />
                   ) : teacher ? (
@@ -139,16 +139,16 @@ function AssignedTeacherCard({
                       firstName={teacher.firstName}
                       lastName={teacher.lastName}
                       email={teacher.email}
-                      size={40}
+                      size={56}
                     />
                   ) : (
-                    <AvatarIcon size={40} />
+                    <AvatarIcon size={56} />
                   )}
                 </div>
                 <div>
                   <h3
                     className={cn(
-                      'text-sm font-semibold text-gray-900 leading-tight',
+                      'text-base text-gray-900 font-semibold mb-0.5',
                       poppins_500.className
                     )}
                   >
@@ -165,7 +165,7 @@ function AssignedTeacherCard({
               {role === 'school' && (
                 <button
                   type="button"
-                  className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="text-xs font-semibold px-3 py-1.5 rounded-lg bg-gray-50 border border-gray-200 text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
                   onClick={() => setIsTeacherListOpen(true)}
                 >
                   View all
