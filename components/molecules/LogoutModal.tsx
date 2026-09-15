@@ -11,6 +11,8 @@ import { resetAuthState } from '@/app/lib/entities/auth.entity';
 import { resetProfileState } from '@/app/lib/entities/profile.entity';
 import { resetSchoolState } from '@/app/lib/entities/school.entity';
 
+import { clearAuthCookies, clearReturnToUrl } from '@/app/lib/utils/authCookies';
+
 const LogoutModal = ({
   open,
   close,
@@ -27,6 +29,9 @@ const LogoutModal = ({
         localforage.removeItem('refreshToken'),
         localforage.removeItem('signupEmail'),
       ]);
+
+      clearAuthCookies();
+      clearReturnToUrl();
 
       // reset persisted entities
       resetAuthState();

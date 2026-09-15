@@ -17,6 +17,7 @@ import { schoolState, SchoolEntity, setSchoolState } from '@/app/lib/entities/sc
 import { replaceProfileState } from '@/app/lib/entities/profile.entity';
 import Image from 'next/image';
 import { Skeleton } from '@/components/ui/skeleton';
+import { setAuthCookies } from '@/app/lib/utils/authCookies';
 
 type Props = {
   initialLogo: string;
@@ -27,6 +28,7 @@ export default function LoginClient({ initialLogo, initialSchool }: Props) {
   const { audienceType } = authState.use();
 
   const [loginMethod, setLoginMethod] = React.useState<'id' | 'email'>('id');
+  const [rememberMe, setRememberMe] = React.useState<boolean>(true);
   const [isModalOpen, setIsModalOpen] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
 
@@ -89,6 +91,9 @@ export default function LoginClient({ initialLogo, initialSchool }: Props) {
           if (resp.data.refreshToken) {
             await localforage.setItem('refreshToken', resp.data.refreshToken);
           }
+
+          // Persist HttpOnly & SameSite auth cookies for seamless token refresh & Remember Me
+          setAuthCookies(resp.data.token, resp.data.refreshToken, rememberMe);
 
           replaceProfileState({
             slgId: resp.data.user?.slgId || '',
@@ -159,7 +164,7 @@ export default function LoginClient({ initialLogo, initialSchool }: Props) {
             Welcome <span className="text-primary"> Back👋</span>
           </h1>
           <p className={cn('text-gray3 text-sm max-w-[470px]', poppins_400.className)}>
-            Sign in to access your classes, assignments, progress and mo    re!, your journey continues here.
+            Sign in to access your classes, assignments, progress and more!, your journey continues here.
           </p>
         </div>
 
@@ -193,14 +198,26 @@ export default function LoginClient({ initialLogo, initialSchool }: Props) {
               errMsg={formik.touched.password ? formik.errors.password : ''}
             />
 
-            <p className={cn("text-sm mt-1.5 self-end", poppins_400.className)}>
-              {loginMethod === 'id' ? 'Prefer using e‑mail?' : 'Prefer using ID?'}{' '}
-              <button type="button" className="text-primary underline" onClick={toggleMethod}>
-                {loginMethod === 'id' ? 'Use Email Login' : 'Use ID Login'}
-              </button>
-            </p>
+            <div className="flex items-center justify-between mt-3 mb-1">
+              <label className="flex items-center gap-2 text-xs text-gray-600 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
+                  className="w-4 h-4 text-primary rounded border-gray-300 focus:ring-primary accent-primary cursor-pointer"
+                />
+                <span className={poppins_400.className}>Remember me</span>
+              </label>
 
-            <Button round wide className="mt-12 rounded-full h-12 text-base" type="submit" disabled={isLoading || !formik.isValid} loading={isLoading}>
+              <p className={cn("text-xs text-right", poppins_400.className)}>
+                {loginMethod === 'id' ? 'Prefer using e‑mail?' : 'Prefer using ID?'}{' '}
+                <button type="button" className="text-primary underline font-medium" onClick={toggleMethod}>
+                  {loginMethod === 'id' ? 'Use Email' : 'Use ID'}
+                </button>
+              </p>
+            </div>
+
+            <Button round wide className="mt-8 rounded-full h-12 text-base" type="submit" disabled={isLoading || !formik.isValid} loading={isLoading}>
               Continue
             </Button>
           </form>

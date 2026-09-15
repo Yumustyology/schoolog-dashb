@@ -6,6 +6,12 @@ import axios, {
 // import showToast from '../utils/toast';
 import { appConfig } from './app.config';
 import { getTenantFromHost } from '../tenant';
+import {
+  clearAuthCookies,
+  getCookie,
+  setAuthCookies,
+  setReturnToUrl,
+} from '../utils/authCookies';
 
 export const baseURL = `${appConfig.axiosBaseUrl}/`;
 
@@ -19,9 +25,16 @@ const axiosConfig = axios.create({
 
 export const redirectUser = async (response: AxiosResponse) => {
   if (response.status === 401) {
-    // On client only: clear storage and redirect
+    // On client only: clear storage and redirect with return-to destination
     if (typeof window !== 'undefined') {
-      const { origin, pathname } = window.location;
+      const { origin, pathname, search } = window.location;
+      const currentUrl = pathname + search;
+
+      // Preserve current URL destination before clearing session
+      if (currentUrl && currentUrl.startsWith('/') && !currentUrl.includes('/login') && !currentUrl.includes('/signup')) {
+        setReturnToUrl(currentUrl);
+      }
+
       setTimeout(async () => {
         try {
           const lfModule = await import('localforage');
@@ -31,12 +44,13 @@ export const redirectUser = async (response: AxiosResponse) => {
         } catch {
           // ignore storage clear failures
         }
-        try {
-          sessionStorage.setItem('returnTo', pathname);
-        } catch {
-          /* ignore */
-        }
-        window.location.replace(`${origin}/`);
+        clearAuthCookies();
+
+        const redirectQuery = currentUrl && !currentUrl.includes('/login') && !currentUrl.includes('/signup')
+          ? `?redirect=${encodeURIComponent(currentUrl)}`
+          : '';
+
+        window.location.replace(`${origin}/login${redirectQuery}`);
       }, 300);
     } else {
       // server-side: nothing to do, just log
@@ -51,11 +65,15 @@ axiosConfig.interceptors.request.use(
     // Only attempt to read client-local storage when running in the browser
     if (typeof window !== 'undefined') {
       try {
-        const lfModule = await import('localforage');
-        // localforage uses a default export in ESM interop
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const lf: any = lfModule?.default ?? lfModule;
-        const token = await lf.getItem('accessToken');
+        let token = getCookie('schoolog_access_token');
+        if (!token) {
+          const lfModule = await import('localforage');
+          // localforage uses a default export in ESM interop
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const lf: any = lfModule?.default ?? lfModule;
+          token = await lf.getItem('accessToken');
+        }
+
         if (token && config.headers) {
           config.headers['Authorization'] = `Bearer ${token}`;
         }
@@ -93,23 +111,35 @@ axiosConfig.interceptors.request.use(
 
 const refreshAuthToken = async (): Promise<string | null> => {
   try {
-    const lfModule = await import('localforage');
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const lf: any = lfModule?.default ?? lfModule;
-    const refreshToken = await lf.getItem('refreshToken');
+    let refreshToken: string | null = getCookie('schoolog_refresh_token');
+    if (!refreshToken && typeof window !== 'undefined') {
+      const lfModule = await import('localforage');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const lf: any = lfModule?.default ?? lfModule;
+      refreshToken = await lf.getItem('refreshToken');
+    }
+
     if (!refreshToken) throw new Error('No refresh token available');
 
     const response = await axios.post(`${baseURL}auth/refresh-token`, {
       token: refreshToken,
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
 
     const { accessToken, refreshToken: newRefreshToken } = response.data.data;
 
-    try {
+    if (typeof window !== 'undefined') {
+      const lfModule = await import('localforage');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const lf: any = lfModule?.default ?? lfModule;
       await lf.setItem('accessToken', accessToken);
-      await lf.setItem('refreshToken', newRefreshToken);
-    } catch {
-      // ignore storage set failures
+      if (newRefreshToken) {
+        await lf.setItem('refreshToken', newRefreshToken);
+      }
+      setAuthCookies(accessToken, newRefreshToken || refreshToken, true);
     }
 
     return accessToken;
