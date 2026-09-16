@@ -223,36 +223,39 @@ const MaterialsList: React.FC<MaterialsListProps> = ({
         </>
       )}
 
-      <main className="my-5 gap-5 grid grid-cols-1 md:grid-cols-3 laptop:grid-cols-4 desktop:grid-cols-5 xlgDesktop:grid-cols-6">
-        {!isLoading && folderIds.length > 0 && (
-          <div
+      {/* Folder Navigation Toolbar when inside a folder */}
+      {folderIds.length > 0 && (
+        <div className="flex items-center justify-between gap-4 mb-4 pb-2 border-b border-gray-100">
+          <button
+            type="button"
             onClick={handleGoBack}
-            className="min-w-[180px] p-3 py-6 rounded-[12px] bg-white flex flex-col justify-center gap-4 cursor-pointer border border-transparent hover:border-primary transition-all"
-            style={{
-              transition: 'all 0.2s ease',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor = `${theme.primary}10`;
-              e.currentTarget.style.borderColor = theme.primary;
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor = 'white';
-              e.currentTarget.style.borderColor = 'transparent';
-            }}
-            title="Go back to parent folder"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium text-xs sm:text-sm transition-colors cursor-pointer"
           >
-            <div className="mx-auto">
-              <BackArrowIcon color={theme.primary} />
+            <BackArrowIcon size={18} color={theme.primary} />
+            <span>Back</span>
+          </button>
+          {folderDetails.length > 0 && (
+            <span className="text-xs text-gray-400 font-medium">
+              Folder path: {folderDetails.map((f) => f.name).join(' / ')}
+            </span>
+          )}
+        </div>
+      )}
+
+      {/* Skeletons while loading */}
+      {isLoading && (
+        <main className="my-5 gap-5 grid grid-cols-1 md:grid-cols-3 laptop:grid-cols-4 desktop:grid-cols-5 xlgDesktop:grid-cols-6">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <div key={`material-skeleton-${index}`}>
+              <MaterialCardSkeleton />
             </div>
-            <div className={cn('text-black1 text-center text-sm', 'font-medium')}>
-              <h3>Back</h3>
-            </div>
-            <p className={cn('text-gray mx-auto text-xs', 'opacity-0')}>
-              &nbsp;
-            </p>
-          </div>
-        )}
-        {!isLoading && resources.length > 0 && (
+          ))}
+        </main>
+      )}
+
+      {/* Materials Grid */}
+      {!isLoading && resources.length > 0 && (
+        <main className="my-5 gap-5 grid grid-cols-1 md:grid-cols-3 laptop:grid-cols-4 desktop:grid-cols-5 xlgDesktop:grid-cols-6">
           <div
             onClick={() => setShowCreateModal(true)}
             className="min-w-[180px] p-3 py-6 rounded-[12px] bg-white flex flex-col justify-center gap-4 cursor-pointer border border-transparent hover:border-primary transition-all"
@@ -278,16 +281,8 @@ const MaterialsList: React.FC<MaterialsListProps> = ({
               &nbsp;
             </p>
           </div>
-        )}
 
-        {isLoading ? (
-          Array.from({ length: 8 }).map((_, index) => (
-            <div key={`material-skeleton-${index}`}>
-              <MaterialCardSkeleton />
-            </div>
-          ))
-        ) : (
-          resources.map((material) => (
+          {resources.map((material) => (
             <div key={material.id}>
               <Material
                 {...material}
@@ -298,16 +293,21 @@ const MaterialsList: React.FC<MaterialsListProps> = ({
                 }
               />
             </div>
-          ))
-        )}
-      </main>
+          ))}
+        </main>
+      )}
 
+      {/* Empty State when no resources in current view/folder */}
       {!isLoading && resources.length === 0 && (
-        <div className="flex flex-col items-center justify-center py-12 mt-5">
+        <div className="flex flex-col items-center justify-center py-12 mt-2">
           <Empty
             icon={<MaterialIcon size="64" color={theme.primary} />}
             title="No materials found"
-            description="There are currently no materials available"
+            description={
+              folderIds.length > 0
+                ? "This folder is currently empty. Upload files or create a folder below."
+                : "There are currently no materials available"
+            }
           />
           <div className="mt-6 flex gap-3">
             <Button

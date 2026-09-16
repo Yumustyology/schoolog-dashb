@@ -52,44 +52,44 @@ const SubjectModal = ({
 
         {type === 'delete' && (
           <div className="w-full mt-8 mb-6 text-center flex justify-center gap-4 px-6">
-            <Button
+            <button
+              type="button"
               onClick={close}
-              round
               className={cn(
-                'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-50 text-base h-[44px] w-[185px]',
+                'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-semibold rounded-full h-[44px] flex-1 min-w-[140px] transition-colors cursor-pointer',
                 Inter_500.className
               )}
             >
               Cancel
-            </Button>
-            <Button
-              round
+            </button>
+            <button
+              type="button"
               className={cn(
-                'text-base bg-r text-white h-[44px] w-[185px]',
+                'text-sm font-semibold bg-red-600 hover:bg-red-700 text-white rounded-full h-[44px] flex-1 min-w-[140px] transition-colors cursor-pointer shadow-sm',
                 Inter_500.className
               )}
             >
               Delete
-            </Button>
+            </button>
           </div>
         )}
 
         {type === 'archive' && (
           <div className="w-full mt-8 mb-6 text-center flex justify-center gap-4 px-6">
-            <Button
+            <button
+              type="button"
               onClick={close}
-              round
               className={cn(
-                'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-50 text-base h-[44px] w-[185px]',
+                'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-semibold rounded-full h-[44px] flex-1 min-w-[140px] transition-colors cursor-pointer',
                 Inter_500.className
               )}
             >
               Cancel
-            </Button>
-            <Button
-              round
+            </button>
+            <button
+              type="button"
               className={cn(
-                'text-base bg-[#F59E0B] hover:bg-[#D97706] text-white h-[44px] w-[185px]',
+                'text-sm font-semibold bg-[#F2994A] hover:bg-[#e0883b] text-white rounded-full h-[44px] flex-1 min-w-[140px] transition-colors cursor-pointer shadow-sm',
                 Inter_500.className
               )}
               onClick={() => {
@@ -97,26 +97,26 @@ const SubjectModal = ({
               }}
             >
               Archive Subject
-            </Button>
+            </button>
           </div>
         )}
 
         {type === 'unarchive' && (
           <div className="w-full mt-8 mb-6 text-center flex justify-center gap-4 px-6">
-            <Button
+            <button
+              type="button"
               onClick={close}
-              round
               className={cn(
-                'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-50 text-base h-[44px] w-[185px]',
+                'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-semibold rounded-full h-[44px] flex-1 min-w-[140px] transition-colors cursor-pointer',
                 Inter_500.className
               )}
             >
               Cancel
-            </Button>
-            <Button
-              round
+            </button>
+            <button
+              type="button"
               className={cn(
-                'text-base bg-primary text-white h-[44px] w-[185px]',
+                'text-sm font-semibold bg-primary hover:bg-primary/90 text-white rounded-full h-[44px] flex-1 min-w-[140px] transition-colors cursor-pointer shadow-sm',
                 Inter_500.className
               )}
               onClick={() => {
@@ -124,7 +124,7 @@ const SubjectModal = ({
               }}
             >
               Unarchive
-            </Button>
+            </button>
           </div>
         )}
       </div>

@@ -308,6 +308,60 @@ function SubjectInfoPage({ subject }: { subject: string }) {
     { revalidateOnFocus: false }
   );
 
+  const handleAssignSuccess = React.useCallback(
+    (assignedPayload?: any) => {
+      const linkData = assignedPayload?.linkData || assignedPayload?.resData || assignedPayload;
+
+      if (linkData && typeof linkData === 'object') {
+        revalidateSubjectLinks(
+          (currentResp: any) => {
+            const currentList = Array.isArray(currentResp?.data)
+              ? [...currentResp.data]
+              : [];
+
+            const targetLinkId = linkData._id;
+            const targetClassGradeId =
+              typeof linkData.classGradeId === 'object'
+                ? linkData.classGradeId?._id
+                : linkData.classGradeId || classGradeId;
+
+            let found = false;
+            const updatedList = currentList.map((item: any) => {
+              const itemClassId =
+                typeof item.classGradeId === 'object'
+                  ? item.classGradeId?._id
+                  : item.classGradeId;
+
+              if (
+                (targetLinkId && item._id === targetLinkId) ||
+                (targetClassGradeId &&
+                  String(itemClassId) === String(targetClassGradeId))
+              ) {
+                found = true;
+                return { ...item, ...linkData };
+              }
+              return item;
+            });
+
+            if (!found) {
+              updatedList.push(linkData);
+            }
+
+            return {
+              status: 'success',
+              ...(currentResp || {}),
+              data: updatedList,
+            };
+          },
+          { revalidate: true }
+        );
+      } else {
+        revalidateSubjectLinks();
+      }
+    },
+    [revalidateSubjectLinks, classGradeId]
+  );
+
   const realAssignedTeachers = React.useMemo(() => {
     const links = (subjectLinksResp?.data as any[]) || [];
     const currentLink = classGradeId
@@ -411,20 +465,20 @@ function SubjectInfoPage({ subject }: { subject: string }) {
             subjectTitle={subjectTitle}
             subjectId={subject}
             classGradeId={classGradeId}
-            onAssignSuccess={revalidateSubjectLinks}
+            onAssignSuccess={handleAssignSuccess}
             nextClassSchedule={nextClassSchedule}
             nextTopic={nextTopic}
           />
         </div>
 
         <div className="bg-white w-full p-4 sm:p-6 mt-6 rounded-lg min-h-[398px] h-auto">
-          <div className="flex flex-col-reverse lg:flex-row items-stretch lg:items-center justify-between gap-4 mb-6">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-6">
             <SearchInput
               placeholder="search"
-              className="bg-[#F7F7F7] border border-gray4 rounded-[100px] p-2 h-[42px] w-full lg:max-w-[300px]"
+              className="bg-[#F7F7F7] border border-gray4 rounded-[100px] p-2 h-[42px] w-full sm:w-[260px] lg:w-[300px]"
             />
 
-            <div className="flex flex-wrap items-center gap-1.5 p-1.5 bg-[#F1F1F1] rounded-2xl sm:rounded-full">
+            <div className="flex items-center gap-1 p-1 bg-[#F1F1F1] rounded-full overflow-x-auto max-w-full flex-nowrap scrollbar-none">
               {todayClassesTabs.map(({ label, value }) => {
                 const isActive = activeTopicAssignmtentTab === value;
                 return (
@@ -433,7 +487,7 @@ function SubjectInfoPage({ subject }: { subject: string }) {
                     type="button"
                     onClick={() => handleTopicAssignmentTabClick(value)}
                     className={cn(
-                      'px-5 py-2 rounded-full text-sm font-medium transition-all whitespace-nowrap flex-shrink-0 cursor-pointer',
+                      'px-4 sm:px-5 py-2 rounded-full text-xs sm:text-sm font-medium transition-all whitespace-nowrap flex-shrink-0 cursor-pointer',
                       poppins_500.className,
                       isActive
                         ? 'bg-primary text-white shadow-xs'

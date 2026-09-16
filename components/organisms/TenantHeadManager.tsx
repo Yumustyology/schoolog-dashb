@@ -51,6 +51,10 @@ export default function TenantHeadManager() {
 
         try {
           localStorage.setItem('schoolog:tenantSchool', JSON.stringify(payload));
+          const logo = payload.schoolImage || payload.image || payload.logo;
+          if (logo) {
+            document.cookie = `schoolog_logo=${encodeURIComponent(logo)}; path=/; max-age=31536000; SameSite=Lax`;
+          }
         } catch {
           /* ignore storage errors */
         }

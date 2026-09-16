@@ -178,13 +178,7 @@ function SubjectInfoCard({
 
       <CardContent className="flex flex-col p-0 gap-4 my-4 flex-grow justify-center">
         <main className="w-full">
-          <section
-            className="grid grid-cols-3 gap-2 w-full p-4 rounded-xl border"
-            style={{
-              backgroundColor: `${theme.primary}0F`,
-              borderColor: `${theme.primary}26`,
-            }}
-          >
+          <section className="grid grid-cols-3 gap-2 w-full p-4 rounded-xl border border-gray-200/80 bg-[#F8F8F8]">
             <div className="text-center">
               <h3 className={cn('text-lg sm:text-xl font-bold text-gray-900 mb-0.5', poppins_500.className)}>
                 {totalStudents}
@@ -194,7 +188,7 @@ function SubjectInfoCard({
               </p>
             </div>
 
-            <div className="text-center border-x border-primary/15 px-1">
+            <div className="text-center border-x border-gray-200 px-1">
               <h3 className={cn('text-lg sm:text-xl font-bold text-primary mb-0.5', poppins_500.className)}>
                 {curriculumCoveredPct}%
               </h3>
@@ -258,7 +252,7 @@ function SubjectInfoCard({
                 setArchiveModal(true);
               }}
             >
-              <ArchiveModalIcon size={20} color="#FFFFFF" showBg={false} />
+              <ArchiveIcon size={18} color="#FFFFFF" />
               <span className="whitespace-nowrap font-semibold">Archive</span>
             </button>
           )}

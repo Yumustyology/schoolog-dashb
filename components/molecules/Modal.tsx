@@ -35,7 +35,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children, title, classNa
   const modalContent = (
     <div className={cn('fixed inset-0 bg-[rgb(0,0,0,0.25)] flex items-center p-6 justify-center z-50 w-full', overlayClassName)}>
       <div 
-        className={cn('bg-white rounded-xl tablet:w-[434px] xxs:w-full shadow-lg flex flex-col max-h-[90vh]', className)}
+        className={cn('bg-white rounded-2xl max-w-lg w-full shadow-xl flex flex-col max-h-[90vh] overflow-hidden', className)}
         style={minHeight ? { minHeight } : undefined}
       >
         <div className="flex justify-between items-center pl-8 pr-4 py-4">

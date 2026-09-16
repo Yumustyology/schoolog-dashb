@@ -41,18 +41,21 @@ export function AppSidebar({
   // get persisted school entity synchronously to avoid flash
   const currentSchool = schoolState.use();
 
-  console.log("current school ",currentSchool)
-  const [showLogo, setShowLogo] = useState<boolean>(false);
-
   const resolveImage = React.useCallback((s?: typeof currentSchool) => {
     try {
-      // prefer tenant cache in localStorage for fastest startup
+      // prefer tenant cache in cookie or localStorage for fastest startup
       if (typeof window !== 'undefined') {
+        const match = document.cookie.match(/(?:^|; )schoolog_logo=([^;]*)/);
+        if (match && match[1]) {
+          const cookieVal = decodeURIComponent(match[1]);
+          if (cookieVal) return cookieVal;
+        }
+
         const raw = window.localStorage.getItem('schoolog:tenantSchool');
         if (raw) {
           try {
             const parsed = JSON.parse(raw) as Record<string, unknown> | null;
-            const img = (parsed?.['schoolImage']) as string | undefined | null;
+            const img = (parsed?.['schoolImage'] || parsed?.['image'] || parsed?.['logo']) as string | undefined | null;
             if (img) return typeof img === 'string' && img.startsWith('http') ? img : `${window.location.origin}${img}`;
           } catch {
             // ignore
@@ -60,7 +63,7 @@ export function AppSidebar({
         }
       }
 
-      const fallbackKeys = ['schoolImage'];
+      const fallbackKeys = ['schoolImage', 'image', 'logo'];
       for (const k of fallbackKeys) {
         const v = (s as Record<string, unknown> | undefined)?.[k];
         if (typeof v === 'string' && v.length > 0) {
@@ -73,28 +76,15 @@ export function AppSidebar({
     return null;
   }, []);
 
-  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  const [logoUrl, setLogoUrl] = useState<string | null>(() =>
+    resolveImage(currentSchool as unknown as typeof currentSchool)
+  );
 
   // update logo when persisted entity changes
   React.useEffect(() => {
     const url = resolveImage(currentSchool as unknown as typeof currentSchool);
-    setLogoUrl(url);
+    if (url) setLogoUrl(url);
   }, [currentSchool, resolveImage]);
-
-  // ensure we show the logo only after full load to avoid flash
-  React.useEffect(() => {
-    if (showLogo) return;
-    const onLoad = () => setShowLogo(true);
-    if (typeof window !== 'undefined') {
-      if (document.readyState === 'complete') {
-        setShowLogo(true);
-        return;
-      }
-      window.addEventListener('load', onLoad);
-      return () => window.removeEventListener('load', onLoad);
-    }
-    return undefined;
-  }, [showLogo]);
 
   const toggleMenu = (title: string, arg?: boolean) => {
     setOpenMenus((prev) => {
@@ -117,26 +107,16 @@ export function AppSidebar({
     <Sidebar collapsible="icon" className="h-screen w-64 border-none bg-white">
       <SidebarHeader className={cn("py-5 px-6 bg-white")}>
         {state === 'expanded' ? (
-          // expanded: show full logo or shimmer while loading
-          showLogo ? (
-            logoUrl ? (
-              <Image alt="school-logo" className="object-contain mx-auto" src={logoUrl} width={150} height={37} />
-            ) : (
-              <Image alt="full-logo" src={'/schoolog-full-logo.svg'} width={200} height={37} />
-            )
+          logoUrl ? (
+            <Image alt="school-logo" className="object-contain mx-auto" src={logoUrl} width={150} height={37} priority />
           ) : (
-            <Skeleton className="w-[200px] h-[37px]" />
+            <Image alt="full-logo" src={'/schoolog-full-logo.svg'} width={200} height={37} priority />
           )
         ) : (
-          // collapsed: show icon (school image if available) or default icon
-          showLogo ? (
-            logoUrl ? (
-              <Image alt="school-icon" src={logoUrl} height={80} width={80} className="object-contain" />
-            ) : (
-              <Image alt="icon-logo" src={'/schoolog-logo.svg'} height={80} width={80} />
-            )
+          logoUrl ? (
+            <Image alt="school-icon" src={logoUrl} height={80} width={80} className="object-contain" priority />
           ) : (
-            <Skeleton className="w-[80px] h-[90px] rounded-full" />
+            <Image alt="icon-logo" src={'/schoolog-logo.svg'} height={80} width={80} priority />
           )
         )}
       </SidebarHeader>

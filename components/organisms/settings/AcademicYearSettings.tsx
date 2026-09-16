@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Calendar, Plus, Save, CloudDownload } from 'lucide-react';
+import { Calendar, Save, CloudDownload } from 'lucide-react';
+import { AdditionIcon } from '@/components/atoms/icons/Icons';
 import Button from '@/components/atoms/form/Button';
 import Input from '@/components/atoms/form/Input';
 import { createAcademicYear } from '@/app/lib/actions/academicYear.actions';
@@ -113,7 +114,7 @@ const AcademicYearSettings: React.FC = () => {
           </div>
         ))}
         <Button onClick={addTerm} className="text-blue-600 text-sm flex items-center gap-1 mt-2 hover:underline">
-          <Plus size={16} /> Add Term
+          <AdditionIcon color="currentColor" size={16} /> Add Term
         </Button>
       </div>
 

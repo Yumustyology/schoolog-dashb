@@ -13,7 +13,15 @@ type ErrorWithResponse = {
 
 // Messages that indicate the response interceptor is already handling a
 // session-expiry redirect (see axios.config.ts) — don't also toast for these.
-const AUTH_REDIRECT_MESSAGES = ['unauthorized', 'invalid token', 'token expired'];
+const AUTH_REDIRECT_MESSAGES = ['unauthorized', 'invalid token', 'token expired', 'jwt expired'];
+
+const shouldSuppressToast = (msg: string, statusCode?: number) => {
+  if (statusCode === 401) return true;
+  const lower = msg.toLowerCase();
+  if (AUTH_REDIRECT_MESSAGES.some((m) => lower.includes(m))) return true;
+  if (lower.startsWith('cannot get /api/')) return true;
+  return false;
+};
 
 const isResponseType = (error: unknown): error is ResponseType => {
   return (
@@ -44,13 +52,14 @@ export const handleError = (error: Error | string | unknown) => {
       },
     });
 
-    if (!AUTH_REDIRECT_MESSAGES.includes(errorMessage.toLowerCase())) {
+    if (!shouldSuppressToast(errorMessage, error.statusCode)) {
       showToast(errorMessage, 'error', { type: 'error' });
     }
   } else if (error instanceof Error) {
     if (typeof error === 'object' && 'response' in error) {
       const resp = (error as ErrorWithResponse).response;
       const rawMessage = resp?.data?.message || error.message;
+      const status = resp?.status;
       errorMessage = Array.isArray(rawMessage)
         ? rawMessage.join(', ')
         : typeof rawMessage === 'string'
@@ -67,7 +76,9 @@ export const handleError = (error: Error | string | unknown) => {
         },
       });
 
-      showToast(errorMessage, 'error', { type: 'error' });
+      if (!shouldSuppressToast(errorMessage, status)) {
+        showToast(errorMessage, 'error', { type: 'error' });
+      }
     } else {
       errorMessage = error.message;
 
@@ -77,7 +88,9 @@ export const handleError = (error: Error | string | unknown) => {
         severity: 'error',
       });
 
-      showToast(errorMessage, 'error', { type: 'error' });
+      if (!shouldSuppressToast(errorMessage)) {
+        showToast(errorMessage, 'error', { type: 'error' });
+      }
     }
   } else if (typeof error === 'string') {
     errorMessage = error;
@@ -87,7 +100,9 @@ export const handleError = (error: Error | string | unknown) => {
       severity: 'error',
     });
 
-    showToast(errorMessage, 'error', { type: 'error' });
+    if (!shouldSuppressToast(errorMessage)) {
+      showToast(errorMessage, 'error', { type: 'error' });
+    }
   } else {
     logUtil.logError({
       message: 'Unknown error occurred',

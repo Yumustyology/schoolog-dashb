@@ -63,7 +63,7 @@ function AssignedTeacherCard({
   subjectId?: string;
   classGradeId?: string;
   departmentId?: string;
-  onAssignSuccess?: () => void;
+  onAssignSuccess?: (assignedData?: any) => void;
   nextClassSchedule?: string;
   nextTopic?: string;
 }) {
@@ -176,13 +176,7 @@ function AssignedTeacherCard({
 
       {role === 'school' && page === 'subjectInfo' && (
         <CardContent className="flex flex-col p-0 my-3 flex-grow justify-center">
-          <div
-            className="p-4 rounded-xl border flex flex-col gap-3"
-            style={{
-              backgroundColor: `${theme.primary}0F`,
-              borderColor: `${theme.primary}26`,
-            }}
-          >
+          <div className="p-4 rounded-xl border border-gray-200/80 bg-[#F8F8F8] flex flex-col gap-3">
             <div>
               <h3 className={cn('text-sm font-semibold text-gray-900', poppins_500.className)}>
                 {nextClassSchedule || 'To be scheduled'}
@@ -192,7 +186,7 @@ function AssignedTeacherCard({
               </p>
             </div>
 
-            <div className="pt-2 border-t border-primary/15">
+            <div className="pt-2 border-t border-gray-200">
               <p className={cn('text-xs text-gray-500 mb-0.5', poppins_400.className)}>
                 Next topic
               </p>

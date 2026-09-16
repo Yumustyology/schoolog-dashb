@@ -22,7 +22,7 @@ interface ChangeTeacherModalProps {
   subjectId?: string;
   classGradeId?: string;
   departmentId?: string;
-  onSuccess?: () => void;
+  onSuccess?: (assignedData?: any) => void;
 }
 
 function ChangeTeacherModal({
@@ -111,7 +111,33 @@ function ChangeTeacherModal({
           'assign-tutor-success',
           { type: 'success' }
         );
-        onSuccess?.();
+
+        const staffList = staffResp?.data || [];
+        const selectedTeacherObj = staffList.find((s) => s._id === selectedTeacherId);
+
+        const rawData = (res.data as any) || {};
+        let teacherIdsList = Array.isArray(rawData.teacherIds) ? rawData.teacherIds : [];
+
+        // Ensure teacher object details exist in link structure
+        if (selectedTeacherObj && (!teacherIdsList.length || typeof teacherIdsList[0] === 'string')) {
+          teacherIdsList = [selectedTeacherObj];
+        }
+
+        const linkData = {
+          ...rawData,
+          classGradeId: rawData.classGradeId || classGradeId,
+          subjectId: rawData.subjectId || subjectId,
+          teacherIds: teacherIdsList,
+        };
+
+        onSuccess?.({
+          linkData,
+          teacher: selectedTeacherObj,
+          teacherId: selectedTeacherId,
+          classGradeId,
+          subjectId,
+        });
+
         closeChangeTeacherModal();
       } else {
         showToast('Failed to assign tutor', 'assign-tutor-fail', { type: 'error' });

@@ -65,30 +65,29 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({
         </main>
 
         <div className="w-full mt-8 mb-6 text-center flex justify-center gap-4 px-6">
-          <Button
+          <button
+            type="button"
             onClick={close}
             disabled={isLoading}
-            round
             className={cn(
-              'bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-50 text-base h-[44px] w-[185px]',
+              'bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 text-sm font-semibold rounded-full h-[44px] flex-1 min-w-[140px] transition-colors cursor-pointer',
               Inter_500.className
             )}
           >
             {cancelText}
-          </Button>
-          <Button
-            round
+          </button>
+          <button
+            type="button"
             disabled={isLoading}
             className={cn(
-              'text-base h-[44px] w-[185px]',
-              confirmClassName,
+              'text-sm font-semibold rounded-full h-[44px] flex-1 min-w-[140px] transition-colors cursor-pointer shadow-sm',
+              confirmClassName === 'bg-r text-white' ? 'bg-red-600 hover:bg-red-700 text-white' : confirmClassName,
               Inter_500.className
             )}
-            loading={isLoading}
             onClick={onConfirm}
           >
             {isLoading ? 'Loading...' : confirmText}
-          </Button>
+          </button>
         </div>
       </div>
     </div>

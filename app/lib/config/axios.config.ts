@@ -121,15 +121,40 @@ const refreshAuthToken = async (): Promise<string | null> => {
 
     if (!refreshToken) throw new Error('No refresh token available');
 
-    const response = await axios.post(`${baseURL}auth/refresh-token`, {
-      token: refreshToken,
-    }, {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    let xTenant = '';
+    if (typeof window !== 'undefined') {
+      try {
+        const hostname = window.location.hostname || '';
+        const tenant = getTenantFromHost(hostname);
+        if (tenant) {
+          xTenant = tenant.isSubdomain ? tenant.id : tenant.hostname;
+        }
+      } catch {
+        // ignore tenant error
+      }
+    }
 
-    const { accessToken, refreshToken: newRefreshToken } = response.data.data;
+    const response = await axios.post(
+      `${baseURL}auth/refresh-token`,
+      {
+        refreshToken,
+        token: refreshToken,
+      },
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          ...(xTenant && { 'x-tenant': xTenant, 'X-Tenant': xTenant }),
+        },
+      }
+    );
+
+    const resData = response.data;
+    const tokenData = resData?.data || resData || {};
+    const accessToken =
+      tokenData.accessToken || tokenData.token || resData.accessToken || resData.token;
+    const newRefreshToken = tokenData.refreshToken || resData.refreshToken;
+
+    if (!accessToken) throw new Error('Refresh response missing access token');
 
     if (typeof window !== 'undefined') {
       const lfModule = await import('localforage');
