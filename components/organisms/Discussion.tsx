@@ -29,6 +29,8 @@ import {
   Maximize2,
   Image as ImageIcon,
 } from 'lucide-react';
+import { io, Socket } from 'socket.io-client';
+import { getCookie } from '@/app/lib/utils/authCookies';
 import { AdditionIcon, DeleteModalIcon } from '@/components/atoms/icons/Icons';
 import { useSlgTheme } from '@/app/lib/hooks/useSlgTheme';
 import { profileState } from '@/app/lib/entities/profile.entity';
@@ -63,47 +65,6 @@ const isImageAttachment = (att: { type?: string; name?: string; url?: string }) 
   );
 };
 
-const SAMPLE_THREADS: DiscussionThread[] = [
-  {
-    id: 'thread-sample-1',
-    title: 'Hey guys',
-    content: 'wassup all',
-    authorName: 'Demo Admin',
-    authorRole: 'School Admin',
-    createdAt: 'Sep 16, 12:07 AM',
-    reactions: {
-      '👍': ['Demo Admin', 'Mahmud Yussuf'],
-      '❤️': ['Joke Aderonke'],
-    },
-    replies: [
-      {
-        id: 'reply-sample-1',
-        authorName: 'Demo Admin',
-        authorRole: 'School Admin',
-        content: 'hi',
-        createdAt: 'Sep 16, 12:07 AM',
-        reactions: {
-          '💡': ['Mahmud Yussuf'],
-        },
-      },
-      {
-        id: 'reply-sample-2',
-        authorName: 'Demo Admin',
-        authorRole: 'School Admin',
-        content: 'hi',
-        createdAt: 'Sep 16, 12:11 AM',
-      },
-      {
-        id: 'reply-sample-3',
-        authorName: 'Demo Admin',
-        authorRole: 'School Admin',
-        content: 'yo',
-        createdAt: 'Sep 16, 12:11 AM',
-      },
-    ],
-  },
-];
-
 type PendingDeletion = {
   threadId: string;
   replyId?: string;
@@ -121,12 +82,13 @@ export default function Discussion({
   const { theme } = useSlgTheme();
   const profile = profileState.use();
 
-  const currentUserId = profile?.slgId || profile?.slugId || profile?.email || 'user-admin';
+  const currentUserId = profile?.slgId || profile?.slugId || profile?.email || profile?._id || 'user';
   const currentAuthorName =
     `${profile?.firstName || ''} ${profile?.lastName || ''}`.trim() ||
+    profile?.name ||
     profile?.email ||
-    'Demo Admin';
-  const currentAuthorRole = profile?.audience || 'School Admin';
+    'User';
+  const currentAuthorRole = profile?.audience || profile?.role || 'Member';
   const isSchoolAdmin =
     !profile?.audience ||
     profile?.audience === 'school' ||
@@ -270,49 +232,180 @@ export default function Discussion({
   // Media Drawer State
   const [isMediaDrawerOpen, setIsMediaDrawerOpen] = useState(false);
 
-  // Load discussions from backend API / sessionStorage / localStorage
+  // Clear obsolete cached sample threads from local/session storage
+  useEffect(() => {
+    try {
+      [sessionStorage, localStorage].forEach((storage) => {
+        const item = storage.getItem(storageKey);
+        if (item && item.includes('thread-sample-1')) {
+          storage.removeItem(storageKey);
+        }
+      });
+    } catch {
+      // ignore
+    }
+  }, [storageKey]);
+
+  // Load discussions from backend API
   useEffect(() => {
     let isMounted = true;
     discussionActions
       .fetchDiscussionThreads(subjectId, classGradeId)
       .then((res) => {
-        if (isMounted && res?.data && Array.isArray(res.data) && res.data.length > 0) {
-          setThreads(res.data);
-          return;
+        if (isMounted) {
+          if (res?.data && Array.isArray(res.data)) {
+            setThreads(res.data);
+          } else {
+            setThreads([]);
+          }
         }
       })
-      .catch(() => undefined);
-
-    try {
-      // Check sessionStorage for current tab first, then localStorage
-      const sessionSaved = sessionStorage.getItem(storageKey);
-      const localSaved = localStorage.getItem(storageKey);
-      const saved = sessionSaved || localSaved;
-      if (saved) {
-        let parsed = JSON.parse(saved);
-        if (Array.isArray(parsed)) {
-          parsed = parsed.map((t: DiscussionThread) => ({
-            ...t,
-            authorName: t.authorName === 'School Administrator' ? 'Demo Admin' : t.authorName,
-            replies: (t.replies || []).map((r: DiscussionReply) => ({
-              ...r,
-              authorName: r.authorName === 'School Administrator' ? 'Demo Admin' : r.authorName,
-            })),
-          }));
-          if (isMounted) setThreads(parsed);
-          return;
-        }
-      }
-    } catch {
-      // fallback
-    }
-
-    if (isMounted) setThreads(SAMPLE_THREADS);
+      .catch(() => {
+        if (isMounted) setThreads([]);
+      });
 
     return () => {
       isMounted = false;
     };
-  }, [storageKey, subjectId, classGradeId]);
+  }, [subjectId, classGradeId]);
+
+  // Real-time Socket.io Connection & Listeners
+  useEffect(() => {
+    let socket: Socket | null = null;
+
+    const setupSocket = async () => {
+      let token = getCookie('schoolog_access_token');
+      if (!token && typeof window !== 'undefined') {
+        try {
+          const lf = (await import('localforage')).default;
+          token = await lf.getItem<string>('accessToken');
+        } catch {
+          // ignore
+        }
+      }
+
+      if (!token) return;
+
+      const backendHost = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+      const socketUrl = backendHost.replace(/\/+$/, '');
+
+      socket = io(`${socketUrl}/ws/discussions`, {
+        transports: ['websocket', 'polling'],
+        auth: { token },
+        query: { token },
+      });
+
+      socket.on('connect', () => {
+        const schoolId = profile?.schoolId || profile?.school?._id;
+        socket?.emit('discussions.join', { schoolId });
+      });
+
+      socket.on('thread.created', (newThread: DiscussionThread) => {
+        setThreads((prev) => {
+          if (prev.some((t) => t.id === newThread.id)) return prev;
+          return [newThread, ...prev];
+        });
+      });
+
+      socket.on('reply.created', ({ threadId, reply }: { threadId: string; reply: DiscussionReply }) => {
+        setThreads((prev) =>
+          prev.map((t) => {
+            if (t.id === threadId) {
+              const existingReplies = t.replies || [];
+              if (existingReplies.some((r) => r.id === reply.id)) return t;
+              return { ...t, replies: [...existingReplies, reply] };
+            }
+            return t;
+          })
+        );
+      });
+
+      socket.on(
+        'reaction.updated',
+        ({
+          threadId,
+          replyId,
+          reactions,
+        }: {
+          threadId: string;
+          replyId: string | null;
+          reactions: Record<string, string[]>;
+        }) => {
+          setThreads((prev) =>
+            prev.map((t) => {
+              if (t.id === threadId) {
+                if (!replyId) {
+                  return { ...t, reactions };
+                } else {
+                  return {
+                    ...t,
+                    replies: (t.replies || []).map((r) => (r.id === replyId ? { ...r, reactions } : r)),
+                  };
+                }
+              }
+              return t;
+            })
+          );
+        }
+      );
+
+      socket.on(
+        'thread.deleted',
+        ({
+          threadId,
+          isDeleted,
+          deletedByRole,
+        }: {
+          threadId: string;
+          isDeleted: boolean;
+          deletedByRole?: string;
+        }) => {
+          setThreads((prev) =>
+            prev.map((t) =>
+              t.id === threadId ? { ...t, isDeleted, deletedByRole: deletedByRole as any } : t
+            )
+          );
+        }
+      );
+
+      socket.on(
+        'reply.deleted',
+        ({
+          threadId,
+          replyId,
+          isDeleted,
+          deletedByRole,
+        }: {
+          threadId: string;
+          replyId: string;
+          isDeleted: boolean;
+          deletedByRole?: string;
+        }) => {
+          setThreads((prev) =>
+            prev.map((t) => {
+              if (t.id === threadId) {
+                return {
+                  ...t,
+                  replies: (t.replies || []).map((r) =>
+                    r.id === replyId ? { ...r, isDeleted, deletedByRole: deletedByRole as any } : r
+                  ),
+                };
+              }
+              return t;
+            })
+          );
+        }
+      );
+    };
+
+    setupSocket();
+
+    return () => {
+      if (socket) {
+        socket.disconnect();
+      }
+    };
+  }, [profile?.schoolId, profile?.school?._id]);
 
   // Lightweight Persist Strategy to prevent LocalStorage Quota Bloat
   const saveThreads = (updated: DiscussionThread[]) => {

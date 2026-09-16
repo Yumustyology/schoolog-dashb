@@ -34,6 +34,7 @@ import { MaterialType } from '@/app/lib/types/materials.types';
 import studentActions from '@/app/lib/actions/student.actions';
 import resourcesActions from '@/app/lib/actions/resources.action';
 import timetableActions from '@/app/lib/actions/timetable.action';
+import staffActions from '@/app/lib/actions/staff.action';
 import { StudentsListTable } from '@/components/molecules/dashboard/student/StudentsListTable';
 
 export const materials: MaterialType[] = [
